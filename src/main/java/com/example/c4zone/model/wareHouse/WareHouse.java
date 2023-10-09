@@ -1,13 +1,12 @@
 package com.example.c4zone.model.wareHouse;
 
+import com.example.c4zone.model.product.Product;
+import com.example.c4zone.model.supplier.Supplier;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Setter
@@ -16,5 +15,21 @@ import javax.persistence.Id;
 public class WareHouse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idWareHouse;
+    private Long id;
+    private String inputDate;
+    private Integer quantity;
+    @ManyToOne
+    @JoinColumn(name = "supplier_id", referencedColumnName = "id_supplier")
+    private Supplier supplier;
+    @ManyToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "idProduct")
+    private Product product;
+
+    public WareHouse(Long id, String inputDate, Integer quantity, Supplier supplier, Product product) {
+        this.id = id;
+        this.inputDate = inputDate;
+        this.quantity = quantity;
+        this.supplier = supplier;
+        this.product = product;
+    }
 }
