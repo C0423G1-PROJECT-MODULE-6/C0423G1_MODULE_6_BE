@@ -1,5 +1,6 @@
 package com.example.c4zone.model.supplier;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,12 +11,13 @@ import javax.persistence.*;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "supplier")
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_supplier")
-    private Integer idSupplier;
+    private Long idSupplier;
     @Column(name = "code_supplier")
     private Integer codeSupplier;
     @Column(name = "name_supplier")
@@ -28,14 +30,4 @@ public class Supplier {
     private String emailSupplier;
     @Column(name = "status_supplier", columnDefinition = "boolean default false")
     private Boolean statusSupplier;
-
-    public Supplier(Integer idSupplier, Integer codeSupplier, String nameSupplier, String addressSupplier, String phoneNumberSupplier, String emailSupplier, Boolean statusSupplier) {
-        this.idSupplier = idSupplier;
-        this.codeSupplier = codeSupplier;
-        this.nameSupplier = nameSupplier;
-        this.addressSupplier = addressSupplier;
-        this.phoneNumberSupplier = phoneNumberSupplier;
-        this.emailSupplier = emailSupplier;
-        this.statusSupplier = statusSupplier;
-    }
 }
