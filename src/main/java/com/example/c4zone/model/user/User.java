@@ -28,9 +28,10 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String username;
+
     @NaturalId
     @JsonIgnore
     private String password;
@@ -48,10 +49,11 @@ public class User {
     @Column(name = "otp_requested_time")
     private Date otpRequestedTime;
 
-    private String name;
+    private String employeeName;
     private String employeeCode;
     private String employeeAddress;
     private String employeePhone;
+
     @Lob
     private String employeeImage;
     private String employeeIdCard;
@@ -81,7 +83,7 @@ public class User {
     }
 
     public User(String name, String username, String email, String encode) {
-        this.name = name;
+        this.employeeName = name;
         this.username = username;
         this.email = email;
         this.password = encode;
