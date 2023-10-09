@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class WareHouse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idWarehouse;
     private String inputDate;
     private Integer quantity;
     @ManyToOne
@@ -25,8 +25,8 @@ public class WareHouse {
     @JoinColumn(name = "product_id", referencedColumnName = "idProduct")
     private Product product;
 
-    public WareHouse(Long id, String inputDate, Integer quantity, Supplier supplier, Product product) {
-        this.id = id;
+    public WareHouse(Long idWarehouse, String inputDate, Integer quantity, Supplier supplier, Product product) {
+        this.idWarehouse = idWarehouse;
         this.inputDate = inputDate;
         this.quantity = quantity;
         this.supplier = supplier;
