@@ -48,7 +48,6 @@ public class UserPrinciple implements UserDetails {
     }
 
 
-
     public Collection<? extends GrantedAuthority> getRoles() {
         return roles;
     }
