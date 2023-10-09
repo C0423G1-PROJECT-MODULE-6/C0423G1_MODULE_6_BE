@@ -68,7 +68,7 @@ public class  UserServiceImpl implements IUserService {
 
         String subject = "Here's your One Time Password (OTP) - Expire in 5 minutes!";
 
-        String content = "<p>Hello " + user.getName() + "</p>"
+        String content = "<p>Hello " + user.getEmployeeName() + "</p>"
                 + "<p>For security reason, you're required to use the following "
                 + "One Time Password to login:</p>"
                 + "<p><b>" + OTP + "</b></p>"

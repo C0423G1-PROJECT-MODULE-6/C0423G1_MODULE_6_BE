@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserPrinciple implements UserDetails {
-    private int id;
+    private long id;
     private String name;
     private String username;
     private String email;
@@ -24,7 +24,7 @@ public class UserPrinciple implements UserDetails {
     public UserPrinciple() {
     }
 
-    public UserPrinciple(int id, String name, String username, String email, String password, String avatar, Collection<? extends GrantedAuthority> roles) {
+    public UserPrinciple(long id, String name, String username, String email, String password, String avatar, Collection<? extends GrantedAuthority> roles) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -38,7 +38,7 @@ public class UserPrinciple implements UserDetails {
                 new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
         return new UserPrinciple(
                 user.getId(),
-                user.getName(),
+                user.getEmployeeName(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
@@ -119,7 +119,7 @@ public class UserPrinciple implements UserDetails {
         return true;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
