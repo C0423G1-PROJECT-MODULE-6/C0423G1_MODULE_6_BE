@@ -1,4 +1,4 @@
-package com.example.c4zone.model.order;
+package com.example.c4zone.model.customer;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,12 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
-public class OderDetail {
+@Entity
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idOderDetail;
+    private int idCustomer;
 }
