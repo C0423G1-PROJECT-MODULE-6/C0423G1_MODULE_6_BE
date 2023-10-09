@@ -16,8 +16,9 @@ import javax.persistence.*;
 public class OrderBill {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private int idOrderBill;
+    private Long idOrderBill;
 
+    @Column(columnDefinition = "date")
     private String dateOfOrder;
 
     @ManyToOne
