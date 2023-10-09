@@ -14,9 +14,9 @@ import javax.persistence.*;
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idOrderDetail;
-    private int quantityOrder;
-    private double priceOrder;
+    private Long idOrderDetail;
+    private Integer quantityOrder;
+    private Double priceOrder;
 
     @ManyToOne
     @JoinColumn(name = "id_product", referencedColumnName = "idProduct")
@@ -24,5 +24,5 @@ public class OrderDetail {
 
     @ManyToOne
     @JoinColumn(name = "id_order", referencedColumnName = "idOrderBill")
-    private OrderBill order;
+    private OrderBill orderBill;
 }
