@@ -16,5 +16,5 @@ public class Ram {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRam;
     private String name;
-
+    private Boolean statusRam = true;
 }
