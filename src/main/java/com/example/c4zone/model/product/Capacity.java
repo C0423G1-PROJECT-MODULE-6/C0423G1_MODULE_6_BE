@@ -17,4 +17,5 @@ public class Capacity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCapacity;
     private String name;
+    private Boolean statusCapacity = true;
 }

@@ -16,5 +16,5 @@ public class Type {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idType;
     private String name;
-
+    private Boolean statusType = true;
 }
