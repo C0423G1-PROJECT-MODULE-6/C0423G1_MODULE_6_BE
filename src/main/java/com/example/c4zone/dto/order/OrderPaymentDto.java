@@ -1,13 +1,17 @@
 package com.example.c4zone.dto.order;
 
-import com.example.c4zone.model.product.Product;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.List;
 
+@Setter
+@Getter
+@NoArgsConstructor
 public class OrderPaymentDto {
     private Long idOrderPaymentDto;
     private Long idCustomerOrder;
-    private List<ProductDtoOrder> productDtoOrders;
     private String paymentMethod;
     private Integer printStatus;
+    private Long idUser;
 }

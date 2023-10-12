@@ -35,7 +35,6 @@ public class OrderBill {
 
     @ManyToOne
     @JoinColumn(name = "id_user",referencedColumnName = "id")
-
     private AppUser user;
 
     @OneToMany(mappedBy = "orderBill", cascade = CascadeType.ALL, orphanRemoval = true)

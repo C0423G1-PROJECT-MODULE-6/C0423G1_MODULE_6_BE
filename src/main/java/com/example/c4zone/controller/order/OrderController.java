@@ -1,16 +1,26 @@
 package com.example.c4zone.controller.order;
 
 import com.example.c4zone.dto.order.*;
+import com.example.c4zone.model.customer.Customer;
+import com.example.c4zone.model.order.OrderBill;
+import com.example.c4zone.model.order.OrderDetail;
+import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.service.cart.ICartService;
 import com.example.c4zone.service.customer.ICustomerService;
 import com.example.c4zone.service.order.IOrderDetailService;
 import com.example.c4zone.service.product.IProductService;
+import com.example.c4zone.service.user.IAppUserService;
+import com.example.c4zone.service.user.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @RequestMapping("/api/admin/order")
@@ -25,6 +35,8 @@ public class OrderController {
     private IProductService productService;
     @Autowired
     private ICartService cartService;
+    @Autowired
+    private IEmployeeService employeeService;
 
     /**
      * method findByCustomer
@@ -57,18 +69,25 @@ public class OrderController {
      * param Long idUser
      * return HttpStatus
      */
-    @GetMapping("/cart")
-    public ResponseEntity<List<ICartDto>> getAllCart(){
-        List<ICartDto> cart = cartService.getAllCart(1L);
+    @GetMapping("/cart/{id}")
+    public ResponseEntity<List<ICartDto>> getAllCart(@PathVariable Long id){
+        List<ICartDto> cart = cartService.getAllCart(id);
         return new ResponseEntity<>(cart,HttpStatus.OK);
     }
-//    @PostMapping("/paymentOrder")
-//    public ResponseEntity<OrderBill> payOrder(@RequestBody OrderBill orderBill){
-//        LocalDate localDate = LocalDate.now();
-//        LocalTime localTime = LocalTime.now();
-//
-//        orderBill.setDateOfOrder(String.valueOf(localDate));
-//        orderBill.setTimeOfOrder(String.valueOf(localTime));
-//        return null;
-//    }
+    @PostMapping("/payment")
+    public ResponseEntity<OrderBill> paymentOrder(@RequestBody OrderPaymentDto orderPaymentDto){
+        OrderBill orderBill = new OrderBill();
+        Optional<Customer> customer = customerService.findById(orderPaymentDto.getIdCustomerOrder());
+        AppUser appUser = employeeService.getUserById(orderPaymentDto.getIdUser());
+        LocalDate localDate = LocalDate.now();
+        LocalTime localTime = LocalTime.now();
+//        List<CartDto> cartDtos = cartService.getAllCart(orderPaymentDto.getIdUser());
+
+        orderBill.setCustomer(customer.orElse(null));
+        orderBill.setUser(appUser);
+        orderBill.setDateOfOrder(String.valueOf(localDate));
+        orderBill.setTimeOfOrder(String.valueOf(localTime));
+        return null;
+    }
 }
+
