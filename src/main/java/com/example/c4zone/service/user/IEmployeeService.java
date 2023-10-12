@@ -12,6 +12,24 @@ public interface IEmployeeService {
     Page<AppUser> findAllUserBy(Pageable pageable, String searchJob, String searchName, String searchPhone);
     void deleteUserById(Long id);
     AppUser getUserById(Long id);
-    void createUser(AppUser user);
+
     void editUser(AppUser user);
+    /**
+     * Author: CaoNV
+     * Date create: 15/09/2023
+     * Get next code of employee
+     * @return new code
+     */
+    String getNextCode();
+
+    /**
+     * Author: TanNV
+     * Date create: 15/09/2023
+     * Save employee
+     *
+     * @param user
+
+     * @return void
+     */
+    void createEmployee(AppUser user);
 }
