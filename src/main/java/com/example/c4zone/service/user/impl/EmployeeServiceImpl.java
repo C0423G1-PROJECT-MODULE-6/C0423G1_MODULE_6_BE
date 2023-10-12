@@ -36,12 +36,19 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public void createUser(AppUser user) {
-        employeeRepository.save(user);
+    public void editUser(AppUser user) {
+
     }
 
     @Override
-    public void editUser(AppUser user) {
-        employeeRepository.save(user);
+    public String getNextCode() {
+        return null;
     }
+
+    @Override
+    public void createEmployee(AppUser user) {
+
+    }
+
+
 }

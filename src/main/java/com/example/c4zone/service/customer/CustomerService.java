@@ -12,6 +12,32 @@ import org.springframework.stereotype.Service;
 public class CustomerService implements ICustomerService {
     @Autowired
     private ICustomerRepository customerRepository;
+    /**
+     * Author: TinDT
+     * Goal: save customers
+     */
+
+    @Override
+    public void saveCustomer(Customer customer) {
+        customer.setStatusCustomer(true);
+        customerRepository.saveCustomer(customer);
+    }
+    /**
+     * Author: TinDT
+     * Goal: find customers by phone
+     */
+    @Override
+    public Customer findCustomerByPhone(String phoneNumberCustomer) {
+        return customerRepository.findCustomerByPhone(phoneNumberCustomer);
+    }
+    /**
+     * Author: TinDT
+     * Goal: find customers by email
+     */
+    @Override
+    public Customer findCustomerByEmail(String emailCustomer) {
+        return customerRepository.findCustomerByEmail(emailCustomer);
+    }
 
     @Override
     public Page<Customer> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, Boolean valueSearchGender) {

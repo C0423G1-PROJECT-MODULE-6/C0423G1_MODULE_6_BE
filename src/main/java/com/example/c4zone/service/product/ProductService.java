@@ -78,7 +78,6 @@ public class ProductService implements IProductService{
                 return productRepository.getAllByQuantity(pageable, 10,50);
             case "better 50":
                 return productRepository.getAllByQuantityMin(pageable, 50);
-
         }
 
         return null;
