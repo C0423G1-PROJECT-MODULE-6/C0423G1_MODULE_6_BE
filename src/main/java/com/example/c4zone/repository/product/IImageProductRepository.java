@@ -9,17 +9,38 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface IImageProductRepository extends JpaRepository<Image, Long> {
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param image save image using firebase
+     * @param idProduct save the image to an object with an idProduct
+     */
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO image (name, status_image, id_product)" +
             " VALUES (:#{#image.name}, true, :idProduct) ", nativeQuery = true)
     void createImage(@Param("image") Image image, Long idProduct);
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param image update image using firebase
+     * @param idProduct update the image to an object with an idProduct
+     */
     @Transactional
     @Modifying
     @Query(value = "UPDATE image SET name = :#{#image.name} WHERE id_product = :idProduct", nativeQuery = true)
     void updateImage(@Param("image") Image image, Long idProduct);
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param idProduct find by image with idProduct
+     * @return image with idProduct
+     */
     @Query(value = "SELECT i.id_image, i.name, i.id_product, i.status_image " +
             "FROM image as i WHERE id_product = :idProduct",nativeQuery = true)
     Image findImageByIdProduct(@Param("idProduct") Long idProduct);

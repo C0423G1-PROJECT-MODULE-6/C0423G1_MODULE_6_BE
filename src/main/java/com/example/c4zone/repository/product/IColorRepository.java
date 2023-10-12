@@ -10,6 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface IColorRepository extends JpaRepository<Color, Long> {
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return list color
+     */
     @Query(value = "SELECT c.id_color, c.name, c.status_color FROM c4_zone.color as c", nativeQuery = true)
     List<Color> findAll();
     @Transactional

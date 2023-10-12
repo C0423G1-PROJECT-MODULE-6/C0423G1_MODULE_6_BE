@@ -22,6 +22,7 @@ public class Product {
     private String nameProduct;
     private String screenProduct;
     private String cameraProduct;
+    @Column(columnDefinition = "LONGTEXT")
     private String descriptionProduct;
     private Boolean statusBusiness = true;
     private String selfieProduct;
