@@ -22,8 +22,8 @@ public class CustomerDto implements Validator {
     private String phoneNumberCustomer;
     private String addressCustomer;
     private Boolean statusCustomer = true;
-    private static final String NAME_DTO = "name_customer";
-    private static final String BIRTHDAY_DTO = "birth_date_customer";
+    private static final String NAME_DTO = "nameCustomer";
+    private static final String BIRTHDAY_DTO = "dateOfBirthCustomer";
     private static final String ADDRESS_DTO = "addressCustomer";
     private static final String PHONE_DTO = "phoneNumberCustomer";
     private static final String EMAIL_DTO = "emailCustomer";
@@ -42,7 +42,7 @@ public class CustomerDto implements Validator {
         CustomerDto customerDto = (CustomerDto) target;
         // Check name
 
-        if (customerDto.getNameCustomer()== null){
+        if (customerDto.getNameCustomer() == null){
            errors.rejectValue(NAME_DTO, "", "Vui lòng bổ sung tên khách hàng!");
        }else if (customerDto.getNameCustomer().trim().equals("")) {
            errors.rejectValue(NAME_DTO, "", "Không được để trống tên!");
