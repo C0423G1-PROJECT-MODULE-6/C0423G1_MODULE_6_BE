@@ -75,8 +75,11 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     Page<Customer> findAllCustomerByGender(Pageable pageable, @Param("name") String valueSearchName, @Param("gender") Boolean valueSearchGender);
 
     /**
-     * Author: ThoiND
-     * Goal: findCustomerById at Order
+     * method findByCustomer
+     * Create ThoiND
+     * Date 12-10-2023
+     * param Long id
+     * return HttpStatus
      */
     @Query(value = "select id_customer as idCustomerOrder, name_customer as customerNameOrder" +
             ",phone_number_customer as customerPhoneorder " +

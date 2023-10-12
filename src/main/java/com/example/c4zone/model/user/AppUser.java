@@ -26,11 +26,9 @@ public class AppUser {
     private Boolean flagOnline;
     private String employeeName;
     private String email;
-
     private String employeeCode;
     private String employeeAddress;
     private String employeePhone;
-
     private String employeeGender;
 
     @Lob
@@ -48,7 +46,7 @@ public class AppUser {
     private Date otpRequestedTime;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "appUser",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "appUser", fetch = FetchType.EAGER)
     private Set<UserRole> userRoleSet;
 
     public boolean isOTPRequired() {

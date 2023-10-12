@@ -16,6 +16,8 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCart;
+    @JoinColumn(name = "quantity_product_order")
+
     private Integer quantityProductOrder;
 
 

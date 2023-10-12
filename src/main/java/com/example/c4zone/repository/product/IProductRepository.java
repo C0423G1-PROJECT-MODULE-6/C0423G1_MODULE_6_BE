@@ -11,8 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
     /**
@@ -78,6 +76,13 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "id_series = :#{#product.series.idSeries}, id_type = :#{#product.type.idType} " +
             "WHERE id_product = :#{#product.idProduct}", nativeQuery = true)
     void updateProduct(@Param("product") Product product);
+    /**
+     * method findByProduct
+     * Create ThoiND
+     * Date 12-10-2023
+     * param Long id
+     * return IProductDtoOrder
+     */
     @Query(value = "select id_product as idProductOrder, name_product as nameProductOrder, " +
             "price_product as priceProductOrder " +
             "from product " +
@@ -87,26 +92,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
 
     /**
      * author :QuanND
-     * work day : 12/10/2023
-     * method :
-     *         getAllByName()
-     *         getAllByPrice()
-     *         getAllByPriceMin()
-     *         getAllByPriceMax()
-     *         getAllByType()
-     *         getAllByQuantity()
-     *         getAllByQuantityMin()
-     *         getAllByQuantityMax()
-     *         findProductByIdWarehouse()
-     *         removeProduct()
-     */
-
-
-    /**
      *
-     * @param pageable
-     * @param name
-     * @return page IProductDto
+     * @param pageable :page control size and number page
+     * @param name     : of input search
+     * @return
      */
     @Query(value = "SELECT " +
             "    p.id_product AS id," +
@@ -137,6 +126,13 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    AND p.name_product like :name ", nativeQuery = true)
     Page<IProductDto> getAllByName(Pageable pageable, @Param("name") String name);
 
+    /**
+     * author :QuanND
+     *
+     * @param pageable :page control size and number page
+     * @param type     :value :id_type
+     * @return
+     */
     @Query(value = "SELECT " +
             "    p.id_product AS id," +
             "    p.battery_product AS battery," +
@@ -166,6 +162,14 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    AND p.id_type = :type ", nativeQuery = true)
     Page<IProductDto> getAllByType(Pageable pageable, @Param("type") Long type);
 
+    /**
+     * author :QuanND
+     *
+     * @param pageable :page control size and number page
+     * @param min      :price of product min :min
+     * @param max      :price of product max:max
+     * @return a page did control and satisfy the search and sorting conditions
+     */
     @Query(value = "SELECT " +
             "    p.id_product AS id," +
             "    p.battery_product AS battery," +
@@ -195,6 +199,13 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    AND p.price_product between :min and :max", nativeQuery = true)
     Page<IProductDto> getAllByPrice(Pageable pageable, @Param("min") Double min, @Param("max") Double max);
 
+    /**
+     * author :QuanND
+     *
+     * @param pageable :page control size and number page
+     * @param min      : price of product min :min
+     * @return a page did control and satisfy the search and sorting conditions
+     */
     @Query(value = "SELECT " +
             "    p.id_product AS id," +
             "    p.battery_product AS battery," +
@@ -224,6 +235,13 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    AND p.price_product >= :min", nativeQuery = true)
     Page<IProductDto> getAllByPriceMin(Pageable pageable, @Param("min") Double min);
 
+    /**
+     * author :QuanND
+     *
+     * @param pageable :page control size and number page
+     * @param max max of price product
+     * @return a page did control and satisfy the search and sorting conditions
+     */
     @Query(value = "SELECT " +
             "    p.id_product AS id," +
             "    p.battery_product AS battery," +
@@ -253,6 +271,12 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    AND p.price_product <= :max", nativeQuery = true)
     Page<IProductDto> getAllByPriceMax(Pageable pageable, @Param("max") Double max);
 
+    /**
+     * author :QuanND
+     *
+     * @param id
+     * @return
+     */
     @Query(value = "   SELECT " +
             "    p.id_product AS id," +
             "    p.name_product AS name," +
@@ -260,8 +284,16 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             " FROM " +
             "    c4_zone.product p" +
             " WHERE " +
-            "    p.id_product =:id",nativeQuery = true)
+            "    p.id_product =:id", nativeQuery = true)
     IProductDto findProductByIdWarehouse(Long id);
+
+    /**
+     * author :QuanND
+     *
+     * @param pageable :page control size and number page
+     * @param max max of quantity product
+     * @return a page did control and satisfy the search and sorting conditions
+     */
     @Query(value = "SELECT " +
             "    p.id_product AS id," +
             "    p.battery_product AS battery," +
@@ -289,7 +321,16 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             " WHERE " +
             "    p.status_business = TRUE  " +
             "    AND p.quantity_product <= :max", nativeQuery = true)
-    Page<IProductDto> getAllByQuantityMax(Pageable pageable,@Param("max") int max);
+    Page<IProductDto> getAllByQuantityMax(Pageable pageable, @Param("max") int max);
+
+    /**
+     * author :QuanND
+     *
+     * @param pageable :page control size and number page
+     * @param min      : quantity of product min :min
+     * @param max max of quantity product
+     * @return a page did control and satisfy the search and sorting conditions
+     */
     @Query(value = "SELECT " +
             "    p.id_product AS id," +
             "    p.battery_product AS battery," +
@@ -317,7 +358,15 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             " WHERE " +
             "    p.status_business = TRUE  " +
             "    AND p.quantity_product <= :max and p.quantity_product>=:min", nativeQuery = true)
-    Page<IProductDto> getAllByQuantity(Pageable pageable,@Param("min") int min,@Param("max") int max);
+    Page<IProductDto> getAllByQuantity(Pageable pageable, @Param("min") int min, @Param("max") int max);
+
+    /**
+     * author :QuanND
+     *
+     * @param pageable :page control size and number page
+     * @param min      : quantity of product min :min
+     * @return :a page did control and satisfy the search and sorting conditions
+     */
     @Query(value = "SELECT " +
             "    p.id_product AS id," +
             "    p.battery_product AS battery," +
@@ -345,8 +394,16 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             " WHERE " +
             "    p.status_business = TRUE  " +
             "    AND p.price_product >= :min", nativeQuery = true)
-    Page<IProductDto> getAllByQuantityMin(Pageable pageable,@Param("min") int min);
-    @Query(value = "UPDATE product ",nativeQuery = true)
+    Page<IProductDto> getAllByQuantityMin(Pageable pageable, @Param("min") int min);
 
-    void removeProduct();
+    /**
+     * author:QuanND
+     *
+     * @param id :id of product remove
+     */
+    @Query(value = "UPDATE product p " +
+            " SET p.status_business= false " +
+            " where p.id_product = :id " , nativeQuery = true)
+
+    void removeProduct(@Param("id") Long id);
 }

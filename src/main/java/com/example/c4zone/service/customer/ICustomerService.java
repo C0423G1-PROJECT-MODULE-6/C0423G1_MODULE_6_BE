@@ -12,6 +12,14 @@ public interface ICustomerService {
     Page<Customer> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, Boolean valueSearchGender);
     Optional<Customer> findById(Long id);
     Page<IShoppingHistory> findShoppingHistory(Pageable pageable, String valueSearchName, Long id);
+
+    /**
+     * method findByCustomer
+     * Create ThoiND
+     * Date 12-10-2023
+     * param Long id
+     * return HttpStatus
+     */
     ICustomerDtoOrder findCustomerByIdOrder(Long id);
 
 
