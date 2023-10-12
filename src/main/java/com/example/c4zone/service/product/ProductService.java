@@ -3,6 +3,7 @@ package com.example.c4zone.service.product;
 
 import com.example.c4zone.dto.order.IProductDtoOrder;
 import com.example.c4zone.dto.product.IProductDto;
+import com.example.c4zone.dto.warehouse.IProductDtoWarehouse;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.repository.product.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class ProductService implements IProductService{
     @Override
     public IProductDtoOrder findProductByIdOrder(Long id) {
         return productRepository.findProductByIdOrder(id);
+    }
+
+    @Override
+    public IProductDto findProductByIdWarehouse(Long id) {
+        return productRepository.findProductByIdWarehouse(id);
     }
 
     @Override
