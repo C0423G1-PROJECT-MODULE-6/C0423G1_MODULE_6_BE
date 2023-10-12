@@ -18,6 +18,8 @@ public class OrderDetail {
     private Integer quantityOrder;
     private Double priceOrder;
 
+
+
     @ManyToOne
     @JoinColumn(name = "id_product", referencedColumnName = "idProduct")
     private Product product;

@@ -1,5 +1,6 @@
 package com.example.c4zone.repository.customer;
 
+import com.example.c4zone.dto.order.ICustomerDtoOrder;
 import com.example.c4zone.model.customer.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +19,11 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     Page<Customer> findAllCustomerByGender(Pageable pageable, @Param("name") String valueSearchName, @Param("gender") Boolean valueSearchGender);
     @Query(value = "select * from customer where name_customer like :name and TIMESTAMPDIFF(YEAR, birth_date_customer, CURDATE()) >= 0 ", nativeQuery = true)
     Page<Customer> findAllCustomerByName(Pageable pageable, @Param("name") String valueSearchName);
+    @Query(value = "select id_customer as idCustomerOrder, name_customer as customerNameOrder" +
+            ",phone_number_customer as customerPhoneorder " +
+            ",address_customer as addressCustomerOrder,birth_date_customer as birthDayCustomerOrder" +
+            ",email_customer as emailCustomerOrder " +
+            "from customer " +
+            "where id_customer = :id",nativeQuery = true)
+    ICustomerDtoOrder findCustomerByIdOrder(Long id);
 }
