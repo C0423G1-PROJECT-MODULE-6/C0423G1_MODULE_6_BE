@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -57,14 +57,13 @@ public class User {
     @Lob
     private String employeeImage;
     private String employeeIdCard;
-    private String employeeBirthday;
-    private String employeeStartDate;
+    private Date employeeBirthday;
+    private Date employeeStartDate;
 
     @NaturalId
     private String email;
 
-    @Column(columnDefinition = "bit(1) default true")
-    private boolean employeeGender;
+    private String employeeGender;
 
     @Column(columnDefinition = "bit(1) default true")
     private boolean flagDelete = true;

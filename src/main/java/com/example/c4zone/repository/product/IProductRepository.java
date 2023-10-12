@@ -26,10 +26,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO product(name_product,battery_product,description_product,camera_product" +
-            "price_product,quantity_product,screen_product,selfie_product,weight_product" +
+    @Query(value = "INSERT INTO product(name_product,battery_product,description_product,camera_product," +
+            "price_product,quantity_product,screen_product,selfie_product,weight_product," +
             "id_capacity,id_color,id_cpu,id_ram,id_series,id_type, status_business)" +
-            "VALUES (:#{#product.nameProduct}, :#{#product.batteryProduct}, :#{#product.descriptionProduct}," +
+            "VALUES ( :#{#product.nameProduct}, :#{#product.batteryProduct}, :#{#product.descriptionProduct}," +
             " :#{#product.cameraProduct}, :#{#product.priceProduct}, :#{#product.quantityProduct}, " +
             ":#{#product.screenProduct}, :#{#product.selfieProduct}, :#{#product.weightProduct}, " +
             ":#{#product.capacity.idCapacity}, :#{#product.color.idColor}, :#{#product.cpu.idCpu}, " +
