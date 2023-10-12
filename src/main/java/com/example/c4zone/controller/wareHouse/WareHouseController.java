@@ -1,7 +1,10 @@
 package com.example.c4zone.controller.wareHouse;
 
+import com.example.c4zone.dto.order.IProductDtoOrder;
+import com.example.c4zone.dto.warehouse.IProductDtoWarehouse;
 import com.example.c4zone.model.wareHouse.IWarehouseProjection;
 import com.example.c4zone.model.wareHouse.WareHouse;
+import com.example.c4zone.service.product.IProductService;
 import com.example.c4zone.service.wareHouse.IWareHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,10 +16,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/admin/warehouse/list")
+@RequestMapping("api/admin/warehouse")
 public class WareHouseController {
     @Autowired
     private IWareHouseService wareHouseService;
+    @Autowired
+    private IProductService productService;
 
     @GetMapping("")
     public ResponseEntity<Page<IWarehouseProjection>> findAll(@RequestParam(defaultValue = "0") int page) {
@@ -28,4 +33,11 @@ public class WareHouseController {
             return new ResponseEntity<>(wareHousePage, HttpStatus.OK);
         }
     }
+//    @GetMapping("/product/{id}")
+//    public ResponseEntity<IProductDtoWarehouse> chooseProduct(@PathVariable Long id){
+//
+//        IProductDtoWarehouse productDtoWarehouse = productService.findProductByIdWarehouse(id);
+//        return new ResponseEntity<>(productDtoWarehouse,HttpStatus.OK);
+//    }
+
 }
