@@ -1,5 +1,6 @@
 package com.example.c4zone.repository.supplier;
 
+import com.example.c4zone.dto.warehouse.ISupplierDtoWarehouse;
 import com.example.c4zone.model.supplier.Supplier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,5 +29,8 @@ public interface ISupplierRepository extends JpaRepository<Supplier,Long> {
     Page<Supplier> getAllSupplierNoCondition(Pageable pageable);
     @Query(value = "SELECT * FROM Supplier s WHERE s.id_supplier = :id",nativeQuery = true)
     Supplier findSupplierById(@Param("id") Long id);
-
+    @Query(value = "select id_supplier as idSupplier, name_supplier as nameSupplier, " +
+            "from supplier " +
+            "where id_supplier = :id",nativeQuery = true)
+    ISupplierDtoWarehouse findSupplierByIdWarehouse(Long id);
 }
