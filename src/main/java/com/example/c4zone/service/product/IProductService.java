@@ -15,6 +15,13 @@ public interface IProductService {
     void updateProduct(Product product);
     void createProduct(Product product);
     Long getLastInsertedId();
+    /**
+     * method findByProduct
+     * Create ThoiND
+     * Date 12-10-2023
+     * param Long id
+     * return IProductDtoOrder
+     */
     IProductDtoOrder findProductByIdOrder(Long id);
     IProductDto findProductByIdWarehouse(Long id);
     /**

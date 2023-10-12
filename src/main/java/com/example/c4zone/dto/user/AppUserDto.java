@@ -1,7 +1,6 @@
 package com.example.c4zone.dto.user;
 
 
-
 import com.example.c4zone.common.user.ValidateAppUser;
 import com.example.c4zone.model.user.UserRole;
 import lombok.AllArgsConstructor;
@@ -94,6 +93,7 @@ public class AppUserDto implements Validator {
     public void setUserRoleSet(Set<UserRole> userRoleSet) {
         this.userRoleSet = userRoleSet;
     }
+
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -101,6 +101,7 @@ public class AppUserDto implements Validator {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+
     @Override
     public boolean supports(Class<?> clazz) {
         return false;
@@ -109,7 +110,7 @@ public class AppUserDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         AppUserDto appUserDto = (AppUserDto) target;
-        ValidateAppUser.checkValidateAppUserName(appUserDto.getUserName(),errors);
-        ValidateAppUser.checkValidateAppUserPassword(appUserDto.getPassword(),errors);
+        ValidateAppUser.checkValidateAppUserName(appUserDto.getUserName(), errors);
+        ValidateAppUser.checkValidateAppUserPassword(appUserDto.getPassword(), errors);
     }
 }
