@@ -36,12 +36,13 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
      * method: ImportProduct
      * author: PhapTM
      * Create: 12-10-2023
+     *
      * @param wareHouse
      */
 
     @Transactional
     @Modifying
     @Query(value = "insert into ware_house(product_id,supplier_id, quantity, input_date) " +
-            "values(:#{#wareHouse.product?.product_id},:#{wareHouse.supplier?.supplier_id}, :#{#wareHouse.quantity}, date(now()))", nativeQuery = true)
+            "values(:#{#wareHouse.product?.product_id},:#{#wareHouse.supplier?.supplier_id}, :#{#wareHouse.quantity}, date(now()))", nativeQuery = true)
     void ImportProduct(WareHouse wareHouse);
 }
