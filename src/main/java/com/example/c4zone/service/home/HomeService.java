@@ -13,7 +13,7 @@ public class HomeService implements IHomeService {
     private IHomeRepository homeRepository;
 
     @Override
-    public List<Product> getProductsByName(String name) {
-        return homeRepository.getProductsByName(name) ;
+    public List<Product> getProductsByName(String name,String sortName,String sortType) {
+        return homeRepository.getProductsByName(name,sortName ,sortType) ;
     }
 }

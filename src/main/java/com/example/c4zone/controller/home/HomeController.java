@@ -18,10 +18,13 @@ import java.util.List;
 public class HomeController {
     @Autowired
     private IHomeService homeService;
-    @GetMapping("/list/{name}")
-    public ResponseEntity<List<Product>> getListByName(@PathVariable String name){
-        List<Product> getListByName =homeService.getProductsByName(name+"%");
+
+    @GetMapping("/list/{name}/{sortType}")
+    public ResponseEntity<List<Product>> getListByName(@PathVariable String name, @PathVariable String sortName, @PathVariable String sortType){
+        List<Product> getListByName =homeService.getProductsByName(name+"%", sortName,sortType);
         return new ResponseEntity<>(getListByName, HttpStatus.OK);
     }
+
+
 
 }
