@@ -51,7 +51,13 @@ public class CustomerService implements ICustomerService {
 
 
     }
-
+    /**
+     * method findByCustomer
+     * Create ThoiND
+     * Date 12-10-2023
+     * param Long id
+     * return HttpStatus
+     */
     @Override
     public ICustomerDtoOrder findCustomerByIdOrder(Long id) {
         return customerRepository.findCustomerByIdOrder(id);
