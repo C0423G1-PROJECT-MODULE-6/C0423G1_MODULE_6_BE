@@ -1,5 +1,5 @@
 package com.example.c4zone.service.user.impl;
-import com.example.c4zone.model.user.User;
+import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.repository.user.IEmployeeRepository;
 import com.example.c4zone.service.user.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +14,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Autowired
     private IEmployeeRepository employeeRepository;
     @Override
-    public List<User> findAllUser() {
+    public List<AppUser> findAllUser() {
         return employeeRepository.findAll();
     }
 
     @Override
-    public Page<User> findAllUserBy(Pageable pageable, String searchJob, String searchName, String searchPhone) {
+    public Page<AppUser> findAllUserBy(Pageable pageable, String searchJob, String searchName, String searchPhone) {
         return employeeRepository.findAllBy(pageable,searchJob,searchName,searchPhone);
     }
 
@@ -29,17 +29,17 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public User getUserById(Long id) {
+    public AppUser getUserById(Long id) {
         return employeeRepository.findUserById(id);
     }
 
     @Override
-    public void createUser(User user) {
+    public void createUser(AppUser user) {
         employeeRepository.save(user);
     }
 
     @Override
-    public void editUser(User user) {
+    public void editUser(AppUser user) {
         employeeRepository.save(user);
     }
 }
