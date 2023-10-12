@@ -17,5 +17,5 @@ public interface ICustomerRepository extends JpaRepository<Customer,Long> {
             ",email_customer as emailCustomerOrder " +
             "from customer " +
             "where id_customer = :id",nativeQuery = true)
-    ICustomerDtoOrder findCustomerById(@Param("id") Long id);
+    ICustomerDtoOrder findCustomerByIdOrder(Long id);
 }

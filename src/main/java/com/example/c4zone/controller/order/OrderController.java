@@ -24,12 +24,12 @@ public class OrderController {
 
     @GetMapping("/customer/{id}")
     public ResponseEntity<ICustomerDtoOrder> findCustomer(@PathVariable Long id){
-        ICustomerDtoOrder customerDtoOrder = customerService.findCustomerById(id);
+        ICustomerDtoOrder customerDtoOrder = customerService.findCustomerByIdOrder(id);
         return new ResponseEntity<>(customerDtoOrder,HttpStatus.OK);
     }
     @GetMapping("/product/{id}")
     public ResponseEntity<IProductDtoOrder> findProduct(@PathVariable Long id){
-        IProductDtoOrder productDtoOrder = productService.findProductById(id);
+        IProductDtoOrder productDtoOrder = productService.findProductByIdOrder(id);
         return new ResponseEntity<>(productDtoOrder,HttpStatus.OK);
     }
 

@@ -10,8 +10,9 @@ public class CustomerService implements ICustomerService{
     @Autowired
    private ICustomerRepository customerRepository;
 
+
     @Override
-    public ICustomerDtoOrder findCustomerById(Long id) {
-        return customerRepository.findCustomerById(id);
+    public ICustomerDtoOrder findCustomerByIdOrder(Long id) {
+        return customerRepository.findCustomerByIdOrder(id);
     }
 }
