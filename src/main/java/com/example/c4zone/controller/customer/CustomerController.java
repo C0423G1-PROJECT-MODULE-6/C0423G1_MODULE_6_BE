@@ -1,6 +1,7 @@
 package com.example.c4zone.controller.customer;
 
 import com.example.c4zone.dto.customer.CustomerDto;
+import com.example.c4zone.dto.customer.IShoppingHistory;
 import com.example.c4zone.dto.product.ProductDto;
 import com.example.c4zone.model.customer.Customer;
 import com.example.c4zone.service.customer.ICustomerService;
@@ -71,7 +72,7 @@ public class CustomerController {
      * Goal: find customer by id
      * * return HttpStatus
      */
-    @GetMapping("/{id}")
+    @GetMapping("list/{id}")
     public ResponseEntity<Customer> findById(@PathVariable Long id) {
         Customer customer = customerService.findById(id).orElse(null);
         if (customer == null) {
@@ -80,7 +81,28 @@ public class CustomerController {
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
+    /**
+     * Author: NguyenNH
+     * Goal: show list shopping history
+     * * return HttpStatus
+     */
+    @GetMapping("/history/{id}")
+    public ResponseEntity<Page<IShoppingHistory>> shoppingHistory(@RequestParam(name = "_limit") int limit,
+                                                                  @RequestParam(name = "_page") int page,
+                                                                  @RequestParam(name = "name_like") Optional<String> searchName,
+                                                                  @PathVariable Long id) {
+        String valueSearchName = "";
+        if (searchName.isPresent()) {
+            valueSearchName = searchName.get();
+        }
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<IShoppingHistory> shoppingHistoryPage = customerService.findShoppingHistory(pageable, valueSearchName, id);
+        if (shoppingHistoryPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
 
+        return new ResponseEntity<>(shoppingHistoryPage, HttpStatus.OK);
+    }
 
     /**
      * Author: TinDT

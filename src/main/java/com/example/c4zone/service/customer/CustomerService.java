@@ -1,5 +1,6 @@
 package com.example.c4zone.service.customer;
 
+import com.example.c4zone.dto.customer.IShoppingHistory;
 import com.example.c4zone.dto.order.ICustomerDtoOrder;
 import com.example.c4zone.model.customer.Customer;
 import com.example.c4zone.repository.customer.ICustomerRepository;
@@ -62,5 +63,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public Optional<Customer> findById(Long id) {
         return customerRepository.findCustomerById(id);
+    }
+
+    @Override
+    public Page<IShoppingHistory> findShoppingHistory(Pageable pageable, String valueSearchName, Long id) {
+        return customerRepository.findShoppingHistory(pageable, "%" + valueSearchName + "%", id);
     }
 }
