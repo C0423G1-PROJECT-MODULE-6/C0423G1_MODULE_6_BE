@@ -27,8 +27,8 @@ public class EmployeeController {
                                                         @RequestParam(name = "searchJob", defaultValue = "",required = false)String searchJob,
                                                         @RequestParam(name = "searchName",defaultValue = "",required = false)String searchName,
                                                         @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
-        Pageable pageable = PageRequest.of(page,5, Sort.by(Sort.Order.desc("id")));
-        Page<AppUser> userPage = employeeService.findAllUserBy(pageable,searchJob,searchName,searchPhone);
+        Pageable pageable = PageRequest.of(page,5);
+        Page<AppUser> userPage = employeeService.findAllUserBy(pageable,"%"+searchJob+"%","%"+searchName+"%","%"+searchPhone+"%");
         if (userPage.getTotalElements()==0 ){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -36,6 +36,7 @@ public class EmployeeController {
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<AppUser> deleteUserById(@PathVariable Long id){
+        System.out.println(id);
         AppUser user = employeeService.getUserById(id);
         if (user==null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
