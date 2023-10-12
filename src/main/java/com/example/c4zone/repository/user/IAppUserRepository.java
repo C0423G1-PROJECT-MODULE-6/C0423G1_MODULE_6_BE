@@ -25,7 +25,7 @@ public interface IAppUserRepository extends JpaRepository<AppUser, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO demo.app_user (user_name, password,flag_online, flag_deleted)\n" +
+    @Query(value = "INSERT INTO app_user (user_name, password,flag_online, flag_deleted)\n" +
             "VALUES (:#{#appUser.userName},:#{#appUser.password}, 0, 0)", nativeQuery = true)
     Integer addNewAppUser(AppUser appUser);
 
@@ -57,6 +57,30 @@ public interface IAppUserRepository extends JpaRepository<AppUser, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "update app_user set one_time_password = :#{#appUser.oneTimePassword}, otp_requested_time = :#{#appUser.otpRequestedTime} where id = :#{#appUser.id} ",nativeQuery = true)
+    @Query(value = "update app_user " +
+            "set " +
+            "one_time_password = :#{#appUser.oneTimePassword}, " +
+            "otp_requested_time = :#{#appUser.otpRequestedTime} " +
+            "where id = :#{#appUser.id} ",nativeQuery = true)
     void updateOtp(AppUser appUser);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update app_user " +
+            "set " +
+            "employee_address = :#{#appUser.employeeAddress}, " +
+            "employee_birthday = :#{#appUser.employeeBirthday}, " +
+            "employee_name = :#{#appUser.employeeName}, " +
+            "employee_phone = :#{#appUser.employeePhone}, " +
+            "email = :#{#appUser.email} " +
+            "where id = :#{#appUser.id} ",nativeQuery = true)
+    void updateInfoUser(AppUser appUser);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update app_user " +
+            "set " +
+            "password = :#{#appUser.password} " +
+            "where id = :#{#appUser.id} ",nativeQuery = true)
+    void updatePass(AppUser appUser);
 }

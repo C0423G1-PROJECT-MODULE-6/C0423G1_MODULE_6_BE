@@ -1,7 +1,6 @@
 package com.example.c4zone.service.user;
-
 import com.example.c4zone.model.user.AppUser;
-
+import com.example.c4zone.model.user.AppUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,6 +11,7 @@ public interface IEmployeeService {
     Page<AppUser> findAllUserBy(Pageable pageable, String searchJob, String searchName, String searchPhone);
     void deleteUserById(Long id);
     AppUser getUserById(Long id);
+
 
     void editUser(AppUser user);
     /**
@@ -32,4 +32,11 @@ public interface IEmployeeService {
      * @return void
      */
     void createEmployee(AppUser user);
+    /**
+     * Author: CaoNV
+     * Date:12/10/2023
+     * update employee
+     * @param employee
+     */
+    void updateEmployee(AppUser employee);
 }
