@@ -4,9 +4,11 @@ package com.example.c4zone.controller.user;
 import com.example.c4zone.common.user.ValidateAppUser;
 import com.example.c4zone.config.JwtTokenUtil;
 import com.example.c4zone.dto.user.AppUserDto;
+import com.example.c4zone.dto.user.UserInfoDto;
 import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.model.user.JwtResponse;
 import com.example.c4zone.service.user.IAppUserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +52,22 @@ public class AppUserController {
         if (appUser == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        return new ResponseEntity<>(appUser, HttpStatus.OK);
+    }
+
+    @PutMapping ("/information/edit")
+    public ResponseEntity<Object> editInformation(@Valid @RequestBody UserInfoDto userInfoDto,
+                                                  BindingResult bindingResult) {
+        AppUser appUser = appUserService.findAppUserById(userInfoDto.getId());
+//        new AppUserDto().validate(userInfoDto, bindingResult);
+//        if (bindingResult.hasErrors()) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+        if (appUser == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        BeanUtils.copyProperties(userInfoDto, appUser);
+        appUserService.updateInfoUser(appUser);
         return new ResponseEntity<>(appUser, HttpStatus.OK);
     }
 
@@ -115,31 +133,42 @@ public class AppUserController {
     }
 
 
-    @PostMapping("/register-by-manager")
-    public ResponseEntity<Object> registerByManager(@RequestParam String userName) {
+    @PutMapping("/register")
+    public ResponseEntity<Object> registerByManager(@RequestBody AppUserDto appUserDto) throws MessagingException, UnsupportedEncodingException {
 
-        String errMsg = ValidateAppUser.checkValidateOnlyAppUserName(userName);
-        if (!errMsg.equals("")) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    appUserDto.getUserName(), appUserDto.getPassword()));
+        } catch (DisabledException e) {
             return ResponseEntity
-                    .status(HttpStatus.NOT_ACCEPTABLE)
-                    .body(errMsg);
-        }
-        boolean userNameExisted = appUserService.existsByUsername(userName);
-        if (userNameExisted) {
+                    .status(HttpStatus.FORBIDDEN)
+                    .body("Tài khoản của bạn đã bị vô hiệu hoá");
+        } catch (BadCredentialsException e) {
             return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body("Tài khoản này đã tồn tại");
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body("Đổi mật khẩu không thành công");
         }
-        AppUser appUser = new AppUser();
-        appUser.setUserName(userName);
-        appUser.setPassword(passwordEncoder.encode("123"));
-        boolean checkAddNewAppUser = appUserService.createNewAppUser(appUser,"ROLE_EMPLOYEE");
-        if (!checkAddNewAppUser) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Đăng ký thất bại, vui lòng chờ trong giây lát");
+
+        AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
+
+        appUserService.generateOneTimePassword(appUser, passwordEncoder);
+
+        return new ResponseEntity<>(appUser, HttpStatus.OK);
+    }
+
+    @PostMapping("/confirmRegister")
+    public ResponseEntity<?> confirmRegister(@RequestBody AppUserDto appUserDto) {
+        AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
+        if (appUser != null) {
+            if (passwordEncoder.matches(appUserDto.getOtp(), appUser.getOneTimePassword()) && appUser.isOTPRequired()) {
+                appUser.setPassword(passwordEncoder.encode(appUserDto.getPassword()));
+                appUserService.updatePass(appUser);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
         }
-        return ResponseEntity.ok("Đăng ký thành công");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
