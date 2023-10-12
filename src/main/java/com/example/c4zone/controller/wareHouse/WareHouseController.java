@@ -1,14 +1,8 @@
 package com.example.c4zone.controller.wareHouse;
 
-import com.example.c4zone.dto.customer.CustomerDto;
 import com.example.c4zone.dto.product.IProductDto;
-import com.example.c4zone.dto.product.ProductDto;
-import com.example.c4zone.dto.warehouse.IProductDtoWarehouse;
 import com.example.c4zone.dto.warehouse.ISupplierDtoWarehouse;
 import com.example.c4zone.dto.warehouse.WarehouseDto;
-import com.example.c4zone.model.customer.Customer;
-import com.example.c4zone.model.product.Image;
-import com.example.c4zone.model.product.Product;
 import com.example.c4zone.model.wareHouse.IWarehouseProjection;
 import com.example.c4zone.model.wareHouse.WareHouse;
 import com.example.c4zone.service.product.IProductService;
@@ -39,10 +33,13 @@ public class WareHouseController {
     private IProductService productService;
     @Autowired
     private ISupplierService supplierService;
+
     /**
+     * Method: findAll
      * Author: PhapTM
-     * Goal: getList WArehouse
-     * * return List warehouse
+     * Create: 12-10-2023
+     * @param page control page: size and number
+     * @return page Warehouse
      */
 
     @GetMapping("")
@@ -56,23 +53,40 @@ public class WareHouseController {
         }
     }
 
+    /**
+     * Method: chooseProduct
+     * Author: PhapTM
+     * Create: 12-10-2023
+     * @param id find id by product
+     * @return object of product
+     */
     @GetMapping("/product/{id}")
     public ResponseEntity<IProductDto> chooseProduct(@PathVariable Long id) {
-
-//        IProductDtoWarehouse productDtoWarehouse = productService.findProductByIdWarehouse(id);
         IProductDto productDto = productService.findProductByIdWarehouse(id);
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
+    /**
+     * Method: chooseProduct
+     * Author: PhapTM
+     * Create: 12-10-2023
+     * @param id find by id by supplier
+     * @return object of supplier
+     */
     @GetMapping("/supplier/{id}")
     public ResponseEntity<ISupplierDtoWarehouse> getSupplier(@PathVariable Long id) {
         ISupplierDtoWarehouse supplierDtoWarehouse = supplierService.findSupplierByIdWarehouse(id);
         return new ResponseEntity<>(supplierDtoWarehouse, HttpStatus.OK);
     }
+
     /**
+     * Method: chooseProduct
      * Author: PhapTM
-     * Goal: importProduct
-     * * return HttpStatus
+     * Create: 12-10-2023
+     * @param warehouseDto create object by warehouseDto
+     * @param bindingResult returns error results
+     * @return if true, return of HttpStatus.OK
+     *         else, return of HttpStatus.BAD_REQUEST
      */
 
     @PostMapping("/create")

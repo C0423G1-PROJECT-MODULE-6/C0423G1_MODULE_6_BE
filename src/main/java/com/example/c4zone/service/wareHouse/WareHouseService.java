@@ -12,11 +12,25 @@ import org.springframework.stereotype.Service;
 public class WareHouseService implements IWareHouseService{
     @Autowired
     private IWareHouseRepository wareHouseRepository;
+
+    /**
+     * Method: findAll
+     * Author: PhapTM
+     * Create: 12-10-2023
+     * @param pageable control page: size and number
+     * @return page Warehouse
+     */
     @Override
     public Page<IWarehouseProjection> findAll(Pageable pageable) {
         return wareHouseRepository.findAllWareHouse(pageable);
     }
 
+    /**
+     * Method: import product
+     * Author: PhapTM
+     * Create: 12-10-2023
+     * @param wareHouse use add object
+     */
     @Override
     public void ImportProduct(WareHouse wareHouse) {
         wareHouseRepository.ImportProduct(wareHouse);
