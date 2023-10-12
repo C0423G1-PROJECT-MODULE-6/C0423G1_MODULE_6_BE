@@ -140,4 +140,14 @@ public class AppUserService implements IAppUserService {
     public AppUser findAppUserById(Long id) {
         return appUserRepository.findAppUserById(id);
     }
+
+    @Override
+    public void updateInfoUser(AppUser appUser) {
+        appUserRepository.updateInfoUser(appUser);
+    }
+
+    @Override
+    public void updatePass(AppUser appUser) {
+        appUserRepository.updatePass(appUser);
+    }
 }
