@@ -1,11 +1,8 @@
 package com.example.c4zone.controller.order;
 
 import com.example.c4zone.dto.order.*;
-import com.example.c4zone.model.order.Cart;
-import com.example.c4zone.model.order.OrderBill;
-import com.example.c4zone.model.order.OrderDetail;
+import com.example.c4zone.service.cart.ICartService;
 import com.example.c4zone.service.customer.ICustomerService;
-import com.example.c4zone.service.order.ICartService;
 import com.example.c4zone.service.order.IOrderDetailService;
 import com.example.c4zone.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 
@@ -62,9 +57,9 @@ public class OrderController {
      * param Long idUser
      * return HttpStatus
      */
-    @GetMapping("/cart/{idUser}")
-    public ResponseEntity<List<ICartDto>> getAllCart(@PathVariable Long idUser){
-        List<ICartDto> cart = cartService.getAllCart(idUser);
+    @GetMapping("/cart")
+    public ResponseEntity<List<ICartDto>> getAllCart(){
+        List<ICartDto> cart = cartService.getAllCart(1L);
         return new ResponseEntity<>(cart,HttpStatus.OK);
     }
 //    @PostMapping("/paymentOrder")
