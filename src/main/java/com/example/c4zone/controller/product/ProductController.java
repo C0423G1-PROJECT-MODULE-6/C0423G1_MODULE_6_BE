@@ -38,6 +38,12 @@ public class ProductController {
     @Autowired
     private ITypeService typeService;
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return set image by firebase in list
+     */
     @GetMapping("/create")
     public ResponseEntity<ProductDto> getProductForCreate() {
         ProductDto productDto = new ProductDto();
@@ -49,6 +55,13 @@ public class ProductController {
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param id The id parameter is used to find by id
+     * @return id to find
+     */
     @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<ProductDto> findProductById(@PathVariable("id") Long id) {
@@ -63,6 +76,15 @@ public class ProductController {
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param productDto to save the object dto
+     * @param bindingResult returns errors on save
+     * @return if true, return it HttpStatus.OK
+     *          else false, return it HttpStatus.BAD_REQUEST
+     */
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
@@ -90,6 +112,15 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param productDto to update the object dto
+     * @param bindingResult returns errors on update
+     * @return if true, return it HttpStatus.OK
+     *          else false, return it HttpStatus.BAD_REQUEST
+     */
     @PatchMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Object> updateProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult){
