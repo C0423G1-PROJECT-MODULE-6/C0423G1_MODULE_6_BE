@@ -16,7 +16,7 @@ public class JwtResponseUserDetails implements UserDetails {
     public JwtResponseUserDetails() {
     }
 
-    public JwtResponseUserDetails( String username, String password, Boolean online, Collection<? extends GrantedAuthority> authorities) {
+    public JwtResponseUserDetails(String username, String password, Boolean online, Collection<? extends GrantedAuthority> authorities) {
 
         this.username = username;
         this.password = password;

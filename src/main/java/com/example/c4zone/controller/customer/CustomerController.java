@@ -1,7 +1,6 @@
 package com.example.c4zone.controller.customer;
 
 import com.example.c4zone.dto.customer.CustomerDto;
-import com.example.c4zone.dto.product.ProductDto;
 import com.example.c4zone.model.customer.Customer;
 import com.example.c4zone.service.customer.ICustomerService;
 import org.springframework.beans.BeanUtils;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;

@@ -1,21 +1,14 @@
 package com.example.c4zone.repository.customer;
 import com.example.c4zone.dto.order.ICustomerDtoOrder;
 import com.example.c4zone.model.customer.Customer;
-import com.example.c4zone.model.product.Capacity;
-import com.example.c4zone.dto.order.ICustomerDtoOrder;
-import com.example.c4zone.model.customer.Customer;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     /**
@@ -52,8 +45,11 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "select * from customer where name_customer like :name and TIMESTAMPDIFF(YEAR, birth_date_customer, CURDATE()) >= 0 ", nativeQuery = true)
     Page<Customer> findAllCustomerByName(Pageable pageable, @Param("name") String valueSearchName);
     /**
-     * Author: ThoiND
-     * Goal: findCustomerById at Order
+     * method findByCustomer
+     * Create ThoiND
+     * Date 12-10-2023
+     * param Long id
+     * return HttpStatus
      */
     @Query(value = "select id_customer as idCustomerOrder, name_customer as customerNameOrder" +
             ",phone_number_customer as customerPhoneorder " +
