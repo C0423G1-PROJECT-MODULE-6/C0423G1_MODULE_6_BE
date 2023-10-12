@@ -53,6 +53,13 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "id_series = :#{#product.series.idSeries}, id_type = :#{#product.type.idType} " +
             "WHERE id_product = :#{#product.idProduct}", nativeQuery = true)
     void updateProduct(@Param("product") Product product);
+    /**
+     * method findByProduct
+     * Create ThoiND
+     * Date 12-10-2023
+     * param Long id
+     * return IProductDtoOrder
+     */
     @Query(value = "select id_product as idProductOrder, name_product as nameProductOrder, " +
             "price_product as priceProductOrder " +
             "from product " +

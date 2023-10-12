@@ -14,6 +14,13 @@ public interface IProductService {
     void updateProduct(Product product);
     void createProduct(Product product);
     Long getLastInsertedId();
+    /**
+     * method findByProduct
+     * Create ThoiND
+     * Date 12-10-2023
+     * param Long id
+     * return IProductDtoOrder
+     */
     IProductDtoOrder findProductByIdOrder(Long id);
     Page<IProductDto> getAllByName(Pageable pageable,String name);
     Page<IProductDto> getAllByPrice(Pageable pageable,String price);

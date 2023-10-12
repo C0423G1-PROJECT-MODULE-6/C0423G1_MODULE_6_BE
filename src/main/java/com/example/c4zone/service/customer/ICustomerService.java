@@ -7,6 +7,13 @@ import org.springframework.data.domain.Pageable;
 
 public interface ICustomerService {
     Page<Customer> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, Boolean valueSearchGender);
+    /**
+     * method findByCustomer
+     * Create ThoiND
+     * Date 12-10-2023
+     * param Long id
+     * return HttpStatus
+     */
     ICustomerDtoOrder findCustomerByIdOrder(Long id);
 
 
