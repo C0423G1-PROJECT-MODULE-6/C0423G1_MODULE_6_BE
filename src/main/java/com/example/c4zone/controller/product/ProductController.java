@@ -144,6 +144,16 @@ public class ProductController {
         imageService.updateImageProduct(image, product.getIdProduct());
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    /**
+     * author :QuanND
+     * work day : 12/10/2023
+     * @param choose :choose with search
+     * @param sort : sort with field
+     * @param page : number page
+     * @param value : value of option choose
+     * @return
+     */
     @GetMapping("/list")
     public ResponseEntity<Page<IProductDto>> getAll(
             @RequestParam(value = "choose", required = false, defaultValue = "name") String choose,
@@ -185,8 +195,21 @@ public class ProductController {
         }
         return new ResponseEntity<>(productDtoPage, HttpStatus.OK);
     }
+
+    /**
+     * author :QuanND
+     * work day : 12/10/2023
+     * @param id
+     * @return if Http status
+     */
     @DeleteMapping("/")
     public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id){
+        if (productService.findProductById(id)==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else {
+            productService.removeProduct(id);
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
