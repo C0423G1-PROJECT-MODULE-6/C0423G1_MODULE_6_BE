@@ -49,8 +49,8 @@ public class EmployeeController {
         }
     }
     /**
-     * Author: TanNV
-     * Date: 15/09/2023
+     * Author: CaoNV
+     * Date: 12/10/2023
      * Used to get employee DTO and reset the new code then return an empty employee with the latest code
      *
      * @return Response entity
@@ -64,8 +64,8 @@ public class EmployeeController {
     }
 
     /**
-     * Author: TanNV
-     * Date: 15/09/2023
+     * Author: CaoNV
+     * Date: 12/10/2023
      * Receive data and validate, if there is an error, return BAD_REQUEST,
      * then save the employee to the DB. If saved successfully, return OK, otherwise NO_CONTENT
      *
