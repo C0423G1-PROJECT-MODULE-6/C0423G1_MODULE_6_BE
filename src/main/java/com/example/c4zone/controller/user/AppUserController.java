@@ -173,7 +173,8 @@ public class AppUserController {
      * param AppUserDto appUserDto
      * return ResponseEntity<>();
      */
-    @PostMapping("/register")
+//    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("/register")
     public ResponseEntity<Object> register(@RequestBody AppUserDto appUserDto) throws MessagingException, UnsupportedEncodingException {
 
         try {
