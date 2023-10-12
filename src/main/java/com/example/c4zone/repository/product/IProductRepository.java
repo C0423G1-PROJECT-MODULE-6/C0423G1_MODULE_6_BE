@@ -15,6 +15,13 @@ import java.util.Optional;
 
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param idProduct find by id with product
+     * @return object to find for idProduct
+     */
     @Query(value = "select p.id_product, p.name_product, p.battery_product, p.camera_product, p.price_product," +
             " p.quantity_product, p.description_product, p.screen_product, p.selfie_product, p.weight_product" +
             " from c4_zone.product as p" +
@@ -27,6 +34,12 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             " WHERE p.id_product= :idProduct and p.status_business = true", nativeQuery = true)
     Product findProductById(@Param("idProduct") Long idProduct);
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param product add new object product
+     */
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO product(name_product,battery_product,description_product,camera_product," +
@@ -39,9 +52,21 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             ":#{#product.ram?.idRam}, :#{#product.series?.idSeries}, :#{#product.type?.idType}, true)", nativeQuery = true)
     void createProduct(@Param("product") Product product);
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return Last inserted id after new addition
+     */
     @Query(value = "SELECT LAST_INSERT_ID()", nativeQuery = true)
     Long getLastInsertedId();
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param product update object product
+     */
     @Transactional
     @Modifying
     @Query(value = "UPDATE product set name_product = :#{#product.nameProduct},battery_product = :#{#product.batteryProduct}, " +
@@ -60,7 +85,29 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     IProductDtoOrder findProductByIdOrder(Long id);
 
 
+    /**
+     * author :QuanND
+     * work day : 12/10/2023
+     * method :
+     *         getAllByName()
+     *         getAllByPrice()
+     *         getAllByPriceMin()
+     *         getAllByPriceMax()
+     *         getAllByType()
+     *         getAllByQuantity()
+     *         getAllByQuantityMin()
+     *         getAllByQuantityMax()
+     *         findProductByIdWarehouse()
+     *         removeProduct()
+     */
 
+
+    /**
+     *
+     * @param pageable
+     * @param name
+     * @return page IProductDto
+     */
     @Query(value = "SELECT " +
             "    p.id_product AS id," +
             "    p.battery_product AS battery," +
