@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,9 @@ public class CustomerController {
                                                        @RequestParam(name = "_page") int page,
                                                        @RequestParam(name = "name_like") Optional<String> searchName,
                                                        @RequestParam(name = "age") Optional<String> searchAge,
-                                                       @RequestParam(name = "gender") Optional<Boolean> searchGender) {
+                                                       @RequestParam(name = "gender") Optional<Boolean> searchGender,
+                                                       @RequestParam(name = "sortName") Optional<String> sortName,
+                                                       @RequestParam(name = "sortCount") Optional<String> sortCount) {
         String valueSearchName = "";
         if (searchName.isPresent()) {
             valueSearchName = searchName.get();
@@ -58,7 +61,23 @@ public class CustomerController {
             valueSearchGender = searchGender.get();
         }
 
+        Boolean valueSortName = false;
+        if (sortName.isPresent()){
+            valueSortName = true;
+        }
+
+        Boolean valueSortCount = false;
+        if (sortCount.isPresent()){
+            valueSortCount = true;
+        }
+
         Pageable pageable = PageRequest.of(page, limit);
+        if (valueSortName){
+            pageable = PageRequest.of(page, limit, Sort.by("name_customer").ascending());
+        } else if (valueSortCount){
+            pageable = PageRequest.of(page, limit, Sort.by("total_purchases").ascending());
+        }
+
         Page<Customer> customerList = customerService.findCustomerByNameAndAge(pageable, valueSearchName, valueSearchAge, valueSearchGender);
         if (customerList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

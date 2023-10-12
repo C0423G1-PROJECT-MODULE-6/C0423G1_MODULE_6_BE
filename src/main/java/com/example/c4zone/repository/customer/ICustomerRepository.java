@@ -54,6 +54,14 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             " from customer c " +
             " left join order_bill o on c.id_customer = o.id_customer " +
             " where c.name_customer like :name " +
+            " and TIMESTAMPDIFF(YEAR, c.birth_date_customer, CURDATE()) =:age " +
+            " group by c.id_customer", nativeQuery = true)
+    Page<Customer> findAllCustomerByAge(Pageable pageable, @Param("name") String valueSearchName, @Param("age") String valueSearchAge);
+
+    @Query(value = "select c.*, count(o.id_customer ) as total_purchases " +
+            " from customer c " +
+            " left join order_bill o on c.id_customer = o.id_customer " +
+            " where c.name_customer like :name " +
             " and TIMESTAMPDIFF(YEAR, c.birth_date_customer, CURDATE()) >= 0 " +
             " group by c.id_customer ", nativeQuery = true)
     Page<Customer> findAllCustomerByName(Pageable pageable, @Param("name") String valueSearchName);
@@ -63,15 +71,17 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             " left join order_bill o on c.id_customer = o.id_customer " +
             " where c.name_customer like :name " +
             " and TIMESTAMPDIFF(YEAR, c.birth_date_customer, CURDATE()) =:age " +
-            " and c.gender_customer = :gender ", nativeQuery = true)
-    Page<Customer> findAllCustomerByAge(Pageable pageable, @Param("name") String valueSearchName, @Param("age") String valueAge, @Param("gender") Boolean valueSearchGender);
+            " and c.gender_customer = :gender " +
+            " group by c.id_customer", nativeQuery = true)
+    Page<Customer> findAllCustomerByAgeAndGender(Pageable pageable, @Param("name") String valueSearchName, @Param("age") String valueAge, @Param("gender") Boolean valueSearchGender);
 
     @Query(value = " select c.*, count(o.id_customer ) as total_purchases  " +
             " from customer c " +
             " left join order_bill o on c.id_customer = o.id_customer " +
             " where c.name_customer like :name " +
             " and TIMESTAMPDIFF(YEAR, c.birth_date_customer, CURDATE()) >= 0 " +
-            " and c.gender_customer = :gender ", nativeQuery = true)
+            " and c.gender_customer = :gender " +
+            " group by c.id_customer ", nativeQuery = true)
     Page<Customer> findAllCustomerByGender(Pageable pageable, @Param("name") String valueSearchName, @Param("gender") Boolean valueSearchGender);
 
     /**
@@ -105,5 +115,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             " where p.name_product like :name " +
             " and c.id_customer = :id " +
             " order by ob.date_of_order desc ", nativeQuery = true)
-    Page<IShoppingHistory> findShoppingHistory(Pageable pageable,@Param("name") String valueSearchName, @Param("id") Long id);
+    Page<IShoppingHistory> findShoppingHistory(Pageable pageable, @Param("name") String valueSearchName, @Param("id") Long id);
+
+
 }

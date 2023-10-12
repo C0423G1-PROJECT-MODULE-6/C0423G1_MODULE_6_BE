@@ -15,6 +15,7 @@ import java.util.Optional;
 public class CustomerService implements ICustomerService {
     @Autowired
     private ICustomerRepository customerRepository;
+
     /**
      * Author: TinDT
      * Goal: save customers
@@ -25,6 +26,7 @@ public class CustomerService implements ICustomerService {
         customer.setStatusCustomer(true);
         customerRepository.saveCustomer(customer);
     }
+
     /**
      * Author: TinDT
      * Goal: find customers by phone
@@ -33,6 +35,7 @@ public class CustomerService implements ICustomerService {
     public Customer findCustomerByPhone(String phoneNumberCustomer) {
         return customerRepository.findCustomerByPhone(phoneNumberCustomer);
     }
+
     /**
      * Author: TinDT
      * Goal: find customers by email
@@ -44,16 +47,20 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Page<Customer> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, Boolean valueSearchGender) {
-        if (!valueSearchAge.equals("")) {
-            return customerRepository.findAllCustomerByAge(pageable, "%" + valueSearchName + "%", valueSearchAge, valueSearchGender);
+        if (!valueSearchAge.equals("") && valueSearchGender != null) {
+            return customerRepository.findAllCustomerByAgeAndGender(pageable, "%" + valueSearchName + "%", valueSearchAge, valueSearchGender);
         }
         if (valueSearchGender != null) {
             return customerRepository.findAllCustomerByGender(pageable, "%" + valueSearchName + "%", valueSearchGender);
+        }
+        if (!valueSearchAge.equals("")) {
+            return customerRepository.findAllCustomerByAge(pageable, "%" + valueSearchName + "%",valueSearchAge);
         }
         return customerRepository.findAllCustomerByName(pageable, "%" + valueSearchName + "%");
 
 
     }
+
     /**
      * method findByCustomer
      * Create ThoiND
