@@ -19,6 +19,7 @@ import java.util.Optional;
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
+
     @GetMapping("/list")
     public ResponseEntity<Page<Customer>> listCustomer(@RequestParam(name = "_limit") int limit,
                                                        @RequestParam(name = "_page") int page,
@@ -47,5 +48,20 @@ public class CustomerController {
         }
 
         return new ResponseEntity<>(customerList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Customer> findById(@PathVariable Long id) {
+        Customer customer = customerService.findById(id).orElse(null);
+        if (customer == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(customer,HttpStatus.OK);
+    }
+    @GetMapping("/history/{id}")
+    public ResponseEntity<Page<Customer>> shoppingHistory(@RequestParam(name = "_limit") int limit,
+                                                  @RequestParam(name = "_page") int page,
+                                                  @RequestParam(name = "name_like") Optional<String> searchName){
+        return null;
     }
 }

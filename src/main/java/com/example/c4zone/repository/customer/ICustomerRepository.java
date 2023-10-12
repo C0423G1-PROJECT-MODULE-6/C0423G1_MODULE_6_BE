@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 
+import java.util.Optional;
 
 
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
@@ -17,7 +18,12 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query(value = "select * from customer where name_customer like :name and TIMESTAMPDIFF(YEAR, birth_date_customer, CURDATE()) >= 0 and gender_customer = :gender ", nativeQuery = true)
     Page<Customer> findAllCustomerByGender(Pageable pageable, @Param("name") String valueSearchName, @Param("gender") Boolean valueSearchGender);
-    @Query(value = "select * from customer where name_customer like :name and TIMESTAMPDIFF(YEAR, birth_date_customer, CURDATE()) >= 0 ", nativeQuery = true)
+    @Query(value = "select customer.*, count(sale_history.id_order_detail) as total_purchases " +
+            "from customer " +
+            "join order_bill on customer.id_customer = order_bill.id_customer " +
+            "join order_detail on order_bill.id_order_bill = order_detail.id_order " +
+            "join sale_history on  order_detail.id_order_detail = sale_history.id_order_detail " +
+            "where name_customer like :name and TIMESTAMPDIFF(YEAR, birth_date_customer, CURDATE()) >= 0 group by customer.id_customer ", nativeQuery = true)
     Page<Customer> findAllCustomerByName(Pageable pageable, @Param("name") String valueSearchName);
     @Query(value = "select id_customer as idCustomerOrder, name_customer as customerNameOrder" +
             ",phone_number_customer as customerPhoneorder " +
@@ -26,4 +32,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "from customer " +
             "where id_customer = :id",nativeQuery = true)
     ICustomerDtoOrder findCustomerByIdOrder(Long id);
+
+    @Query(value = "select * from customer where id_customer = :id ", nativeQuery = true)
+    Optional<Customer> findCustomerById(@Param("id") Long id);
 }

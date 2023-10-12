@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomerService implements ICustomerService {
     @Autowired
@@ -29,5 +31,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public ICustomerDtoOrder findCustomerByIdOrder(Long id) {
         return customerRepository.findCustomerByIdOrder(id);
+    }
+
+    @Override
+    public Optional<Customer> findById(Long id) {
+        return customerRepository.findCustomerById(id);
     }
 }
