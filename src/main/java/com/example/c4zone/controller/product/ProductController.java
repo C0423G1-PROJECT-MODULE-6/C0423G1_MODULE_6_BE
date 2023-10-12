@@ -113,7 +113,7 @@ public class ProductController {
         imageService.updateImageProduct(image, product.getIdProduct());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping("/")
+    @GetMapping("/list")
     public ResponseEntity<Page<IProductDto>> getAll(
             @RequestParam(value = "choose", required = false, defaultValue = "name") String choose,
             @RequestParam(value = "sort", required = false, defaultValue = "") String sort,
