@@ -10,6 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface ICpuRepository extends JpaRepository<Cpu, Long> {
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return list CPU
+     */
     @Query(value = "SELECT cpu.id_cpu, cpu.name, cpu.status_cpu FROM c4_zone.cpu as cpu", nativeQuery = true)
     List<Cpu> findAll();
     @Transactional

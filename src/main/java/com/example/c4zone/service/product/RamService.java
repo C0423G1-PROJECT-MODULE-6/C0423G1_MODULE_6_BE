@@ -11,6 +11,12 @@ import java.util.List;
 public class RamService implements IRamService{
     @Autowired
     private IRamRepository ramRepository;
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return find all list ram
+     */
     @Override
     public List<Ram> findAll() {
         return ramRepository.findAll();

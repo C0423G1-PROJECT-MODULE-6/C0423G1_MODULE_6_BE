@@ -10,6 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface ICapacityRepository extends JpaRepository<Capacity, Long> {
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return list capacity
+     */
     @Query(value = "SELECT c.id_capacity, c.name, c.status_capacity FROM c4_zone.capacity as c",nativeQuery = true)
     List<Capacity>findAll();
 

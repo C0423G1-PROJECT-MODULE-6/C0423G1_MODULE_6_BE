@@ -11,6 +11,12 @@ import java.util.List;
 public class SeriesService implements ISeriesService{
     @Autowired
     private ISeriesRepository seriesRepository;
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return find all list series
+     */
     @Override
     public List<Series> findAll() {
         return seriesRepository.findAll();
