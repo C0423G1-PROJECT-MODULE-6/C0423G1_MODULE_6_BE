@@ -5,7 +5,9 @@ import com.example.c4zone.model.wareHouse.WareHouse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 
 public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
@@ -22,4 +24,10 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
             "JOIN supplier s ON w.supplier_id = s.id_supplier " +
             "GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
     Page<IWarehouseProjection> findAllWareHouse(Pageable pageable);
+
+    @Transactional
+    @Modifying
+    @Query(value = "insert into ware_house(product_id,supplier_id, quantity, input_date) " +
+            "values(:wareHouse.product_id,:wareHouse.supplier_id, :wareHouse.quantity, date(now()))", nativeQuery = true)
+    void ImportProduct(WareHouse wareHouse);
 }
