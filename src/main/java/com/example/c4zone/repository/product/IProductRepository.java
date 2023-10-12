@@ -1,6 +1,7 @@
 package com.example.c4zone.repository.product;
-import com.example.c4zone.dto.product.IProductDto;
+
 import com.example.c4zone.dto.order.IProductDtoOrder;
+import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.model.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,8 +11,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param idProduct find by id with product
+     * @return object to find for idProduct
+     */
     @Query(value = "select p.id_product, p.name_product, p.battery_product, p.camera_product, p.price_product," +
             " p.quantity_product, p.description_product, p.screen_product, p.selfie_product, p.weight_product" +
             " from c4_zone.product as p" +
@@ -24,6 +34,12 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             " WHERE p.id_product= :idProduct and p.status_business = true", nativeQuery = true)
     Product findProductById(@Param("idProduct") Long idProduct);
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param product add new object product
+     */
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO product(name_product,battery_product,description_product,camera_product," +
@@ -32,13 +48,25 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "VALUES ( :#{#product.nameProduct}, :#{#product.batteryProduct}, :#{#product.descriptionProduct}," +
             " :#{#product.cameraProduct}, :#{#product.priceProduct}, :#{#product.quantityProduct}, " +
             ":#{#product.screenProduct}, :#{#product.selfieProduct}, :#{#product.weightProduct}, " +
-            ":#{#product.capacity.idCapacity}, :#{#product.color.idColor}, :#{#product.cpu.idCpu}, " +
-            ":#{#product.ram.idRam}, :#{#product.series.idSeries}, :#{#product.type.idType}, true)", nativeQuery = true)
+            ":#{#product.capacity?.idCapacity}, :#{#product.color?.idColor}, :#{#product.cpu?.idCpu}, " +
+            ":#{#product.ram?.idRam}, :#{#product.series?.idSeries}, :#{#product.type?.idType}, true)", nativeQuery = true)
     void createProduct(@Param("product") Product product);
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return Last inserted id after new addition
+     */
     @Query(value = "SELECT LAST_INSERT_ID()", nativeQuery = true)
     Long getLastInsertedId();
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param product update object product
+     */
     @Transactional
     @Modifying
     @Query(value = "UPDATE product set name_product = :#{#product.nameProduct},battery_product = :#{#product.batteryProduct}, " +
@@ -56,6 +84,30 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "where id_product = :id",nativeQuery = true)
     IProductDtoOrder findProductByIdOrder(Long id);
 
+
+    /**
+     * author :QuanND
+     * work day : 12/10/2023
+     * method :
+     *         getAllByName()
+     *         getAllByPrice()
+     *         getAllByPriceMin()
+     *         getAllByPriceMax()
+     *         getAllByType()
+     *         getAllByQuantity()
+     *         getAllByQuantityMin()
+     *         getAllByQuantityMax()
+     *         findProductByIdWarehouse()
+     *         removeProduct()
+     */
+
+
+    /**
+     *
+     * @param pageable
+     * @param name
+     * @return page IProductDto
+     */
     @Query(value = "SELECT " +
             "    p.id_product AS id," +
             "    p.battery_product AS battery," +
@@ -143,5 +195,158 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    AND p.price_product between :min and :max", nativeQuery = true)
     Page<IProductDto> getAllByPrice(Pageable pageable, @Param("min") Double min, @Param("max") Double max);
 
+    @Query(value = "SELECT " +
+            "    p.id_product AS id," +
+            "    p.battery_product AS battery," +
+            "    p.camera_product AS camera," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    p.quantity_product AS quantity," +
+            "    ca.id_capacity AS capacity," +
+            "    c.id_cpu AS cpu," +
+            "    co.id_color AS color " +
+            " FROM " +
+            "    c4_zone.product p " +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN " +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            "        JOIN " +
+            "    ram r ON p.id_ram = r.id_ram" +
+            "        JOIN " +
+            "    type t ON p.id_type = t.id_type " +
+            "        JOIN " +
+            "    series s ON p.id_series = s.id_series " +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "    AND p.price_product >= :min", nativeQuery = true)
+    Page<IProductDto> getAllByPriceMin(Pageable pageable, @Param("min") Double min);
 
+    @Query(value = "SELECT " +
+            "    p.id_product AS id," +
+            "    p.battery_product AS battery," +
+            "    p.camera_product AS camera," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    p.quantity_product AS quantity," +
+            "    ca.id_capacity AS capacity," +
+            "    c.id_cpu AS cpu," +
+            "    co.id_color AS color " +
+            " FROM " +
+            "    c4_zone.product p " +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN " +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            "        JOIN " +
+            "    ram r ON p.id_ram = r.id_ram" +
+            "        JOIN " +
+            "    type t ON p.id_type = t.id_type " +
+            "        JOIN " +
+            "    series s ON p.id_series = s.id_series " +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "    AND p.price_product <= :max", nativeQuery = true)
+    Page<IProductDto> getAllByPriceMax(Pageable pageable, @Param("max") Double max);
+
+    @Query(value = "   SELECT " +
+            "    p.id_product AS id," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price" +
+            " FROM " +
+            "    c4_zone.product p" +
+            " WHERE " +
+            "    p.id_product =:id",nativeQuery = true)
+    IProductDto findProductByIdWarehouse(Long id);
+    @Query(value = "SELECT " +
+            "    p.id_product AS id," +
+            "    p.battery_product AS battery," +
+            "    p.camera_product AS camera," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    p.quantity_product AS quantity," +
+            "    ca.id_capacity AS capacity," +
+            "    c.id_cpu AS cpu," +
+            "    co.id_color AS color " +
+            " FROM " +
+            "    c4_zone.product p " +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN " +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            "        JOIN " +
+            "    ram r ON p.id_ram = r.id_ram" +
+            "        JOIN " +
+            "    type t ON p.id_type = t.id_type " +
+            "        JOIN " +
+            "    series s ON p.id_series = s.id_series " +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "    AND p.quantity_product <= :max", nativeQuery = true)
+    Page<IProductDto> getAllByQuantityMax(Pageable pageable,@Param("max") int max);
+    @Query(value = "SELECT " +
+            "    p.id_product AS id," +
+            "    p.battery_product AS battery," +
+            "    p.camera_product AS camera," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    p.quantity_product AS quantity," +
+            "    ca.id_capacity AS capacity," +
+            "    c.id_cpu AS cpu," +
+            "    co.id_color AS color " +
+            " FROM " +
+            "    c4_zone.product p " +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN " +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            "        JOIN " +
+            "    ram r ON p.id_ram = r.id_ram" +
+            "        JOIN " +
+            "    type t ON p.id_type = t.id_type " +
+            "        JOIN " +
+            "    series s ON p.id_series = s.id_series " +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "    AND p.quantity_product <= :max and p.quantity_product>=:min", nativeQuery = true)
+    Page<IProductDto> getAllByQuantity(Pageable pageable,@Param("min") int min,@Param("max") int max);
+    @Query(value = "SELECT " +
+            "    p.id_product AS id," +
+            "    p.battery_product AS battery," +
+            "    p.camera_product AS camera," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    p.quantity_product AS quantity," +
+            "    ca.id_capacity AS capacity," +
+            "    c.id_cpu AS cpu," +
+            "    co.id_color AS color " +
+            " FROM " +
+            "    c4_zone.product p " +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN " +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            "        JOIN " +
+            "    ram r ON p.id_ram = r.id_ram" +
+            "        JOIN " +
+            "    type t ON p.id_type = t.id_type " +
+            "        JOIN " +
+            "    series s ON p.id_series = s.id_series " +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "    AND p.price_product >= :min", nativeQuery = true)
+    Page<IProductDto> getAllByQuantityMin(Pageable pageable,@Param("min") int min);
+    @Query(value = "UPDATE product ",nativeQuery = true)
+
+    void removeProduct();
 }

@@ -1,5 +1,6 @@
 package com.example.c4zone.controller.product;
 
+import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.dto.product.ImageDto;
 import com.example.c4zone.dto.product.ProductDto;
 import com.example.c4zone.model.product.Image;
@@ -7,6 +8,10 @@ import com.example.c4zone.model.product.Product;
 import com.example.c4zone.service.product.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -38,6 +43,12 @@ public class ProductController {
     @Autowired
     private ITypeService typeService;
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return set image by firebase in list
+     */
     @GetMapping("/create")
     public ResponseEntity<ProductDto> getProductForCreate() {
         ProductDto productDto = new ProductDto();
@@ -49,6 +60,13 @@ public class ProductController {
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param id The id parameter is used to find by id
+     * @return id to find
+     */
     @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<ProductDto> findProductById(@PathVariable("id") Long id) {
@@ -63,6 +81,15 @@ public class ProductController {
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param productDto to save the object dto
+     * @param bindingResult returns errors on save
+     * @return if true, return it HttpStatus.OK
+     *          else false, return it HttpStatus.BAD_REQUEST
+     */
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
@@ -90,6 +117,15 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param productDto to update the object dto
+     * @param bindingResult returns errors on update
+     * @return if true, return it HttpStatus.OK
+     *          else false, return it HttpStatus.BAD_REQUEST
+     */
     @PatchMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Object> updateProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult){
@@ -108,4 +144,50 @@ public class ProductController {
         imageService.updateImageProduct(image, product.getIdProduct());
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/list")
+    public ResponseEntity<Page<IProductDto>> getAll(
+            @RequestParam(value = "choose", required = false, defaultValue = "name") String choose,
+            @RequestParam(value = "sort", required = false, defaultValue = "") String sort,
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(value = "value", required = false, defaultValue = "") String value) {
+        Page<IProductDto> productDtoPage = null;
+        Pageable pageable = PageRequest.of(page, 5);
+        switch (sort) {
+            case "name":
+                pageable = PageRequest.of(page, 5, Sort.by("name").ascending());
+                break;
+            case "type":
+                pageable = PageRequest.of(page, 5, Sort.by("type").ascending());
+                break;
+            case "price":
+                pageable = PageRequest.of(page, 5, Sort.by("price").ascending());
+                break;
+            case "quantity":
+                pageable = PageRequest.of(page, 5, Sort.by("quantity").ascending());
+                break;
+            default:
+                pageable = PageRequest.of(page, 5);
+                break;
+        }
+        switch (choose) {
+            case "name":
+                productDtoPage = productService.getAllByName(pageable, value);
+                break;
+            case "price":
+                productDtoPage=productService.getAllByPrice(pageable,value);
+                break;
+            case "type":
+                productDtoPage=productService.getAllByType(pageable,value);
+                break;
+            case "quantity":
+                productDtoPage=productService.getAllByQuantity(pageable,value);
+                break;
+        }
+        return new ResponseEntity<>(productDtoPage, HttpStatus.OK);
+    }
+    @DeleteMapping("/")
+    public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id){
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

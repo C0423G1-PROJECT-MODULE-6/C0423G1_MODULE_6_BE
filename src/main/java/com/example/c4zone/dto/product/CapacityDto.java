@@ -11,6 +11,12 @@ public class CapacityDto implements Validator {
     public CapacityDto() {
     }
 
+    public CapacityDto(Long idCapacity, String name, Boolean statusCapacity) {
+        this.idCapacity = idCapacity;
+        this.name = name;
+        this.statusCapacity = statusCapacity;
+    }
+
     public Long getIdCapacity() {
         return idCapacity;
     }
