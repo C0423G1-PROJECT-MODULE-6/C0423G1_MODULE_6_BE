@@ -20,4 +20,6 @@ public interface IProductService {
     Page<IProductDto> getAllByType(Pageable pageable,String idType);
 
     Page<IProductDto> getAllByQuantity(Pageable pageable, String value);
+
+    void removeProduct(Long id);
 }

@@ -42,7 +42,7 @@ public class ProductService implements IProductService{
 
     @Override
     public Page<IProductDto> getAllByName(Pageable pageable, String name) {
-        return productRepository.getAllByName(pageable, name);
+        return productRepository.getAllByName(pageable, '%'+name+'%');
     }
 
     @Override
@@ -73,8 +73,12 @@ public class ProductService implements IProductService{
             case "better 50":
                 return productRepository.getAllByQuantityMin(pageable, 50);
         }
-
         return null;
+    }
+
+    @Override
+    public void removeProduct(Long id) {
+        productRepository.removeProduct(id);
     }
 
 }
