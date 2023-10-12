@@ -50,7 +50,7 @@ public class UserInfoDto implements Validator {
     private Date otpRequestedTime;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "appUser",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "appUser", fetch = FetchType.EAGER)
     private Set<UserRole> userRoleSet;
 
     public boolean isOTPRequired() {

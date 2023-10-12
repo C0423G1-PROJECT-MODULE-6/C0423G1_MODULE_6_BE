@@ -54,23 +54,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/api/user/create/**",
                         "/api/user/confirm/**",
-                        "/api/user/information/**",
+//                        "/api/user/information/**",
                         "/api/user/resetOTP/**",
                         "/api/user/login-by-username/**",
-                        "/api/user/logout/{userName}/**",
-                        "/api/user/get-id-app-user/{userName}",
-                        "/api/user/register/**",
+//                        "/api/user/logout/{userName}/**",
+//                        "/api/user/get-id-app-user/{userName}",
+//                        "/api/user/register/**",
                         "/api/admin/product/**",
                         "/api/admin/employee/list/**"
                 ).permitAll()
 
                 .antMatchers(
-                        "/api/user/register/**"
-
+                        "/api/user/register/**",
+                        "/api/user/information/**",
+                        "/api/user/logout/{userName}/**",
+                        "/api/user/get-id-app-user/{userName}"
                 ).hasAnyAuthority("ROLE_ADMIN", "ROLE_SALE", "ROLE_BUSINESS", "ROLE_WAREHOUSE")
 
                 .antMatchers(
-                         //admin
+                        //admin
 
                 ).hasAnyAuthority("ROLE_ADMIN")
 
@@ -80,13 +82,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ).hasAnyAuthority("ROLE_SALE")
 
 
-
                 .antMatchers(
                         //business
                 ).hasAnyAuthority("ROLE_BUSINESS")
 
 
-                 .antMatchers(
+                .antMatchers(
                         //warehouse
                 ).hasAnyAuthority("ROLE_WAREHOUSE")
 

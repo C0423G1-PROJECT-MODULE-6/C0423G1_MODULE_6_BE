@@ -80,8 +80,8 @@ public class JwtTokenUtil implements Serializable {
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-                .claim("isEnabled",isEnabled)
-                .claim("roleList",grantList)
+                .claim("isEnabled", isEnabled)
+                .claim("roleList", grantList)
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
