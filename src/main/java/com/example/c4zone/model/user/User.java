@@ -1,5 +1,8 @@
 package com.example.c4zone.model.user;
 
+public class User {
+    package com.example.c4zone.model.user;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +14,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -72,19 +76,14 @@ public class User {
     public boolean isOTPRequired() {
         if (this.getOneTimePassword() == null) {
             return false;
+
         }
 
-        long currentTimeInMillis = System.currentTimeMillis();
-        long otpRequestedTimeInMillis = this.otpRequestedTime.getTime();
-
-        // OTP expires
-        return otpRequestedTimeInMillis + OTP_VALID_DURATION >= currentTimeInMillis;
-    }
-
-    public User(String name, String username, String email, String encode) {
-        this.employeeName = name;
-        this.username = username;
-        this.email = email;
-        this.password = encode;
+        public User(String name, String username, String email, String encode) {
+            this.employeeName = name;
+            this.username = username;
+            this.email = email;
+            this.password = encode;
+        }
     }
 }
