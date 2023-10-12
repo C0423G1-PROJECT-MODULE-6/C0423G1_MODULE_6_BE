@@ -11,6 +11,12 @@ import java.util.List;
 public class CpuService implements ICpuService{
     @Autowired
     private ICpuRepository cpuRepository;
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return find all list cpu
+     */
     @Override
     public List<Cpu> findAll() {
         return cpuRepository.findAll();

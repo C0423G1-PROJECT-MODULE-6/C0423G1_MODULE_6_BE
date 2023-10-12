@@ -9,16 +9,38 @@ import org.springframework.stereotype.Service;
 public class ImageService implements IImageService{
     @Autowired
     private IImageProductRepository imageProductRepository;
+
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param image create image with firebase
+     * @param idProduct create image with idProduct
+     */
     @Override
     public void createImageProduct(Image image, Long idProduct) {
         imageProductRepository.createImage(image, idProduct);
     }
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param idProduct find by image with idProduct
+     * @return object image after find by
+     */
     @Override
     public Image findImageProductByIdProduct(Long idProduct) {
         return imageProductRepository.findImageByIdProduct(idProduct);
     }
 
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @param image update image with firebase
+     * @param idProduct update image with idProduct
+     */
     @Override
     public void updateImageProduct(Image image, Long idProduct) {
         imageProductRepository.updateImage(image, idProduct);

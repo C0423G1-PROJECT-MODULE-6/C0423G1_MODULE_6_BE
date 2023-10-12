@@ -11,6 +11,12 @@ import java.util.List;
 public class ColorService implements IColorService{
     @Autowired
     private IColorRepository colorRepository;
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return find all list color
+     */
     @Override
     public List<Color> findAll() {
         return colorRepository.findAll();
