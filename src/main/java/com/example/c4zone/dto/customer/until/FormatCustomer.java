@@ -28,14 +28,12 @@ public class FormatCustomer {
      * Goal:  calculate age for customer
      */
         public static int calculateAge(String birthDate) {
+            LocalDate currentDate = LocalDate.now();
             // Định dạng của ngày tháng năm trong chuỗi đầu vào
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             // Chuyển chuỗi thành LocalDate
             LocalDate birthLocalDate = LocalDate.parse(birthDate, formatter);
-
             // Tính toán tuổi
-            LocalDate currentDate = LocalDate.now();
             int age = currentDate.getYear() - birthLocalDate.getYear();
 
             return age;
