@@ -1,7 +1,10 @@
 package com.example.c4zone.controller.customer;
 
+import com.example.c4zone.dto.customer.CustomerDto;
+import com.example.c4zone.dto.product.ProductDto;
 import com.example.c4zone.model.customer.Customer;
 import com.example.c4zone.service.customer.ICustomerService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,8 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -19,6 +27,9 @@ import java.util.Optional;
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
+    private static final String EMAIL = "email_customer";
+    private static final String PHONE = "phone_number_customer";
+
     @GetMapping("/list")
     public ResponseEntity<Page<Customer>> listCustomer(@RequestParam(name = "_limit") int limit,
                                                        @RequestParam(name = "_page") int page,
@@ -47,5 +58,36 @@ public class CustomerController {
         }
 
         return new ResponseEntity<>(customerList, HttpStatus.OK);
+    }
+    /**
+     * Author: TinDT
+     * Goal: create customer
+     * * return HttpStatus
+     */
+    @PostMapping("/create")
+    public ResponseEntity<Map<String,String>> createCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult) {
+        Customer customer = new Customer();
+        Map<String, String> errors = new HashMap<>();
+        new CustomerDto().validate(customerDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            for (FieldError err : bindingResult.getFieldErrors()) {
+                errors.put(err.getField(), err.getDefaultMessage());
+            }
+        }
+        Customer customerCheck = customerService.findCustomerByEmail(customerDto.getEmailCustomer());
+        if (customerCheck != null){
+            errors.put(EMAIL,"Email đã được đăng ký");
+        }
+        Customer  customerCheckPhone = customerService.findCustomerByPhone(customerDto.getPhoneNumberCustomer());
+        if (customerCheckPhone != null) {
+            errors.put(PHONE, "Số điện thoại đã được đăng ký");
+        }
+        if (errors.size() != 0){
+            return new ResponseEntity<>(errors, HttpStatus.NOT_ACCEPTABLE);
+        }
+        BeanUtils.copyProperties(customerDto, customer);
+        customerService.saveCustomer(customer);
+
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 }
