@@ -25,7 +25,7 @@ public class Product {
     private Boolean statusBusiness = true;
     private String selfieProduct;
     private String batteryProduct;
-    private Double weightProduct;
+    private String weightProduct;
     private Double quantityProduct;
     private Double priceProduct;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
