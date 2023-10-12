@@ -1,9 +1,5 @@
 package com.example.c4zone.config;
 
-
-import com.example.c4zone.security.jwt.JwtEntryPoint;
-import com.example.c4zone.security.jwt.JwtTokenFilter;
-import com.example.c4zone.security.userprincal.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -22,41 +19,85 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Autowired
+    private UserDetailsService jwtUserDetailService;
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
+
 
     @Autowired
-    private UserDetailService userDetailService;
-
-    @Autowired
-    private JwtEntryPoint jwtEntryPoint;
-    @Bean
-    public JwtTokenFilter jwtTokenFilter(){
-        return new JwtTokenFilter();
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(jwtUserDetailService).passwordEncoder(new BCryptPasswordEncoder());
     }
+
+
+    @Bean
     @Override
-    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userDetailService)
-                .passwordEncoder(passwordEncoder());
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+
     }
+
+
     @Bean
-    PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
+
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.cors().and().csrf().disable().
-                authorizeRequests()
-                .antMatchers("/**").permitAll()
-//                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-//                .antMatchers("/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                .anyRequest().authenticated()
-                .and().exceptionHandling()
-                .authenticationEntryPoint(jwtEntryPoint)
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        httpSecurity.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.csrf().disable().cors().and()
+                .authorizeRequests()
+                .antMatchers(
+                         "/api/user/create/**",
+                        "/api/user/confirm/**",
+                        "/api/user/information/**",
+                        "/api/user/resetOTP/**",
+                        "/api/user/register-by-manager/**",
+                        "/api/user/login-by-username/**",
+                        "/api/user/register-by-customer/**",
+                        "/api/user/logout/{userName}/**",
+                        "/api/user/get-id-app-user/{userName}"
+                ).permitAll()
+
+                .antMatchers(
+                         //admin
+
+                ).hasAnyAuthority("ROLE_ADMIN")
+
+
+                .antMatchers(
+                        //sale
+                ).hasAnyAuthority("ROLE_SALE")
+
+
+
+                .antMatchers(
+                        //business
+                ).hasAnyAuthority("ROLE_BUSINESS")
+
+
+                 .antMatchers(
+                        //warehouse
+                ).hasAnyAuthority("ROLE_WAREHOUSE")
+
+                .anyRequest()
+                .authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and().
+                sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
+//        httpSecurity
+//                .authorizeRequests()
+//                .anyRequest().permitAll()
+//                .and()
+//                .csrf().disable();
     }
+
 }
