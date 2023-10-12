@@ -29,7 +29,7 @@ public class Product {
     private Double quantityProduct;
     private Double priceProduct;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Image> images = new ArrayList<>();
+    private List<Image> images;
     @ManyToOne
     @JoinColumn(name = "id_capacity", referencedColumnName = "idCapacity")
     private Capacity capacity;
