@@ -1,5 +1,7 @@
 package com.example.c4zone.dto.product;
 
+import com.example.c4zone.model.product.*;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -35,13 +37,18 @@ public class ProductDto implements Validator {
     @Min(0)
     @Max(30000000)
     private Double priceProduct;
-
     private ImageDto imageDto;
+    private Capacity capacity;
+    private Color color;
+    private Cpu cpu;
+    private Ram ram;
+    private Series series;
+    private Type type;
 
     public ProductDto() {
     }
 
-    public ProductDto(Long idProduct, String nameProduct, String screenProduct, String cameraProduct, String descriptionProduct, Boolean statusBusiness, String selfieProduct, String batteryProduct, Double weightProduct, Double quantityProduct, Double priceProduct, ImageDto imageDto) {
+    public ProductDto(Long idProduct, String nameProduct, String screenProduct, String cameraProduct, String descriptionProduct, Boolean statusBusiness, String selfieProduct, String batteryProduct, Double weightProduct, Double quantityProduct, Double priceProduct, ImageDto imageDto, Capacity capacity, Color color, Cpu cpu, Ram ram, Series series, Type type) {
         this.idProduct = idProduct;
         this.nameProduct = nameProduct;
         this.screenProduct = screenProduct;
@@ -54,6 +61,12 @@ public class ProductDto implements Validator {
         this.quantityProduct = quantityProduct;
         this.priceProduct = priceProduct;
         this.imageDto = imageDto;
+        this.capacity = capacity;
+        this.color = color;
+        this.cpu = cpu;
+        this.ram = ram;
+        this.series = series;
+        this.type = type;
     }
 
     public ImageDto getImageDto() {
@@ -150,6 +163,54 @@ public class ProductDto implements Validator {
 
     public void setPriceProduct(Double priceProduct) {
         this.priceProduct = priceProduct;
+    }
+
+    public Capacity getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Capacity capacity) {
+        this.capacity = capacity;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Cpu getCpu() {
+        return cpu;
+    }
+
+    public void setCpu(Cpu cpu) {
+        this.cpu = cpu;
+    }
+
+    public Ram getRam() {
+        return ram;
+    }
+
+    public void setRam(Ram ram) {
+        this.ram = ram;
+    }
+
+    public Series getSeries() {
+        return series;
+    }
+
+    public void setSeries(Series series) {
+        this.series = series;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override
