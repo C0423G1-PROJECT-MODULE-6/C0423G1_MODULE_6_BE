@@ -16,4 +16,9 @@ public class WareHouseService implements IWareHouseService{
     public Page<IWarehouseProjection> findAll(Pageable pageable) {
         return wareHouseRepository.findAllWareHouse(pageable);
     }
+
+    @Override
+    public void ImportProduct(WareHouse wareHouse) {
+        wareHouseRepository.ImportProduct(wareHouse);
+    }
 }

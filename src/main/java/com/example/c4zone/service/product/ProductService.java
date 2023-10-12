@@ -3,6 +3,7 @@ package com.example.c4zone.service.product;
 
 import com.example.c4zone.dto.order.IProductDtoOrder;
 import com.example.c4zone.dto.product.IProductDto;
+import com.example.c4zone.dto.warehouse.IProductDtoWarehouse;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.repository.product.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,8 +68,13 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    public IProductDto findProductByIdWarehouse(Long id) {
+        return productRepository.findProductByIdWarehouse(id);
+    }
+
+    @Override
     public Page<IProductDto> getAllByName(Pageable pageable, String name) {
-        return productRepository.getAllByName(pageable, name);
+        return productRepository.getAllByName(pageable, '%'+name+'%');
     }
 
     @Override
@@ -99,8 +105,12 @@ public class ProductService implements IProductService{
             case "better 50":
                 return productRepository.getAllByQuantityMin(pageable, 50);
         }
-
         return null;
+    }
+
+    @Override
+    public void removeProduct(Long id) {
+        productRepository.removeProduct(id);
     }
 
 }

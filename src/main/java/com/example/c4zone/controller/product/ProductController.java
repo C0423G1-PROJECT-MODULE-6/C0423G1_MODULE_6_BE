@@ -187,6 +187,12 @@ public class ProductController {
     }
     @DeleteMapping("/")
     public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id){
+        if (productService.findProductById(id)==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else {
+            productService.removeProduct(id);
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

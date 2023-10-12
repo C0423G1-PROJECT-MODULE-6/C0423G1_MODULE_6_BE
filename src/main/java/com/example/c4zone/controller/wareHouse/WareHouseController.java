@@ -1,10 +1,12 @@
 package com.example.c4zone.controller.wareHouse;
 
-import com.example.c4zone.dto.order.IProductDtoOrder;
+import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.dto.warehouse.IProductDtoWarehouse;
+import com.example.c4zone.dto.warehouse.ISupplierDtoWarehouse;
 import com.example.c4zone.model.wareHouse.IWarehouseProjection;
 import com.example.c4zone.model.wareHouse.WareHouse;
 import com.example.c4zone.service.product.IProductService;
+import com.example.c4zone.service.supplier.ISupplierService;
 import com.example.c4zone.service.wareHouse.IWareHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,8 @@ public class WareHouseController {
     private IWareHouseService wareHouseService;
     @Autowired
     private IProductService productService;
+    @Autowired
+    private ISupplierService supplierService;
 
     @GetMapping("")
     public ResponseEntity<Page<IWarehouseProjection>> findAll(@RequestParam(defaultValue = "0") int page) {
@@ -33,11 +37,22 @@ public class WareHouseController {
             return new ResponseEntity<>(wareHousePage, HttpStatus.OK);
         }
     }
-//    @GetMapping("/product/{id}")
-//    public ResponseEntity<IProductDtoWarehouse> chooseProduct(@PathVariable Long id){
-//
+    @GetMapping("/product/{id}")
+    public ResponseEntity<IProductDto> chooseProduct(@PathVariable Long id){
+
 //        IProductDtoWarehouse productDtoWarehouse = productService.findProductByIdWarehouse(id);
-//        return new ResponseEntity<>(productDtoWarehouse,HttpStatus.OK);
-//    }
+        IProductDto productDto = productService.findProductByIdWarehouse(id);
+        return new ResponseEntity<>(productDto,HttpStatus.OK);
+    }
+    @GetMapping("/supplier/{id}")
+    public ResponseEntity<ISupplierDtoWarehouse> getSupplier(@PathVariable Long id){
+        ISupplierDtoWarehouse supplierDtoWarehouse = supplierService.findSupplierByIdWarehouse(id);
+        return new ResponseEntity<>(supplierDtoWarehouse, HttpStatus.OK);
+    }
+    @PostMapping("")
+    public ResponseEntity<WareHouse> importProduct(@RequestBody WareHouse wareHouse){
+        wareHouseService.ImportProduct(wareHouse);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
 }

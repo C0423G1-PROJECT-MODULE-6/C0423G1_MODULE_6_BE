@@ -31,4 +31,7 @@ public interface IAppUserService extends UserDetailsService {
     Optional<AppUser> findByUsername(String name);
 
     AppUser findAppUserById(Long id);
+    void updateInfoUser(AppUser appUser);
+
+    void updatePass(AppUser appUser);
 }
