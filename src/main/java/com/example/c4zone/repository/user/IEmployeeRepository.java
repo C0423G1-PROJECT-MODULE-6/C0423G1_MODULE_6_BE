@@ -55,4 +55,15 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
      */
     @Query(nativeQuery = true,value = " select  * from users where id= :id")
     AppUser findUserById(@Param("id") Long id);
+
+
+
+    /**
+     * Author: CaoNV
+     * Date: 12/10/2023
+     * Get code of employee latest
+     * @return  code of employee latest
+     */
+    @Query(value = "select employee_code from users where id = (select max(id) from users) and flag_delete = false",nativeQuery = true)
+    String getLastCodeEmployee();
 }
