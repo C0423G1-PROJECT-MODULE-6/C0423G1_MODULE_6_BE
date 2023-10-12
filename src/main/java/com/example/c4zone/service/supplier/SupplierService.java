@@ -36,4 +36,19 @@ public class SupplierService implements ISupplierService {
     public ISupplierDtoWarehouse findSupplierByIdWarehouse(Long id) {
         return supplierRepository.findSupplierByIdWarehouse(id);
     }
+
+    @Override
+    public void editSupplier(Supplier supplier) {
+        supplierRepository.updateSupplier(supplier.getIdSupplier(),
+                supplier.getCodeSupplier(),
+                supplier.getNameSupplier(),
+                supplier.getAddressSupplier(),
+                supplier.getPhoneNumberSupplier(),
+                supplier.getEmailSupplier());
+    }
+
+    @Override
+    public void saveSupplier(Supplier newSupplier) {
+        supplierRepository.save(newSupplier);
+    }
 }
