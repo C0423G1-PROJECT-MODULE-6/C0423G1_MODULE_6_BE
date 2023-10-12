@@ -1,6 +1,6 @@
 package com.example.c4zone.repository.user;
 
-import com.example.c4zone.model.user.User;
+import com.example.c4zone.model.user.AppUser;
 import org.hibernate.query.NativeQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface IEmployeeRepository extends JpaRepository<User,Long> {
+public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
 
     /**
      * method :findAllUserBy()
@@ -26,7 +26,7 @@ public interface IEmployeeRepository extends JpaRepository<User,Long> {
             " JOIN user_role on users.id = user_role.user_id\n " +
             " Join roles on user_role.role_id = roles.id\n " +
             " where users.flag_delete = 0 and roles.name like :searchJob and users.name like :searchName and users.employee_phone like :searchPhone; ")
-    Page<User> findAllBy(Pageable pageable, @Param("searchJob") String searchJob,@Param("searchName") String searchName,@Param("searchPhone") String searchPhone);
+    Page<AppUser> findAllBy(Pageable pageable, @Param("searchJob") String searchJob,@Param("searchName") String searchName,@Param("searchPhone") String searchPhone);
 
     /**
      * method :deleteUserById()
@@ -52,5 +52,5 @@ public interface IEmployeeRepository extends JpaRepository<User,Long> {
      * return: user
      */
     @Query(nativeQuery = true,value = " select  * from users where id= :id")
-    User findUserById(@Param("id") Long id);
+    AppUser findUserById(@Param("id") Long id);
 }

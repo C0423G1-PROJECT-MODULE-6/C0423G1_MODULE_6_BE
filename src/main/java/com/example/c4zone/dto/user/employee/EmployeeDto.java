@@ -1,12 +1,12 @@
 package com.example.c4zone.dto.user.employee;
-import com.example.c4zone.model.user.Role;
+import com.example.c4zone.model.user.UserRole;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import java.sql.Date;
 public class EmployeeDto implements Validator {
     private Long id;
     private String userName;
-    private Role role;
+    private UserRole role;
     private String employeeName;
     private String employeeCode;
     private String employeeAddress;
