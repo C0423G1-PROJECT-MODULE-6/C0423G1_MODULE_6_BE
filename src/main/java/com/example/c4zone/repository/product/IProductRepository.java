@@ -1,6 +1,6 @@
 package com.example.c4zone.repository.product;
-
 import com.example.c4zone.dto.product.IProductDto;
+import com.example.c4zone.dto.order.IProductDtoOrder;
 import com.example.c4zone.model.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,6 +50,11 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "id_series = :#{#product.series.idSeries}, id_type = :#{#product.type.idType} " +
             "WHERE id_product = :#{#product.idProduct}", nativeQuery = true)
     void updateProduct(@Param("product") Product product);
+    @Query(value = "select id_product as idProductOrder, name_product as nameProductOrder, " +
+            "price_product as priceProductOrder " +
+            "from product " +
+            "where id_product = :id",nativeQuery = true)
+    IProductDtoOrder findProductByIdOrder(Long id);
 
     @Query(value = "SELECT " +
             "    p.id_product AS id," +
