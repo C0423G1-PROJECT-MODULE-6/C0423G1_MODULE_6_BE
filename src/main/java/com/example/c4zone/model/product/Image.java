@@ -10,7 +10,7 @@ public class Image {
     private Long id;
     private String name;
     @ManyToOne
-    @JoinColumn(name = "id_product",referencedColumnName = "id_product")
+    @JoinColumn(name = "id_product",referencedColumnName = "idProduct")
     private Product product;
 
     public Image() {

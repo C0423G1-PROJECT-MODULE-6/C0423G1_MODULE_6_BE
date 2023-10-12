@@ -12,7 +12,6 @@ import javax.persistence.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_product")
     private long idProduct;
     private String nameProduct;
     private String screenProduct;
@@ -23,6 +22,7 @@ public class Product {
     private String batteryProduct;
     private double weightProduct;
     private double quantityProduct;
+    private double priceProduct;
     @ManyToOne
     @JoinColumn(name = "id_capacity",referencedColumnName = "id_capacity")
     private Capacity capacity;
@@ -38,6 +38,4 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "id_type",referencedColumnName = "id_type")
     private Type type;
-
-
 }

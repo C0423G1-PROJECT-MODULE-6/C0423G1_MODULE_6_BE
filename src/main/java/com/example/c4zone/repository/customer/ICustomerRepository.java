@@ -1,8 +1,21 @@
 package com.example.c4zone.repository.customer;
 
-import org.springframework.stereotype.Controller;
+import com.example.c4zone.dto.order.ICustomerDtoOrder;
+import com.example.c4zone.model.customer.Customer;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-@Controller
+@Repository
 
-public interface ICustomerRepository {
+public interface ICustomerRepository extends JpaRepository<Customer,Long> {
+
+    @Query(value = "select id_customer as idCustomerOrder, name_customer as customerNameOrder" +
+            ",phone_number_customer as customerPhoneorder " +
+            ",address_customer as addressCustomerOrder,birth_date_customer as birthDayCustomerOrder" +
+            ",email_customer as emailCustomerOrder " +
+            "from customer " +
+            "where id_customer = :id",nativeQuery = true)
+    ICustomerDtoOrder findCustomerById(@Param("id") Long id);
 }
