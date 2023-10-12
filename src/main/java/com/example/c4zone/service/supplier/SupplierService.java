@@ -1,5 +1,6 @@
 package com.example.c4zone.service.supplier;
 
+import com.example.c4zone.dto.warehouse.ISupplierDtoWarehouse;
 import com.example.c4zone.model.supplier.Supplier;
 import com.example.c4zone.repository.supplier.ISupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,10 @@ public class SupplierService implements ISupplierService {
     @Override
     public Supplier findByIdSupplier(Long id) {
         return supplierRepository.findSupplierById(id);
+    }
+
+    @Override
+    public ISupplierDtoWarehouse findSupplierByIdWarehouse(Long id) {
+        return supplierRepository.findSupplierByIdWarehouse(id);
     }
 }
