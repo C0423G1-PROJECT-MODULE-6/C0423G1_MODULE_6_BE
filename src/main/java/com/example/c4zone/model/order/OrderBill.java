@@ -22,7 +22,12 @@ public class OrderBill {
 
     @Column(columnDefinition = "date")
     private String dateOfOrder;
+    @Column(columnDefinition = "time")
+    private String timeOfOrder;
     private Double totalMoney;
+    private String paymentMethod;
+    private Integer printStatus;
+
 
     @ManyToOne
     @JoinColumn(name = "id_customer",referencedColumnName = "idCustomer")

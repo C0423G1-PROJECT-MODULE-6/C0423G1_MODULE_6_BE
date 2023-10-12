@@ -31,6 +31,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     Page<Customer> findAllCustomerByGender(Pageable pageable, @Param("name") String valueSearchName, @Param("gender") Boolean valueSearchGender);
     @Query(value = "select * from customer where name_customer like :name and TIMESTAMPDIFF(YEAR, birth_date_customer, CURDATE()) >= 0 ", nativeQuery = true)
     Page<Customer> findAllCustomerByName(Pageable pageable, @Param("name") String valueSearchName);
+    /**
+     * Author: ThoiND
+     * Goal: findCustomerById at Order
+     */
     @Query(value = "select id_customer as idCustomerOrder, name_customer as customerNameOrder" +
             ",phone_number_customer as customerPhoneorder " +
             ",address_customer as addressCustomerOrder,birth_date_customer as birthDayCustomerOrder" +
