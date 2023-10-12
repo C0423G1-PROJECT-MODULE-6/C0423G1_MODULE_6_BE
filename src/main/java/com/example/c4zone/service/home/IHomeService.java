@@ -10,4 +10,6 @@ public interface IHomeService {
     List<Product> getBestsellers();
     String getAvatarByProductId(Long product_id);
     List <String> getColorsOfAProductByName(String name);
+    List<String> getImageLinksById(Long id);
+    List<String> getCapacitiesByName(String name);
 }

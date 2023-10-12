@@ -16,4 +16,34 @@ public class HomeService implements IHomeService {
     public List<Product> getProductsByName(String name,String sortName,String sortType) {
         return homeRepository.getProductsByName(name,sortName ,sortType) ;
     }
+
+    @Override
+    public Product getProductById(Long id) {
+        return homeRepository.getProductById(id);
+    }
+
+    @Override
+    public List<Product> getBestsellers() {
+        return homeRepository.getBestsellers();
+    }
+
+    @Override
+    public String getAvatarByProductId(Long product_id) {
+        return homeRepository.getAvatarByProductId(product_id);
+    }
+
+    @Override
+    public List<String> getColorsOfAProductByName(String name) {
+        return homeRepository.getColorsOfAProductByName(name);
+    }
+
+    @Override
+    public List<String> getImageLinksById(Long id) {
+        return homeRepository.getImageLinksById(id);
+    }
+
+    @Override
+    public List<String> getCapacitiesByName(String name) {
+        return homeRepository.getCapacitiesByName(name);
+    }
 }

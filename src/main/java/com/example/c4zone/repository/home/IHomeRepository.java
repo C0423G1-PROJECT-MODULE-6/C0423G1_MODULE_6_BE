@@ -12,7 +12,14 @@ import java.util.List;
 @Controller
 
 public interface IHomeRepository extends JpaRepository<Product, Long> {
-@Query(value = "SELECT \n" +
+    /**
+     * @author Tai Phat
+     * @param name
+     * @param sortName : must be product_id or price
+     * @param sortType : asc or desc
+     * @return a list of product combining with sorting type. This method is born for list page and searching function
+     */
+    @Query(value = "SELECT \n" +
         "    p.id_product AS id,\n" +
         "    p.name_product AS name,\n" +
         "    p.price_product AS price,\n" +
@@ -30,7 +37,13 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
         "ORDER BY :sortName :sortType;", nativeQuery = true)
     List<Product> getProductsByName(@Param("name") String name,@Param("sortName") String sortName, @Param("sortType") String sortType);
 
-@Query(value = "SELECT \n" +
+
+    /**
+     * @author Tai Phat
+     * @param id
+     * @return all information of a product. These values will be shown in detail page in specification part.
+     */
+    @Query(value = "SELECT \n" +
         "    p.id_product AS id,\n" +
         "    p.name_product AS name,\n" +
         "    p.battery_product AS battery,\n" +
@@ -65,8 +78,11 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
         "    id = :id \n",nativeQuery = true)
     Product getProductById(@Param("id") Long id);
 
-
-@Query(value = "SELECT \n" +
+    /**
+     * @author Tai Phat
+     * @return 8 products that are bestsellers of C4ZONE store
+     */
+    @Query(value = "SELECT \n" +
         "    p.id_product AS id,\n" +
         "    p.name_product AS name,\n" +
         "    p.price_product AS price,\n" +
@@ -82,8 +98,12 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
     List<Product> getBestsellers();
 
 
-
-@Query(value = "  SELECT \n" +
+    /**
+     * @author Tai Phat
+     * @param product_id
+     * @return URL of the avatar of the product
+     */
+    @Query(value = "  SELECT \n" +
         "    name\n" +
         "FROM\n" +
         "    image\n" +
@@ -92,7 +112,12 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
         "LIMIT 1",nativeQuery = true)
 String getAvatarByProductId(@Param("product_id") Long product_id);
 
-@Query(value = " SELECT \n" +
+    /**
+     * @author Tai Phat
+     * @param name: this name must be formatted before receive ex: Iphone 14 pro max 128GB -> Iphone 14 pro max
+     * @return all colors of a specific product
+     */
+    @Query(value = " SELECT \n" +
         "    color.name\n" +
         "FROM\n" +
         "    product\n" +
@@ -103,8 +128,12 @@ String getAvatarByProductId(@Param("product_id") Long product_id);
     List<String> getColorsOfAProductByName(@Param("name") String name);
 
 
-
-@Query(value = "SELECT \n" +
+    /**
+     * @author Tai Phat
+     * @param name: this name must be formatted before receive ex: Iphone 14 pro max 128GB -> Iphone 14 pro max
+     * @return a list of capacities of a product
+     */
+    @Query(value = "SELECT \n" +
         "    capacity.name AS capacity,\n" +
         "    product.name_product AS product_name\n" +
         "FROM\n" +
@@ -113,11 +142,15 @@ String getAvatarByProductId(@Param("product_id") Long product_id);
         "    capacity ON capacity.id_capacity = product.id_capacity\n" +
         "WHERE\n" +
         "    name_product LIKE :name",nativeQuery = true)
-    List<Product> getCapacitiesByName(@Param("name")String name);
+    List<String> getCapacitiesByName(@Param("name")String name);
 
 
-
-@Query(value="SELECT \n" +
+    /**
+     * @author Tai Phat
+     * @param product_id
+     * @return a list of images of a product
+     */
+    @Query(value="SELECT \n" +
         "    name\n" +
         "FROM\n" +
         "    image\n" +
