@@ -1,7 +1,5 @@
 package com.example.c4zone.service.user.impl;
-
 import com.example.c4zone.model.user.AppUser;
-
 import com.example.c4zone.repository.user.IEmployeeRepository;
 import com.example.c4zone.service.user.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +35,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public void editUser(AppUser user) {
-
-    }
-
-    @Override
     public String getNextCode() {
 
             String code = employeeRepository.getLastCodeEmployee();
@@ -61,8 +54,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     public void updateEmployee(AppUser employee) {
-        employeeRepository.updateEmployee(employee,employee.getId());
+
     }
 
-
+    @Override
+    public void editUser(AppUser user) {
+        employeeRepository.save(user);
+    }
 }
