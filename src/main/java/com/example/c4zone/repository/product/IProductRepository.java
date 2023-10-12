@@ -29,8 +29,8 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "VALUES ( :#{#product.nameProduct}, :#{#product.batteryProduct}, :#{#product.descriptionProduct}," +
             " :#{#product.cameraProduct}, :#{#product.priceProduct}, :#{#product.quantityProduct}, " +
             ":#{#product.screenProduct}, :#{#product.selfieProduct}, :#{#product.weightProduct}, " +
-            ":#{#product.capacity.idCapacity}, :#{#product.color.idColor}, :#{#product.cpu.idCpu}, " +
-            ":#{#product.ram.idRam}, :#{#product.series.idSeries}, :#{#product.type.idType}, true)", nativeQuery = true)
+            ":#{#product.capacity?.idCapacity}, :#{#product.color?.idColor}, :#{#product.cpu?.idCpu}, " +
+            ":#{#product.ram?.idRam}, :#{#product.series?.idSeries}, :#{#product.type?.idType}, true)", nativeQuery = true)
     void createProduct(@Param("product") Product product);
 
     @Query(value = "SELECT LAST_INSERT_ID()", nativeQuery = true)
