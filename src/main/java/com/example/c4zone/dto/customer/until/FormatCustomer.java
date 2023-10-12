@@ -23,5 +23,21 @@ public class FormatCustomer {
         LocalDate date = LocalDate.parse(dateStr, formatter);
         return !date.isAfter(currentDate);
     }
+    /**
+     * Author: TinDT
+     * Goal:  calculate age for customer
+     */
+        public static int calculateAge(String birthDate) {
+            // Định dạng của ngày tháng năm trong chuỗi đầu vào
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
+            // Chuyển chuỗi thành LocalDate
+            LocalDate birthLocalDate = LocalDate.parse(birthDate, formatter);
+
+            // Tính toán tuổi
+            LocalDate currentDate = LocalDate.now();
+            int age = currentDate.getYear() - birthLocalDate.getYear();
+
+            return age;
+        }
 }
