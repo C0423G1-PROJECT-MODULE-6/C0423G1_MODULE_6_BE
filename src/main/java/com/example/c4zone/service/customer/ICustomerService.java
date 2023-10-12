@@ -8,6 +8,13 @@ import org.springframework.data.domain.Pageable;
 public interface ICustomerService {
     Page<Customer> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, Boolean valueSearchGender);
     ICustomerDtoOrder findCustomerByIdOrder(Long id);
+    /**
+     * Author: TinDT
+     * Goal: save customers
+     */
+    void saveCustomer(Customer customer);
 
+    Customer findCustomerByPhone(String phoneNumberCustomer);
 
+    Customer findCustomerByEmail(String emailCustomer);
 }
