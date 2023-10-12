@@ -32,4 +32,11 @@ public interface IEmployeeService {
      * @return void
      */
     void createEmployee(AppUser user);
+    /**
+     * Author: CaoNV
+     * Date:12/10/2023
+     * update employee
+     * @param employee
+     */
+    void updateEmployee(AppUser employee);
 }

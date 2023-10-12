@@ -66,4 +66,19 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
      */
     @Query(value = "select employee_code from users where id = (select max(id) from users) and flag_delete = false",nativeQuery = true)
     String getLastCodeEmployee();
+
+    /**
+     * Author: CaoNV
+     * Date: 16/09/2023
+     * Use to update employee
+     * @param employee
+     * @param id
+     * @return void
+     */
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE `c4_zone`.`employee` SET `address` = :#{#employee.address}, `birthday` = :#{#employee.birthday}, `id_card` = :#{#employee.idCard}, `image` = :#{#employee.image}, `name_employee` = :#{#employee.nameEmployee}, `note` = :#{#employee.note}, `phone_number` = :#{#employee.phoneNumber}, `start_day` = :#{#employee.startDay} WHERE (`id` = :id) and flag_delete = false",nativeQuery = true)
+    void updateEmployee(@Param(value = "employee")AppUser employee,
+                        @Param(value = "id") Long id
+    );
 }
