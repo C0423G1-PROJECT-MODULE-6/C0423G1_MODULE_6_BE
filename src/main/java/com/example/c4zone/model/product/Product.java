@@ -17,6 +17,7 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long idProduct;
     private String nameProduct;
     private String screenProduct;
@@ -29,7 +30,7 @@ public class Product {
     private Double quantityProduct;
     private Double priceProduct;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Image> images = new ArrayList<>();
+    private List<Image> images;
     @ManyToOne
     @JoinColumn(name = "id_capacity", referencedColumnName = "idCapacity")
     private Capacity capacity;
@@ -45,6 +46,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "id_type", referencedColumnName = "idType")
     private Type type;
+
     @ManyToOne
     @JoinColumn(name = "id_series", referencedColumnName = "idSeries")
     private Series series;
