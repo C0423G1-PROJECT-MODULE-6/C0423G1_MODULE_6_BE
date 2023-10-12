@@ -1,9 +1,7 @@
 package com.example.c4zone.repository.user;
-
-
+import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.model.user.AppUser;
 import org.hibernate.query.NativeQuery;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -55,4 +53,31 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
      */
     @Query(nativeQuery = true,value = " select  * from users where id= :id")
     AppUser findUserById(@Param("id") Long id);
+
+
+
+
+    /**
+     * Author: CaoNV
+     * Date: 12/10/2023
+     * Get code of employee latest
+     * @return  code of employee latest
+     */
+    @Query(value = "select employee_code from users where id = (select max(id) from users) and flag_delete = false",nativeQuery = true)
+    String getLastCodeEmployee();
+
+    /**
+     * Author: CaoNV
+     * Date: 16/09/2023
+     * Use to update employee
+     * @param employee
+     * @param id
+     * @return void
+     */
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE `c4_zone`.`app_user` SET `employee_address` = :#{#employee.employeeAddress}, `employee_birthday` = :#{#employee.employeeBirthday}, `employee_id_card` = :#{#employee.employeeIdCard}, `employee_image` = :#{#employee.employeeImage}, `employee_name` = :#{#employee.employeeName}, `employee_phone` = :#{#employee.employeePhone}, `employee_start_date` = :#{#employee.employeeStartDate} WHERE (`id` = :id) and flag_delete = false",nativeQuery = true)
+    void updateEmployee(@Param(value = "employee")AppUser employee,
+                        @Param(value = "id") Long id
+    );
 }

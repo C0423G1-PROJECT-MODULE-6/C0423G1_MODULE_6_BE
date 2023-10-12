@@ -7,4 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface IWareHouseService {
     Page<IWarehouseProjection> findAll(Pageable pageable);
+    void ImportProduct(WareHouse wareHouse);
 }

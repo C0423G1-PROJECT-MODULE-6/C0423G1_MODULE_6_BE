@@ -15,6 +15,13 @@ public interface ICustomerService {
      * return HttpStatus
      */
     ICustomerDtoOrder findCustomerByIdOrder(Long id);
+    /**
+     * Author: TinDT
+     * Goal: save customers
+     */
+    void saveCustomer(Customer customer);
 
+    Customer findCustomerByPhone(String phoneNumberCustomer);
 
+    Customer findCustomerByEmail(String emailCustomer);
 }

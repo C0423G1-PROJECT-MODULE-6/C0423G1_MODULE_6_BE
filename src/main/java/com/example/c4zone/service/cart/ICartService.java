@@ -1,0 +1,12 @@
+package com.example.c4zone.service.cart;
+
+import com.example.c4zone.model.customer.Customer;
+import com.example.c4zone.model.order.Cart;
+
+public interface ICartService {
+    /**
+     * Author: TinDT
+     * Goal: create cart for sale page
+     */
+    void saveCart(Cart cart);
+}

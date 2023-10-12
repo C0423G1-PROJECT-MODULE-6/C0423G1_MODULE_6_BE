@@ -1,7 +1,6 @@
 package com.example.c4zone.service.user.impl;
 
 import com.example.c4zone.model.user.AppUser;
-
 import com.example.c4zone.repository.user.IEmployeeRepository;
 import com.example.c4zone.service.user.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import java.util.List;
 public class EmployeeServiceImpl implements IEmployeeService {
     @Autowired
     private IEmployeeRepository employeeRepository;
+
     @Override
     public List<AppUser> findAllUser() {
         return employeeRepository.findAll();
@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     public Page<AppUser> findAllUserBy(Pageable pageable, String searchJob, String searchName, String searchPhone) {
-        return employeeRepository.findAllBy(pageable,searchJob,searchName,searchPhone);
+        return employeeRepository.findAllBy(pageable, searchJob, searchName, searchPhone);
     }
 
     @Override
@@ -36,8 +36,26 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public void createUser(AppUser user) {
+    public String getNextCode() {
+
+        String code = employeeRepository.getLastCodeEmployee();
+        if (code == null) {
+            return "NV001";
+        }
+        int currentNumber = Integer.parseInt(code.substring(2));
+        currentNumber++;
+        return "NV" + String.format("%03d", currentNumber);
+
+    }
+
+    @Override
+    public void createEmployee(AppUser user) {
         employeeRepository.save(user);
+    }
+
+    @Override
+    public void updateEmployee(AppUser employee) {
+        employeeRepository.updateEmployee(employee, employee.getId());
     }
 
     @Override

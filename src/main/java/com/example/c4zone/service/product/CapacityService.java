@@ -10,6 +10,13 @@ import java.util.List;
 public class CapacityService implements ICapacityService{
     @Autowired
     private ICapacityRepository capacityRepository;
+
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return find all list capacity
+     */
     @Override
     public List<Capacity> findAll() {
         return capacityRepository.findAll();

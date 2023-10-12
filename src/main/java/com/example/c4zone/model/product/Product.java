@@ -22,12 +22,13 @@ public class Product {
     private String nameProduct;
     private String screenProduct;
     private String cameraProduct;
+    @Column(columnDefinition = "LONGTEXT")
     private String descriptionProduct;
     private Boolean statusBusiness = true;
     private String selfieProduct;
     private String batteryProduct;
     private String weightProduct;
-    private Double quantityProduct;
+    private Long quantityProduct;
     private Double priceProduct;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Image> images;
