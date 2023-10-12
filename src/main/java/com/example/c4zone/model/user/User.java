@@ -15,73 +15,68 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-    @Entity
-    @Table(name = "users", uniqueConstraints = {
-            @UniqueConstraint(columnNames = {
-                    "username"
-            }),
-            @UniqueConstraint(columnNames = {
-                    "email"
-            })
-    })
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public class User {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private long id;
 
-        private String username;
+@Entity
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "username"
+        }),
+        @UniqueConstraint(columnNames = {
+                "email"
+        })
+})
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-        @NaturalId
-        @JsonIgnore
-        private String password;
+    private String username;
 
-        @ManyToMany(fetch = FetchType.EAGER)
-        @JoinTable(name = "user_role",
-                joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
-        Set<Role> roles = new HashSet<>();
+    @NaturalId
+    @JsonIgnore
+    private String password;
 
-        private static final long OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 minutes
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+    joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
+    Set<Role> roles = new HashSet<>();
 
-        @Column(name = "one_time_password")
-        private String oneTimePassword;
+    private static final long OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 minutes
 
-        @Column(name = "otp_requested_time")
-        private Date otpRequestedTime;
+    @Column(name = "one_time_password")
+    private String oneTimePassword;
 
-        private String employeeName;
-        private String employeeCode;
-        private String employeeAddress;
-        private String employeePhone;
+    @Column(name = "otp_requested_time")
+    private Date otpRequestedTime;
 
-        @Lob
-        private String employeeImage;
-        private String employeeIdCard;
-        private Date employeeBirthday;
-        private Date employeeStartDate;
+    private String employeeName;
+    private String employeeCode;
+    private String employeeAddress;
+    private String employeePhone;
 
-        @NaturalId
-        private String email;
+    @Lob
+    private String employeeImage;
+    private String employeeIdCard;
+    private Date employeeBirthday;
+    private Date employeeStartDate;
 
-        private String employeeGender;
+    @NaturalId
+    private String email;
 
-        @Column(columnDefinition = "bit(1) default true")
-        private boolean flagDelete = true;
+    private String employeeGender;
+
+    @Column(columnDefinition = "bit(1) default true")
+    private boolean flagDelete = true;
 
 
-        public boolean isOTPRequired() {
-            if (this.getOneTimePassword() == null) {
-                return false;
-            }
+    public boolean isOTPRequired() {
+        if (this.getOneTimePassword() == null) {
+            return false;
 
-            long currentTimeInMillis = System.currentTimeMillis();
-            long otpRequestedTimeInMillis = this.otpRequestedTime.getTime();
-
-            // OTP expires
-            return otpRequestedTimeInMillis + OTP_VALID_DURATION >= currentTimeInMillis;
         }
 
         public User(String name, String username, String email, String encode) {

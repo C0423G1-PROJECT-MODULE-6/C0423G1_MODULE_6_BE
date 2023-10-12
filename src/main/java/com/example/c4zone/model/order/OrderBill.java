@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
@@ -20,6 +22,7 @@ public class OrderBill {
 
     @Column(columnDefinition = "date")
     private String dateOfOrder;
+    private Double totalMoney;
 
     @ManyToOne
     @JoinColumn(name = "id_customer",referencedColumnName = "idCustomer")
@@ -27,5 +30,10 @@ public class OrderBill {
 
     @ManyToOne
     @JoinColumn(name = "id_user",referencedColumnName = "id")
+
     private AppUser user;
+
+    @OneToMany(mappedBy = "orderBill", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderDetail> orderDetails = new ArrayList<>();
+
 }
