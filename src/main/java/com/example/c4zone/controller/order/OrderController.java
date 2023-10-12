@@ -1,7 +1,13 @@
 package com.example.c4zone.controller.order;
 
+
+
 import com.example.c4zone.dto.order.ICustomerDtoOrder;
 import com.example.c4zone.dto.order.IProductDtoOrder;
+import com.example.c4zone.dto.order.OrderPaymentDto;
+import com.example.c4zone.dto.order.ProductDtoOrder;
+import com.example.c4zone.model.order.OrderBill;
+import com.example.c4zone.model.order.OrderDetail;
 import com.example.c4zone.service.customer.ICustomerService;
 import com.example.c4zone.service.order.IOrderDetailService;
 import com.example.c4zone.service.product.IProductService;
@@ -9,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RequestMapping("/api/admin/order")
@@ -30,7 +38,7 @@ public class OrderController {
     @GetMapping("/product/{id}")
     public ResponseEntity<IProductDtoOrder> findProduct(@PathVariable Long id){
         IProductDtoOrder productDtoOrder = productService.findProductByIdOrder(id);
+
         return new ResponseEntity<>(productDtoOrder,HttpStatus.OK);
     }
-
 }

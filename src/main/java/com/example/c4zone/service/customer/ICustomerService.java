@@ -12,5 +12,14 @@ public interface ICustomerService {
     ICustomerDtoOrder findCustomerByIdOrder(Long id);
 
 
+    /**
+     * Author: TinDT
+     * Goal: save customers
+     */
+    void saveCustomer(Customer customer);
+
+    Customer findCustomerByPhone(String phoneNumberCustomer);
+
     Optional<Customer> findById(Long id);
+    Customer findCustomerByEmail(String emailCustomer);
 }

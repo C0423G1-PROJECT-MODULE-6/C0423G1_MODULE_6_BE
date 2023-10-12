@@ -2,7 +2,7 @@ package com.example.c4zone.model.order;
 
 
 import com.example.c4zone.model.customer.Customer;
-import com.example.c4zone.model.user.User;
+import com.example.c4zone.model.user.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +22,12 @@ public class OrderBill {
 
     @Column(columnDefinition = "date")
     private String dateOfOrder;
+    @Column(columnDefinition = "time")
+    private String timeOfOrder;
     private Double totalMoney;
+    private String paymentMethod;
+    private Integer printStatus;
+
 
     @ManyToOne
     @JoinColumn(name = "id_customer",referencedColumnName = "idCustomer")
@@ -30,8 +35,10 @@ public class OrderBill {
 
     @ManyToOne
     @JoinColumn(name = "id_user",referencedColumnName = "id")
-    private User user;
+
+    private AppUser user;
 
     @OneToMany(mappedBy = "orderBill", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails = new ArrayList<>();
+
 }
