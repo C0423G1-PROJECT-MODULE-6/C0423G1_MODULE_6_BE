@@ -60,7 +60,29 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     IProductDtoOrder findProductByIdOrder(Long id);
 
 
+    /**
+     * author :QuanND
+     * work day : 12/10/2023
+     * method :
+     *         getAllByName()
+     *         getAllByPrice()
+     *         getAllByPriceMin()
+     *         getAllByPriceMax()
+     *         getAllByType()
+     *         getAllByQuantity()
+     *         getAllByQuantityMin()
+     *         getAllByQuantityMax()
+     *         findProductByIdWarehouse()
+     *         removeProduct()
+     */
 
+
+    /**
+     *
+     * @param pageable
+     * @param name
+     * @return page IProductDto
+     */
     @Query(value = "SELECT " +
             "    p.id_product AS id," +
             "    p.battery_product AS battery," +
