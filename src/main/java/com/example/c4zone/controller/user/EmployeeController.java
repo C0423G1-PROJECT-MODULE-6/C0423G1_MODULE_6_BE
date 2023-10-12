@@ -94,5 +94,35 @@ public class EmployeeController {
 
         return new ResponseEntity<>("Thêm mới thành công", HttpStatus.OK);
     }
+    /**
+     * Author: CaoNV
+     * Date: 12/10/2023
+     * Receive data and validate, if there is an error, return BAD_REQUEST,
+     * then save the employee to the DB. If saved successfully, return OK
+     * @param id id employee
+     * @param employeeDto validate info
+     * @param bindingResult return error
+     * @return Responese Entity with message
+     */
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<String> updateEmployee(@PathVariable Long id,
+                                                 @RequestBody EmployeeDto employeeDto,
+                                                 BindingResult bindingResult){
+        if (id == null){
+            return new ResponseEntity<>("Không có id",HttpStatus.BAD_REQUEST);
+        }
+        new EmployeeDto().validate(employeeDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors().toString(),HttpStatus.NOT_ACCEPTABLE);
+        }
+        AppUser employee = employeeService.getUserById(id);
+        if(employee==null){
+            return new ResponseEntity<>("Không tìm thấy",HttpStatus.NOT_FOUND);
+        }
+        BeanUtils.copyProperties(employeeDto, employee);
+        employeeService.updateEmployee(employee);
+        return new ResponseEntity<>("Update thành công",HttpStatus.OK);
+    }
+
 
 }
