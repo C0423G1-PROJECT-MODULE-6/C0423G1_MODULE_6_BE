@@ -15,7 +15,7 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
     /**
      * method findAllwarehouse
      * Create: 12-10-2023
-     * return: List
+     * return: List warehouse
      * author: PhapTM
      */
     @Query(value = " SELECT " +
@@ -31,6 +31,13 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
             "JOIN supplier s ON w.supplier_id = s.id_supplier " +
             "GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
     Page<IWarehouseProjection> findAllWareHouse(Pageable pageable);
+
+    /**
+     * method: ImportProduct
+     * author: PhapTM
+     * Create: 12-10-2023
+     * @param wareHouse
+     */
 
     @Transactional
     @Modifying
