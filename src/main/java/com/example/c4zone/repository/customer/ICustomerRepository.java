@@ -17,24 +17,24 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     /**
      * Author: TinDT
      * Goal: save customers
      */
 
-    @Modifying
+
     @Transactional
-    @Query(value = "INSERT INTO c4_zone.customer(name_customer,gender_customer,birth_date_customer,address_customer,phone_number_customer,email_customer,status_customer) VALUES(:#{#customer.name_customer},:#{#customer.gender_customer},:#{#customer.birth_date_customer},:#{#customer.address_customer},:#{#customer.phone_number_customer},:#{#customer.email_customer},:#{#customer.status_customer})", nativeQuery = true)
-    List<Capacity> saveCustomer(Customer customer);
+    @Modifying
+    @Query(value = "INSERT INTO c4_zone.customer(name_customer, gender_customer, birth_date_customer, address_customer, phone_number_customer, email_customer, status_customer) VALUES(:#{#customer.nameCustomer}, :#{#customer.genderCustomer}, :#{#customer.dateOfBirthCustomer}, :#{#customer.addressCustomer}, :#{#customer.phoneNumberCustomer}, :#{#customer.emailCustomer}, :#{#customer.statusCustomer});", nativeQuery = true)
+   void saveCustomer(Customer customer);
     /**
      * Author: TinDT
      * Goal: save customers
      */
     @Query(value = "select * from  c4_zone.customer where phone_number_customer = :phone_number_customer  ", nativeQuery = true)
 
-    public Customer findCustomerByPhone(@Param("phone_number_customer") String phoneNumberCustomer);
+     Customer findCustomerByPhone(@Param("phone_number_customer") String phoneNumberCustomer);
     /**
      * Author: TinDT
      * Goal: save customers
@@ -42,7 +42,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query(value = "select * from  c4_zone.customer where email_customer = :email_customer  ", nativeQuery = true)
 
-    public Customer findCustomerByEmail(@Param("email_customer") String email);
+     Customer findCustomerByEmail(@Param("email_customer") String email);
 
     @Query(value = "select * from customer where name_customer like :name and TIMESTAMPDIFF(YEAR, birth_date_customer, CURDATE()) =:age and gender_customer = :gender ", nativeQuery = true)
     Page<Customer> findAllCustomerByAge(Pageable pageable, @Param("name") String valueSearchName,@Param("age") String valueAge, @Param("gender") Boolean valueSearchGender);

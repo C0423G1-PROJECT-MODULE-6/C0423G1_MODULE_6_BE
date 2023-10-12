@@ -27,8 +27,8 @@ import java.util.Optional;
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
-    private static final String EMAIL = "email_customer";
-    private static final String PHONE = "phone_number_customer";
+    private static final String EMAIL = "emailCustomer";
+    private static final String PHONE = "phoneNumberCustomer";
 
     @GetMapping("/list")
     public ResponseEntity<Page<Customer>> listCustomer(@RequestParam(name = "_limit") int limit,
@@ -65,7 +65,7 @@ public class CustomerController {
      * * return HttpStatus
      */
     @PostMapping("/create")
-    public ResponseEntity<Map<String,String>> createCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult) {
+    public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult) {
         Customer customer = new Customer();
         Map<String, String> errors = new HashMap<>();
         new CustomerDto().validate(customerDto, bindingResult);
@@ -88,6 +88,6 @@ public class CustomerController {
         BeanUtils.copyProperties(customerDto, customer);
         customerService.saveCustomer(customer);
 
-        return new ResponseEntity<>( HttpStatus.OK);
+        return new ResponseEntity<>(customerService.findCustomerByPhone(customer.getPhoneNumberCustomer()),HttpStatus.OK);
     }
 }
