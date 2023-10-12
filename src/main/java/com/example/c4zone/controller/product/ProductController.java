@@ -156,8 +156,6 @@ public class ProductController {
     }
     @DeleteMapping("/")
     public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id){
-
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
