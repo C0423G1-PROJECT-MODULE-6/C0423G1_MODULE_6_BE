@@ -49,9 +49,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable().cors().and()
-                .authorizeRequests()
+        httpSecurity.csrf().disable().cors().and()//
+                .authorizeRequests()//
                 .antMatchers(
+//                        "/api/**",
                         "/api/user/create/**",
                         "/api/user/confirm/**",
 //                        "/api/user/information/**",
@@ -63,25 +64,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/admin/product/**",
 
                         "/api/admin/employee/list/**",
+                        "/api/user/register/**",
+
+
+                        "/api/admin/employee/list/**",
                         "/api/admin/customer/list/**",
                         "/api/admin/customer/history/**",
 
                         "/api/user/get-id-app-user/{userName}",
-                        "/api/admin/employee/**"
-
+                        "/api/admin/employee/**",
+                        "/api/admin/supplier/**"
                 ).permitAll()
 
                 .antMatchers(
-                        "/api/user/register/**",
-                        "/api/user/information/**",
-                        "/api/user/logout/{userName}/**",
-                        "/api/user/get-id-app-user/{userName}"
-                ).hasAnyAuthority("ROLE_ADMIN", "ROLE_SALE", "ROLE_BUSINESS", "ROLE_WAREHOUSE")
+//                        "/api/user/register/**",
+//                        "/api/user/information/**",
+//                        "/api/user/logout/{userName}/**",
+//                        "/api/user/get-id-app-user/{userName}"
+                ).hasAnyAuthority("ROLE_ADMIN", "ROLE_SALE", "ROLE_BUSINESS", "ROLE_WAREHOUSE")//
 
                 .antMatchers(
                         //admin
 
-                ).hasAnyAuthority("ROLE_ADMIN")
+                        "/api/user/information/**",
+                        "/api/user/logout/{userName}/**",
+                        "/api/user/get-id-app-user/{userName}/**"
+
+                ).hasAnyAuthority("ROLE_ADMIN")//
 
 
                 .antMatchers(
@@ -98,12 +107,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         //warehouse
                 ).hasAnyAuthority("ROLE_WAREHOUSE")
 
-                .anyRequest()
+                .anyRequest()//
                 .authenticated()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and()//
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)//
                 .and().
-                sessionManagement()
+                sessionManagement()//
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
