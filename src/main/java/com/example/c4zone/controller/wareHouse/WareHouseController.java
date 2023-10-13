@@ -92,6 +92,9 @@ public class WareHouseController {
     @GetMapping("/product/{id}")
     public ResponseEntity<IProductDto> chooseProduct(@PathVariable Long id) {
         IProductDto productDto = productService.findProductByIdWarehouse(id);
+        if(productDto == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
@@ -105,11 +108,14 @@ public class WareHouseController {
     @GetMapping("/supplier/{id}")
     public ResponseEntity<ISupplierDtoWarehouse> getSupplier(@PathVariable Long id) {
         ISupplierDtoWarehouse supplierDtoWarehouse = supplierService.findSupplierByIdWarehouse(id);
+        if(supplierDtoWarehouse ==null ){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(supplierDtoWarehouse, HttpStatus.OK);
     }
 
     /**
-     * Method: chooseProduct
+     * Method: chooseSupplier
      * Author: PhapTM
      * Create: 12-10-2023
      * @param warehouseDto create object by warehouseDto
