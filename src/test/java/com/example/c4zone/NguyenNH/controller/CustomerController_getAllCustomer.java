@@ -157,6 +157,7 @@ public class CustomerController_getAllCustomer {
                 .andExpect(jsonPath("content[0].statusCustomer").value(true));
     }
 
+
     @Test
     public void getAllCustomer_age_9() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -199,8 +200,59 @@ public class CustomerController_getAllCustomer {
                         .param("_page","0" )
                         .param("name_like", "")
                         .param("age", "")
-                        .param("gender", (String) null))
+                        .param("gender", "10"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getAllCustomer_gender_11() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/admin/customer/list")
+                        .param("_limit", "5")
+                        .param("_page","0" )
+                        .param("name_like", "")
+                        .param("age", "")
+                        .param("gender", "1"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("content[0].idCustomer").value(1))
+                .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Hồng Hà"))
+                .andExpect(jsonPath("content[0].genderCustomer").value(true))
+                .andExpect(jsonPath("content[0].emailCustomer").value("ha@gmail.com"))
+                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2021-10-10"))
+                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("123312654"))
+                .andExpect(jsonPath("content[0].addressCustomer").value("Ha Noi"))
+                .andExpect(jsonPath("content[0].statusCustomer").value(true))
+
+                .andExpect(jsonPath("content[4].idCustomer").value(9))
+                .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Hồng Nguyên"))
+                .andExpect(jsonPath("content[4].genderCustomer").value(true))
+                .andExpect(jsonPath("content[4].emailCustomer").value("nguyen@gmail.com"))
+                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2023-10-10"))
+                .andExpect(jsonPath("content[4].phoneNumberCustomer").value("023165489"))
+                .andExpect(jsonPath("content[4].addressCustomer").value("Ha Noi"))
+                .andExpect(jsonPath("content[4].statusCustomer").value(true))   ;
+    }
+
+    @Test
+    public void getAllCustomer_sortName_11() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/admin/customer/list")
+                        .param("_limit", "5")
+                        .param("_page", "0")
+                        .param("sortName", "1"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+    @Test
+    public void getAllCustomer_sortCount_11() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/admin/customer/list")
+                        .param("_limit", "5")
+                        .param("_page", "0")
+                        .param("sortCount", "1"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
     }
 }
