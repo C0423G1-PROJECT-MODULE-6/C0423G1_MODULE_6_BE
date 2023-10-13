@@ -307,6 +307,25 @@ public class CustomerRestController_CreateCustomer {
                 .andDo(print()).andExpect(status().is4xxClientError());
     }
     /**
+     * This function is used to check whether a phone number exists or not
+     * * Author: TinDT
+     */
+    @Test
+    public void create_Customer_phone_number_99() throws Exception {
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setNameCustomer("Đàm Thoại Tin");
+        customerDto.setDateOfBirthCustomer("2000-10-03");
+        customerDto.setAddressCustomer("16 Mỹ khê Đà Nẵng");
+        customerDto.setGenderCustomer(true);
+        customerDto.setPhoneNumberCustomer("0339779768");
+        customerDto.setEmailCustomer("aaacb@gmail.com");
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/admin/customer/create")
+                                .content(this.objectMapper.writeValueAsString(customerDto))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print()).andExpect(status().is4xxClientError());
+    }
+    /**
      * This function is used to check the validation of a specific field email is null
      * Author: TinDT
      */
@@ -327,7 +346,7 @@ public class CustomerRestController_CreateCustomer {
                 .andDo(print()).andExpect(status().is4xxClientError());
     }
     /**
-     * This function is used to check the validation of a specific field phone number is empty
+     * This function is used to check the validation of a specific field email is empty
      * Author: TinDT
      */
     @Test
@@ -347,7 +366,7 @@ public class CustomerRestController_CreateCustomer {
                 .andDo(print()).andExpect(status().is4xxClientError());
     }
     /**
-     * This function is used to check the validation of a specific field phone number is null
+     * This function is used to check specific field email validation instead of validation longer character length 11
      * Author: TinDT
      */
     @Test
@@ -386,7 +405,7 @@ public class CustomerRestController_CreateCustomer {
                 .andDo(print()).andExpect(status().is4xxClientError());
     }
     /**
-     * This function is used to check specific field phone number validation instead of validation longer character length 50
+     * This function is used to check specific field email validation instead of validation longer character length 50
      * Author: TinDT
      */
     @Test
@@ -398,6 +417,25 @@ public class CustomerRestController_CreateCustomer {
         customerDto.setGenderCustomer(true);
         customerDto.setPhoneNumberCustomer("0339756568");
         customerDto.setEmailCustomer("asadksamdjsakljdklnjsakldjklasjlkjdklajslkjdklajslkdjklasjdjaskljdaskljdklasjkldjlkasjdjklasjdlkjsajdlksajkldjlkasb@gmail.com");
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/admin/customer/create")
+                                .content(this.objectMapper.writeValueAsString(customerDto))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print()).andExpect(status().is4xxClientError());
+    }
+    /**
+     * This function is used to check whether a email exists or not
+     * * Author: TinDT
+     */
+    @Test
+    public void create_Customer_email_99() throws Exception {
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setNameCustomer("Đàm Thoại Tin");
+        customerDto.setDateOfBirthCustomer("2000-10-03");
+        customerDto.setAddressCustomer("16 Mỹ khê Đà Nẵng");
+        customerDto.setGenderCustomer(true);
+        customerDto.setPhoneNumberCustomer("0339756568");
+        customerDto.setEmailCustomer("ab@gmail.com");
         this.mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/admin/customer/create")
                                 .content(this.objectMapper.writeValueAsString(customerDto))
@@ -484,4 +522,25 @@ public class CustomerRestController_CreateCustomer {
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
     }
+    /**
+     * This function is used to check that all data is correct
+     * Author: TinDT
+     */
+    @Test
+    public void create_Customer() throws Exception {
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setNameCustomer("Đàm Thoại Tin");
+        customerDto.setDateOfBirthCustomer("2000-10-03");
+        customerDto.setAddressCustomer("Đà Nẵng");
+        customerDto.setGenderCustomer(true);
+        customerDto.setPhoneNumberCustomer("0334775712");
+        customerDto.setEmailCustomer("tinthoai@gmail.com");
+
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/admin/customer/create")
+                                .content(this.objectMapper.writeValueAsString(customerDto))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print()).andExpect(status().is2xxSuccessful());
+    }
+
 }
