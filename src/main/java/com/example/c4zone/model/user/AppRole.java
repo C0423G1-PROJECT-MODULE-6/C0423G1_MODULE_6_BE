@@ -24,11 +24,13 @@ public class AppRole {
 
     public AppRole() {
     }
+
     public AppRole(Long id, String name, Boolean flagDeleted) {
         this.id = id;
         this.name = name;
         this.flagDeleted = flagDeleted;
     }
+
     public Long getId() {
         return id;
     }

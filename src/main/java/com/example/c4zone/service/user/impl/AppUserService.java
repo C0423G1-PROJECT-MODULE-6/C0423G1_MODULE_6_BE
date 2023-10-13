@@ -33,6 +33,13 @@ public class AppUserService implements IAppUserService {
     private JavaMailSender mailSender;
 
 
+    /**
+     * method loadUserByUsername
+     * Create HaiBH
+     * Date 12-10-2023
+     * param String username
+     * return userDetails
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser appUser = appUserRepository.findAppUserByName(username);
@@ -54,6 +61,13 @@ public class AppUserService implements IAppUserService {
     }
 
 
+    /**
+     * method existsByUsername
+     * Create HaiBH
+     * Date 12-10-2023
+     * param String userName
+     * return boolean
+     */
     @Override
     public Boolean existsByUsername(String userName) {
         AppUser appUser = appUserRepository.findAppUserByName(userName);
@@ -61,8 +75,15 @@ public class AppUserService implements IAppUserService {
     }
 
 
+    /**
+     * method createNewAppUser
+     * Create HaiBH
+     * Date 12-10-2023
+     * param AppUser appUser,String role
+     * return boolean
+     */
     @Override
-    public Boolean createNewAppUser(AppUser appUser,String role) {
+    public Boolean createNewAppUser(AppUser appUser, String role) {
         AppUser currentAppUser = appUserRepository.findAppUserByName(appUser.getUserName());
         if (currentAppUser == null) {
             Integer amountAppUserCreated = appUserRepository.addNewAppUser(appUser);
@@ -75,20 +96,49 @@ public class AppUserService implements IAppUserService {
     }
 
 
+    /**
+     * method logout
+     * Create HaiBH
+     * Date 12-10-2023
+     * param String userName
+     * return boolean
+     */
     @Override
     public Boolean logout(String userName) {
         return appUserRepository.updateAppUserIsOffline(userName) > 0;
     }
 
+    /**
+     * method findAppUserIdByUserName
+     * Create HaiBH
+     * Date 12-10-2023
+     * param String userName
+     * return long
+     */
     @Override
     public Long findAppUserIdByUserName(String userName) {
         return appUserRepository.findIdByUserName(userName);
     }
+
+    /**
+     * method existsById
+     * Create HaiBH
+     * Date 12-10-2023
+     * param Long id
+     * return boolean
+     */
     @Override
-    public boolean existsById(Long id){
+    public boolean existsById(Long id) {
         return appUserRepository.existsById(id);
     }
 
+    /**
+     * method generateOneTimePassword
+     * Create HaiBH
+     * Date 12-10-2023
+     * param AppUser appUser, PasswordEncoder passwordEncoder
+     * return void
+     */
     @Override
     public void generateOneTimePassword(AppUser appUser, PasswordEncoder passwordEncoder) throws MessagingException, UnsupportedEncodingException {
         String OTP = RandomString.make(8);
@@ -102,6 +152,13 @@ public class AppUserService implements IAppUserService {
         sendOTPEmail(appUser, OTP);
     }
 
+    /**
+     * method sendOTPEmail
+     * Create HaiBH
+     * Date 12-10-2023
+     * param AppUser appUser, String OTP
+     * return void
+     */
     @Override
     public void sendOTPEmail(AppUser appUser, String OTP) throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();
@@ -126,18 +183,63 @@ public class AppUserService implements IAppUserService {
         mailSender.send(message);
     }
 
+    /**
+     * method updateOtp
+     * Create HaiBH
+     * Date 12-10-2023
+     * param AppUser appUser
+     * return void
+     */
     @Override
     public void updateOtp(AppUser appUser) {
-         appUserRepository.updateOtp(appUser);
+        appUserRepository.updateOtp(appUser);
     }
 
+    /**
+     * method findByUsername
+     * Create HaiBH
+     * Date 12-10-2023
+     * param String name
+     * return Optional
+     */
     @Override
     public Optional<AppUser> findByUsername(String name) {
         return appUserRepository.findAppUserByUserName(name);
     }
 
+    /**
+     * method findAppUserById
+     * Create HaiBH
+     * Date 12-10-2023
+     * param Long id
+     * return AppUser
+     */
     @Override
     public AppUser findAppUserById(Long id) {
         return appUserRepository.findAppUserById(id);
+    }
+
+    /**
+     * method updateInfoUser
+     * Create HaiBH
+     * Date 12-10-2023
+     * param AppUser appUser
+     * return void
+     */
+    @Override
+    public void updateInfoUser(AppUser appUser) {
+        appUserRepository.updateInfoUser(appUser);
+    }
+
+    /**
+     * method updatePass
+     * Create HaiBH
+     * Date 12-10-2023
+     * param AppUser appUser
+     * return void
+     */
+    @Override
+    public void updatePass(AppUser appUser) {
+        appUserRepository.updatePass(appUser);
     }
 }

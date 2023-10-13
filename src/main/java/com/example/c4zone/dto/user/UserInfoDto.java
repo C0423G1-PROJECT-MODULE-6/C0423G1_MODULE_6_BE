@@ -1,24 +1,26 @@
-package com.example.c4zone.model.user;
+package com.example.c4zone.dto.user;
 
-
+import com.example.c4zone.model.user.UserRole;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import java.util.Date;
 import java.util.Set;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppUser {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserInfoDto implements Validator {
     private Long id;
     private String userName;
     private String password;
@@ -26,9 +28,11 @@ public class AppUser {
     private Boolean flagOnline;
     private String employeeName;
     private String email;
+
     private String employeeCode;
     private String employeeAddress;
     private String employeePhone;
+
     private String employeeGender;
 
     @Lob
@@ -61,7 +65,7 @@ public class AppUser {
         return otpRequestedTimeInMillis + OTP_VALID_DURATION >= currentTimeInMillis;
     }
 
-    public AppUser(Long id, String userName, String password, Boolean flagDeleted, Boolean flagOnline, Set<UserRole> userRoleSet) {
+    public UserInfoDto(Long id, String userName, String password, Boolean flagDeleted, Boolean flagOnline, Set<UserRole> userRoleSet) {
         this.id = id;
         this.userName = userName;
         this.password = password;
@@ -148,5 +152,15 @@ public class AppUser {
 
     public void setUserRoleSet(Set<UserRole> userRoleSet) {
         this.userRoleSet = userRoleSet;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
     }
 }

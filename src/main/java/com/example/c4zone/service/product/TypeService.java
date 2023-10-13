@@ -11,6 +11,12 @@ import java.util.List;
 public class TypeService implements ITypeService{
     @Autowired
     private ITypeRepository typeRepository;
+    /**
+     * author: DaoPTA
+     * workday: 12/10/2023
+     *
+     * @return find all list type
+     */
     @Override
     public List<Type> findAll() {
         return typeRepository.findAll();
