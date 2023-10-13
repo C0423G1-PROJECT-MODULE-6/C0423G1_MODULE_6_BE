@@ -63,6 +63,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/admin/product/**",
 
                         "/api/admin/employee/list/**",
+                        "/api/user/register/**"
+
+
+                        "/api/admin/employee/list/**",
                         "/api/admin/customer/list/**",
                         "/api/admin/customer/history/**",
 
@@ -72,14 +76,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ).permitAll()
 
                 .antMatchers(
-                        "/api/user/register/**",
-                        "/api/user/information/**",
-                        "/api/user/logout/{userName}/**",
-                        "/api/user/get-id-app-user/{userName}"
+//                        "/api/user/register/**",
+//                        "/api/user/information/**",
+//                        "/api/user/logout/{userName}/**",
+//                        "/api/user/get-id-app-user/{userName}"
                 ).hasAnyAuthority("ROLE_ADMIN", "ROLE_SALE", "ROLE_BUSINESS", "ROLE_WAREHOUSE")
 
                 .antMatchers(
                         //admin
+
+                        "/api/user/information/**",
+                        "/api/user/logout/{userName}/**",
+                        "/api/user/get-id-app-user/{userName}/**"
 
                 ).hasAnyAuthority("ROLE_ADMIN")
 
