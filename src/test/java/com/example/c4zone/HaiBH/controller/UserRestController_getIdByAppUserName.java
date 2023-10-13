@@ -18,6 +18,11 @@ public class UserRestController_getIdByAppUserName {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: username = null
+     * @Throw: Exception
+     */
     @Test
     public void getIdByAppUserName_userName_1 () throws Exception {
         this.mockMvc.perform(
@@ -27,6 +32,11 @@ public class UserRestController_getIdByAppUserName {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: username = ""
+     * @Throw: Exception
+     */
     @Test
     public void getIdByAppUserName_username_2 () throws Exception {
         this.mockMvc.perform(
@@ -36,6 +46,11 @@ public class UserRestController_getIdByAppUserName {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: username = invalid username not exist in DB
+     * @Throw: Exception
+     */
     @Test
     public void getIdByAppUserName_username_3 () throws Exception {
         this.mockMvc.perform(
@@ -45,6 +60,11 @@ public class UserRestController_getIdByAppUserName {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: username = data exist in DB, successfully
+     * @Throw: Exception
+     */
     @Test
     public void getIdByAppUserName_username_4 () throws Exception {
         this.mockMvc.perform(
