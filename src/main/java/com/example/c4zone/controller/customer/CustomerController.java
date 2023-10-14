@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +28,9 @@ import java.util.Optional;
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
+    private static final String EMAIL_DTO = "emailCustomer";
+    private static final String PHONE_DTO = "phoneNumberCustomer";
 
-    private static final String EMAIL = "emailCustomer";
-    private static final String PHONE = "phoneNumberCustomer";
 
     /**
      * Author: NguyenNH
@@ -139,12 +138,12 @@ public class CustomerController {
             }
         }
         Customer customerCheck = customerService.findCustomerByEmail(customerDto.getEmailCustomer());
-        if (customerCheck != null) {
-            errors.put(EMAIL, "Email đã được đăng ký");
+        if (customerCheck != null){
+            errors.put(EMAIL_DTO,"Email đã được đăng ký");
         }
         Customer customerCheckPhone = customerService.findCustomerByPhone(customerDto.getPhoneNumberCustomer());
         if (customerCheckPhone != null) {
-            errors.put(PHONE, "Số điện thoại đã được đăng ký");
+            errors.put(PHONE_DTO, "Số điện thoại đã được đăng ký");
         }
         if (errors.size() != 0) {
             return new ResponseEntity<>(errors, HttpStatus.NOT_ACCEPTABLE);
