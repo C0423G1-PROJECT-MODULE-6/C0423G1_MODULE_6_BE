@@ -22,28 +22,46 @@ import java.util.Map;
 public class EmployeeController {
     @Autowired
     private IEmployeeService employeeService;
+    /**
+     * method :findAllEmployeeBy()
+     * created by :PhuocLQ
+     * date create: 10/09/2023
+     *
+     * @param: page, searchJob, searchName,searchPhone
+     * return: Page<AppUser>
+     */
     @GetMapping("/list")
-    public ResponseEntity<Page<AppUser>> displayAllUser(@RequestParam(name = "page", defaultValue = "0",required = false) int page,
+    public ResponseEntity<Page<AppUser>> findAllEmployeeBy(@RequestParam(name = "page", defaultValue = "0",required = false) int page,
                                                         @RequestParam(name = "searchJob", defaultValue = "",required = false)String searchJob,
                                                         @RequestParam(name = "searchName",defaultValue = "",required = false)String searchName,
                                                         @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
-        Pageable pageable = PageRequest.of(page,5, Sort.by(Sort.Order.desc("id")));
-        Page<AppUser> userPage = employeeService.findAllUserBy(pageable,searchJob,searchName,searchPhone);
+        Pageable pageable = PageRequest.of(page,5);
+        Page<AppUser> userPage = employeeService.findAllEmployeeBy(pageable,"%"+searchJob+"%","%"+searchName+"%","%"+searchPhone+"%");
         if (userPage.getTotalElements()==0 ){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(userPage, HttpStatus.OK);
     }
+
+    /**
+     * method :deleteEmployeeById()
+     * created by :PhuocLQ
+     * date create: 10/09/2023
+     *
+     * @param: id
+     * return: void
+     */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<AppUser> deleteUserById(@PathVariable Long id){
-        AppUser user = employeeService.getUserById(id);
+    public ResponseEntity<AppUser> deleteEmployeeById(@PathVariable Long id){
+        AppUser user = employeeService.getEmployeeById(id);
         if (user==null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else {
-            employeeService.deleteUserById(id);
+            employeeService.deleteEmployeeById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
     /**
      * Author: CaoNV
      * Date: 12/10/2023
@@ -111,7 +129,7 @@ public class EmployeeController {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(bindingResult.getAllErrors().toString(),HttpStatus.NOT_ACCEPTABLE);
         }
-        AppUser employee = employeeService.getUserById(id);
+        AppUser employee = employeeService.getEmployeeById(id);
         if(employee==null){
             return new ResponseEntity<>("Không tìm thấy",HttpStatus.NOT_FOUND);
         }

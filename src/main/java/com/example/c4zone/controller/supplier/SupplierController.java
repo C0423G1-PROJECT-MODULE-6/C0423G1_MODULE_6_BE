@@ -1,5 +1,6 @@
 package com.example.c4zone.controller.supplier;
 
+import antlr.StringUtils;
 import com.example.c4zone.dto.supplier.SupplierDto;
 import com.example.c4zone.model.supplier.Supplier;
 import com.example.c4zone.service.supplier.ISupplierService;
@@ -36,11 +37,20 @@ public class SupplierController {
         } else {
             listSupplier = supplierService.getAllNoCondition(pageable);
         }
+        if (listSupplier == null || listSupplier.isEmpty()){
+            return new ResponseEntity<>(listSupplier,HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(listSupplier, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSupplier(@PathVariable Long id){
+    public ResponseEntity<?> deleteSupplier(@PathVariable Long id){
+        if (id.equals("")){
+            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body("Giá trị của id không thể mang giá trị rỗng");
+        }
+        if (id == null) {
+            return ResponseEntity.badRequest().body("Giá trị của id không thể là null");
+        }
         if (supplierService.findByIdSupplier(id)==null){
             return ResponseEntity.notFound().build();
         }
