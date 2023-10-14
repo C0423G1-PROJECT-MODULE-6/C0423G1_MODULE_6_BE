@@ -37,6 +37,9 @@ public class SupplierController {
         } else {
             listSupplier = supplierService.getAllNoCondition(pageable);
         }
+        if (listSupplier == null || listSupplier.isEmpty()){
+            return new ResponseEntity<>(listSupplier,HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(listSupplier, HttpStatus.OK);
     }
 
