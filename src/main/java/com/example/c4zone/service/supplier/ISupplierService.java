@@ -11,4 +11,6 @@ public interface ISupplierService {
     Page<Supplier> getAllNoCondition(Pageable pageable);
     Supplier findByIdSupplier(Long id);
     ISupplierDtoWarehouse findSupplierByIdWarehouse(Long id);
+    void editSupplier(Supplier supplier);
+    void saveSupplier(Supplier newSupplier);
 }
