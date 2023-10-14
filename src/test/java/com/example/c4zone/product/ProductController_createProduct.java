@@ -2341,5 +2341,4 @@ public class ProductController_createProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
 }

@@ -51,8 +51,8 @@ public class SupplierControler_getAllSupplier {
     @Test
     public void getAllStudent_5() throws  Exception{
         this.mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/admin/supplierr")
+                MockMvcRequestBuilders.get("/api/admin/supplier?_page=0&_limit=3&name_like=&addressSearch=&emailSearch=")
         ).andDo(print())
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().isNotFound());
     }
 }
