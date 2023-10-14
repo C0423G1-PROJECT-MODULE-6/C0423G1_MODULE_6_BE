@@ -22,11 +22,11 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
      * @param:
      * return Page<User>
      */
-    @Query(nativeQuery = true,value = "SELECT users.name, users.employee_birthday, users.employee_address, roles.name, users.employee_phone FROM users\n " +
-            " JOIN user_role on users.id = user_role.user_id\n " +
-            " Join roles on user_role.role_id = roles.id\n " +
-            " where users.flag_delete = 0 and roles.name like :searchJob and users.name like :searchName and users.employee_phone like :searchPhone; ")
-    Page<AppUser> findAllBy(Pageable pageable, @Param("searchJob") String searchJob,@Param("searchName") String searchName,@Param("searchPhone") String searchPhone);
+    @Query(nativeQuery = true,value = "SELECT app_user.* FROM app_user  " +
+            "             JOIN user_role on app_user.id = user_role.app_user_id  " +
+            "             JOIN app_role on user_role.app_role_id = app_role.id  " +
+            "             where app_user.flag_deleted = 0 and app_role.id like :searchJob and app_user.employee_name like :searchName and app_user.employee_phone like :searchPhone ")
+    Page<AppUser> findAllEmployee(Pageable pageable, @Param("searchJob") String searchJob,@Param("searchName") String searchName,@Param("searchPhone") String searchPhone);
 
     /**
      * method :deleteUserById()
@@ -38,9 +38,9 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
      */
     @Transactional
     @Modifying
-    @Query(nativeQuery = true,value = " UPDATE users\n " +
-            " SET flag_delete = false\n " +
-            " WHERE users.id = :id; ")
+    @Query(nativeQuery = true,value = " UPDATE app_user " +
+            " SET flag_deleted = true " +
+            " WHERE app_user.id = :id ")
     void deleteUserById(@Param("id") Long id);
 
     /**
@@ -51,7 +51,7 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
      * @param: id
      * return: user
      */
-    @Query(nativeQuery = true,value = " select  * from users where id= :id")
+    @Query(nativeQuery = true,value = " select  * from app_user where id= :id")
     AppUser findUserById(@Param("id") Long id);
 
 

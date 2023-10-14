@@ -173,7 +173,8 @@ public class AppUserController {
      * param AppUserDto appUserDto
      * return ResponseEntity<>();
      */
-    @PostMapping("/register")
+//    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("/register")
     public ResponseEntity<Object> register(@RequestBody AppUserDto appUserDto) throws MessagingException, UnsupportedEncodingException {
 
         try {
@@ -253,35 +254,35 @@ public class AppUserController {
         return ResponseEntity.ok().body(id);
     }
 
-    /**
-     * method create
-     * Create HaiBH
-     * Date 12-10-2023
-     * param AppUserDto appUserDto, BindingResult bindingResult
-     * return ResponseEntity<>();
-     */
-    @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody AppUserDto appUserDto, BindingResult bindingResult) {
-        new AppUserDto().validate(appUserDto, bindingResult);
-        Map<String, String> errorMap = new HashMap<>();
-        if (bindingResult.hasErrors()) {
-            for (FieldError fieldError : bindingResult.getFieldErrors()
-            ) {
-                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-            }
-            return new ResponseEntity<>(errorMap, HttpStatus.NOT_ACCEPTABLE);
-        }
-
-
-        AppUser appUser = new AppUser();
-        appUser.setUserName(appUserDto.getUserName());
-        appUser.setPassword(passwordEncoder.encode("123"));
-        Boolean checkAddNewAppUser = appUserService.createNewAppUser(appUser, "ROLE_ADMIN");
-        if (!Boolean.TRUE.equals(checkAddNewAppUser)) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Đăng ký thất bại, vui lòng chờ trong giây lát");
-        }
-        return new ResponseEntity<>("Thêm mới thành công", HttpStatus.OK);
-    }
+//    /**
+//     * method create
+//     * Create HaiBH
+//     * Date 12-10-2023
+//     * param AppUserDto appUserDto, BindingResult bindingResult
+//     * return ResponseEntity<>();
+//     */
+//    @PostMapping("/create")
+//    public ResponseEntity<?> create(@RequestBody AppUserDto appUserDto, BindingResult bindingResult) {
+//        new AppUserDto().validate(appUserDto, bindingResult);
+//        Map<String, String> errorMap = new HashMap<>();
+//        if (bindingResult.hasErrors()) {
+//            for (FieldError fieldError : bindingResult.getFieldErrors()
+//            ) {
+//                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+//            }
+//            return new ResponseEntity<>(errorMap, HttpStatus.NOT_ACCEPTABLE);
+//        }
+//
+//
+//        AppUser appUser = new AppUser();
+//        appUser.setUserName(appUserDto.getUserName());
+//        appUser.setPassword(passwordEncoder.encode("123"));
+//        Boolean checkAddNewAppUser = appUserService.createNewAppUser(appUser, "ROLE_ADMIN");
+//        if (!Boolean.TRUE.equals(checkAddNewAppUser)) {
+//            return ResponseEntity
+//                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Đăng ký thất bại, vui lòng chờ trong giây lát");
+//        }
+//        return new ResponseEntity<>("Thêm mới thành công", HttpStatus.OK);
+//    }
 }

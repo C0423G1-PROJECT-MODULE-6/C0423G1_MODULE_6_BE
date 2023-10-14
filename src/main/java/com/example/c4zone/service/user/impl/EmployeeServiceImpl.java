@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     public Page<AppUser> findAllUserBy(Pageable pageable, String searchJob, String searchName, String searchPhone) {
-        return employeeRepository.findAllBy(pageable, searchJob, searchName, searchPhone);
+        return employeeRepository.findAllEmployee(pageable, searchJob, searchName, searchPhone);
     }
 
     @Override

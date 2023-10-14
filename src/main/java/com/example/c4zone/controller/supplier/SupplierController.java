@@ -1,5 +1,7 @@
 package com.example.c4zone.controller.supplier;
 
+import antlr.StringUtils;
+import com.example.c4zone.dto.supplier.SupplierDto;
 import com.example.c4zone.model.supplier.Supplier;
 import com.example.c4zone.service.supplier.ISupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/admin/supplier")
@@ -37,11 +41,41 @@ public class SupplierController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSupplier(@PathVariable Long id){
+    public ResponseEntity<?> deleteSupplier(@PathVariable Long id){
+        if (id.equals("")){
+            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body("Giá trị của id không thể mang giá trị rỗng");
+        }
+        if (id == null) {
+            return ResponseEntity.badRequest().body("Giá trị của id không thể là null");
+        }
         if (supplierService.findByIdSupplier(id)==null){
             return ResponseEntity.notFound().build();
         }
         supplierService.deleteSupplier(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Supplier> editSupplier(@PathVariable Long id, @RequestBody Supplier supplier) {
+        if (supplierService.findByIdSupplier(id) == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            supplierService.editSupplier(supplier);
+            return ResponseEntity.ok(supplier);
+        }
+    }
+
+    @PostMapping("")
+    public ResponseEntity<Supplier> createSupplier(@RequestBody @Valid SupplierDto supplierDto){
+        Supplier newSupplier = new Supplier();
+        // Copy dl tu SupplierDto sang Supplier
+        newSupplier.setCodeSupplier(supplierDto.getCodeSupplier());
+        newSupplier.setNameSupplier(supplierDto.getNameSupplier());
+        newSupplier.setAddressSupplier(supplierDto.getAddressSupplier());
+        newSupplier.setPhoneNumberSupplier(supplierDto.getPhoneNumberSupplier());
+        newSupplier.setEmailSupplier(supplierDto.getEmailSupplier());
+
+        supplierService.saveSupplier(newSupplier);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
