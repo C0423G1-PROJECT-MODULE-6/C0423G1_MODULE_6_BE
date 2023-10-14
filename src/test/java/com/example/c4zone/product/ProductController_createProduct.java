@@ -2092,4 +2092,254 @@ public class ProductController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * author: DaoPTA
+     * workday: 13/10/2023
+     * this function use to test the validation of field color more specific is null
+     *
+     * @throws Exception
+     */
+    @Test
+    public void createProduct_color_2 () throws Exception {
+        ProductDto productDto = new ProductDto();
+        productDto.setNameProduct("Phan Tá Anh Đào");
+        productDto.setBatteryProduct("100%");
+        productDto.setCameraProduct("12mp, 12mp, 12mp");
+        productDto.setPriceProduct(11000000.0);
+        productDto.setQuantityProduct(0.0D);
+        productDto.setScreenProduct("64 in");
+        productDto.setSelfieProduct("15mp");
+        productDto.setWeightProduct(200.5D);
+        productDto.setStatusBusiness(true);
+        productDto.setDescriptionProduct("Ngon bổ rẻ");
+        Capacity capacity = new Capacity();
+        capacity.setIdCapacity(1L);
+        productDto.setCapacity(capacity);
+        Color color = new Color();
+        color.setIdColor(Long.valueOf("3842129ryui"));
+        productDto.setColor(color);
+        Cpu cpu = new Cpu();
+        cpu.setIdCpu(1L);
+        productDto.setCpu(cpu);
+        Ram ram = new Ram();
+        ram.setIdRam(1L);
+        productDto.setRam(ram);
+        Series series = new Series();
+        series.setIdSeries(1L);
+        productDto.setSeries(series);
+        Type type = new Type();
+        type.setIdType(1L);
+        productDto.setType(type);
+        ImageDto imageDto = new ImageDto();
+        imageDto.setName("image");
+        imageDto.setStatusImage(true);
+        productDto.setImageDto(imageDto);
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/admin/product/add")
+                                .content(this.objectMapper.writeValueAsString(productDto))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    /**
+     * author: DaoPTA
+     * workday: 13/10/2023
+     * this function use to test the validation of field cpu more specific is null
+     *
+     * @throws Exception
+     */
+    @Test
+    public void createProduct_cpu_2 () throws Exception {
+        ProductDto productDto = new ProductDto();
+        productDto.setNameProduct("Phan Tá Anh Đào");
+        productDto.setBatteryProduct("100%");
+        productDto.setCameraProduct("12mp, 12mp, 12mp");
+        productDto.setPriceProduct(11000000.0);
+        productDto.setQuantityProduct(0.0D);
+        productDto.setScreenProduct("64 in");
+        productDto.setSelfieProduct("15mp");
+        productDto.setWeightProduct(200.5D);
+        productDto.setStatusBusiness(true);
+        productDto.setDescriptionProduct("Ngon bổ rẻ");
+        Capacity capacity = new Capacity();
+        capacity.setIdCapacity(1L);
+        productDto.setCapacity(capacity);
+        Color color = new Color();
+        color.setIdColor(1L);
+        productDto.setColor(color);
+        Cpu cpu = new Cpu();
+        cpu.setIdCpu(Long.valueOf("895ry43hri"));
+        productDto.setCpu(cpu);
+        Ram ram = new Ram();
+        ram.setIdRam(1L);
+        productDto.setRam(ram);
+        Series series = new Series();
+        series.setIdSeries(1L);
+        productDto.setSeries(series);
+        Type type = new Type();
+        type.setIdType(1L);
+        productDto.setType(type);
+        ImageDto imageDto = new ImageDto();
+        imageDto.setName("image");
+        imageDto.setStatusImage(true);
+        productDto.setImageDto(imageDto);
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/admin/product/add")
+                                .content(this.objectMapper.writeValueAsString(productDto))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    /**
+     * author: DaoPTA
+     * workday: 13/10/2023
+     * this function use to test the validation of field ram more specific is null
+     *
+     * @throws Exception
+     */
+    @Test
+    public void createProduct_ram_2 () throws Exception {
+        ProductDto productDto = new ProductDto();
+        productDto.setNameProduct("Phan Tá Anh Đào");
+        productDto.setBatteryProduct("100%");
+        productDto.setCameraProduct("12mp, 12mp, 12mp");
+        productDto.setPriceProduct(11000000.0);
+        productDto.setQuantityProduct(0.0D);
+        productDto.setScreenProduct("64 in");
+        productDto.setSelfieProduct("15mp");
+        productDto.setWeightProduct(200.5D);
+        productDto.setStatusBusiness(true);
+        productDto.setDescriptionProduct("Ngon bổ rẻ");
+        Capacity capacity = new Capacity();
+        capacity.setIdCapacity(1L);
+        productDto.setCapacity(capacity);
+        Color color = new Color();
+        color.setIdColor(1L);
+        productDto.setColor(color);
+        Cpu cpu = new Cpu();
+        cpu.setIdCpu(1L);
+        productDto.setCpu(cpu);
+        Ram ram = new Ram();
+        ram.setIdRam(Long.valueOf("89y54htruirwa"));
+        productDto.setRam(ram);
+        Series series = new Series();
+        series.setIdSeries(1L);
+        productDto.setSeries(series);
+        Type type = new Type();
+        type.setIdType(1L);
+        productDto.setType(type);
+        ImageDto imageDto = new ImageDto();
+        imageDto.setName("image");
+        imageDto.setStatusImage(true);
+        productDto.setImageDto(imageDto);
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/admin/product/add")
+                                .content(this.objectMapper.writeValueAsString(productDto))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    /**
+     * author: DaoPTA
+     * workday: 13/10/2023
+     * this function use to test the validation of field series more specific is null
+     *
+     * @throws Exception
+     */
+    @Test
+    public void createProduct_series_2 () throws Exception {
+        ProductDto productDto = new ProductDto();
+        productDto.setNameProduct("Phan Tá Anh Đào");
+        productDto.setBatteryProduct("100%");
+        productDto.setCameraProduct("12mp, 12mp, 12mp");
+        productDto.setPriceProduct(11000000.0);
+        productDto.setQuantityProduct(0.0D);
+        productDto.setScreenProduct("64 in");
+        productDto.setSelfieProduct("15mp");
+        productDto.setWeightProduct(200.5D);
+        productDto.setStatusBusiness(true);
+        productDto.setDescriptionProduct("Ngon bổ rẻ");
+        Capacity capacity = new Capacity();
+        capacity.setIdCapacity(1L);
+        productDto.setCapacity(capacity);
+        Color color = new Color();
+        color.setIdColor(1L);
+        productDto.setColor(color);
+        Cpu cpu = new Cpu();
+        cpu.setIdCpu(1L);
+        productDto.setCpu(cpu);
+        Ram ram = new Ram();
+        ram.setIdRam(1L);
+        productDto.setRam(ram);
+        Series series = new Series();
+        series.setIdSeries(Long.valueOf("79854y3hr2q4de"));
+        productDto.setSeries(series);
+        Type type = new Type();
+        type.setIdType(1L);
+        productDto.setType(type);
+        ImageDto imageDto = new ImageDto();
+        imageDto.setName("image");
+        imageDto.setStatusImage(true);
+        productDto.setImageDto(imageDto);
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/admin/product/add")
+                                .content(this.objectMapper.writeValueAsString(productDto))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    /**
+     * author: DaoPTA
+     * workday: 13/10/2023
+     * this function use to test the validation of field type more specific is null
+     *
+     * @throws Exception
+     */
+    @Test
+    public void createProduct_type_2 () throws Exception {
+        ProductDto productDto = new ProductDto();
+        productDto.setNameProduct("Phan Tá Anh Đào");
+        productDto.setBatteryProduct("100%");
+        productDto.setCameraProduct("12mp, 12mp, 12mp");
+        productDto.setPriceProduct(11000000.0);
+        productDto.setQuantityProduct(0.0D);
+        productDto.setScreenProduct("64 in");
+        productDto.setSelfieProduct("15mp");
+        productDto.setWeightProduct(200.5D);
+        productDto.setStatusBusiness(true);
+        productDto.setDescriptionProduct("Ngon bổ rẻ");
+        Capacity capacity = new Capacity();
+        capacity.setIdCapacity(1L);
+        productDto.setCapacity(capacity);
+        Color color = new Color();
+        color.setIdColor(1L);
+        productDto.setColor(color);
+        Cpu cpu = new Cpu();
+        cpu.setIdCpu(1L);
+        productDto.setCpu(cpu);
+        Ram ram = new Ram();
+        ram.setIdRam(1L);
+        productDto.setRam(ram);
+        Series series = new Series();
+        series.setIdSeries(1L);
+        productDto.setSeries(series);
+        Type type = new Type();
+        type.setIdType(Long.valueOf("895y4qr2w"));
+        productDto.setType(type);
+        ImageDto imageDto = new ImageDto();
+        imageDto.setName("image");
+        imageDto.setStatusImage(true);
+        productDto.setImageDto(imageDto);
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/admin/product/add")
+                                .content(this.objectMapper.writeValueAsString(productDto))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
 }
