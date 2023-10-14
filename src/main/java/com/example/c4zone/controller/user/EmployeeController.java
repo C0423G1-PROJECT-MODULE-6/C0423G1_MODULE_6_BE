@@ -22,6 +22,16 @@ import java.util.Map;
 public class EmployeeController {
     @Autowired
     private IEmployeeService employeeService;
+    /**
+     * Author: PhuocLQ
+     * Date: 13/10/2023
+     * Receive data if there is error, return BAD_REQUEST,
+     * then save the employee to the DB. If saved successfully, return OK, otherwise NO_CONTENT
+     *
+     *
+     *Receive data if thereis error, return BAD_REQUEST,
+     * @return Response userPage
+     */
     @GetMapping("/list")
     public ResponseEntity<Page<AppUser>> displayAllUser(@RequestParam(name = "page", defaultValue = "0",required = false) int page,
                                                         @RequestParam(name = "searchJob", defaultValue = "",required = false)String searchJob,
