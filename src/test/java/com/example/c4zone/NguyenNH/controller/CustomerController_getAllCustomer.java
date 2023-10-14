@@ -17,6 +17,12 @@ public class CustomerController_getAllCustomer {
     @Autowired
     private MockMvc mockMvc;
 
+
+    /**
+     * Check case limit null
+     * Author: NguyenNH
+     * Goal: @throw Exception
+     */
     @Test
     public void getAllCustomer_limit_7() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -26,6 +32,12 @@ public class CustomerController_getAllCustomer {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
+    /**
+     * Check case limit empty
+     * Author: NguyenNH
+     * Goal: @throw Exception
+     */
     @Test
     public void getAllCustomer_limit_8() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -36,6 +48,11 @@ public class CustomerController_getAllCustomer {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Check case limit exist
+     * Author: NguyenNH
+     * Goal: @return list customer
+     */
     @Test
     public void getAllCustomer_limit_11() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -51,7 +68,7 @@ public class CustomerController_getAllCustomer {
                 .andExpect(jsonPath("content[0].genderCustomer").value(false))
                 .andExpect(jsonPath("content[0].emailCustomer").value("tham@gmail.com"))
                 .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2023-10-10"))
-                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("123456"))
+                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0054631279"))
                 .andExpect(jsonPath("content[0].addressCustomer").value("Sai Gon"))
                 .andExpect(jsonPath("content[0].statusCustomer").value(true))
 
@@ -59,12 +76,17 @@ public class CustomerController_getAllCustomer {
                 .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Văn Hải"))
                 .andExpect(jsonPath("content[4].genderCustomer").value(true))
                 .andExpect(jsonPath("content[4].emailCustomer").value("hai@gmail.com"))
-                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2022-10-10"))
+                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2000-10-10"))
                 .andExpect(jsonPath("content[4].phoneNumberCustomer").value("0983125476"))
                 .andExpect(jsonPath("content[4].addressCustomer").value("Da Nang"))
                 .andExpect(jsonPath("content[4].statusCustomer").value(true));
     }
 
+    /**
+     * Check case page null
+     * Author: NguyenNH
+     * Goal: @throw Exception
+     */
     @Test
     public void getAllCustomer_page_7() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -74,6 +96,12 @@ public class CustomerController_getAllCustomer {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
+    /**
+     * Check case page empty
+     * Author: NguyenNH
+     * Goal: @throw Exception
+     */
     @Test
     public void getAllCustomer_page_8() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -84,6 +112,11 @@ public class CustomerController_getAllCustomer {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Check case page not exist
+     * Author: NguyenNH
+     * Goal: @throw Exception
+     */
     @Test
     public void getAllCustomer_page_9() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -94,6 +127,12 @@ public class CustomerController_getAllCustomer {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    /**
+     * Check case page exist
+     * Author: NguyenNH
+     * Goal: @return list customer
+     */
     @Test
     public void getAllCustomer_page_11() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -109,7 +148,7 @@ public class CustomerController_getAllCustomer {
                 .andExpect(jsonPath("content[0].genderCustomer").value(false))
                 .andExpect(jsonPath("content[0].emailCustomer").value("tham@gmail.com"))
                 .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2023-10-10"))
-                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("123456"))
+                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0054631279"))
                 .andExpect(jsonPath("content[0].addressCustomer").value("Sai Gon"))
                 .andExpect(jsonPath("content[0].statusCustomer").value(true))
 
@@ -117,18 +156,24 @@ public class CustomerController_getAllCustomer {
                 .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Văn Hải"))
                 .andExpect(jsonPath("content[4].genderCustomer").value(true))
                 .andExpect(jsonPath("content[4].emailCustomer").value("hai@gmail.com"))
-                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2022-10-10"))
+                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2000-10-10"))
                 .andExpect(jsonPath("content[4].phoneNumberCustomer").value("0983125476"))
                 .andExpect(jsonPath("content[4].addressCustomer").value("Da Nang"))
                 .andExpect(jsonPath("content[4].statusCustomer").value(true));
     }
 
+
+    /**
+     * Check case name not exist in the database
+     * Author: NguyenNH
+     * Goal: @throw Exception
+     */
     @Test
     public void getAllCustomer_name_9() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/admin/customer/list")
                         .param("_limit", "5")
-                        .param("_page","0" )
+                        .param("_page", "0")
                         .param("name_like", "không có trong DB")
                         .param("age", "")
                         .param("gender", ""))
@@ -136,12 +181,18 @@ public class CustomerController_getAllCustomer {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    /**
+     * Check case name exist in the database
+     * Author: NguyenNH
+     * Goal: @return list customer
+     */
     @Test
     public void getAllCustomer_name_11() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/admin/customer/list")
                         .param("_limit", "5")
-                        .param("_page","0" )
+                        .param("_page", "0")
                         .param("name_like", "Nguyễn Hoàng Anh")
                         .param("age", "")
                         .param("gender", ""))
@@ -157,13 +208,17 @@ public class CustomerController_getAllCustomer {
                 .andExpect(jsonPath("content[0].statusCustomer").value(true));
     }
 
-
+    /**
+     * Check case age not exist in the database
+     * Author: NguyenNH
+     * Goal: @throw Exception
+     */
     @Test
     public void getAllCustomer_age_9() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/admin/customer/list")
                         .param("_limit", "5")
-                        .param("_page","0" )
+                        .param("_page", "0")
                         .param("name_like", "")
                         .param("age", "100")
                         .param("gender", ""))
@@ -171,12 +226,18 @@ public class CustomerController_getAllCustomer {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    /**
+     * Check case age exist in the database
+     * Author: NguyenNH
+     * Goal: @return list customer
+     */
     @Test
     public void getAllCustomer_age_11() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/admin/customer/list")
                         .param("_limit", "5")
-                        .param("_page","0" )
+                        .param("_page", "0")
                         .param("name_like", "")
                         .param("age", "23")
                         .param("gender", ""))
@@ -192,12 +253,17 @@ public class CustomerController_getAllCustomer {
                 .andExpect(jsonPath("content[0].statusCustomer").value(true));
     }
 
+    /**
+     * Check case gender not exist in the database
+     * Author: NguyenNH
+     * Goal: @throw Exception
+     */
     @Test
     public void getAllCustomer_gender_9() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/admin/customer/list")
                         .param("_limit", "5")
-                        .param("_page","0" )
+                        .param("_page", "0")
                         .param("name_like", "")
                         .param("age", "")
                         .param("gender", "10"))
@@ -205,12 +271,18 @@ public class CustomerController_getAllCustomer {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    /**
+     * Check case gender exist in the database
+     * Author: NguyenNH
+     * Goal: @return list customer
+     */
     @Test
     public void getAllCustomer_gender_11() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/admin/customer/list")
                         .param("_limit", "5")
-                        .param("_page","0" )
+                        .param("_page", "0")
                         .param("name_like", "")
                         .param("age", "")
                         .param("gender", "1"))
@@ -232,9 +304,14 @@ public class CustomerController_getAllCustomer {
                 .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2023-10-10"))
                 .andExpect(jsonPath("content[4].phoneNumberCustomer").value("023165489"))
                 .andExpect(jsonPath("content[4].addressCustomer").value("Ha Noi"))
-                .andExpect(jsonPath("content[4].statusCustomer").value(true))   ;
+                .andExpect(jsonPath("content[4].statusCustomer").value(true));
     }
 
+    /**
+     * Check case sortName exist
+     * Author: NguyenNH
+     * Goal: @return list customer
+     */
     @Test
     public void getAllCustomer_sortName_11() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -243,8 +320,31 @@ public class CustomerController_getAllCustomer {
                         .param("_page", "0")
                         .param("sortName", "1"))
                 .andDo(print())
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("content[0].idCustomer").value(8))
+                .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Anh Quân"))
+                .andExpect(jsonPath("content[0].genderCustomer").value(true))
+                .andExpect(jsonPath("content[0].emailCustomer").value("quan@gmail.com"))
+                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2021-10-10"))
+                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0983125476"))
+                .andExpect(jsonPath("content[0].addressCustomer").value("Sai Gon"))
+                .andExpect(jsonPath("content[0].statusCustomer").value(true))
+
+                .andExpect(jsonPath("content[4].idCustomer").value(1))
+                .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Hồng Hà"))
+                .andExpect(jsonPath("content[4].genderCustomer").value(true))
+                .andExpect(jsonPath("content[4].emailCustomer").value("ha@gmail.com"))
+                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2021-10-10"))
+                .andExpect(jsonPath("content[4].phoneNumberCustomer").value("123312654"))
+                .andExpect(jsonPath("content[4].addressCustomer").value("Ha Noi"))
+                .andExpect(jsonPath("content[4].statusCustomer").value(true));
     }
+
+    /**
+     * Check case sortCount exist
+     * Author: NguyenNH
+     * Goal: @return list customer
+     */
     @Test
     public void getAllCustomer_sortCount_11() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders

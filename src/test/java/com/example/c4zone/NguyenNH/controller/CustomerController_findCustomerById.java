@@ -17,41 +17,63 @@ public class CustomerController_findCustomerById {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Check case null Id
+     * Author: NguyenNH
+     * Goal: @throw Exception
+     */
     @Test
     public void findCustomerById_id_1() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/admin/customer/list/{id}", (Object) null))
-                        .andDo(print())
-                        .andExpect(status().is4xxClientError());
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Check case empty Id
+     * Author: NguyenNH
+     * Goal: @throw Exception
+     */
     @Test
     public void findCustomerById_id_2() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/admin/customer/list/{id}", ""))
-                        .andDo(print())
-                        .andExpect(status().is4xxClientError());
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
     }
+
+    /**
+     * Check case Id does not exist in the database
+     * Author: NguyenNH
+     * Goal: @throw Exception
+     */
     @Test
     public void findCustomerById_id_3() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/admin/customer/list/{id}", 10))
-                        .andDo(print())
-                        .andExpect(status().is4xxClientError());
+                        .get("/api/admin/customer/list/{id}", 1220))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
     }
+
+    /**
+     * Check case Id exists in the database
+     * Author: NguyenNH
+     * Goal: @return customer information
+     */
     @Test
     public void findCustomerById_id_4() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/admin/customer/list/{id}", 2))
-                        .andDo(print())
-                        .andExpect(status().is2xxSuccessful())
-                        .andExpect(jsonPath("idCustomer").value(2))
-                        .andExpect(jsonPath("nameCustomer").value("Nguyễn Hoàng Anh"))
-                        .andExpect(jsonPath("genderCustomer").value(false))
-                        .andExpect(jsonPath("emailCustomer").value("anh@gmail.com"))
-                        .andExpect(jsonPath("dateOfBirthCustomer").value("2022-10-10"))
-                        .andExpect(jsonPath("phoneNumberCustomer").value("098732165"))
-                        .andExpect(jsonPath("addressCustomer").value("Da Nang"))
-                        .andExpect(jsonPath("statusCustomer").value(true));
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("idCustomer").value(2))
+                .andExpect(jsonPath("nameCustomer").value("Nguyễn Hoàng Anh"))
+                .andExpect(jsonPath("genderCustomer").value(false))
+                .andExpect(jsonPath("emailCustomer").value("anh@gmail.com"))
+                .andExpect(jsonPath("dateOfBirthCustomer").value("2022-10-10"))
+                .andExpect(jsonPath("phoneNumberCustomer").value("098732165"))
+                .andExpect(jsonPath("addressCustomer").value("Da Nang"))
+                .andExpect(jsonPath("statusCustomer").value(true));
     }
 }

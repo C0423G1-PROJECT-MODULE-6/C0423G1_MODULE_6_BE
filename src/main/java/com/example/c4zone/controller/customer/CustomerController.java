@@ -39,7 +39,7 @@ public class CustomerController {
      * * return HttpStatus
      */
     @GetMapping("/list")
-    public ResponseEntity<Page<Customer>> listCustomer(@RequestParam(name = "_limit") int limit,
+    public ResponseEntity<Page<Customer>> getAllCustomer(@RequestParam(name = "_limit") int limit,
                                                        @RequestParam(name = "_page") int page,
                                                        @RequestParam(name = "name_like") Optional<String> searchName,
                                                        @RequestParam(name = "age") Optional<String> searchAge,
@@ -78,9 +78,14 @@ public class CustomerController {
             pageable = PageRequest.of(page, limit, Sort.by("total_purchases").ascending());
         }
 
+
+        if (valueSearchName==null || valueSearchAge == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         Page<Customer> customerList = customerService.findCustomerByNameAndAge(pageable, valueSearchName, valueSearchAge, valueSearchGender);
         if (customerList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(customerList, HttpStatus.OK);
@@ -92,10 +97,10 @@ public class CustomerController {
      * * return HttpStatus
      */
     @GetMapping("list/{id}")
-    public ResponseEntity<Customer> findById(@PathVariable Long id) {
+    public ResponseEntity<Customer> findCustomerById(@PathVariable Long id) {
         Customer customer = customerService.findById(id).orElse(null);
         if (customer == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
@@ -106,7 +111,7 @@ public class CustomerController {
      * * return HttpStatus
      */
     @GetMapping("/history/{id}")
-    public ResponseEntity<Page<IShoppingHistory>> shoppingHistory(@RequestParam(name = "_limit") int limit,
+    public ResponseEntity<Page<IShoppingHistory>> getShoppingHistory(@RequestParam(name = "_limit") int limit,
                                                                   @RequestParam(name = "_page") int page,
                                                                   @RequestParam(name = "name_like") Optional<String> searchName,
                                                                   @PathVariable Long id) {
@@ -117,7 +122,7 @@ public class CustomerController {
         Pageable pageable = PageRequest.of(page, limit);
         Page<IShoppingHistory> shoppingHistoryPage = customerService.findShoppingHistory(pageable, valueSearchName, id);
         if (shoppingHistoryPage.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(shoppingHistoryPage, HttpStatus.OK);
