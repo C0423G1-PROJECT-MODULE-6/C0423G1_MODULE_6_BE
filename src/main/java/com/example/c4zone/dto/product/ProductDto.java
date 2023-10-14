@@ -8,29 +8,26 @@ import javax.validation.constraints.*;
 
 public class ProductDto implements Validator {
     private Long idProduct;
-    @NotBlank(message = "Không được để trống tên điện thoại!")
+    @NotNull(message = "Không được để trống tên điện thoại!")
     @Size(min = 5, max = 50, message = "Phải lớn hơn 5 ký tự và ít hơn 50 ký tự!")
     private String nameProduct;
-    @NotBlank(message = "Không được để trống màn hình!")
+    @NotNull(message = "Không được để trống màn hình!")
     @Size(min = 5, max = 100, message = "Nhập vào ít nhất 5 ký tự và nhỏ hơn 100 ký tự!")
     private String screenProduct;
-    @NotBlank(message = "Không được để trống camera!")
+    @NotNull(message = "Không được để trống camera!")
     @Size(min = 5, max = 100, message = "Nhập vào ít nhất 5 ký tự và nhỏ hơn 100 ký tự!")
     private String cameraProduct;
     @Size(max = 10000, message = "Mô tả không được quá 10000 từ!")
     private String descriptionProduct;
     private Boolean statusBusiness = true;
-    @NotBlank(message = "Không được để trống camera trước!")
+    @NotNull(message = "Không được để trống camera trước!")
     @Size(min = 5, max = 100, message = "Nhập vào ít nhất 5 ký tự và nhỏ hơn 100 ký tự!")
     private String selfieProduct;
-    @NotBlank(message = "Không được để trống tên điện thoại!")
+    @NotNull(message = "Không được để trống tên điện thoại!")
     private String batteryProduct;
-    @NotNull(message = "Không được để trống trọng lượng điện thoại!")
-    @Min(10)
-    @Max(500)
+    @NotBlank(message = "Không được để trống trọng lượng điện thoại!")
     private Double weightProduct;
-    @NotNull(message = "Không được để trống số lượng điện thoại!")
-    @Min(0)
+    @NotBlank(message = "Không được để trống số lượng điện thoại!")
     private Double quantityProduct;
     @NotNull(message = "Không được để trống giá điện thoại!")
     @Min(0)
