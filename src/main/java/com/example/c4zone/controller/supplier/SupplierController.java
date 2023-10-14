@@ -4,6 +4,7 @@ import antlr.StringUtils;
 import com.example.c4zone.dto.supplier.SupplierDto;
 import com.example.c4zone.model.supplier.Supplier;
 import com.example.c4zone.service.supplier.ISupplierService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,9 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin/supplier")
@@ -55,26 +60,60 @@ public class SupplierController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * author: NghiaNPX
+     * date: 12/10/2023
+     * goal: Edit available supplier
+     *
+     * @param id          to find customer by id
+     * @param supplierDto to overwrite the old object
+     * @return HttpStatus
+     */
     @PutMapping("/{id}")
-    public ResponseEntity<Supplier> editSupplier(@PathVariable Long id, @RequestBody Supplier supplier) {
+    @ResponseBody
+    public ResponseEntity<Object> editSupplier(@PathVariable Long id,
+                                               @RequestBody SupplierDto supplierDto,
+                                               BindingResult bindingResult) {
         if (supplierService.findByIdSupplier(id) == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            supplierService.editSupplier(supplier);
-            return ResponseEntity.ok(supplier);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        new SupplierDto().validate(supplierDto, bindingResult);
+        Map<String, String> errors = new HashMap<>();
+        if (bindingResult.hasErrors()) {
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
+        Supplier newSupplier = new Supplier();
+        BeanUtils.copyProperties(supplierDto, newSupplier);
+        supplierService.editSupplier(newSupplier);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("")
-    public ResponseEntity<Supplier> createSupplier(@RequestBody @Valid SupplierDto supplierDto){
+    /**
+     * author: NghiaNPX
+     * date: 12/10/2023
+     * goal: create new supplier
+     *
+     * @param supplierDto   to save the object dto
+     * @param bindingResult to return errors
+     * @return HttpStatus
+     */
+    @PostMapping("/create")
+    @ResponseBody
+    public ResponseEntity<Object> createSupplier(@RequestBody @Valid SupplierDto supplierDto,
+                                                 BindingResult bindingResult) {
+        new SupplierDto().validate(supplierDto, bindingResult);
+        Map<String, String> errors = new HashMap<>();
+        if (bindingResult.hasErrors()) {
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errors, HttpStatus.NOT_ACCEPTABLE);
+        }
         Supplier newSupplier = new Supplier();
-        // Copy dl tu SupplierDto sang Supplier
-        newSupplier.setCodeSupplier(supplierDto.getCodeSupplier());
-        newSupplier.setNameSupplier(supplierDto.getNameSupplier());
-        newSupplier.setAddressSupplier(supplierDto.getAddressSupplier());
-        newSupplier.setPhoneNumberSupplier(supplierDto.getPhoneNumberSupplier());
-        newSupplier.setEmailSupplier(supplierDto.getEmailSupplier());
-
+        BeanUtils.copyProperties(supplierDto, newSupplier);
         supplierService.saveSupplier(newSupplier);
         return new ResponseEntity<>(HttpStatus.OK);
     }

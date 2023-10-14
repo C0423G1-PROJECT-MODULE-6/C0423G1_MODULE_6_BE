@@ -3,20 +3,13 @@ package com.example.c4zone.dto.supplier;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 public class SupplierDto implements Validator {
     private Long idSupplier;
-    @NotBlank(message = "Không được để trống")
     private Integer codeSupplier;
-    @NotBlank(message = "Không được để trống")
     private String nameSupplier;
-    @NotBlank(message = "Không được để trống")
     private String addressSupplier;
-    @NotBlank(message = "Không được để trống")
     private String phoneNumberSupplier;
-    @NotBlank(message = "Không được để trống")
     private String emailSupplier;
     private Boolean statusSupplier;
 
@@ -98,20 +91,28 @@ public class SupplierDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         SupplierDto supplierDto = (SupplierDto) target;
-        if (!supplierDto.getCodeSupplier().toString().matches("^[1-9]{5}$")){
+        if (supplierDto.getCodeSupplier().toString().isEmpty()){
+            errors.rejectValue("codeSupplier", null, "Không được để trống");
+        } else if (!supplierDto.getCodeSupplier().toString().matches("^[1-9]{5}$")){
             errors.rejectValue("codeSupplier",null,"Mã số chỉ chứa ký tự số và không quá 5 chữ số");
         }
-        if (!supplierDto.getNameSupplier().matches("^[^0-9`~!@#$%^&*()_\\-\\+\\=\\[\\{\\]\\}\\\\\\|;:'\",<\\.>\\/\\?]{1,100}$")){
+        if (supplierDto.getNameSupplier().isEmpty()){
+            errors.rejectValue("nameSupplier", null, "Không được để trống");
+        } else if (!supplierDto.getNameSupplier().matches("^[^0-9`~!@#$%^&*()_\\-\\+\\=\\[\\{\\]\\}\\\\\\|;:'\",<\\.>\\/\\?]{1,100}$")){
             errors.rejectValue("nameSupplier",null, "Tên không được chứa số, ký tự đặc biệt và quá 100 ký tự");
         }
-        if (!supplierDto.getPhoneNumberSupplier().matches("^(0|(\\+84))[0-9]{9,11}$")){
+        if (supplierDto.getPhoneNumberSupplier().isEmpty()){
+            errors.rejectValue("phoneNumberSupplier", null, "Không được để trống");
+        } else if (!supplierDto.getPhoneNumberSupplier().matches("^(0|(\\+84))[0-9]{9,11}$")){
             errors.rejectValue("phoneNumberSupplier",null,"SĐT phải đúng định dạng (0|+84)XXXXXXXXX với X từ 0-9");
-        } else if (!supplierDto.getPhoneNumberSupplier().matches("^[^a-zA-Z`~!@#$%^&*()_\\-\\+\\=\\[\\{\\]\\}\\\\\\|;:'\",<\\.>\\/\\?]{10,12}$")){
+        } else if (!supplierDto.getPhoneNumberSupplier().matches("^(0|(\\+84))[^a-zA-Z`~!@#$%^&*()_\\-\\+\\=\\[\\{\\]\\}\\\\\\|;:'\",<\\.>\\/\\?]{9,11}$")){
             errors.rejectValue("phoneNumberSupplier",null,"SĐT không chứa ký tự chữ và ký tự đặc biệt");
         }
-        if (supplierDto.getEmailSupplier().length() == 100){
+        if (supplierDto.getEmailSupplier().isEmpty()){
+            errors.rejectValue("emailSupplier", null, "Không được để trống");
+        } else if (supplierDto.getEmailSupplier().length() >= 100){
             errors.rejectValue("emailSupplier", null, "Email không được quá 100 ký tự");
-        } else if (supplierDto.getEmailSupplier().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+        } else if (!supplierDto.getEmailSupplier().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
             errors.rejectValue("emailSupplier", null, "Email không đúng định dạng");
         }
     }

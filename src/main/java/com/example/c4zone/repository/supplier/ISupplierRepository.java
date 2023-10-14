@@ -33,6 +33,13 @@ public interface ISupplierRepository extends JpaRepository<Supplier,Long> {
             "from supplier " +
             "where id_supplier = :id",nativeQuery = true)
     ISupplierDtoWarehouse findSupplierByIdWarehouse(Long id);
+
+    /**
+     * author: NghiaNPX
+     * date: 12/10/2023
+     * goal: edit an object in DB
+     *
+     */
     @Modifying
     @Transactional
     @Query(value = "update c4_zone.supplier " +
@@ -48,4 +55,26 @@ public interface ISupplierRepository extends JpaRepository<Supplier,Long> {
                         @Param("address") String addressSupplier,
                         @Param("phoneNumber") String phoneNumberSupplier,
                         @Param("email") String emailSupplier);
+
+    /**
+     * author: NghiaNPX
+     * date: 12/10/2023
+     * goal: create new supplier
+     *
+     */
+    @Modifying
+    @Transactional
+    @Query(value = "insert into c4_zone.supplier(id_supplier, " +
+            "address_supplier, " +
+            "code_supplier, " +
+            "email_supplier, " +
+            "name_supplier, " +
+            "phone_number_supplier, " +
+            "status_supplier) " +
+            "values ( :#{#supplier.addressSupplier}, " +
+            "#{#supplier.codeSupplier}, " +
+            "#{#supplier.emailSupplier}, " +
+            "#{#supplier.nameSupplier}, " +
+            "#{#supplier.phoneNumberSupplier}, false)",nativeQuery = true)
+    void saveSupplier(@Param("supplier") Supplier newSupplier);
 }

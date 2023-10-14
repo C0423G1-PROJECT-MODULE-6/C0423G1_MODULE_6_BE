@@ -37,6 +37,12 @@ public class SupplierService implements ISupplierService {
         return supplierRepository.findSupplierByIdWarehouse(id);
     }
 
+    /**
+     * author: NghiaNPX
+     * date: 12/10/2023
+     * goal: edit an object
+     * @param supplier is object existing in DB
+     */
     @Override
     public void editSupplier(Supplier supplier) {
         supplierRepository.updateSupplier(supplier.getIdSupplier(),
@@ -47,8 +53,14 @@ public class SupplierService implements ISupplierService {
                 supplier.getEmailSupplier());
     }
 
+    /**
+     * author: NghiaNPX
+     * date: 12/10/2023
+     * goal: save new object
+     * @param newSupplier is new object being created
+     */
     @Override
     public void saveSupplier(Supplier newSupplier) {
-        supplierRepository.save(newSupplier);
+        supplierRepository.saveSupplier(newSupplier);
     }
 }

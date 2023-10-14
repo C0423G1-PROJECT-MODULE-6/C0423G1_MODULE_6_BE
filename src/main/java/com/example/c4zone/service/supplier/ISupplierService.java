@@ -11,6 +11,20 @@ public interface ISupplierService {
     Page<Supplier> getAllNoCondition(Pageable pageable);
     Supplier findByIdSupplier(Long id);
     ISupplierDtoWarehouse findSupplierByIdWarehouse(Long id);
+
+    /**
+     * author: NghiaNPX
+     * date: 12/10/2023
+     * goal: edit object
+     * @param supplier is object existing in DB
+     */
     void editSupplier(Supplier supplier);
+
+    /**
+     * author: NghiaNPX
+     * date: 12/10/2023
+     * goal: save new object
+     * @param newSupplier is new object being created
+     */
     void saveSupplier(Supplier newSupplier);
 }
