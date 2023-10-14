@@ -33,4 +33,19 @@ public interface ISupplierRepository extends JpaRepository<Supplier,Long> {
             "from supplier " +
             "where id_supplier = :id",nativeQuery = true)
     ISupplierDtoWarehouse findSupplierByIdWarehouse(Long id);
+    @Modifying
+    @Transactional
+    @Query(value = "update c4_zone.supplier " +
+            "set address_supplier = :address, " +
+            "code_supplier = :code, " +
+            "email_supplier = :email, " +
+            "name_supplier = :name, " +
+            "phone_number_supplier = :phoneNumber " +
+            "where id_supplier = :id", nativeQuery = true)
+    void updateSupplier(@Param("id") Long idSupplier,
+                        @Param("code") Integer codeSupplier,
+                        @Param("name") String nameSupplier,
+                        @Param("address") String addressSupplier,
+                        @Param("phoneNumber") String phoneNumberSupplier,
+                        @Param("email") String emailSupplier);
 }

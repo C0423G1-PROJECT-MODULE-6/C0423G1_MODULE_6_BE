@@ -61,7 +61,13 @@ public class ProductService implements IProductService{
         return productRepository.getLastInsertedId();
 
     }
-
+    /**
+     * method findByProduct
+     * Create ThoiND
+     * Date 12-10-2023
+     * param Long id
+     * return IProductDtoOrder
+     */
     @Override
     public IProductDtoOrder findProductByIdOrder(Long id) {
         return productRepository.findProductByIdOrder(id);
