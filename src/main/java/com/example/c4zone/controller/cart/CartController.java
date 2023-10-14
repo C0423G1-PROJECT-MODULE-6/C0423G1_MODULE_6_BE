@@ -11,15 +11,24 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admin/cart")
 public class CartController {
     /**
-     * Author: TinDT
-     * Goal: create cart of employee for sale page
-     * * return HttpStatus
+     * method create cart for Sale page
+     * Create TinDT
+     * Date 14-10-2023
+     * param  cart
+     * return Http status
      */
     @Autowired
     private ICartService cartService;
     @PostMapping("/create")
-    public ResponseEntity<?> createCart(@RequestBody Cart cart) {
-        cartService.saveCart(cart);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> createCart(@RequestParam Long idUSer,
+                                        @RequestParam Long idProduct,
+                                        @RequestParam Long quantity) {
+       Long checkQuantity = cartService.getQuantityProduct(idProduct);
+        if (checkQuantity > 1) {
+            cartService.saveCart(idUSer,idProduct,quantity);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
+
 }

@@ -1,7 +1,10 @@
 package com.example.c4zone.repository.cart;
 
 import com.example.c4zone.dto.order.ICartDto;
+import com.example.c4zone.dto.product.IProductCartDto;
+import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.model.order.Cart;
+import com.example.c4zone.model.product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,13 +15,16 @@ import java.util.List;
 
 public interface ICartRepository extends JpaRepository<Cart,Long> {
     /**
-     * Author: TinDT
-     * Goal: create cart
+     * method Create Cart
+     * Create TinDT
+     * Date 14-10-2023
+     * param Cart cart
+     * return void
      */
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO c4_zone.cart(quantity_product_order,id_user,id_product) VALUES(:#{#cart.quantityProductOrder}, :#{#cart.user.id}, :#{#cart.product.idProduct}", nativeQuery = true)
-    void saveCart(Cart cart);
+    @Query(value = "INSERT INTO c4_zone.cart(quantity_product_order,id_user,id_product) VALUES(:quantity_product_order, :id_user, :id_product", nativeQuery = true)
+    void saveCart(@Param("quantity_product_order")Long quantity,@Param("id_user")Long idUser,@Param("id_product")Long idProduct);
     /**
      * method getAllCart
      * Create ThoiND
@@ -33,4 +39,21 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
             "on cart.id_product = p.id_product " +
             "where id_user = :id",nativeQuery = true)
     List<ICartDto> getAllCart(@Param("id")Long idUser);
+    /**
+     * method get quantity idProduct of cart form product
+     * Create TinDT
+     * Date 14-10-2023
+     * param Cart cart
+     * return Long
+     */
+    @Query(value =" select p.quantity_product as quantityProduct from product p where p.id_product = :id ",nativeQuery = true)
+    Long quantityProduct(@Param("id") Long id);
+    @Transactional
+
+    @Modifying
+    @Query(nativeQuery = true, value = "insert into cart (id_user, id_product, quantity_product_order)" +
+            "VALUES (:id_user, :id_product, :quantity_product_order) " +
+            "ON DUPLICATE KEY UPDATE quantity_product_order = quantity_product_order + :newQuantity")
+    void addToCart(@Param("id_user") Long idUser,@Param("id_product") Long idProduct, @Param("newQuantity") Long newQuantity);
+//    ALTER TABLE cart ADD UNIQUE INDEX user_medicine_index (app_user_id, medicine_id);
 }
