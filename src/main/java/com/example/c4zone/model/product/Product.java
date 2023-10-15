@@ -24,6 +24,7 @@ public class Product {
     private String selfieProduct;
     private String batteryProduct;
     private String weightProduct;
+    @Column(columnDefinition = "bigint")
     private Long quantityProduct;
     private Double priceProduct;
     @OneToMany(mappedBy = "product")

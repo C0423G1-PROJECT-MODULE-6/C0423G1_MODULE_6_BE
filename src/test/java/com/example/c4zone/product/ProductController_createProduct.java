@@ -89,7 +89,7 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(10.0);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
         productDto.setWeightProduct(200.5D);

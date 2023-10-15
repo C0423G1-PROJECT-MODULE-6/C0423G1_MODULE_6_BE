@@ -1,6 +1,6 @@
 package com.example.c4zone.dto.customer;
 
-public interface IShoppingHistory {
+public interface IShoppingHistoryDto {
     String getDateOfOrder();
 
     String getNameProduct();

@@ -1,8 +1,8 @@
 package com.example.c4zone.controller.customer;
 
 import com.example.c4zone.dto.customer.CustomerDto;
-import com.example.c4zone.dto.customer.IShoppingHistory;
-import com.example.c4zone.dto.product.ProductDto;
+import com.example.c4zone.dto.customer.ICustomerListDto;
+import com.example.c4zone.dto.customer.IShoppingHistoryDto;
 import com.example.c4zone.model.customer.Customer;
 import com.example.c4zone.service.customer.ICustomerService;
 import org.springframework.beans.BeanUtils;
@@ -38,13 +38,13 @@ public class CustomerController {
      * * return HttpStatus
      */
     @GetMapping("/list")
-    public ResponseEntity<Page<Customer>> listCustomer(@RequestParam(name = "_limit") int limit,
-                                                       @RequestParam(name = "_page") int page,
-                                                       @RequestParam(name = "name_like") Optional<String> searchName,
-                                                       @RequestParam(name = "age") Optional<String> searchAge,
-                                                       @RequestParam(name = "gender") Optional<Boolean> searchGender,
-                                                       @RequestParam(name = "sortName") Optional<String> sortName,
-                                                       @RequestParam(name = "sortCount") Optional<String> sortCount) {
+    public ResponseEntity<Page<ICustomerListDto>> getAllCustomer(@RequestParam(name = "_limit") int limit,
+                                                                 @RequestParam(name = "_page") int page,
+                                                                 @RequestParam(name = "name_like") Optional<String> searchName,
+                                                                 @RequestParam(name = "age") Optional<String> searchAge,
+                                                                 @RequestParam(name = "gender") Optional<String> searchGender,
+                                                                 @RequestParam(name = "sortName") Optional<String> sortName,
+                                                                 @RequestParam(name = "sortCount") Optional<String> sortCount) {
         String valueSearchName = "";
         if (searchName.isPresent()) {
             valueSearchName = searchName.get();
@@ -55,7 +55,7 @@ public class CustomerController {
             valueSearchAge = searchAge.get();
         }
 
-        Boolean valueSearchGender = null;
+        String valueSearchGender = "3";
         if (searchGender.isPresent()) {
             valueSearchGender = searchGender.get();
         }
@@ -72,14 +72,15 @@ public class CustomerController {
 
         Pageable pageable = PageRequest.of(page, limit);
         if (valueSortName){
-            pageable = PageRequest.of(page, limit, Sort.by("name_customer").ascending());
+            pageable = PageRequest.of(page, limit, Sort.by("nameCustomer").ascending());
         } else if (valueSortCount){
-            pageable = PageRequest.of(page, limit, Sort.by("total_purchases").ascending());
+            pageable = PageRequest.of(page, limit, Sort.by("totalPurchases").descending());
         }
 
-        Page<Customer> customerList = customerService.findCustomerByNameAndAge(pageable, valueSearchName, valueSearchAge, valueSearchGender);
+
+        Page<ICustomerListDto> customerList = customerService.findCustomerByNameAndAge(pageable, valueSearchName, valueSearchAge, valueSearchGender);
         if (customerList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(customerList, HttpStatus.OK);
@@ -91,10 +92,10 @@ public class CustomerController {
      * * return HttpStatus
      */
     @GetMapping("list/{id}")
-    public ResponseEntity<Customer> findById(@PathVariable Long id) {
+    public ResponseEntity<Customer> findCustomerById(@PathVariable Long id) {
         Customer customer = customerService.findById(id).orElse(null);
         if (customer == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
@@ -105,18 +106,18 @@ public class CustomerController {
      * * return HttpStatus
      */
     @GetMapping("/history/{id}")
-    public ResponseEntity<Page<IShoppingHistory>> shoppingHistory(@RequestParam(name = "_limit") int limit,
-                                                                  @RequestParam(name = "_page") int page,
-                                                                  @RequestParam(name = "name_like") Optional<String> searchName,
-                                                                  @PathVariable Long id) {
+    public ResponseEntity<Page<IShoppingHistoryDto>> getShoppingHistory(@RequestParam(name = "_limit") int limit,
+                                                                        @RequestParam(name = "_page") int page,
+                                                                        @RequestParam(name = "name_like") Optional<String> searchName,
+                                                                        @PathVariable Long id) {
         String valueSearchName = "";
         if (searchName.isPresent()) {
             valueSearchName = searchName.get();
         }
         Pageable pageable = PageRequest.of(page, limit);
-        Page<IShoppingHistory> shoppingHistoryPage = customerService.findShoppingHistory(pageable, valueSearchName, id);
+        Page<IShoppingHistoryDto> shoppingHistoryPage = customerService.findShoppingHistory(pageable, valueSearchName, id);
         if (shoppingHistoryPage.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(shoppingHistoryPage, HttpStatus.OK);
