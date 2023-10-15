@@ -104,9 +104,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    t.name AS type," +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -140,9 +141,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    t.name AS type," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -159,7 +161,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    series s ON p.id_series = s.id_series " +
             " WHERE " +
             "    p.status_business = TRUE  " +
-            "    AND p.id_type = :type ", nativeQuery = true)
+            "    AND t.id_type = :type ", nativeQuery = true)
     Page<IProductDto> getAllByType(Pageable pageable, @Param("type") Long type);
 
     /**
@@ -177,9 +179,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    t.name AS type," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -213,9 +216,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    t.name AS type," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -249,9 +253,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    t.name AS type," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -301,9 +306,9 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -338,9 +343,9 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -374,9 +379,9 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
