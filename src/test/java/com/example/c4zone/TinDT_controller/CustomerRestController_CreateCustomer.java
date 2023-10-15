@@ -1,4 +1,4 @@
-package com.example.c4zone.customer_controller;
+package com.example.c4zone.TinDT_controller;
 
 import com.example.c4zone.dto.customer.CustomerDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
