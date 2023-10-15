@@ -1,6 +1,7 @@
 package com.example.c4zone.service.customer;
 
-import com.example.c4zone.dto.customer.IShoppingHistory;
+import com.example.c4zone.dto.customer.ICustomerListDto;
+import com.example.c4zone.dto.customer.IShoppingHistoryDto;
 import com.example.c4zone.dto.order.ICustomerDtoOrder;
 import com.example.c4zone.model.customer.Customer;
 import org.springframework.data.domain.Page;
@@ -9,9 +10,9 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 public interface ICustomerService {
-    Page<Customer> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, Boolean valueSearchGender);
+    Page<ICustomerListDto> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, String valueSearchGender);
     Optional<Customer> findById(Long id);
-    Page<IShoppingHistory> findShoppingHistory(Pageable pageable, String valueSearchName, Long id);
+    Page<IShoppingHistoryDto> findShoppingHistory(Pageable pageable, String valueSearchName, Long id);
 
     /**
      * method findByCustomer
