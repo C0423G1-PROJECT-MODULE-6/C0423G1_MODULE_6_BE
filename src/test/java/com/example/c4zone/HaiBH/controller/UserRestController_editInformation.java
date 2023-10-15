@@ -25,6 +25,11 @@ public class UserRestController_editInformation {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: userInfoDto = null
+     * @Throw: Exception
+     */
     @Test
     public void editInformation_object_19 () throws Exception {
 
@@ -39,6 +44,11 @@ public class UserRestController_editInformation {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: userInfoDto = ""
+     * @Throw: Exception
+     */
     @Test
     public void editInformation_object_20 () throws Exception {
 
@@ -59,6 +69,11 @@ public class UserRestController_editInformation {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: phone = String
+     * @Throw: Exception
+     */
     @Test
     public void editInformation_phone_21 () throws Exception {
 
@@ -78,6 +93,11 @@ public class UserRestController_editInformation {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: name = 1 letter
+     * @Throw: Exception
+     */
     @Test
     public void editInformation_name_22 () throws Exception {
 
@@ -97,6 +117,11 @@ public class UserRestController_editInformation {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: phone = more than 10 number
+     * @Throw: Exception
+     */
     @Test
     public void editInformation_phone_23 () throws Exception {
 
@@ -116,6 +141,11 @@ public class UserRestController_editInformation {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: userInfoDto = valid, successfully
+     * @Throw: Exception
+     */
     @Test
     public void editInformation_object_24 () throws Exception {
 
