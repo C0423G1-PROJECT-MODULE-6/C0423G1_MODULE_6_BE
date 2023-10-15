@@ -26,8 +26,6 @@ public interface IAppUserService extends UserDetailsService {
 
     void sendOTPEmail(AppUser appUser, String OTP) throws MessagingException, UnsupportedEncodingException;
 
-    void updateOtp(AppUser appUser);
-
     Optional<AppUser> findByUsername(String name);
 
     AppUser findAppUserById(Long id);
