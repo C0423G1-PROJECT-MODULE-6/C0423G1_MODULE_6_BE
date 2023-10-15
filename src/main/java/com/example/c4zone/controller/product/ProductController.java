@@ -30,18 +30,6 @@ public class ProductController {
     private IProductService productService;
     @Autowired
     private IImageService imageService;
-    @Autowired
-    private ICapacityService capacityService;
-    @Autowired
-    private IColorService colorService;
-    @Autowired
-    private ICpuService cpuService;
-    @Autowired
-    private IRamService ramService;
-    @Autowired
-    private ISeriesService service;
-    @Autowired
-    private ITypeService typeService;
 
     /**
      * author: DaoPTA
