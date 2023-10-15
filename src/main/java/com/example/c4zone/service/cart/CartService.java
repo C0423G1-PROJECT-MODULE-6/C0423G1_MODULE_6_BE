@@ -1,10 +1,9 @@
 package com.example.c4zone.service.cart;
 
 import com.example.c4zone.dto.order.ICartDto;
-import com.example.c4zone.dto.product.IProductCartDto;
-import com.example.c4zone.dto.product.IProductDto;
-import com.example.c4zone.model.order.Cart;
 import com.example.c4zone.model.product.Product;
+import com.example.c4zone.model.user.AppUser;
+
 import com.example.c4zone.repository.cart.ICartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,19 +18,21 @@ public class CartService implements ICartService{
      * method create Cart
      * Create TinDT
      * Date 12-10-2023
-     * param Cart cart
+     * param  cart
      * return voide
      */
     @Override
     public void saveCart(Long idUser,Long idProduct,Long newQuantity) {
 
-        cartRepository.addToCart(idUser,idProduct,newQuantity);
+        cartRepository.createCard(idUser,idProduct,newQuantity);
+
     }
+
     /**
      * method get quantity idProduct of cart form Product
      * Create TinDT
      * Date 12-10-2023
-     * param Cart cart
+     * param  cart
      * return Long
      */
     @Override
@@ -49,5 +50,44 @@ public class CartService implements ICartService{
     @Override
     public List<ICartDto> getAllCart(Long idUser) {
         return cartRepository.getAllCart(idUser);
+    }
+    /**
+     * method get quantity idProduct of cart form Product
+     * Create TinDT
+     * Date 12-10-2023
+     * param  Long idProduct
+     * return Long
+     */
+    @Override
+    public Long getQuantityProductOrder(Long idProduct, Long idUser) {
+        return cartRepository.quantityProductCart(idProduct,idUser);
+    }
+    /**
+     * method get product  from iProduct
+     * Create TinDT
+     * Date 14-10-2023
+     * param Long idProduct
+     * return Product
+     */
+    @Override
+    public Product getProductById(Long idProduct) {
+        if (cartRepository.getProductById(idProduct)== null){
+            return null;
+        }
+        return cartRepository.getProductById(idProduct);
+    }
+    /**
+     * method get product  from iProduct
+     * Create TinDT
+     * Date 14-10-2023
+     * param Long idProduct
+     * return Product
+     */
+    @Override
+    public AppUser getUserById(Long idUser) {
+        if (cartRepository.getUserById(idUser)== null){
+            return null;
+        }
+        return cartRepository.getUserById(idUser);
     }
 }

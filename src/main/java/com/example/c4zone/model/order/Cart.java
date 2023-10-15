@@ -16,7 +16,8 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCart;
-    @Column(name = "quantity_product_order")
+    @Column(name ="quantity_product_order")
+
 
     private Long quantityProductOrder;
 
