@@ -184,18 +184,6 @@ public class AppUserService implements IAppUserService {
     }
 
     /**
-     * method updateOtp
-     * Create HaiBH
-     * Date 12-10-2023
-     * param AppUser appUser
-     * return void
-     */
-    @Override
-    public void updateOtp(AppUser appUser) {
-        appUserRepository.updateOtp(appUser);
-    }
-
-    /**
      * method findByUsername
      * Create HaiBH
      * Date 12-10-2023

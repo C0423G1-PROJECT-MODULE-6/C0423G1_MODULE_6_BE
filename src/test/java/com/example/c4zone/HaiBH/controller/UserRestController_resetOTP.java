@@ -23,6 +23,11 @@ public class UserRestController_resetOTP {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: appUserDto = null
+     * @Throw: Exception
+     */
     @Test
     public void resetOTP_object_19 () throws Exception {
 
@@ -37,6 +42,11 @@ public class UserRestController_resetOTP {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: appUserDto = ""
+     * @Throw: Exception
+     */
     @Test
     public void resetOTP_object_20 () throws Exception {
 
@@ -52,6 +62,12 @@ public class UserRestController_resetOTP {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: appUserDto = data exist in DB, success
+     * @Throw: Exception
+     */
     @Test
     public void resetOTP_object_24 () throws Exception {
 
