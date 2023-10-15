@@ -193,6 +193,7 @@ public class CustomerListRestController_ListCustomert {
                 .andExpect(jsonPath("content[0].genderCustomer").value(false))
                 .andExpect(jsonPath("content[0].emailCustomer").value("anh@gmail.com"))
                 .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("1997-10-10"))
+
                 .andExpect(jsonPath("content[0].phoneNumberCustomer").value("098732165"))
                 .andExpect(jsonPath("content[0].addressCustomer").value("Da Nang"))
                 .andExpect(jsonPath("content[0].statusCustomer").value(true));
@@ -283,6 +284,7 @@ public class CustomerListRestController_ListCustomert {
                 .andExpect(jsonPath("content[0].genderCustomer").value(true))
                 .andExpect(jsonPath("content[0].emailCustomer").value("ha@gmail.com"))
                 .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("1993-10-10"))
+
                 .andExpect(jsonPath("content[0].phoneNumberCustomer").value("123312654"))
                 .andExpect(jsonPath("content[0].addressCustomer").value("Ha Noi"))
                 .andExpect(jsonPath("content[0].statusCustomer").value(true))
@@ -292,6 +294,7 @@ public class CustomerListRestController_ListCustomert {
                 .andExpect(jsonPath("content[4].genderCustomer").value(true))
                 .andExpect(jsonPath("content[4].emailCustomer").value("nguyen@gmail.com"))
                 .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("1999-10-10"))
+
                 .andExpect(jsonPath("content[4].phoneNumberCustomer").value("023165489"))
                 .andExpect(jsonPath("content[4].addressCustomer").value("Ha Noi"))
                 .andExpect(jsonPath("content[4].statusCustomer").value(true));
