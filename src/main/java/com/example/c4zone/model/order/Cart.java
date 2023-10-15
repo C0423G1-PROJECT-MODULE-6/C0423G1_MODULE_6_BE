@@ -18,6 +18,7 @@ public class Cart {
     private Long idCart;
     @Column(name ="quantity_product_order")
 
+
     private Long quantityProductOrder;
 
 

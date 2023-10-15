@@ -3,6 +3,7 @@ package com.example.c4zone.service.cart;
 import com.example.c4zone.dto.order.ICartDto;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.model.user.AppUser;
+
 import com.example.c4zone.repository.cart.ICartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,9 @@ public class CartService implements ICartService{
     public void saveCart(Long idUser,Long idProduct,Long newQuantity) {
 
         cartRepository.createCard(idUser,idProduct,newQuantity);
+
     }
+
     /**
      * method get quantity idProduct of cart form Product
      * Create TinDT

@@ -93,4 +93,5 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      */
     @Query(value =" select * from app_user where id = :id_user ",nativeQuery = true)
     AppUser getUserById(@Param("id_user") Long idUser);
+
 }

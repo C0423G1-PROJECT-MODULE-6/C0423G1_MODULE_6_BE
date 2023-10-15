@@ -6,6 +6,7 @@ import com.example.c4zone.model.user.AppUser;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+
 import java.util.List;
 
 public interface ICartService {
@@ -18,6 +19,8 @@ public interface ICartService {
      */
     void saveCart(Long idUser, Long idProduct, Long newQuantity);
 
+
+
     /**
      * method getAllCart
      * Create ThoiND
@@ -26,7 +29,6 @@ public interface ICartService {
      * return List<ICartDto>
      */
     List<ICartDto> getAllCart(Long idUser);
-
     /**
      * method get quantity idProduct of cart form Product
      * Create TinDT
