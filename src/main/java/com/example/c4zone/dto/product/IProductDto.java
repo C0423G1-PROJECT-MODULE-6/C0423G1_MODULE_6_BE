@@ -10,4 +10,14 @@ public interface IProductDto {
     String getColor();
     Double getPrice();
     Double getQuantity();
+    String getImage();
+    String getType();
+    String getScreen();
+    String getSelfie();
+    String getWeight();
+    String getRam();
+    String getSeries();
+
+
+
 }

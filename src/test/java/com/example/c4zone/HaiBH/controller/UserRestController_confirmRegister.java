@@ -23,6 +23,11 @@ public class UserRestController_confirmRegister {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: appUserDto = null
+     * @Throw: Exception
+     */
     @Test
     public void confirmRegister_object_19 () throws Exception {
 
@@ -37,6 +42,11 @@ public class UserRestController_confirmRegister {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: appUserDto = ""
+     * @Throw: Exception
+     */
     @Test
     public void confirmRegister_object_20 () throws Exception {
 
@@ -54,6 +64,11 @@ public class UserRestController_confirmRegister {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: otp = valid, successfully
+     * @Throw: Exception
+     */
     @Test
     public void confirmRegister_object_24 () throws Exception {
 
