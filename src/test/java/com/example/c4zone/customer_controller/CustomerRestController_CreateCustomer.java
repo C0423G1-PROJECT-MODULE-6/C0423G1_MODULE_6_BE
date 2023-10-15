@@ -1,4 +1,4 @@
-package com.example.c4zone.customer_controller;
+package com.example.c4zone.TinDT_controller;
 
 import com.example.c4zone.dto.customer.CustomerDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,7 +63,7 @@ public class CustomerRestController_CreateCustomer {
     }
     /**
      * This function is used to check the validation of a specific field name that is not in the validate format
-      * Author: TinDT
+     * Author: TinDT
      */
     @Test
     public void create_Customer_name_15() throws Exception {
