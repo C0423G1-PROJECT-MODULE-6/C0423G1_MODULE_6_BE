@@ -21,8 +21,43 @@ public class WareHouseService implements IWareHouseService{
      * @return page Warehouse
      */
     @Override
-    public Page<IWarehouseProjection> findAll(Pageable pageable) {
-        return wareHouseRepository.findAllWareHouse(pageable);
+    public Page<IWarehouseProjection> findAllByName(Pageable pageable, String name) {
+        return wareHouseRepository.findAllWareHouseByName(pageable, '%'+name+'%');
+    }
+
+    /**
+     * method findAll by Price
+     * author PhapTM
+     * create 12-10-2023
+     * @param pageable return page
+     * @param price search by filter
+     * @return
+     */
+    @Override
+    public Page<IWarehouseProjection> findAllByPrice(Pageable pageable, String price) {
+        switch (price) {
+            case "smaller 5m":
+                return wareHouseRepository.findAllWareHouseByPriceMax(pageable, 5000000.0);
+            case "5m to 10m":
+                return wareHouseRepository.findAllWareHouseByPrice(pageable, 5000000.0, 10000000.0);
+            case "better 10m":
+                return wareHouseRepository.findAllWareHouseByPriceMin(pageable, 10000000.0);
+        }
+        return null;
+    }
+
+    /**
+     * method findAll by supplier
+     * author PhapTM
+     * create 12-10-2023
+     * @param pageable page
+     * @param supplier search by name supplier
+     * @return
+     */
+
+    @Override
+    public Page<IWarehouseProjection> findAllBySupplier(Pageable pageable, String supplier) {
+        return wareHouseRepository.findAllWareHouseBySupplier(pageable, supplier);
     }
 
     /**
@@ -32,7 +67,9 @@ public class WareHouseService implements IWareHouseService{
      * @param wareHouse use add object
      */
     @Override
-    public void ImportProduct(WareHouse wareHouse) {
+    public void importProduct(WareHouse wareHouse) {
         wareHouseRepository.ImportProduct(wareHouse);
     }
+
+
 }

@@ -9,8 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
+@Repository
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
     /**
@@ -406,4 +407,36 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             " where p.id_product = :id " , nativeQuery = true)
 
     void removeProduct(@Param("id") Long id);
+    /**
+     * method find product by id product
+     * Create ThoiND
+     * Date 14-10-2023
+     * param id product
+     * return product
+     */
+    @Query(value = "select * from product where id_product = :id",nativeQuery = true)
+    Product findProductByIdProduct(@Param("id") Long idProduct);
+
+    /**
+     * method get quantity by id product
+     * Create ThoiND
+     * Date 14-10-2023
+     * param id product
+     * return quantity current product
+     */
+    @Query(value = "select quantity_product from product where id_product = :id",nativeQuery = true)
+    Integer getQuantityByid(@Param("id") Long idProduct);
+
+    /**
+     * method update quantity of product
+     * Create ThoiND
+     * Date 14-10-2023
+     * param id product
+     * return void
+     */
+    @Modifying
+    @Transactional
+    @Query(value = "update product set quantity_product = :quantity where id_product = :id",nativeQuery = true)
+    void updateQuantityOfProduct(@Param("id") Long idProduct,@Param("quantity") Integer quantityOfProductAfterPayment);
+
 }

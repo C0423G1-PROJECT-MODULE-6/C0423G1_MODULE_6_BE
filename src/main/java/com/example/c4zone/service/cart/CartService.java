@@ -1,5 +1,6 @@
 package com.example.c4zone.service.cart;
 
+
 import com.example.c4zone.dto.order.ICartDto;
 import com.example.c4zone.model.order.Cart;
 import com.example.c4zone.repository.cart.ICartRepository;
@@ -31,4 +32,10 @@ public class CartService implements ICartService{
     public List<ICartDto> getAllCart(Long idUser) {
         return cartRepository.getAllCart(idUser);
     }
+
+    @Override
+    public void addToCart(Long idUser, Long idProduct, Integer quantity) {
+        cartRepository.addToCart(idUser,idProduct,quantity);
+    }
+
 }

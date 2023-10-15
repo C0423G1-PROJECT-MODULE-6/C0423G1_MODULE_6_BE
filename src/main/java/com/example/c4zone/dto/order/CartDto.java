@@ -1,5 +1,6 @@
 package com.example.c4zone.dto.order;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,9 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CartDto {
-    private Long idCartDto;
-    private String nameProduct;
-    private Double priceProduct;
     private Integer quantityProduct;
+    private Double priceOrder;
+    private Long idOrder;
+    private Long idProduct;
 }

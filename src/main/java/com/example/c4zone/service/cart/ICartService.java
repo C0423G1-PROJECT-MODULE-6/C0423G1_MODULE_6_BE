@@ -1,7 +1,6 @@
 package com.example.c4zone.service.cart;
 
 import com.example.c4zone.dto.order.ICartDto;
-import com.example.c4zone.model.customer.Customer;
 import com.example.c4zone.model.order.Cart;
 
 import java.util.List;
@@ -21,4 +20,8 @@ public interface ICartService {
      * return List<ICartDto>
      */
     List<ICartDto> getAllCart(Long idUser);
+
+
+    void addToCart(Long idUser, Long idProduct, Integer quantity);
+
 }

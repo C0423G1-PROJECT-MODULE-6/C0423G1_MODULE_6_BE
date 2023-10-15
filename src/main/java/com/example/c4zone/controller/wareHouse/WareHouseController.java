@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -35,22 +36,50 @@ public class WareHouseController {
     private ISupplierService supplierService;
 
     /**
-     * Method: findAll
-     * Author: PhapTM
-     * Create: 12-10-2023
-     * @param page control page: size and number
-     * @return page Warehouse
+     * Method find All
+     * Author PhapTM
+     * Create 12-10-2023
+     * @param choose : Select type to search
+     * @param sort : Arranged in many ways
+     * @param page : number page
+     * @param value :  value of option choose
+     * @return list Warehouse Management
      */
 
     @GetMapping("")
-    public ResponseEntity<Page<IWarehouseProjection>> findAll(@RequestParam(defaultValue = "0") int page) {
-        Pageable pageable = PageRequest.of(page, 2);
-        Page<IWarehouseProjection> wareHousePage = wareHouseService.findAll(pageable);
-        if (wareHousePage.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(wareHousePage, HttpStatus.OK);
+    public ResponseEntity<Page<IWarehouseProjection>> findAll(
+                @RequestParam(value = "choose", required = false, defaultValue = "name") String choose,
+                @RequestParam(value = "sort", required = false, defaultValue = "") String sort,
+                @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+                @RequestParam(value = "value", required = false, defaultValue = "") String value) {
+        Page<IWarehouseProjection> warehouseProjections = null;
+        Pageable pageable = PageRequest.of(page,5);
+        switch (sort){
+            case "name":
+                pageable = PageRequest.of(page, 5, Sort.by("name").ascending());
+                break;
+            case "price":
+                pageable = PageRequest.of(page, 5, Sort.by("price").ascending());
+                break;
+            case "supplier":
+                pageable = PageRequest.of(page, 5, Sort.by("supplier").ascending());
+                break;
+            default:
+                pageable = PageRequest.of(page, 5);
+                break;
         }
+        switch (choose){
+            case "name":
+                warehouseProjections = wareHouseService.findAllByName(pageable,value);
+                break;
+            case "price":
+                warehouseProjections = wareHouseService.findAllByPrice(pageable,value);
+                break;
+            case "supplier":
+                warehouseProjections = wareHouseService.findAllBySupplier(pageable,value);
+                break;
+        }
+        return new ResponseEntity<>(warehouseProjections, HttpStatus.OK);
     }
 
     /**
@@ -101,7 +130,7 @@ public class WareHouseController {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
         BeanUtils.copyProperties(warehouseDto, wareHouse);
-        wareHouseService.ImportProduct(wareHouse);
+        wareHouseService.importProduct(wareHouse);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

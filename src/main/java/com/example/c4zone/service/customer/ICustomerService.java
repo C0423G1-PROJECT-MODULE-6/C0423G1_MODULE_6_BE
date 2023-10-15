@@ -1,5 +1,6 @@
 package com.example.c4zone.service.customer;
 
+import com.example.c4zone.dto.customer.IShoppingHistory;
 import com.example.c4zone.dto.order.ICustomerDtoOrder;
 import com.example.c4zone.model.customer.Customer;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,9 @@ import java.util.Optional;
 
 public interface ICustomerService {
     Page<Customer> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, Boolean valueSearchGender);
+    Optional<Customer> findById(Long id);
+    Page<IShoppingHistory> findShoppingHistory(Pageable pageable, String valueSearchName, Long id);
+
     /**
      * method findByCustomer
      * Create ThoiND
@@ -17,6 +21,8 @@ public interface ICustomerService {
      * return HttpStatus
      */
     ICustomerDtoOrder findCustomerByIdOrder(Long id);
+
+
     /**
      * Author: TinDT
      * Goal: save customers
@@ -25,7 +31,8 @@ public interface ICustomerService {
 
     Customer findCustomerByPhone(String phoneNumberCustomer);
 
+
     Customer findCustomerByEmail(String emailCustomer);
 
-    Optional<Customer> findById(Long idCustomerOrder);
+
 }

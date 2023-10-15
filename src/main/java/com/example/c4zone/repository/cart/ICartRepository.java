@@ -26,11 +26,31 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      * param Long idUser
      * return List<ICartDto>
      */
-    @Query(value = "select cart.id_cart as idCart, p.name_product as nameProduct, p.price_product as priceProduct " +
-            "p.quantity_product as quantityProduct " +
-            "from cart " +
-            "join product as p " +
-            "on cart.id_product = p.id_product " +
-            "where id_user = :id",nativeQuery = true)
+    @Query(value = "select c.id_cart as idCart,c.id_product as idProduct,c.quantity_product_order as quantityOrder ,p.name_product as nameProduct " +
+            ",p.price_product as priceProduct " +
+            "from cart as c " +
+            "join product " +
+            "as p on c.id_product = p.id_product " +
+            "where c.id_user = :id",nativeQuery = true)
     List<ICartDto> getAllCart(@Param("id")Long idUser);
+
+    @Modifying
+    @Transactional
+    @Query(value = "insert into cart (id_user, id_product, quantity_product_order) " +
+             "values (:userId, :productId, :newQuantity) "  +
+             "on duplicate key update quantity_product_order = :newQuantity",nativeQuery = true)
+    void addToCart(@Param("userId") Long userId,
+                   @Param("productId") Long productId, @Param("newQuantity") Integer newQuantity);
+
+    /**
+     * method delete cart after copy to order detail
+     * Create ThoiND
+     * Date 14-10-2023
+     * param id user
+     * return void
+     */
+    @Modifying
+    @Transactional
+    @Query(value = "delete from cart where id_user = :id",nativeQuery = true)
+    void deleteCart(@Param("id") Long idUser);
 }

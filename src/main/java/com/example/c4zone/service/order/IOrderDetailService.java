@@ -1,12 +1,25 @@
 package com.example.c4zone.service.order;
 
-import com.example.c4zone.dto.order.OrderHistoryDtoTotal;
+import com.example.c4zone.dto.order.ICartDto;
+import com.example.c4zone.dto.order.IOrderHistoryDtoTotal;
+import com.example.c4zone.model.order.OrderBill;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
+
 
 public interface IOrderDetailService {
-    Optional<List<OrderHistoryDtoTotal>> getAllHistoryTotal();
 
 
+    void createOrderBill(OrderBill orderBill);
+
+
+    void createOrderDetail(List<ICartDto> cartDto);
+
+    Double calculateTotalMoney();
+
+    void updateTotalMoney(Double totalMoney);
+
+    Page<IOrderHistoryDtoTotal> getAllSaleHistory(Pageable pageable, String valueSearchName, int i);
 }
