@@ -129,7 +129,7 @@ public class EmployeeController {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(bindingResult.getAllErrors().toString(),HttpStatus.NOT_ACCEPTABLE);
         }
-        AppUser employee = employeeService.getUserById(id);
+        AppUser employee = employeeService.getEmployeeById(id);
         if(employee==null){
             return new ResponseEntity<>("Không tìm thấy",HttpStatus.NOT_FOUND);
         }
