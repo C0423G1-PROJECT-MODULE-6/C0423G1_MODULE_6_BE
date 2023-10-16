@@ -10,6 +10,7 @@ import com.example.c4zone.service.customer.ICustomerService;
 import com.example.c4zone.service.order.IOrderDetailService;
 import com.example.c4zone.service.product.IProductService;
 
+import com.example.c4zone.service.user.IAppUserService;
 import com.example.c4zone.service.user.IEmployeeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,8 @@ public class OrderController {
     private ICartService cartService;
     @Autowired
     private IEmployeeService employeeService;
+    @Autowired
+    private IAppUserService appUserService;
 
     /**
      * method findByCustomer
@@ -127,7 +130,7 @@ public class OrderController {
                 if (!customer.isPresent()){
                     return new ResponseEntity<>("Không tìm thấy khách hàng",HttpStatus.NOT_FOUND);
                 }
-                AppUser appUser = employeeService.getUserById(idUser);
+                AppUser appUser = appUserService.findAppUserById(idUser);
                 if (appUser == null){
                     return new ResponseEntity<>("Không tìm thấy tài khoản",HttpStatus.NOT_FOUND);
                 }

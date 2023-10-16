@@ -62,6 +62,7 @@ public class CartService implements ICartService{
     @Override
     public void deleteCart(Long idUser) {
         cartRepository.deleteCart(idUser);
+    }
 
     /**
      * method get quantity idProduct of cart form Product
