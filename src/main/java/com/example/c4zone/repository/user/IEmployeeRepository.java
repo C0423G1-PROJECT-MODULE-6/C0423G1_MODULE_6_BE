@@ -1,17 +1,13 @@
 package com.example.c4zone.repository.user;
 import com.example.c4zone.model.user.AppUser;
-import com.example.c4zone.model.user.AppUser;
-import org.hibernate.query.NativeQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
 public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
 
     /**
@@ -22,10 +18,10 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
      * @param:
      * return Page<User>
      */
-    @Query(nativeQuery = true,value = "SELECT app_user.* FROM app_user  " +
-            "             JOIN user_role on app_user.id = user_role.app_user_id  " +
+    @Query(nativeQuery = true,value = " SELECT * FROM app_user as au   " +
+            "             JOIN user_role on au.id = user_role.app_user_id  " +
             "             JOIN app_role on user_role.app_role_id = app_role.id  " +
-            "             where app_user.flag_deleted = 0 and app_role.name like :searchJob and app_user.employee_name like :searchName and app_user.employee_phone like :searchPhone ")
+            "             where au.flag_deleted = 0 and app_role.name like :searchJob and au.employee_name like :searchName and au.employee_phone like :searchPhone ")
     Page<AppUser> findAllEmployee(Pageable pageable, @Param("searchJob") String searchJob,@Param("searchName") String searchName,@Param("searchPhone") String searchPhone);
 
     /**
