@@ -1,5 +1,4 @@
 package com.example.c4zone.service.user.impl;
-
 import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.repository.user.IEmployeeRepository;
 import com.example.c4zone.service.user.IEmployeeService;
@@ -16,23 +15,23 @@ public class EmployeeServiceImpl implements IEmployeeService {
     private IEmployeeRepository employeeRepository;
 
     @Override
-    public List<AppUser> findAllUser() {
+    public List<AppUser> findAllEmployee() {
         return employeeRepository.findAll();
     }
 
     @Override
-    public Page<AppUser> findAllUserBy(Pageable pageable, String searchJob, String searchName, String searchPhone) {
+    public Page<AppUser> findAllEmployeeBy(Pageable pageable, String searchJob, String searchName, String searchPhone) {
         return employeeRepository.findAllEmployee(pageable, searchJob, searchName, searchPhone);
     }
 
     @Override
-    public void deleteUserById(Long id) {
-        employeeRepository.deleteUserById(id);
+    public void deleteEmployeeById(Long id) {
+        employeeRepository.deleteEmployeeById(id);
     }
 
     @Override
-    public AppUser getUserById(Long id) {
-        return employeeRepository.findUserById(id);
+    public AppUser getEmployeeById(Long id) {
+        return employeeRepository.findEmployeeById(id);
     }
 
     @Override

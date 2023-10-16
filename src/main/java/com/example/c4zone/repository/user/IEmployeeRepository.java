@@ -15,21 +15,21 @@ import org.springframework.transaction.annotation.Transactional;
 public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
 
     /**
-     * method :findAllUserBy()
+     * method :findAllEmployee()
      * created by :PhuocLQ
      * date create: 10/09/2023
      *
      * @param:
      * return Page<User>
      */
-    @Query(nativeQuery = true,value = "SELECT app_user.* FROM app_user  " +
+    @Query(nativeQuery = true,value = " SELECT * FROM app_user  " +
             "             JOIN user_role on app_user.id = user_role.app_user_id  " +
             "             JOIN app_role on user_role.app_role_id = app_role.id  " +
-            "             where app_user.flag_deleted = 0 and app_role.name like :searchJob and app_user.employee_name like :searchName and app_user.employee_phone like :searchPhone ")
+            "             where app_user.flag_deleted = 0 and app_role.id like :searchJob and app_user.employee_name like :searchName and app_user.employee_phone like :searchPhone ")
     Page<AppUser> findAllEmployee(Pageable pageable, @Param("searchJob") String searchJob,@Param("searchName") String searchName,@Param("searchPhone") String searchPhone);
 
     /**
-     * method :deleteUserById()
+     * method :deleteEmployeeById()
      * created by :PhuocLQ
      * date create: 10/09/2023
      *
@@ -41,10 +41,10 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
     @Query(nativeQuery = true,value = " UPDATE app_user " +
             " SET flag_deleted = true " +
             " WHERE app_user.id = :id ")
-    void deleteUserById(@Param("id") Long id);
+    void deleteEmployeeById(@Param("id") Long id);
 
     /**
-     * method :getUserById()
+     * method :findEmployeeById()
      * created by :PhuocLQ
      * date create: 10/09/2023
      *
@@ -52,7 +52,7 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
      * return: user
      */
     @Query(nativeQuery = true,value = " select  * from app_user where id= :id")
-    AppUser findUserById(@Param("id") Long id);
+    AppUser findEmployeeById(@Param("id") Long id);
 
 
 

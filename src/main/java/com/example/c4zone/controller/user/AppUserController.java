@@ -137,9 +137,7 @@ public class AppUserController {
 
                 String jwtToken = jwtTokenUtil.generateToken(userDetails);
 
-                return ResponseEntity
-                        .ok()
-                        .body(new JwtResponse(jwtToken));
+                return ResponseEntity.ok().body(new JwtResponse(jwtToken));
 
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -173,7 +171,8 @@ public class AppUserController {
      * param AppUserDto appUserDto
      * return ResponseEntity<>();
      */
-    @PostMapping("/register")
+//    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("/register")
     public ResponseEntity<Object> register(@RequestBody AppUserDto appUserDto) throws MessagingException, UnsupportedEncodingException {
 
         try {

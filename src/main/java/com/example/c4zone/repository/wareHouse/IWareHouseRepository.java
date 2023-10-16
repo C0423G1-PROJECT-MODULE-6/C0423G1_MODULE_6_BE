@@ -146,5 +146,4 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
     @Query(value = "insert into ware_house(product_id,supplier_id, quantity, input_date) " +
             "values(:#{#wareHouse.product?.product_id},:#{#wareHouse.supplier?.supplier_id}, :#{#wareHouse.quantity}, date(now()))", nativeQuery = true)
     void ImportProduct(WareHouse wareHouse);
-
 }
