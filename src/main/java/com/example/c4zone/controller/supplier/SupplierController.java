@@ -72,7 +72,7 @@ public class SupplierController {
      * @param supplierDto to overwrite the old object
      * @return HttpStatus
      */
-    @PutMapping("/{id}")
+    @PutMapping("/edit/{id}")
     @ResponseBody
     public ResponseEntity<Object> editSupplier(@PathVariable Long id,
                                                @RequestBody SupplierDto supplierDto,
@@ -86,7 +86,25 @@ public class SupplierController {
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 errors.put(fieldError.getField(), fieldError.getDefaultMessage());
             }
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
+        Supplier duplicatedCodeSupplier = supplierService.findSupplierByCode(supplierDto.getCodeSupplier());
+        if (duplicatedCodeSupplier != null){
+            errors.put("codeSupplier", "Mã số đã tồn tại");
+        }
+        Supplier duplicatedNameSupplier = supplierService.findSupplierByName(supplierDto.getNameSupplier());
+        if (duplicatedNameSupplier != null){
+            errors.put("nameSupplier", "Tên nhà cung cấp đã tồn tại");
+        }
+        Supplier duplicatedPhoneNumberSupplier = supplierService.findSupplierByPhoneNumber(supplierDto.getPhoneNumberSupplier());
+        if (duplicatedPhoneNumberSupplier != null){
+            errors.put("phoneNumberSupplier", "SĐT đã tồn tại");
+        }
+        Supplier duplicatedEmailSupplier = supplierService.findSupplierByEmail(supplierDto.getEmailSupplier());
+        if (duplicatedEmailSupplier != null){
+            errors.put("emailSupplier", "Email đã tồn tại");
+        }
+        if (errors.size() != 0){
+            return new ResponseEntity<>(errors, HttpStatus.NOT_ACCEPTABLE);
         }
         Supplier newSupplier = new Supplier();
         BeanUtils.copyProperties(supplierDto, newSupplier);
@@ -113,6 +131,24 @@ public class SupplierController {
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 errors.put(fieldError.getField(), fieldError.getDefaultMessage());
             }
+        }
+        Supplier duplicatedCodeSupplier = supplierService.findSupplierByCode(supplierDto.getCodeSupplier());
+        if (duplicatedCodeSupplier != null){
+            errors.put("codeSupplier", "Mã số đã tồn tại");
+        }
+//        Supplier duplicatedNameSupplier = supplierService.findSupplierByName(supplierDto.getNameSupplier());
+//        if (duplicatedNameSupplier != null){
+//            errors.put("nameSupplier", "Tên nhà cung cấp đã tồn tại");
+//        }
+//        Supplier duplicatedPhoneNumberSupplier = supplierService.findSupplierByPhoneNumber(supplierDto.getPhoneNumberSupplier());
+//        if (duplicatedPhoneNumberSupplier != null){
+//            errors.put("phoneNumberSupplier", "SĐT đã tồn tại");
+//        }
+//        Supplier duplicatedEmailSupplier = supplierService.findSupplierByEmail(supplierDto.getEmailSupplier());
+//        if (duplicatedEmailSupplier != null){
+//            errors.put("emailSupplier", "Email đã tồn tại");
+//        }
+        if (errors.size() != 0){
             return new ResponseEntity<>(errors, HttpStatus.NOT_ACCEPTABLE);
         }
         Supplier newSupplier = new Supplier();

@@ -64,17 +64,43 @@ public interface ISupplierRepository extends JpaRepository<Supplier,Long> {
      */
     @Modifying
     @Transactional
-    @Query(value = "insert into c4_zone.supplier(id_supplier, " +
-            "address_supplier, " +
-            "code_supplier, " +
-            "email_supplier, " +
-            "name_supplier, " +
-            "phone_number_supplier, " +
-            "status_supplier) " +
-            "values ( :#{#supplier.addressSupplier}, " +
-            "#{#supplier.codeSupplier}, " +
-            "#{#supplier.emailSupplier}, " +
-            "#{#supplier.nameSupplier}, " +
-            "#{#supplier.phoneNumberSupplier}, false)",nativeQuery = true)
+    @Query(value = "INSERT INTO c4_zone.supplier (code_supplier, name_supplier, address_supplier, phone_number_supplier, email_supplier, status_supplier) " +
+            "VALUES (:#{#supplier.codeSupplier}, " +
+            ":#{#supplier.nameSupplier}, " +
+            ":#{#supplier.addressSupplier}, " +
+            ":#{#supplier.phoneNumberSupplier}, " +
+            ":#{#supplier.emailSupplier}, false)", nativeQuery = true)
     void saveSupplier(@Param("supplier") Supplier newSupplier);
+
+    /**
+     * author: NghiaNPX
+     * date: 13/10/2023
+     * goal: SQL statement for querying supplier by code_supplier
+     */
+    @Query(value = "select * from c4_zone.supplier where code_supplier like :code", nativeQuery = true)
+    Supplier findByCode(@Param("code") String s);
+
+    /**
+     * author: NghiaNPX
+     * date: 13/10/2023
+     * goal: SQL statement for querying supplier by name_supplier
+     */
+    @Query(value = "select * from c4_zone.supplier where name_supplier like :name", nativeQuery = true)
+    Supplier findByName(@Param("name") String s);
+
+    /**
+     * author: NghiaNPX
+     * date: 13/10/2023
+     * goal: SQL statement for querying supplier by phone_number_supplier
+     */
+    @Query(value = "select * from c4_zone.supplier where phone_number_supplier like :phone", nativeQuery = true)
+    Supplier findByPhoneNumber(@Param("phone") String s);
+
+    /**
+     * author: NghiaNPX
+     * date: 13/10/2023
+     * goal: SQL statement for querying supplier by email_supplier
+     */
+    @Query(value = "select * from c4_zone.supplier where email_supplier like :email", nativeQuery = true)
+    Supplier findByEmail(@Param("email") String s);
 }

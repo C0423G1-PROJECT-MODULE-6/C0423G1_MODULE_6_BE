@@ -27,4 +27,40 @@ public interface ISupplierService {
      * @param newSupplier is new object being created
      */
     void saveSupplier(Supplier newSupplier);
+
+    /**
+     * author: NghiaNPX
+     * date: 13/10/2023
+     * goal: find supplier by code_supplier
+     * @param codeSupplier is passing value
+     * @return an object with existing code_supplier in database
+     */
+    Supplier findSupplierByCode(Integer codeSupplier);
+
+    /**
+     * author: NghiaNPX
+     * date: 13/10/2023
+     * goal: find supplier by name_supplier
+     * @param nameSupplier is passing value
+     * @return an object with existing name_supplier in database
+     */
+    Supplier findSupplierByName(String nameSupplier);
+
+    /**
+     * author: NghiaNPX
+     * date: 13/10/2023
+     * goal: find supplier by phone_number_supplier
+     * @param phoneNumberSupplier is passing value
+     * @return an object with existing name_supplier in database
+     */
+    Supplier findSupplierByPhoneNumber(String phoneNumberSupplier);
+
+    /**
+     * author: NghiaNPX
+     * date: 13/10/2023
+     * goal: find supplier by email_supplier
+     * @param emailSupplier is passing value
+     * @return an object with existing name_supplier in database
+     */
+    Supplier findSupplierByEmail(String emailSupplier);
 }
