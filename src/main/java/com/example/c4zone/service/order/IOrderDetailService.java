@@ -15,11 +15,21 @@ public interface IOrderDetailService {
     void createOrderBill(OrderBill orderBill);
 
 
-    void createOrderDetail(List<ICartDto> cartDto);
+    void createOrderDetail(List<ICartDto> cartDto, Long idCustomerOrder, Long idUser);
 
-    Double calculateTotalMoney();
+    Double calculateTotalMoney(Long idUser, Long idCustomerOrder);
 
-    void updateTotalMoney(Double totalMoney);
+
 
     Page<IOrderHistoryDtoTotal> getAllSaleHistory(Pageable pageable, String valueSearchName, int i);
+
+    OrderBill isNotPayOfCustomer(Long id);
+
+    void deteleOldBillNotPay(Long id);
+
+    void updateOrderBill(Double totalMoney, Integer paymentMethod, Long idCustomerOrder, Long idUser);
+
+    void updateOrderBill(int printStatus, Long idCus, Long idUser);
+
+    void deleteOrderDetailOfBill(Long idOrderBill);
 }

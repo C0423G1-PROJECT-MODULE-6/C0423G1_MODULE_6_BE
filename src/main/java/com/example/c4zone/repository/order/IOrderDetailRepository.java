@@ -31,9 +31,9 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO  order_bill  ( date_of_order ,  payment_method ,  print_status ,  time_of_order ,  " +
-            "total_money ,  id_customer ,  id_user ) " +
+            "total_money, payment_status ,  id_customer ,  id_user ) " +
             "VALUES (:#{#orderBill.dateOfOrder},:#{#orderBill.paymentMethod},:#{#orderBill.printStatus}," +
-            ":#{#orderBill.timeOfOrder},:#{#orderBill.totalMoney},:#{#orderBill.customer.idCustomer}," +
+            ":#{#orderBill.timeOfOrder},:#{#orderBill.totalMoney},:#{#orderBill.paymentStatus},:#{#orderBill.customer.idCustomer}," +
             ":#{#orderBill.user.id})",nativeQuery = true)
     void createOrderBill(@Param("orderBill") OrderBill orderBill);
     /**
@@ -61,17 +61,7 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
             "from order_detail " +
             "where id_order = :id",nativeQuery = true)
     List<IOrderDetailDto> getAllOrderDetailByOrderBill(@Param("id") Long idOrderBill);
-    /**
-     * method update total money to order bill
-     * Create ThoiND
-     * Date 14-10-2023
-     * param orderbill
-     * return void
-     */
-    @Modifying
-    @Transactional
-    @Query(value = "update order_bill set total_money = :total where id_order_bill = :id",nativeQuery = true)
-    void updateTotalMoney( @Param("id") Long idOrderBill,@Param("total") Double totalMoney);
+
     /**
      * method find order bill newest
      * Create ThoiND
@@ -164,4 +154,29 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
             "ORDER BY " +
             "    CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(info_buy, ' x', -1), ', ', -1) AS SIGNED) desc",nativeQuery = true)
     Page<IOrderHistoryDtoTotal> getAllHistorySortQuantity(Pageable pageable,@Param("name") String s);
+
+    @Query(value = "select * from order_bill where id_customer = :id and payment_status = 0",nativeQuery = true)
+    OrderBill getOrderBillNotPayOfCus(@Param("id") Long id);
+
+
+    @Query(value = "select * from order_bill where id_customer = :idCus and id_user = :idUser and payment_status = 0",nativeQuery = true)
+    OrderBill getOrderBillWithCusAndUser(@Param("idCus") Long idCustomerOrder,@Param("idUser") Long idUser);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update order_bill set total_money = :total,payment_method = :method where id_order_bill = :id",nativeQuery = true)
+    void updateOrderBill(@Param("id") Long idOrderBill,@Param("total") Double totalMoney,@Param("method") Integer paymentMethod);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update order_bill set print_status = :status, payment_status = 1 where id_order_bill = :id",nativeQuery = true)
+    void updateOrderBill(@Param("status") int printStatus,@Param("id") Long idOrderBill);
+    @Modifying
+    @Transactional
+    @Query(value = "delete from order_bill where id_customer = :id and payment_status = 0",nativeQuery = true)
+    void deleteOldBillNotPay(@Param("id") Long id);
+    @Modifying
+    @Transactional
+    @Query(value = "delete from order_detail where id_order= :id",nativeQuery = true)
+    void deleteOrderDetailOfBill(@Param("id") Long idOrderBill);
 }

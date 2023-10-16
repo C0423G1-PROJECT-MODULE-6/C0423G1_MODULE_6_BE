@@ -48,8 +48,8 @@ public class OrderDetailService implements IOrderDetailService{
      * return status 2xx
      */
     @Override
-    public Double calculateTotalMoney() {
-        OrderBill orderBill = orderDetailRepository.findOrderBillWithNewest();
+    public Double calculateTotalMoney(Long idUser, Long idCustomerOrder) {
+        OrderBill orderBill = orderDetailRepository.getOrderBillWithCusAndUser(idCustomerOrder,idUser);
         if (orderBill == null){
             return null;
         }
@@ -65,18 +65,7 @@ public class OrderDetailService implements IOrderDetailService{
         return total;
     }
 
-    /**
-     * method update total money to order bill
-     * Create ThoiND
-     * Date 14-10-2023
-     * param totalMoney
-     * return status 2xx
-     */
-    @Override
-    public void updateTotalMoney(Double totalMoney) {
-        OrderBill orderBill = orderDetailRepository.findOrderBillWithNewest();
-        orderDetailRepository.updateTotalMoney(orderBill.getIdOrderBill(),totalMoney);
-    }
+
 
     /**
      * method create order detail
@@ -86,22 +75,23 @@ public class OrderDetailService implements IOrderDetailService{
      * return status 2xx
      */
     @Override
-    public void createOrderDetail(List<ICartDto> cartDto) {
-        OrderBill orderBill = orderDetailRepository.findOrderBillWithNewest();
-        if (orderBill != null){
+    public void createOrderDetail(List<ICartDto> cartDto, Long idCustomerOrder, Long idUser) {
+        OrderBill orderBillByCusAndUser = orderDetailRepository.getOrderBillWithCusAndUser(idCustomerOrder,idUser);
+        if (orderBillByCusAndUser != null){
             for (ICartDto cartDto1 : cartDto){
                 OrderDetail orderDetail = new OrderDetail();
                 Product product = productRepository.findProductByIdProduct(cartDto1.getIdProduct());
                 orderDetail.setQuantityOrder(cartDto1.getQuantityOrder());
                 orderDetail.setProduct(product);
                 orderDetail.setPriceOrder(product.getPriceProduct());
-                orderDetail.setOrderBill(orderBill);
+                orderDetail.setOrderBill(orderBillByCusAndUser);
                 orderDetailRepository.createOrderDetail(orderDetail);
+
                 Integer quantityOfProduct = productRepository.getQuantityByid(cartDto1.getIdProduct());
                 Integer quantityOfProductAfterPayment = quantityOfProduct - orderDetail.getQuantityOrder();
                 productRepository.updateQuantityOfProduct(cartDto1.getIdProduct(),quantityOfProductAfterPayment);
-                cartRepository.deleteCart(orderBill.getUser().getId());
             }
+            cartRepository.deleteCart(idUser);
         }
     }
     /**
@@ -121,4 +111,31 @@ public class OrderDetailService implements IOrderDetailService{
         return orderDetailRepository.getAllHistory(pageable , "%" + valueSearchName +"%");
     }
 
+    @Override
+    public OrderBill isNotPayOfCustomer(Long id) {
+        return orderDetailRepository.getOrderBillNotPayOfCus(id);
+    }
+
+    @Override
+    public void deteleOldBillNotPay(Long id) {
+        orderDetailRepository.deleteOldBillNotPay(id);
+    }
+
+    @Override
+    public void updateOrderBill(Double totalMoney, Integer paymentMethod,
+                                Long idCustomerOrder, Long idUser) {
+        OrderBill orderBill = orderDetailRepository.getOrderBillWithCusAndUser(idCustomerOrder,idUser);
+        orderDetailRepository.updateOrderBill(orderBill.getIdOrderBill(),totalMoney,paymentMethod);
+    }
+
+    @Override
+    public void updateOrderBill(int printStatus, Long idCus, Long idUser) {
+        OrderBill orderBill = orderDetailRepository.getOrderBillWithCusAndUser(idCus,idUser);
+        orderDetailRepository.updateOrderBill(printStatus, orderBill.getIdOrderBill());
+    }
+
+    @Override
+    public void deleteOrderDetailOfBill(Long idOrderBill) {
+        orderDetailRepository.deleteOrderDetailOfBill(idOrderBill);
+    }
 }

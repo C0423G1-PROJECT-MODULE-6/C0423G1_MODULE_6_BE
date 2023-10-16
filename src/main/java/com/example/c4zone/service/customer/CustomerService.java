@@ -46,6 +46,8 @@ public class CustomerService implements ICustomerService {
     }
 
 
+
+
     @Override
     public Page<Customer> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, Boolean valueSearchGender) {
         if (!valueSearchAge.equals("") && valueSearchGender != null) {
@@ -73,6 +75,14 @@ public class CustomerService implements ICustomerService {
     public ICustomerDtoOrder findCustomerByIdOrder(Long id) {
         return customerRepository.findCustomerByIdOrder(id);
     }
+    /**
+     * method check customer not pay
+     * Create ThoiND
+     * Date 15-10-2023
+     * param Long id
+     * return true/false
+     */
+
 
     @Override
     public Optional<Customer> findById(Long id) {

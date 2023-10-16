@@ -54,10 +54,11 @@ public class OrderController {
     @GetMapping("/customer/{id}")
     public ResponseEntity<?> findCustomer(@PathVariable Long id){
         ICustomerDtoOrder customerDtoOrder = customerService.findCustomerByIdOrder(id);
-//        if (customerDtoOrder.isInOrderBill){
-//            return new ResponseEntity<>(customerDtoOrder,HttpStatus.OK);
-//        }
-        return new ResponseEntity<>(customerDtoOrder,HttpStatus.NO_CONTENT);
+        OrderBill orderBillByCustomerNotPay = orderDetailService.isNotPayOfCustomer(id);
+        if (orderBillByCustomerNotPay != null){
+            return new ResponseEntity<>(orderBillByCustomerNotPay,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(customerDtoOrder,HttpStatus.OK);
     }
     /**
      * method getAllCart
@@ -98,47 +99,90 @@ public class OrderController {
         return new ResponseEntity<>("Bạn đã thêm sản phẩm vào đơn hàng",HttpStatus.OK);
     }
     /**
-     * method show orderBill before pay
+     * method get bill by customer (other screen modal to choose old bill or create new)
+     * Create ThoiND
+     * Date 14-10-2023
+     * param Long idUser,Long idProduct
+     * return status 2xx
+     */
+    @GetMapping("/customer/getOrderNotPay/{idCus}/{idUser}")
+    public ResponseEntity<?> getOrderNotPayByChoose(
+            @RequestParam(name = "_choose") Integer choose,
+            @PathVariable Long idCus,
+            @PathVariable Long idUser){
+        OrderBill orderBillByCustomerNotPay = orderDetailService.isNotPayOfCustomer(idCus);
+        if (orderBillByCustomerNotPay == null){
+            return new ResponseEntity<>("Không tìm thấy",HttpStatus.NOT_FOUND);
+        }else {
+            if (choose == 1){
+                return new ResponseEntity<>(orderBillByCustomerNotPay,HttpStatus.OK);
+            }else if (choose == 2){
+                orderDetailService.deleteOrderDetailOfBill(orderBillByCustomerNotPay.getIdOrderBill());
+                orderDetailService.deteleOldBillNotPay(idCus);
+                OrderBill orderBill = new OrderBill();
+                Optional<Customer> customer = customerService.findById(idCus);
+                if (!customer.isPresent()){
+                    return new ResponseEntity<>("Không tìm thấy khách hàng",HttpStatus.NOT_FOUND);
+                }
+                AppUser appUser = employeeService.getUserById(idUser);
+                if (appUser == null){
+                    return new ResponseEntity<>("Không tìm thấy tài khoản",HttpStatus.NOT_FOUND);
+                }
+                LocalDate localDate = LocalDate.now();
+                LocalTime localTime = LocalTime.now();
+
+                orderBill.setCustomer(customer.orElse(null));
+                orderBill.setUser(appUser);
+                orderBill.setDateOfOrder(String.valueOf(localDate));
+                orderBill.setTimeOfOrder(String.valueOf(localTime));
+                orderBill.setTotalMoney(0.0);
+                orderBill.setPaymentMethod(0);
+                orderBill.setPrintStatus(0);
+                orderBill.setPaymentStatus(0);
+                orderDetailService.createOrderBill(orderBill);
+                return new ResponseEntity<>(orderBill,HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    /**
+     * method show orderBill before pay when click button "thanh toan"
      * Create ThoiND
      * Date 14-10-2023
      * param orderPaymentDto
      * return status 2xx
      */
-    @PostMapping("/payment")
+    @PostMapping("/payment/showBill")
     public ResponseEntity<?> showOrderBillBeforePay(@RequestBody OrderPaymentDto orderPaymentDto){
-        OrderBill orderBill = new OrderBill();
+
         List<ICartDto> cartDto = cartService.getAllCart(orderPaymentDto.getIdUser());
 
-        Optional<Customer> customer = customerService.findById(orderPaymentDto.getIdCustomerOrder());
-        if (!customer.isPresent()){
-            return new ResponseEntity<>("Không tìm thấy khách hàng",HttpStatus.NOT_FOUND);
+        orderDetailService.createOrderDetail(cartDto,orderPaymentDto.getIdCustomerOrder(),orderPaymentDto.getIdUser());
+
+        Double totalMoney = orderDetailService.calculateTotalMoney(orderPaymentDto.getIdUser(),orderPaymentDto.getIdCustomerOrder());
+
+        orderDetailService.updateOrderBill(totalMoney,orderPaymentDto.getPaymentMethod(),
+                orderPaymentDto.getIdCustomerOrder(),orderPaymentDto.getIdUser());
+
+
+        OrderBill orderBill = orderDetailService.isNotPayOfCustomer(orderPaymentDto.getIdCustomerOrder());
+
+        if (orderBill == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        AppUser appUser = employeeService.getUserById(orderPaymentDto.getIdUser());
-        if (appUser == null){
-            return new ResponseEntity<>("Không tìm thấy tài khoản",HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(orderBill,HttpStatus.OK);
+    }
+    @PostMapping("/payment/acceptPay/{idCus}/{idUser}")
+    public ResponseEntity<?> acceptToPay(@RequestParam(name = "_printStatus") int printStatus,
+                                         @PathVariable Long idCus,
+                                         @PathVariable Long idUser){
+
+        if (printStatus == 1){
+            orderDetailService.updateOrderBill(printStatus,idCus,idUser);
+            return new ResponseEntity<>("innnn",HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("ok",HttpStatus.OK);
         }
-        LocalDate localDate = LocalDate.now();
-        LocalTime localTime = LocalTime.now();
-
-        orderBill.setCustomer(customer.orElse(null));
-        orderBill.setUser(appUser);
-        orderBill.setDateOfOrder(String.valueOf(localDate));
-        orderBill.setTimeOfOrder(String.valueOf(localTime));
-        orderBill.setTotalMoney(0.0);
-        orderBill.setPaymentMethod(orderPaymentDto.getPaymentMethod());
-        orderBill.setPrintStatus(orderPaymentDto.getPrintStatus());
-        orderBill.setPaymentStatus(0);
-
-
-        orderDetailService.createOrderBill(orderBill);
-        orderDetailService.createOrderDetail(cartDto);
-
-        Double totalMoney = orderDetailService.calculateTotalMoney();
-        orderDetailService.updateTotalMoney(totalMoney);
-
-
-
-        return new ResponseEntity<>(orderPaymentDto,HttpStatus.OK);
     }
     /**
      * method get all history
@@ -161,17 +205,14 @@ public class OrderController {
         if (searchName.isPresent()) {
             valueSearchName = searchName.get();
         }
-
         Boolean valueSortNameCustomer = false;
         if (sortCustomer.isPresent()){
             valueSortNameCustomer = true;
         }
-
         Boolean valueSortTime = false;
         if (sortTime.isPresent()){
             valueSortTime = true;
         }
-
         Boolean valueSortNameProduct = false;
         if (sortNameProduct.isPresent()){
             valueSortNameProduct = true;
@@ -187,7 +228,7 @@ public class OrderController {
 
         Pageable pageable = PageRequest.of(page, limit);
         if (valueSortNameCustomer){
-            pageable = PageRequest.of(page, limit, Sort.by("name_customer").ascending());
+            pageable = PageRequest.of(page, limit, Sort.by("name_customer").descending());
         } else if (valueSortTime){
             pageable = PageRequest.of(page, limit, Sort.by("time_of_order").ascending());
         }else if (valueSortNameProduct){
@@ -200,9 +241,9 @@ public class OrderController {
             pageable = PageRequest.of(page, limit, Sort.by("total_money").descending());
         }
 
-        Page<IOrderHistoryDtoTotal> saleHistoryList = orderDetailService.getAllSaleHistory(pageable, valueSearchName, 1);
+        Page<IOrderHistoryDtoTotal> saleHistoryList = orderDetailService.getAllSaleHistory(pageable, valueSearchName ,0);
         if (saleHistoryList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(saleHistoryList, HttpStatus.OK);
 }}

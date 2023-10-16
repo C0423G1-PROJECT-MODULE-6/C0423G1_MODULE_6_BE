@@ -17,7 +17,6 @@ import javax.validation.constraints.NotNull;
 public class OrderPaymentDto implements Validator {
     private Long idCustomerOrder;
     private Integer paymentMethod;
-    private Integer printStatus;
     private Long idUser;
 
     @Override

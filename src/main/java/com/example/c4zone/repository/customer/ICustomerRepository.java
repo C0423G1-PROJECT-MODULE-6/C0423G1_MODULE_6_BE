@@ -117,4 +117,6 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             " and c.id_customer = :id " +
             " order by ob.date_of_order desc ", nativeQuery = true)
     Page<IShoppingHistory> findShoppingHistory(Pageable pageable, @Param("name") String valueSearchName, @Param("id") Long id);
+
+
 }

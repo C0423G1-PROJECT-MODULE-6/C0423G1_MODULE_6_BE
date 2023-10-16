@@ -24,4 +24,5 @@ public interface ICartService {
 
     void addToCart(Long idUser, Long idProduct, Integer quantity);
 
+    void deleteCart(Long idUser);
 }
