@@ -60,20 +60,20 @@ public class CustomerController {
             valueSearchGender = searchGender.get();
         }
 
-        Boolean valueSortName = false;
+        String valueSortName = "";
         if (sortName.isPresent()){
-            valueSortName = true;
+            valueSortName = sortName.get();
         }
 
-        Boolean valueSortCount = false;
+        String valueSortCount = "";
         if (sortCount.isPresent()){
-            valueSortCount = true;
+            valueSortCount = sortCount.get();
         }
 
         Pageable pageable = PageRequest.of(page, limit);
-        if (valueSortName){
+        if (valueSortName.equals("1")){
             pageable = PageRequest.of(page, limit, Sort.by("nameCustomer").ascending());
-        } else if (valueSortCount){
+        } else if (valueSortCount.equals("2")){
             pageable = PageRequest.of(page, limit, Sort.by("totalPurchases").descending());
         }
 
