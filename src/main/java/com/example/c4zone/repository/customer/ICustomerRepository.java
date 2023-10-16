@@ -1,5 +1,7 @@
 package com.example.c4zone.repository.customer;
 
+
+import com.example.c4zone.dto.customer.IShoppingHistory;
 import com.example.c4zone.dto.customer.ICustomerListDto;
 import com.example.c4zone.dto.customer.IShoppingHistoryDto;
 import com.example.c4zone.dto.order.ICustomerDtoOrder;
