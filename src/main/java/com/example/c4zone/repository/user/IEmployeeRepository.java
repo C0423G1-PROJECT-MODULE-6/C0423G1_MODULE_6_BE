@@ -1,5 +1,7 @@
 package com.example.c4zone.repository.user;
 import com.example.c4zone.model.user.AppUser;
+import com.example.c4zone.model.user.AppUser;
+import org.hibernate.query.NativeQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
