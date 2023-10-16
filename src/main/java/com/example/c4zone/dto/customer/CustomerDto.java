@@ -73,8 +73,6 @@ public class CustomerDto implements Validator {
             errors.rejectValue(BIRTHDAY_DTO, "", "Nhập không đúng định dạng ngày sinh !");
         } else if (!FormatCustomer.isDateValidAndBeforeCurrent(customerDto.getDateOfBirthCustomer())) {
             errors.rejectValue(BIRTHDAY_DTO, "", "Vượt quá thời gian thực tế !");
-        }else if (!FormatCustomer.check18YearsOld(customerDto.getDateOfBirthCustomer())) {
-            errors.rejectValue(BIRTHDAY_DTO, "", "Cảnh báo chưa đủ 18 tuổi !");
         }
         // Check number phone
         if (customerDto.getPhoneNumberCustomer() == null) {
@@ -93,13 +91,14 @@ public class CustomerDto implements Validator {
             errors.rejectValue(EMAIL_DTO, "", "Vui lòng bổ sung email khách hàng");
         } else if (customerDto.getEmailCustomer().trim().equals("")) {
             errors.rejectValue(EMAIL_DTO, "", "Không được để trống email");
-        } else if (customerDto.getEmailCustomer().length() > 50) {
+        }else if (customerDto.getEmailCustomer().length() < 12) {
+            errors.rejectValue(EMAIL_DTO, "", "Email không đủ ký tự cho phép");
+        }
+            else if (customerDto.getEmailCustomer().length() > 50) {
             errors.rejectValue(EMAIL_DTO, "", "Email vượt quá ký tự cho phép");
         } else if (!customerDto.getEmailCustomer().matches(EMAIL_REGEX)) {
             errors.rejectValue(EMAIL_DTO, "", "Bạn nhập sai định dạng email!");
         }
-
-
     }
 
 }
