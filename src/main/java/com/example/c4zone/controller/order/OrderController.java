@@ -70,6 +70,9 @@ public class OrderController {
     @GetMapping("/cart/{idUser}")
     public ResponseEntity<?> getAllCart(@PathVariable Long idUser){
         List<ICartDto> cart = cartService.getAllCart(idUser);
+        if (cart == null){
+            return new ResponseEntity<>("Không tìm thấy",HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(cart,HttpStatus.OK);
     }
     /**

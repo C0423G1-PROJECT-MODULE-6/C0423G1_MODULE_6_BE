@@ -35,7 +35,7 @@ public class OrderController_getAllCart {
     @Test
     public void getAllCart_idUser_3() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/admin/order/cart/{id}", 3))
+                        .get("/api/admin/order/cart/{id}", 2))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
