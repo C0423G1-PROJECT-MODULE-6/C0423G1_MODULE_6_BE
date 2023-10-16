@@ -1,4 +1,4 @@
-package com.example.c4zone.customer_controller;
+package com.example.c4zone.NguyenNH.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +10,17 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CustomerListRestController_ListCustomert {
+public class CustomerController_getAllCustomer {
     @Autowired
     private MockMvc mockMvc;
 
 
     /**
      * Check case limit null
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @throw Exception
      */
     @Test
@@ -34,7 +35,7 @@ public class CustomerListRestController_ListCustomert {
 
     /**
      * Check case limit empty
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @throw Exception
      */
     @Test
@@ -48,8 +49,8 @@ public class CustomerListRestController_ListCustomert {
     }
 
     /**
-     * Check case all success
-     * Author: TinDT
+     * Check case limit exist
+     * Author: NguyenNH
      * Goal: @return list customer
      */
     @Test
@@ -66,15 +67,24 @@ public class CustomerListRestController_ListCustomert {
                 .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Thị Thắm"))
                 .andExpect(jsonPath("content[0].genderCustomer").value(false))
                 .andExpect(jsonPath("content[0].emailCustomer").value("tham@gmail.com"))
-                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("1990-10-10"))
+                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2023-10-10"))
                 .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0054631279"))
                 .andExpect(jsonPath("content[0].addressCustomer").value("Sai Gon"))
-                .andExpect(jsonPath("content[0].statusCustomer").value(true));
+                .andExpect(jsonPath("content[0].statusCustomer").value(true))
+
+                .andExpect(jsonPath("content[4].idCustomer").value(10))
+                .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Văn Hải"))
+                .andExpect(jsonPath("content[4].genderCustomer").value(true))
+                .andExpect(jsonPath("content[4].emailCustomer").value("hai@gmail.com"))
+                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2000-10-10"))
+                .andExpect(jsonPath("content[4].phoneNumberCustomer").value("0983125476"))
+                .andExpect(jsonPath("content[4].addressCustomer").value("Da Nang"))
+                .andExpect(jsonPath("content[4].statusCustomer").value(true));
     }
 
     /**
      * Check case page null
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @throw Exception
      */
     @Test
@@ -89,7 +99,7 @@ public class CustomerListRestController_ListCustomert {
 
     /**
      * Check case page empty
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @throw Exception
      */
     @Test
@@ -104,7 +114,7 @@ public class CustomerListRestController_ListCustomert {
 
     /**
      * Check case page not exist
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @throw Exception
      */
     @Test
@@ -120,7 +130,7 @@ public class CustomerListRestController_ListCustomert {
 
     /**
      * Check case page exist
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @return list customer
      */
     @Test
@@ -155,7 +165,7 @@ public class CustomerListRestController_ListCustomert {
 
     /**
      * Check case name not exist in the database
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @throw Exception
      */
     @Test
@@ -174,7 +184,7 @@ public class CustomerListRestController_ListCustomert {
 
     /**
      * Check case name exist in the database
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @return list customer
      */
     @Test
@@ -192,8 +202,7 @@ public class CustomerListRestController_ListCustomert {
                 .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Hoàng Anh"))
                 .andExpect(jsonPath("content[0].genderCustomer").value(false))
                 .andExpect(jsonPath("content[0].emailCustomer").value("anh@gmail.com"))
-                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("1997-10-10"))
-
+                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2022-10-10"))
                 .andExpect(jsonPath("content[0].phoneNumberCustomer").value("098732165"))
                 .andExpect(jsonPath("content[0].addressCustomer").value("Da Nang"))
                 .andExpect(jsonPath("content[0].statusCustomer").value(true));
@@ -201,7 +210,7 @@ public class CustomerListRestController_ListCustomert {
 
     /**
      * Check case age not exist in the database
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @throw Exception
      */
     @Test
@@ -220,7 +229,7 @@ public class CustomerListRestController_ListCustomert {
 
     /**
      * Check case age exist in the database
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @return list customer
      */
     @Test
@@ -234,19 +243,19 @@ public class CustomerListRestController_ListCustomert {
                         .param("gender", ""))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("content[0].idCustomer").value(4))
-                .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Hồng Nguyên"))
+                .andExpect(jsonPath("content[0].idCustomer").value(10))
+                .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Văn Hải"))
                 .andExpect(jsonPath("content[0].genderCustomer").value(true))
-                .andExpect(jsonPath("content[0].emailCustomer").value("nguyen@gmail.com"))
+                .andExpect(jsonPath("content[0].emailCustomer").value("hai@gmail.com"))
                 .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2000-10-10"))
-                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("123312654"))
-                .andExpect(jsonPath("content[0].addressCustomer").value("Ha Noi"))
+                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0983125476"))
+                .andExpect(jsonPath("content[0].addressCustomer").value("Da Nang"))
                 .andExpect(jsonPath("content[0].statusCustomer").value(true));
     }
 
     /**
      * Check case gender not exist in the database
-     * Author: TinDt
+     * Author: NguyenNH
      * Goal: @throw Exception
      */
     @Test
@@ -265,7 +274,7 @@ public class CustomerListRestController_ListCustomert {
 
     /**
      * Check case gender exist in the database
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @return list customer
      */
     @Test
@@ -283,8 +292,7 @@ public class CustomerListRestController_ListCustomert {
                 .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Hồng Hà"))
                 .andExpect(jsonPath("content[0].genderCustomer").value(true))
                 .andExpect(jsonPath("content[0].emailCustomer").value("ha@gmail.com"))
-                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("1993-10-10"))
-
+                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2021-10-10"))
                 .andExpect(jsonPath("content[0].phoneNumberCustomer").value("123312654"))
                 .andExpect(jsonPath("content[0].addressCustomer").value("Ha Noi"))
                 .andExpect(jsonPath("content[0].statusCustomer").value(true))
@@ -293,8 +301,7 @@ public class CustomerListRestController_ListCustomert {
                 .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Hồng Nguyên"))
                 .andExpect(jsonPath("content[4].genderCustomer").value(true))
                 .andExpect(jsonPath("content[4].emailCustomer").value("nguyen@gmail.com"))
-                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("1999-10-10"))
-
+                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2023-10-10"))
                 .andExpect(jsonPath("content[4].phoneNumberCustomer").value("023165489"))
                 .andExpect(jsonPath("content[4].addressCustomer").value("Ha Noi"))
                 .andExpect(jsonPath("content[4].statusCustomer").value(true));
@@ -302,7 +309,7 @@ public class CustomerListRestController_ListCustomert {
 
     /**
      * Check case sortName exist
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @return list customer
      */
     @Test
@@ -318,7 +325,7 @@ public class CustomerListRestController_ListCustomert {
                 .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Anh Quân"))
                 .andExpect(jsonPath("content[0].genderCustomer").value(true))
                 .andExpect(jsonPath("content[0].emailCustomer").value("quan@gmail.com"))
-                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2002-10-10"))
+                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2021-10-10"))
                 .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0983125476"))
                 .andExpect(jsonPath("content[0].addressCustomer").value("Sai Gon"))
                 .andExpect(jsonPath("content[0].statusCustomer").value(true))
@@ -327,7 +334,7 @@ public class CustomerListRestController_ListCustomert {
                 .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Hồng Hà"))
                 .andExpect(jsonPath("content[4].genderCustomer").value(true))
                 .andExpect(jsonPath("content[4].emailCustomer").value("ha@gmail.com"))
-                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("1993-10-10"))
+                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2021-10-10"))
                 .andExpect(jsonPath("content[4].phoneNumberCustomer").value("123312654"))
                 .andExpect(jsonPath("content[4].addressCustomer").value("Ha Noi"))
                 .andExpect(jsonPath("content[4].statusCustomer").value(true));
@@ -335,7 +342,7 @@ public class CustomerListRestController_ListCustomert {
 
     /**
      * Check case sortCount exist
-     * Author: TinDT
+     * Author: NguyenNH
      * Goal: @return list customer
      */
     @Test
