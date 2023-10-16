@@ -70,4 +70,6 @@ public class WareHouseService implements IWareHouseService{
     public void importProduct(WareHouse wareHouse) {
         wareHouseRepository.ImportProduct(wareHouse);
     }
+
+
 }

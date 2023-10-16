@@ -46,6 +46,9 @@ public class CustomerService implements ICustomerService {
         return customerRepository.findCustomerByEmail(emailCustomer);
     }
 
+
+
+
     @Override
     public Page<ICustomerListDto> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, String valueSearchGender) {
         if (!valueSearchAge.equals("") && !valueSearchGender.equals("3")) {
@@ -76,6 +79,14 @@ public class CustomerService implements ICustomerService {
     public ICustomerDtoOrder findCustomerByIdOrder(Long id) {
         return customerRepository.findCustomerByIdOrder(id);
     }
+    /**
+     * method check customer not pay
+     * Create ThoiND
+     * Date 15-10-2023
+     * param Long id
+     * return true/false
+     */
+
 
     @Override
     public Optional<Customer> findById(Long id) {

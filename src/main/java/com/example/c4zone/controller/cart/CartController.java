@@ -1,7 +1,8 @@
 package com.example.c4zone.controller.cart;
+import com.example.c4zone.model.product.Product;
+import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.service.cart.ICartService;
 import com.example.c4zone.service.product.IProductService;
-import com.example.c4zone.service.user.IAppUserService;
 import com.example.c4zone.service.user.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,15 +28,17 @@ public class CartController {
     @Autowired
     private IEmployeeService employeeService;
     @PostMapping("/create")
-    public ResponseEntity<?> createCart(@RequestParam Long idUSer,
-                                        @RequestParam Long idProduct,
-                                        @RequestParam Long quantity) {
-//        if (productService.findProductById(idProduct) == null){
-//            return new ResponseEntity<>("Không tìm thấy idProduct", HttpStatus.NOT_ACCEPTABLE);
-//        }
-//        if (employeeService.getUserById(idUSer) == null){
-//            return new ResponseEntity<>("Không tìm thấy idUser", HttpStatus.NOT_ACCEPTABLE);
-//        }
+    public ResponseEntity<?> createCart(@RequestParam (defaultValue = "0") Long idUSer,
+                                        @RequestParam (defaultValue = "0") Long idProduct,
+                                        @RequestParam (defaultValue = "0") Long quantity) {
+        AppUser user = employeeService.getEmployeeById(idUSer);
+        Product product = productService.findProductById(idUSer);
+        if (user == null){
+            return new ResponseEntity<>("Không tìm thấy idUser", HttpStatus.NOT_ACCEPTABLE);
+        }
+        if (product == null){
+            return new ResponseEntity<>("Không tìm thấy idProduct", HttpStatus.NOT_ACCEPTABLE);
+        }
         if (idProduct == null || idProduct < 1) {
             return new ResponseEntity<>("Không tìm thấy idProduct", HttpStatus.NOT_ACCEPTABLE);
         }

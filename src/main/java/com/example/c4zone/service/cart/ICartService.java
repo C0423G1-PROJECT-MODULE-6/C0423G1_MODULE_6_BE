@@ -1,10 +1,12 @@
 package com.example.c4zone.service.cart;
 
 import com.example.c4zone.dto.order.ICartDto;
+import com.example.c4zone.model.order.Cart;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.model.user.AppUser;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 
 
 import java.util.List;
@@ -29,6 +31,13 @@ public interface ICartService {
      * return List<ICartDto>
      */
     List<ICartDto> getAllCart(Long idUser);
+
+
+
+    void addToCart(Long idUser, Long idProduct, Integer quantity);
+
+    void deleteCart(Long idUser);
+
     /**
      * method get quantity idProduct of cart form Product
      * Create TinDT
@@ -64,5 +73,6 @@ public interface ICartService {
      * return User
      */
     AppUser getUserById(Long idUser);
+
 
 }

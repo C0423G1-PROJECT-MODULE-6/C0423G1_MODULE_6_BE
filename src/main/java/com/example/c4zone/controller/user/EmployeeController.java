@@ -31,7 +31,7 @@ public class EmployeeController {
      * return: Page<AppUser>
      */
     @GetMapping("/list")
-    public ResponseEntity<Page<AppUser>> findAllEmployeeBy(@RequestParam(name = "page", defaultValue = "0",required = false) int page,
+    public ResponseEntity<Page<?>> displayAllUser(@RequestParam(name = "page", defaultValue = "0",required = false) int page,
                                                         @RequestParam(name = "searchJob", defaultValue = "",required = false)String searchJob,
                                                         @RequestParam(name = "searchName",defaultValue = "",required = false)String searchName,
                                                         @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
