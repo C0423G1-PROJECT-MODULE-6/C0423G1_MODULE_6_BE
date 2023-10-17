@@ -1,4 +1,6 @@
 package com.example.c4zone.controller.user;
+import com.example.c4zone.dto.user.employee.IEmployeeDto;
+import com.example.c4zone.model.user.AppRole;
 import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.dto.user.employee.EmployeeDto;
 import com.example.c4zone.service.user.IEmployeeService;
@@ -14,11 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/admin/employee")
+@RequestMapping("/api/admin/employee")
 public class EmployeeController {
     @Autowired
     private IEmployeeService employeeService;
@@ -31,16 +34,17 @@ public class EmployeeController {
      * return: Page<AppUser>
      */
     @GetMapping("/list")
-    public ResponseEntity<Page<AppUser>> findAllEmployeeBy(@RequestParam(name = "page", defaultValue = "0",required = false) int page,
-                                                        @RequestParam(name = "searchJob", defaultValue = "",required = false)String searchJob,
-                                                        @RequestParam(name = "searchName",defaultValue = "",required = false)String searchName,
-                                                        @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
+    public ResponseEntity<Page<IEmployeeDto>> findAllEmployeeBy(@RequestParam(name = "page", defaultValue = "0",required = false) int page,
+                                                                @RequestParam(name = "searchJob", defaultValue = "",required = false)String searchJob,
+                                                                @RequestParam(name = "searchName",defaultValue = "",required = false)String searchName,
+                                                                @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
+
         Pageable pageable = PageRequest.of(page,5);
-        Page<AppUser> userPage = employeeService.findAllEmployeeBy(pageable,"%"+searchJob+"%","%"+searchName+"%","%"+searchPhone+"%");
-        if (userPage.getTotalElements()==0 ){
+        Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable,"%"+searchJob+"%","%"+searchName+"%","%"+searchPhone+"%");
+        if (employeeDtoPage.getTotalElements()==0 ){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(userPage, HttpStatus.OK);
+        return new ResponseEntity<>(employeeDtoPage, HttpStatus.OK);
     }
 
     /**
@@ -61,6 +65,8 @@ public class EmployeeController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
+
 
     /**
      * Author: CaoNV

@@ -1,5 +1,6 @@
 package com.example.c4zone.service.cart;
 
+
 import com.example.c4zone.dto.order.ICartDto;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.model.user.AppUser;
@@ -51,6 +52,18 @@ public class CartService implements ICartService{
     public List<ICartDto> getAllCart(Long idUser) {
         return cartRepository.getAllCart(idUser);
     }
+
+
+    @Override
+    public void addToCart(Long idUser, Long idProduct, Integer quantity) {
+        cartRepository.addToCart(idUser,idProduct,quantity);
+    }
+
+    @Override
+    public void deleteCart(Long idUser) {
+        cartRepository.deleteCart(idUser);
+    }
+
     /**
      * method get quantity idProduct of cart form Product
      * Create TinDT
@@ -89,5 +102,6 @@ public class CartService implements ICartService{
             return null;
         }
         return cartRepository.getUserById(idUser);
+
     }
 }

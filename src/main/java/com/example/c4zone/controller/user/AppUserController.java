@@ -55,7 +55,7 @@ public class AppUserController {
     public ResponseEntity<Object> showInformation(@PathVariable Long id) {
         AppUser appUser = appUserService.findAppUserById(id);
         if (appUser == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(appUser, HttpStatus.OK);
     }
@@ -129,21 +129,26 @@ public class AppUserController {
      */
     @PostMapping("/confirm")
     public ResponseEntity<?> confirm(@RequestBody AppUserDto appUserDto) {
-        AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
-        if (appUser != null) {
-            if (passwordEncoder.matches(appUserDto.getOtp(), appUser.getOneTimePassword()) && appUser.isOTPRequired()) {
+        try {
+            AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
+            if (appUser != null) {
+                if (passwordEncoder.matches(appUserDto.getOtp(), appUser.getOneTimePassword()) && appUser.isOTPRequired()) {
 
-                UserDetails userDetails = appUserService.loadUserByUsername(appUser.getUserName());
+                    UserDetails userDetails = appUserService.loadUserByUsername(appUser.getUserName());
 
-                String jwtToken = jwtTokenUtil.generateToken(userDetails);
+                    String jwtToken = jwtTokenUtil.generateToken(userDetails);
 
-                return ResponseEntity.ok().body(new JwtResponse(jwtToken));
+                    return ResponseEntity.ok().body(new JwtResponse(jwtToken));
 
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
             }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 
     /**
@@ -252,35 +257,35 @@ public class AppUserController {
         return ResponseEntity.ok().body(id);
     }
 
-//    /**
-//     * method create
-//     * Create HaiBH
-//     * Date 12-10-2023
-//     * param AppUserDto appUserDto, BindingResult bindingResult
-//     * return ResponseEntity<>();
-//     */
-//    @PostMapping("/create")
-//    public ResponseEntity<?> create(@RequestBody AppUserDto appUserDto, BindingResult bindingResult) {
-//        new AppUserDto().validate(appUserDto, bindingResult);
-//        Map<String, String> errorMap = new HashMap<>();
-//        if (bindingResult.hasErrors()) {
-//            for (FieldError fieldError : bindingResult.getFieldErrors()
-//            ) {
-//                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-//            }
-//            return new ResponseEntity<>(errorMap, HttpStatus.NOT_ACCEPTABLE);
-//        }
-//
-//
-//        AppUser appUser = new AppUser();
-//        appUser.setUserName(appUserDto.getUserName());
-//        appUser.setPassword(passwordEncoder.encode("123"));
-//        Boolean checkAddNewAppUser = appUserService.createNewAppUser(appUser, "ROLE_ADMIN");
-//        if (!Boolean.TRUE.equals(checkAddNewAppUser)) {
-//            return ResponseEntity
-//                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body("Đăng ký thất bại, vui lòng chờ trong giây lát");
-//        }
-//        return new ResponseEntity<>("Thêm mới thành công", HttpStatus.OK);
-//    }
+    /**
+     * method create
+     * Create HaiBH
+     * Date 12-10-2023
+     * param AppUserDto appUserDto, BindingResult bindingResult
+     * return ResponseEntity<>();
+     */
+    @PostMapping("/create")
+    public ResponseEntity<?> create(@RequestBody AppUserDto appUserDto, BindingResult bindingResult) {
+        new AppUserDto().validate(appUserDto, bindingResult);
+        Map<String, String> errorMap = new HashMap<>();
+        if (bindingResult.hasErrors()) {
+            for (FieldError fieldError : bindingResult.getFieldErrors()
+            ) {
+                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errorMap, HttpStatus.NOT_ACCEPTABLE);
+        }
+
+
+        AppUser appUser = new AppUser();
+        appUser.setUserName(appUserDto.getUserName());
+        appUser.setPassword(passwordEncoder.encode("123"));
+        Boolean checkAddNewAppUser = appUserService.createNewAppUser(appUser, "ROLE_ADMIN");
+        if (!Boolean.TRUE.equals(checkAddNewAppUser)) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Đăng ký thất bại, vui lòng chờ trong giây lát");
+        }
+        return new ResponseEntity<>("Thêm mới thành công", HttpStatus.OK);
+    }
 }

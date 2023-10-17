@@ -35,7 +35,7 @@ public class UserRestController_resetOTP {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put( "/api/user/resetOTP")
+                                .post( "/api/user/resetOTP")
                                 .content(this.objectMapper.writeValueAsString(null))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -55,7 +55,7 @@ public class UserRestController_resetOTP {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put( "/api/user/resetOTP")
+                                .post( "/api/user/resetOTP")
                                 .content(this.objectMapper.writeValueAsString(appUserDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -76,7 +76,7 @@ public class UserRestController_resetOTP {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put( "/api/user/resetOTP")
+                                .post( "/api/user/resetOTP")
                                 .content(this.objectMapper.writeValueAsString(appUserDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
