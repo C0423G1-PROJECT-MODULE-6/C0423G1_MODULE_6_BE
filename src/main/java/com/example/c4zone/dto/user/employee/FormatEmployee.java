@@ -1,7 +1,9 @@
 package com.example.c4zone.dto.user.employee;
 
+import java.text.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Random;
 
 public class FormatEmployee {
@@ -13,15 +15,16 @@ public class FormatEmployee {
      */
     public static String generateEmployeeCode() {
         int randomNumber = random.nextInt(9999);
-        if (randomNumber < 10){
-            return "NV000"+randomNumber;
+        if (randomNumber < 10) {
+            return "NV000" + randomNumber;
         } else if (randomNumber < 100) {
-            return "NV00"+randomNumber;
+            return "NV00" + randomNumber;
         } else if (randomNumber < 1000) {
-            return "NV0"+randomNumber;
+            return "NV0" + randomNumber;
         }
-        return "NV"+ randomNumber;
+        return "NV" + randomNumber;
     }
+
     /**
      * Author: CaoNV
      * Goal:  Check if the date format is 18 years old or not
@@ -33,6 +36,7 @@ public class FormatEmployee {
         LocalDate date18YearsAgo = currentDate.minusYears(18);
         return date.isBefore(date18YearsAgo);
     }
+
     /**
      * Author: CaoNV
      * Goal:  Check the validity of the date
@@ -43,4 +47,12 @@ public class FormatEmployee {
         LocalDate date = LocalDate.parse(dateStr, formatter);
         return !date.isAfter(currentDate);
     }
+
+    public static Date formatDate(String employeeDate) throws ParseException {
+            DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+            Date date = df.parse(employeeDate);
+            return date;
+    }
+
+
 }
