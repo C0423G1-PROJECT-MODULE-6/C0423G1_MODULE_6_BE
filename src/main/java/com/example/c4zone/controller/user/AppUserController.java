@@ -55,7 +55,7 @@ public class AppUserController {
     public ResponseEntity<Object> showInformation(@PathVariable Long id) {
         AppUser appUser = appUserService.findAppUserById(id);
         if (appUser == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(appUser, HttpStatus.OK);
     }
@@ -141,10 +141,10 @@ public class AppUserController {
                     return ResponseEntity.ok().body(new JwtResponse(jwtToken));
 
                 } else {
-                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
                 }
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
