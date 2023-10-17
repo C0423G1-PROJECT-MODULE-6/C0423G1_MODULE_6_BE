@@ -81,8 +81,9 @@ public class ProductController {
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
+        Map<String, String> error = new HashMap<>();
+        new ProductDto().validate(productDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            Map<String, String> error = new HashMap<>();
             for (FieldError err : bindingResult.getFieldErrors()) {
                 error.put(err.getField(), err.getDefaultMessage());
             }
@@ -117,8 +118,9 @@ public class ProductController {
     @PatchMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Object> updateProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult){
+        Map<String, String> error = new HashMap<>();
+        new ProductDto().validate(productDto,bindingResult);
         if (bindingResult.hasErrors()) {
-            Map<String, String> error = new HashMap<>();
             for (FieldError err : bindingResult.getFieldErrors()) {
                 error.put(err.getField(), err.getDefaultMessage());
             }

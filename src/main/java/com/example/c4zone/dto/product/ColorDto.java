@@ -48,6 +48,6 @@ public class ColorDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-
+// custom lại sau
     }
 }
