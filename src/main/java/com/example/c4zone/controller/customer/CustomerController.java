@@ -87,6 +87,27 @@ public class CustomerController {
     }
 
     /**
+     * Author: TinDT
+     * Goal: get all customers
+     * return list of customers
+     */
+    @GetMapping("/modal")
+    public ResponseEntity<Page<ICustomerListDto>> getAllCustomers(@RequestParam(name = "_limit") Integer limit,
+                                                                  @RequestParam(defaultValue = "0", required = false,name = "_page") Integer page,
+                                                                  @RequestParam(defaultValue = "", required = false,name = "name_like") String name,
+                                                                  @RequestParam(defaultValue = "", required = false,name = "age") String age,
+                                                                  @RequestParam(defaultValue = "2", required = false,name = "gender") String gender,
+                                                                  @RequestParam(defaultValue = "", required = false,name = "phone") String phoneNumber
+                                                                 ) {
+        Pageable pageable = PageRequest.of(page, 5, Sort.by("nameCustomer").ascending());
+        Page<ICustomerListDto> customers = customerService.getPageCustomerForModal(pageable,name,age,gender,phoneNumber);
+        if (customers.getTotalElements() != 0) {
+            return ResponseEntity.ok(customers);
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
      * Author: NguyenNH
      * Goal: find customer by id
      * * return HttpStatus

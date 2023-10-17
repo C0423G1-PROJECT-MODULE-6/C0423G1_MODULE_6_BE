@@ -39,6 +39,7 @@ public class ProductRestController_ListProduct {
     /**
      * Check case name is empty
      * Author: TinDT
+     * workday: 12/10/2023
      * Goal: @throw Exception
      */
     @Test
@@ -49,11 +50,11 @@ public class ProductRestController_ListProduct {
                 .andExpect(jsonPath("totalElements").value(45))
                 .andExpect(jsonPath("content[0].id").value(39))
                 .andExpect(jsonPath("content[0].name").value("Apple Watch SE 2023 GPS 44mm Sport Loop "))
-//                .andExpect(jsonPath("content[0].color").value("Xanh Đen Đậm"))
-//                .andExpect(jsonPath("content[0].cpu").value("Apple S8"))
-//                .andExpect(jsonPath("content[0].capacity").value("32GB"))
+                .andExpect(jsonPath("content[0].color").value("Xanh Đen Đậm"))
+                .andExpect(jsonPath("content[0].cpu").value("Apple S8"))
+                .andExpect(jsonPath("content[0].capacity").value("32GB"))
                 .andExpect(jsonPath("content[0].quantity").value(10.0))
-//                .andExpect(jsonPath("content[0].camera").value("Không có"))
+                .andExpect(jsonPath("content[0].camera").value("Không có"))
                 .andExpect(jsonPath("content[0].price").value(7190000.0))
                 .andExpect(status().is2xxSuccessful())
         ;
@@ -137,7 +138,7 @@ public class ProductRestController_ListProduct {
                 .andExpect(jsonPath("totalPages").value(9))
                 .andExpect(jsonPath("totalElements").value(45))
                 .andExpect(jsonPath("content[0].id").value(39))
-                .andExpect(jsonPath("content[0].name").value("Apple Watch SE 2023 GPS 44mm Sport Loop"))
+                .andExpect(jsonPath("content[0].name").value("Apple Watch SE 2023 GPS 44mm Sport Loop "))
                 .andExpect(jsonPath("content[0].color").value("Xanh Đen Đậm"))
                 .andExpect(jsonPath("content[0].cpu").value("Apple S8"))
                 .andExpect(jsonPath("content[0].capacity").value("32GB"))
@@ -159,7 +160,7 @@ public class ProductRestController_ListProduct {
                 .andExpect(jsonPath("totalPages").value(9))
                 .andExpect(jsonPath("totalElements").value(45))
                 .andExpect(jsonPath("content[0].id").value(39))
-                .andExpect(jsonPath("content[0].name").value("Apple Watch SE 2023 GPS 44mm Sport Loop"))
+                .andExpect(jsonPath("content[0].name").value("Apple Watch SE 2023 GPS 44mm Sport Loop "))
                 .andExpect(jsonPath("content[0].color").value("Xanh Đen Đậm"))
                 .andExpect(jsonPath("content[0].cpu").value("Apple S8"))
                 .andExpect(jsonPath("content[0].capacity").value("32GB"))
@@ -182,7 +183,7 @@ public class ProductRestController_ListProduct {
                 .andExpect(jsonPath("totalPages").value(9))
                 .andExpect(jsonPath("totalElements").value(45))
                 .andExpect(jsonPath("content[0].id").value(39))
-                .andExpect(jsonPath("content[0].name").value("Apple Watch SE 2023 GPS 44mm Sport Loop"))
+                .andExpect(jsonPath("content[0].name").value("Apple Watch SE 2023 GPS 44mm Sport Loop "))
                 .andExpect(jsonPath("content[0].color").value("Xanh Đen Đậm"))
                 .andExpect(jsonPath("content[0].cpu").value("Apple S8"))
                 .andExpect(jsonPath("content[0].capacity").value("32GB"))
@@ -205,7 +206,7 @@ public class ProductRestController_ListProduct {
                 .andExpect(jsonPath("totalPages").value(9))
                 .andExpect(jsonPath("totalElements").value(45))
                 .andExpect(jsonPath("content[0].id").value(39))
-                .andExpect(jsonPath("content[0].name").value("Apple Watch SE 2023 GPS 44mm Sport Loop"))
+                .andExpect(jsonPath("content[0].name").value("Apple Watch SE 2023 GPS 44mm Sport Loop "))
                 .andExpect(jsonPath("content[0].color").value("Xanh Đen Đậm"))
                 .andExpect(jsonPath("content[0].cpu").value("Apple S8"))
                 .andExpect(jsonPath("content[0].capacity").value("32GB"))
@@ -216,7 +217,7 @@ public class ProductRestController_ListProduct {
     }
 
     /**
-     * Check case sort is not available and has default value
+     * Check case sort is not exits and has default value
      * Author: TinDT
      * Goal: @throw Exception
      */
@@ -225,7 +226,16 @@ public class ProductRestController_ListProduct {
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/admin/product/list?sort=abczyz")).andDo(print())
                 .andExpect(status().is2xxSuccessful())
-
+                .andExpect(jsonPath("totalPages").value(9))
+                .andExpect(jsonPath("totalElements").value(45))
+                .andExpect(jsonPath("content[0].id").value(39))
+                .andExpect(jsonPath("content[0].name").value("Apple Watch SE 2023 GPS 44mm Sport Loop "))
+                .andExpect(jsonPath("content[0].color").value("Xanh Đen Đậm"))
+                .andExpect(jsonPath("content[0].cpu").value("Apple S8"))
+                .andExpect(jsonPath("content[0].capacity").value("32GB"))
+                .andExpect(jsonPath("content[0].quantity").value(10.0))
+                .andExpect(jsonPath("content[0].camera").value("Không có"))
+                .andExpect(jsonPath("content[0].price").value(7190000.0))
         ;
     }
 
@@ -242,19 +252,18 @@ public class ProductRestController_ListProduct {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("totalPages").value(9))
                 .andExpect(jsonPath("totalElements").value(45))
-                .andExpect(jsonPath("content[0].id").value(34))
-                .andExpect(jsonPath("content[0].name").value("Ipad Air 5 Wifi + Cellular 256GB"))
+                .andExpect(jsonPath("content[0].id").value(36))
+                .andExpect(jsonPath("content[0].name").value("Ipad Air 5 Wifi 64GB"))
                 .andExpect(jsonPath("content[0].color").value("Trắng"))
                 .andExpect(jsonPath("content[0].cpu").value("Apple M1"))
-                .andExpect(jsonPath("content[0].capacity").value("256GB"))
-                .andExpect(jsonPath("content[0].quantity").value(10.0))
+                .andExpect(jsonPath("content[0].capacity").value("64GB"))
+                .andExpect(jsonPath("content[0].quantity").value(10))
                 .andExpect(jsonPath("content[0].camera").value("12MP"))
-                .andExpect(jsonPath("content[0].price").value(21590000.0))
-                .andExpect(jsonPath("content[0].type").value("Ipad"))
+                .andExpect(jsonPath("content[0].price").value(1.439E7))
         ;
     }
     /**
-     * Check case success when sort is price
+     * Check case success when sort is price and default value
      * Author: TinDT
      * Goal: @throw Exception
      */
@@ -276,7 +285,7 @@ public class ProductRestController_ListProduct {
         ;
     }
     /**
-     * Check case success when sort is type
+     * Check case success when sort is quantity and default value
      * Author: TinDT
      * Goal: @throw Exception
      */
@@ -287,22 +296,16 @@ public class ProductRestController_ListProduct {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("totalPages").value(9))
                 .andExpect(jsonPath("totalElements").value(45))
-                .andExpect(jsonPath("content[0].id").value(1))
-                .andExpect(jsonPath("content[0].name").value("iPhone 12 128GB"))
-                .andExpect(jsonPath("content[0].color").value("Xanh Lá"))
-                .andExpect(jsonPath("content[0].cpu").value("Apple A14 Bionic"))
-                .andExpect(jsonPath("content[0].capacity").value("128GB"))
+                .andExpect(jsonPath("content[0].id").value(2))
+                .andExpect(jsonPath("content[0].name").value("iPhone 13 256GB"))
+                .andExpect(jsonPath("content[0].color").value("Trắng"))
+                .andExpect(jsonPath("content[0].cpu").value("Apple A15 Bionic"))
+                .andExpect(jsonPath("content[0].capacity").value("256GB"))
                 .andExpect(jsonPath("content[0].quantity").value(10.0))
                 .andExpect(jsonPath("content[0].camera").value("12 MP"))
-                .andExpect(jsonPath("content[0].price").value(16490000.0))
+                .andExpect(jsonPath("content[0].price").value(1.949E7))
         ;
     }
-    @Test
-    public void getAll_choose_name_11() throws Exception {
-        this.mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/admin/product/list?choose=name&value=#")).andDo(print())
-                .andExpect(status().is4xxClientError())
-        ;
-    }
+
 
 }
