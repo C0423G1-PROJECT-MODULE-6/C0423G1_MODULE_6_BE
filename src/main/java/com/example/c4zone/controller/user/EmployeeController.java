@@ -40,7 +40,7 @@ public class EmployeeController {
                                                                 @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
 
         Pageable pageable = PageRequest.of(page,5);
-        Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable,"%"+searchJob+"%","%"+searchName+"%","%"+searchPhone+"%");
+        Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable,'%'+searchJob+'%',"%"+searchName+"%","%"+searchPhone+"%");
         if (employeeDtoPage.getTotalElements()==0 ){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
