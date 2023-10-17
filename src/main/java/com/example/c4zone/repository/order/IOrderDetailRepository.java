@@ -139,6 +139,7 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
             "    OB.date_of_order as dateOfOrder , " +
             "    OB.time_of_order as timeOfOrder, " +
             "    C.name_customer as nameCustomer, " +
+
             "    GROUP_CONCAT(CONCAT(P.name_product, ' x', OD.quantity_order) SEPARATOR ', ') as infoBuy , " +
             "    OB.total_money as totalMoney " +
             "FROM " +

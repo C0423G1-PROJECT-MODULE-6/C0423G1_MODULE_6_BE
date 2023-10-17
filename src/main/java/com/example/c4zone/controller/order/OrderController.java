@@ -93,6 +93,7 @@ public class OrderController {
             @PathVariable Long idUser,
             @PathVariable Long idProduct
     ){
+
         Integer quantityOfProduct = productService.getQuantityById(idProduct);
         if (quantity == null){
             return new ResponseEntity<>("Số lượng không được để trống",HttpStatus.BAD_REQUEST);
@@ -115,11 +116,18 @@ public class OrderController {
      */
     @PostMapping("/cart/deleteChosenProduct/{idUser},{idProduct}")
     public ResponseEntity<?> deleteChosenProduct(@PathVariable Long idUser,@PathVariable Long idProduct){
+        if (idUser == null){
+            return new ResponseEntity<>("Không tìm thấy idUser",HttpStatus.BAD_REQUEST);
+        }
+        if (idProduct == null){
+            return new ResponseEntity<>("Không tìm thấy idProduct",HttpStatus.BAD_REQUEST);
+        }
         cartService.deleteChosenProduct(idUser,idProduct);
         return new ResponseEntity<>("Bạn đã xóa sản phẩm",HttpStatus.OK);
     }
     /**
      * method get bill by customer (other screen modal to choose old bill or create new)
+     * after Check Customer's bill has not pay yet
      * Create ThoiND
      * Date 14-10-2023
      * param Long idUser,Long idProduct

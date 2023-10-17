@@ -66,9 +66,8 @@ public class OrderController_findProductAndChangeQuantity {
     public void findProductAndChangeQuantity_17_1() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                         .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,1)
-                        .param("_quantity", "0"))
+                        .param("_quantity", "avc"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
 }
