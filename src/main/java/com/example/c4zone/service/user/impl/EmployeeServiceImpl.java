@@ -1,4 +1,7 @@
 package com.example.c4zone.service.user.impl;
+import com.example.c4zone.dto.user.employee.EmployeeDto;
+import com.example.c4zone.dto.user.employee.IEmployeeDto;
+import com.example.c4zone.model.user.AppRole;
 import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.repository.user.IEmployeeRepository;
 import com.example.c4zone.service.user.IEmployeeService;
@@ -20,7 +23,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public Page<AppUser> findAllEmployeeBy(Pageable pageable, String searchJob, String searchName, String searchPhone) {
+    public Page<IEmployeeDto> findAllEmployeeBy(Pageable pageable, String searchJob, String searchName, String searchPhone) {
         return employeeRepository.findAllEmployee(pageable, searchJob, searchName, searchPhone);
     }
 
@@ -33,6 +36,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
     public AppUser getEmployeeById(Long id) {
         return employeeRepository.findEmployeeById(id);
     }
+
+
 
     @Override
     public String getNextCode() {
