@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ProductService implements IProductService{
     @Autowired
@@ -25,6 +27,18 @@ public class ProductService implements IProductService{
     @Override
     public Product findProductById(Long idProduct) {
         return productRepository.findProductById(idProduct);
+    }
+
+    /**
+     * author:QuanND
+     *
+     * @param id
+     * @return a product with id=:id
+     * day: 17/10/2023
+     */
+    @Override
+    public IProductDto findById(Long id) {
+        return productRepository.getProductById(id);
     }
 
     /**
