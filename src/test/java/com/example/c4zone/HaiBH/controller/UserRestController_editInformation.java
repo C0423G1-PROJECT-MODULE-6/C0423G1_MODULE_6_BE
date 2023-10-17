@@ -57,7 +57,6 @@ public class UserRestController_editInformation {
         userInfoDto.setEmployeeAddress("");
         userInfoDto.setEmployeePhone("");
         userInfoDto.setEmployeeName("");
-        userInfoDto.setEmployeeBirthday(Date.valueOf(""));
 
 
         this.mockMvc.perform(
@@ -150,11 +149,11 @@ public class UserRestController_editInformation {
     public void editInformation_object_24 () throws Exception {
 
         UserInfoDto userInfoDto = new UserInfoDto();
-        userInfoDto.setEmail("buihuhai318@gmail.com");
+        userInfoDto.setEmail("buihuhai3108@gmail.com");
         userInfoDto.setEmployeeAddress("da nang");
         userInfoDto.setEmployeePhone("0942409424");
         userInfoDto.setEmployeeName("Bui Huu Hai");;
-        userInfoDto.setEmployeeBirthday(Date.valueOf("1996-08-31"));
+        userInfoDto.setEmployeeBirthday(Date.valueOf("2005-10-10"));
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
