@@ -16,4 +16,5 @@ public interface IHomeService {
     List<String> getImageLinksByProductId(Long id);
     List<String> getCapacitiesByName(String name);
     IProductDto getProductByNameAndCapacityAndColor(String name, String capacity,String color);
+    List<String> getSeriesByProductType(String type);
 }
