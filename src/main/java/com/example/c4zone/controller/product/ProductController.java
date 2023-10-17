@@ -81,8 +81,9 @@ public class ProductController {
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
+        Map<String, String> error = new HashMap<>();
+        new ProductDto().validate(productDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            Map<String, String> error = new HashMap<>();
             for (FieldError err : bindingResult.getFieldErrors()) {
                 error.put(err.getField(), err.getDefaultMessage());
             }
@@ -117,8 +118,9 @@ public class ProductController {
     @PatchMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Object> updateProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult){
+        Map<String, String> error = new HashMap<>();
+        new ProductDto().validate(productDto,bindingResult);
         if (bindingResult.hasErrors()) {
-            Map<String, String> error = new HashMap<>();
             for (FieldError err : bindingResult.getFieldErrors()) {
                 error.put(err.getField(), err.getDefaultMessage());
             }
@@ -150,9 +152,6 @@ public class ProductController {
             @RequestParam(value = "value", required = false, defaultValue = "") String value) {
         Page<IProductDto> productDtoPage;
         Pageable pageable;
-        if (page < 0) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         switch (sort) {
             case "name":
                 pageable = PageRequest.of(page, 5, Sort.by("name").ascending());
@@ -172,12 +171,8 @@ public class ProductController {
         }
         switch (choose) {
             case "name":
-                if (value.matches("^\\w+$")) {
                     productDtoPage = productService.getAllByName(pageable, value);
                     break;
-                } else {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                }
             case "price":
                 productDtoPage = productService.getAllByPrice(pageable, value);
                 break;
