@@ -36,13 +36,13 @@ public class ProductController_createProduct {
     @Test
     public void createProduct_1 () throws Exception {
         ProductDto productDto = new ProductDto();
-        productDto.setNameProduct("Phan Tá Anh Đào");
-        productDto.setBatteryProduct("100%");
-        productDto.setCameraProduct("12mp, 12mp, 12mp");
+        productDto.setNameProduct("Iphone 17");
+        productDto.setBatteryProduct("100 mPA");
+        productDto.setCameraProduct("12mp 12mp 12mp");
         productDto.setPriceProduct(11000000.0);
         productDto.setQuantityProduct(100L);
-        productDto.setScreenProduct("64 in");
-        productDto.setSelfieProduct("15mp");
+        productDto.setScreenProduct("64 inch");
+        productDto.setSelfieProduct("15mp 15mp 15mp");
         productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
@@ -86,13 +86,13 @@ public class ProductController_createProduct {
     @Test
     public void createProduct_name_2 () throws Exception {
         ProductDto productDto = new ProductDto();
-        productDto.setNameProduct(null);
-        productDto.setBatteryProduct("100%");
-        productDto.setCameraProduct("12mp, 12mp, 12mp");
+        productDto.setNameProduct("!@$@&@(&@)");
+        productDto.setBatteryProduct("100 mAH");
+        productDto.setCameraProduct("12mp 12mp 12mp");
         productDto.setPriceProduct(11000000.0);
         productDto.setQuantityProduct(10L);
-        productDto.setScreenProduct("64 in");
-        productDto.setSelfieProduct("15mp");
+        productDto.setScreenProduct("64 inch");
+        productDto.setSelfieProduct("15mp 15mp");
         productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
@@ -289,12 +289,12 @@ public class ProductController_createProduct {
     public void createProduct_price_2 () throws Exception {
         ProductDto productDto = new ProductDto();
         productDto.setNameProduct("Phan Tá Anh Đào");
-        productDto.setBatteryProduct("100%");
-        productDto.setCameraProduct("12mp, 12mp, 12mp");
-//        productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0L);
-        productDto.setScreenProduct("64 in");
-        productDto.setSelfieProduct("15mp");
+        productDto.setBatteryProduct("100 aMH");
+        productDto.setCameraProduct("12mp 12mp 12mp");
+        productDto.setPriceProduct(11000000.0);
+        productDto.setQuantityProduct(Long.valueOf("edhscjhjkcdnxkl"));
+        productDto.setScreenProduct("64 inch");
+        productDto.setSelfieProduct("15mp 15mp");
         productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
