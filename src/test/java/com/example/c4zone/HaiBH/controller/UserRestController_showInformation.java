@@ -18,6 +18,11 @@ public class UserRestController_showInformation {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: [id] = null
+     * @Throw: Exception
+     */
     @Test
     public void showInformation_id_1 () throws Exception {
         this.mockMvc.perform(
@@ -27,6 +32,11 @@ public class UserRestController_showInformation {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: [id] = ""
+     * @Throw: Exception
+     */
     @Test
     public void showInformation_id_2 () throws Exception {
         this.mockMvc.perform(
@@ -36,6 +46,11 @@ public class UserRestController_showInformation {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: [id] = not exist in DB
+     * @Throw: Exception
+     */
     @Test
     public void showInformation_id_3 () throws Exception {
         this.mockMvc.perform(
@@ -45,6 +60,11 @@ public class UserRestController_showInformation {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Creator: Bui Huu Hai
+     * Goal: [id] = exist in DB, successful
+     * @Throw: Exception
+     */
     @Test
     public void showInformation_id_4 () throws Exception {
         this.mockMvc.perform(

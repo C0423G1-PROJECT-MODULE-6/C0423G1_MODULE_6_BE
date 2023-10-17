@@ -3,6 +3,8 @@ import com.example.c4zone.dto.user.employee.EmployeeDto;
 import com.example.c4zone.dto.user.employee.IEmployeeDto;
 import com.example.c4zone.model.user.AppRole;
 import com.example.c4zone.model.user.AppUser;
+import com.example.c4zone.model.user.AppUser;
+import org.hibernate.query.NativeQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

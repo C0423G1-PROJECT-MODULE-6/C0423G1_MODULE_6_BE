@@ -30,18 +30,6 @@ public class ProductController {
     private IProductService productService;
     @Autowired
     private IImageService imageService;
-    @Autowired
-    private ICapacityService capacityService;
-    @Autowired
-    private IColorService colorService;
-    @Autowired
-    private ICpuService cpuService;
-    @Autowired
-    private IRamService ramService;
-    @Autowired
-    private ISeriesService service;
-    @Autowired
-    private ITypeService typeService;
 
     /**
      * author: DaoPTA
@@ -93,8 +81,9 @@ public class ProductController {
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
+        Map<String, String> error = new HashMap<>();
+        new ProductDto().validate(productDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            Map<String, String> error = new HashMap<>();
             for (FieldError err : bindingResult.getFieldErrors()) {
                 error.put(err.getField(), err.getDefaultMessage());
             }
@@ -129,8 +118,9 @@ public class ProductController {
     @PatchMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Object> updateProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult){
+        Map<String, String> error = new HashMap<>();
+        new ProductDto().validate(productDto,bindingResult);
         if (bindingResult.hasErrors()) {
-            Map<String, String> error = new HashMap<>();
             for (FieldError err : bindingResult.getFieldErrors()) {
                 error.put(err.getField(), err.getDefaultMessage());
             }
@@ -160,8 +150,8 @@ public class ProductController {
             @RequestParam(value = "sort", required = false, defaultValue = "") String sort,
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(value = "value", required = false, defaultValue = "") String value) {
-        Page<IProductDto> productDtoPage = null;
-        Pageable pageable = PageRequest.of(page, 5);
+        Page<IProductDto> productDtoPage;
+        Pageable pageable;
         switch (sort) {
             case "name":
                 pageable = PageRequest.of(page, 5, Sort.by("name").ascending());
@@ -181,17 +171,23 @@ public class ProductController {
         }
         switch (choose) {
             case "name":
-                productDtoPage = productService.getAllByName(pageable, value);
-                break;
+                    productDtoPage = productService.getAllByName(pageable, value);
+                    break;
             case "price":
-                productDtoPage=productService.getAllByPrice(pageable,value);
+                productDtoPage = productService.getAllByPrice(pageable, value);
                 break;
             case "type":
-                productDtoPage=productService.getAllByType(pageable,value);
+                productDtoPage = productService.getAllByType(pageable, value);
                 break;
             case "quantity":
-                productDtoPage=productService.getAllByQuantity(pageable,value);
+                productDtoPage = productService.getAllByQuantity(pageable, value);
                 break;
+            default:
+                productDtoPage = productService.getAllByName(pageable, "");
+                break;
+        }
+        if (productDtoPage.getContent().isEmpty()) {
+            return new ResponseEntity<>(productDtoPage, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(productDtoPage, HttpStatus.OK);
     }
@@ -202,7 +198,7 @@ public class ProductController {
      * @param id
      * @return if Http status
      */
-    @DeleteMapping("/")
+    @PatchMapping("/remove")
     public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id){
         if (productService.findProductById(id)==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

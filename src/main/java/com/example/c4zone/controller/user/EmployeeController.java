@@ -38,6 +38,7 @@ public class EmployeeController {
                                                                 @RequestParam(name = "searchJob", defaultValue = "",required = false)String searchJob,
                                                                 @RequestParam(name = "searchName",defaultValue = "",required = false)String searchName,
                                                                 @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
+
         Pageable pageable = PageRequest.of(page,5);
         Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable,"%"+searchJob+"%","%"+searchName+"%","%"+searchPhone+"%");
         if (employeeDtoPage.getTotalElements()==0 ){

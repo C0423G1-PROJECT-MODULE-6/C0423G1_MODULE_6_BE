@@ -1,12 +1,8 @@
 package com.example.c4zone.model.product;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -17,7 +13,6 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long idProduct;
     private String nameProduct;
     private String screenProduct;
@@ -28,9 +23,10 @@ public class Product {
     private String selfieProduct;
     private String batteryProduct;
     private String weightProduct;
+    @Column(columnDefinition = "bigint")
     private Long quantityProduct;
     private Double priceProduct;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product")
     private List<Image> images;
     @ManyToOne
     @JoinColumn(name = "id_capacity", referencedColumnName = "idCapacity")
