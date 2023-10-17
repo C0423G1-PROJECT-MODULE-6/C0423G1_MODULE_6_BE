@@ -44,8 +44,6 @@ public class OrderController {
     @Autowired
     private ICartService cartService;
     @Autowired
-    private IEmployeeService employeeService;
-    @Autowired
     private IAppUserService appUserService;
 
     /**
@@ -74,7 +72,10 @@ public class OrderController {
     @GetMapping("/cart/{idUser}")
     public ResponseEntity<?> getAllCart(@PathVariable Long idUser){
         List<ICartDto> cart = cartService.getAllCart(idUser);
-        if (cart == null){
+//        if (cart == null){
+//            return new ResponseEntity<>("Không tìm thấy giỏ hàng",HttpStatus.NOT_FOUND);
+//        }
+        if (cart.isEmpty()){
             return new ResponseEntity<>("Không tìm thấy giỏ hàng",HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(cart,HttpStatus.OK);
@@ -166,6 +167,7 @@ public class OrderController {
     }
     /**
      * method show orderBill before pay when click button "thanh toan"
+     * if customer dont have bill not pay, create new orbill. else find orderbill with this customer and create orderDetail
      * Create ThoiND
      * Date 14-10-2023
      * param orderPaymentDto
@@ -176,6 +178,30 @@ public class OrderController {
     public ResponseEntity<?> showOrderBillBeforePay(@RequestBody OrderPaymentDto orderPaymentDto){
 
         List<ICartDto> cartDto = cartService.getAllCart(orderPaymentDto.getIdUser());
+        OrderBill orderBillNotPay = orderDetailService.isNotPayOfCustomer(orderPaymentDto.getIdCustomerOrder());
+        if (orderBillNotPay == null){
+            OrderBill orderBill = new OrderBill();
+            Optional<Customer> customer = customerService.findById(orderPaymentDto.getIdCustomerOrder());
+            if (!customer.isPresent()){
+                return new ResponseEntity<>("Không tìm thấy khách hàng",HttpStatus.NOT_FOUND);
+            }
+            AppUser appUser = appUserService.findAppUserById(orderPaymentDto.getIdUser());
+            if (appUser == null){
+                return new ResponseEntity<>("Không tìm thấy tài khoản",HttpStatus.NOT_FOUND);
+            }
+            LocalDate localDate = LocalDate.now();
+            LocalTime localTime = LocalTime.now();
+
+            orderBill.setCustomer(customer.orElse(null));
+            orderBill.setUser(appUser);
+            orderBill.setDateOfOrder(String.valueOf(localDate));
+            orderBill.setTimeOfOrder(String.valueOf(localTime));
+            orderBill.setTotalMoney(0.0);
+            orderBill.setPaymentMethod(0);
+            orderBill.setPrintStatus(0);
+            orderBill.setPaymentStatus(0);
+            orderDetailService.createOrderBill(orderBill);
+        }
 
         orderDetailService.createOrderDetail(cartDto,orderPaymentDto.getIdCustomerOrder(),orderPaymentDto.getIdUser());
 

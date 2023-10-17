@@ -19,6 +19,7 @@ import java.util.List;
 
 
 @Repository
+@Transactional
 public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
 
     /**
@@ -94,7 +95,7 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
             "    customer C ON OB.id_customer = C.id_customer " +
             "LEFT JOIN " +
             "    product P ON OD.id_product = P.id_product " +
-            "WHERE C.name_customer like :name " +
+            "WHERE C.name_customer like :name and OB.payment_status = 1 " +
             "GROUP BY " +
             "    OB.id_order_bill",nativeQuery = true)
     Page<IOrderHistoryDtoTotal> getAllHistory(Pageable pageable,@Param("name") String s);
@@ -120,7 +121,7 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
             "    customer C ON OB.id_customer = C.id_customer " +
             "LEFT JOIN " +
             "    product P ON OD.id_product = P.id_product " +
-            "WHERE C.name_customer like :name " +
+            "WHERE C.name_customer like :name and OB.payment_status = 1 " +
             "GROUP BY " +
             "    OB.id_order_bill " +
             "ORDER BY " +
@@ -148,7 +149,7 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
             "    customer C ON OB.id_customer = C.id_customer " +
             "LEFT JOIN " +
             "    product P ON OD.id_product = P.id_product " +
-            "WHERE C.name_customer like :name " +
+            "WHERE C.name_customer like :name and OB.payment_status = 1 " +
             "GROUP BY " +
             "    OB.id_order_bill " +
             "ORDER BY " +
@@ -182,7 +183,6 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
      */
 
     @Modifying
-    @Transactional
     @Query(value = "update order_bill set total_money = :total,payment_method = :method where id_order_bill = :id",nativeQuery = true)
     void updateOrderBill(@Param("id") Long idOrderBill,@Param("total") Double totalMoney,@Param("method") Integer paymentMethod);
     /**
@@ -194,7 +194,6 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
      */
 
     @Modifying
-    @Transactional
     @Query(value = "update order_bill set print_status = :status, payment_status = 1 where id_order_bill = :id",nativeQuery = true)
     void updateOrderBill(@Param("status") int printStatus,@Param("id") Long idOrderBill);
     /**

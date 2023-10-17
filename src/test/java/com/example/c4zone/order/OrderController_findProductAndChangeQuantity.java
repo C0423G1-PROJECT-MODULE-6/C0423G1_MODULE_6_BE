@@ -8,7 +8,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -26,8 +26,8 @@ public class OrderController_findProductAndChangeQuantity {
     @Test
     public void findProductAndChangeQuantity_18() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,60)
-                        .param("_quantity", "1"))
+                        .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,1)
+                        .param("_quantity", "2"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
@@ -39,7 +39,7 @@ public class OrderController_findProductAndChangeQuantity {
     @Test
     public void findProductAndChangeQuantity_16() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,60)
+                        .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,1)
                         .param("_quantity", "555"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
@@ -52,7 +52,7 @@ public class OrderController_findProductAndChangeQuantity {
     @Test
     public void findProductAndChangeQuantity_17() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,60)
+                        .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,1)
                         .param("_quantity", "-1"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
@@ -65,7 +65,7 @@ public class OrderController_findProductAndChangeQuantity {
     @Test
     public void findProductAndChangeQuantity_17_1() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,60)
+                        .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,1)
                         .param("_quantity", "0"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());

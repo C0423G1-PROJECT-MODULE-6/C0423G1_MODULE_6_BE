@@ -66,6 +66,18 @@ public class OrderController_getAllCart {
                         .get("/api/admin/order/cart/{id}", 1))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$[0].idCart").value(29));
+                .andExpect(jsonPath("$[0].idCart").value(1))
+                .andExpect(jsonPath("$[0].nameProduct").value("6.1 inch"))
+                .andExpect(jsonPath("$[0].quantityProduct").value(10))
+                .andExpect(jsonPath("$[0].idProduct").value(1))
+                .andExpect(jsonPath("$[0].quantityOrder").value(1))
+                .andExpect(jsonPath("$[0].priceProduct").value( 1.649E7))
+
+                .andExpect(jsonPath("$[1].idCart").value(2))
+                .andExpect(jsonPath("$[1].nameProduct").value("6.1 inch"))
+                .andExpect(jsonPath("$[1].quantityProduct").value(10))
+                .andExpect(jsonPath("$[1].idProduct").value(2))
+                .andExpect(jsonPath("$[1].quantityOrder").value(1))
+                .andExpect(jsonPath("$[1].priceProduct").value( 1.949E7));
     }
 }
