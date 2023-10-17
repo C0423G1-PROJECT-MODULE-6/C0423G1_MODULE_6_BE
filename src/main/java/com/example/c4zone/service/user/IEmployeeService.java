@@ -1,4 +1,7 @@
 package com.example.c4zone.service.user;
+import com.example.c4zone.dto.user.employee.EmployeeDto;
+import com.example.c4zone.dto.user.employee.IEmployeeDto;
+import com.example.c4zone.model.user.AppRole;
 import com.example.c4zone.model.user.AppUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +28,7 @@ public interface IEmployeeService {
      * @param: pageable,searchJob,searchName,searchPhone
      * return: Page<AppUser>
      */
-    Page<AppUser> findAllEmployeeBy(Pageable pageable, String searchJob, String searchName, String searchPhone);
+    Page<IEmployeeDto> findAllEmployeeBy(Pageable pageable, String searchJob, String searchName, String searchPhone);
 
     /**
      * method :deleteEmployeeById()
@@ -46,6 +49,8 @@ public interface IEmployeeService {
      * return: AppUser
      */
     AppUser getEmployeeById(Long id);
+
+
 
 
     void editUser(AppUser user);
