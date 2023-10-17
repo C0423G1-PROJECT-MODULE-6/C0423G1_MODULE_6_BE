@@ -35,7 +35,7 @@ public class UserRestController_confirmRegister {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put( "/api/user/confirmRegister")
+                                .post( "/api/user/confirmRegister")
                                 .content(this.objectMapper.writeValueAsString(null))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -57,7 +57,7 @@ public class UserRestController_confirmRegister {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put( "/api/user/confirmRegister")
+                                .post( "/api/user/confirmRegister")
                                 .content(this.objectMapper.writeValueAsString(appUserDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -75,11 +75,11 @@ public class UserRestController_confirmRegister {
         AppUserDto appUserDto = new AppUserDto();
         appUserDto.setUserName("admin");
         appUserDto.setPassword("123");
-        appUserDto.setOtp("test");
+        appUserDto.setOtp("Nojl9yxp");
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put( "/api/user/confirmRegister")
+                                .post( "/api/user/confirmRegister")
                                 .content(this.objectMapper.writeValueAsString(appUserDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())

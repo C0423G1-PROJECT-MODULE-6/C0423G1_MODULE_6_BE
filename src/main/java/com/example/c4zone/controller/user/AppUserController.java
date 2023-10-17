@@ -141,10 +141,10 @@ public class AppUserController {
                     return ResponseEntity.ok().body(new JwtResponse(jwtToken));
 
                 } else {
-                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 }
             }
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
