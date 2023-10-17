@@ -137,9 +137,7 @@ public class AppUserController {
 
                 String jwtToken = jwtTokenUtil.generateToken(userDetails);
 
-                return ResponseEntity
-                        .ok()
-                        .body(new JwtResponse(jwtToken));
+                return ResponseEntity.ok().body(new JwtResponse(jwtToken));
 
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

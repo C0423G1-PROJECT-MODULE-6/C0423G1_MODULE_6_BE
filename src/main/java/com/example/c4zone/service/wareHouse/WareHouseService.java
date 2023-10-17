@@ -75,5 +75,4 @@ public class WareHouseService implements IWareHouseService {
     public void importProduct(Long productId, int quantity, Long supplierId) {
         wareHouseRepository.importProduct(productId, quantity, supplierId);
     }
-
 }

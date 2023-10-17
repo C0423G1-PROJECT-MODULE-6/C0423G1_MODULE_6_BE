@@ -9,8 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
+@Repository
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
     /**
@@ -104,9 +105,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    t.name AS type," +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -140,9 +142,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    t.name AS type," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -159,7 +162,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    series s ON p.id_series = s.id_series " +
             " WHERE " +
             "    p.status_business = TRUE  " +
-            "    AND p.id_type = :type ", nativeQuery = true)
+            "    AND t.id_type = :type ", nativeQuery = true)
     Page<IProductDto> getAllByType(Pageable pageable, @Param("type") Long type);
 
     /**
@@ -177,9 +180,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    t.name AS type," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -213,9 +217,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    t.name AS type," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -249,9 +254,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    t.name AS type," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -301,9 +307,9 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -338,9 +344,9 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -374,9 +380,9 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
-            "    ca.id_capacity AS capacity," +
-            "    c.id_cpu AS cpu," +
-            "    co.id_color AS color " +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
             " FROM " +
             "    c4_zone.product p " +
             "        JOIN " +
@@ -406,4 +412,36 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             " where p.id_product = :id " , nativeQuery = true)
 
     void removeProduct(@Param("id") Long id);
+    /**
+     * method find product by id product
+     * Create ThoiND
+     * Date 14-10-2023
+     * param id product
+     * return product
+     */
+    @Query(value = "select * from product where id_product = :id",nativeQuery = true)
+    Product findProductByIdProduct(@Param("id") Long idProduct);
+
+    /**
+     * method get quantity by id product
+     * Create ThoiND
+     * Date 14-10-2023
+     * param id product
+     * return quantity current product
+     */
+    @Query(value = "select quantity_product from product where id_product = :id",nativeQuery = true)
+    Integer getQuantityByid(@Param("id") Long idProduct);
+
+    /**
+     * method update quantity of product
+     * Create ThoiND
+     * Date 14-10-2023
+     * param id product
+     * return void
+     */
+    @Modifying
+    @Transactional
+    @Query(value = "update product set quantity_product = :quantity where id_product = :id",nativeQuery = true)
+    void updateQuantityOfProduct(@Param("id") Long idProduct,@Param("quantity") Integer quantityOfProductAfterPayment);
+
 }

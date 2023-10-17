@@ -7,6 +7,7 @@ import com.example.c4zone.model.user.UserRole;
 import com.example.c4zone.repository.user.IAppUserRepository;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,7 @@ import java.util.Optional;
 
 @Service
 public class AppUserService implements IAppUserService {
+
     @Autowired
     private IAppUserRepository appUserRepository;
 
@@ -181,18 +183,6 @@ public class AppUserService implements IAppUserService {
         helper.setText(content, true);
 
         mailSender.send(message);
-    }
-
-    /**
-     * method updateOtp
-     * Create HaiBH
-     * Date 12-10-2023
-     * param AppUser appUser
-     * return void
-     */
-    @Override
-    public void updateOtp(AppUser appUser) {
-        appUserRepository.updateOtp(appUser);
     }
 
     /**
