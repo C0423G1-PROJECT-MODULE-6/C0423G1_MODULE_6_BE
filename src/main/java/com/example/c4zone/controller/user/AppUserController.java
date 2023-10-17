@@ -55,7 +55,7 @@ public class AppUserController {
     public ResponseEntity<Object> showInformation(@PathVariable Long id) {
         AppUser appUser = appUserService.findAppUserById(id);
         if (appUser == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(appUser, HttpStatus.OK);
     }
@@ -129,21 +129,26 @@ public class AppUserController {
      */
     @PostMapping("/confirm")
     public ResponseEntity<?> confirm(@RequestBody AppUserDto appUserDto) {
-        AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
-        if (appUser != null) {
-            if (passwordEncoder.matches(appUserDto.getOtp(), appUser.getOneTimePassword()) && appUser.isOTPRequired()) {
+        try {
+            AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
+            if (appUser != null) {
+                if (passwordEncoder.matches(appUserDto.getOtp(), appUser.getOneTimePassword()) && appUser.isOTPRequired()) {
 
-                UserDetails userDetails = appUserService.loadUserByUsername(appUser.getUserName());
+                    UserDetails userDetails = appUserService.loadUserByUsername(appUser.getUserName());
 
-                String jwtToken = jwtTokenUtil.generateToken(userDetails);
+                    String jwtToken = jwtTokenUtil.generateToken(userDetails);
 
-                return ResponseEntity.ok().body(new JwtResponse(jwtToken));
+                    return ResponseEntity.ok().body(new JwtResponse(jwtToken));
 
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
             }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 
     /**
