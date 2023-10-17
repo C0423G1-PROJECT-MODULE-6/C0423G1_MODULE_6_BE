@@ -22,15 +22,23 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "    p.id_product AS id,\n" +
             "    p.name_product AS name,\n" +
             "    p.price_product AS price,\n" +
-            "    p.quantity_product AS quantity\n" +
+            "    p.quantity_product AS quantity,\n" +
+            "    t.name as type,\n" +
+            "   capacity.name as capacity,\n" +
+            "    MIN(i.name) AS image \n" +
             "FROM\n" +
             "    product p\n" +
             "        JOIN\n" +
             "    capacity ON capacity.id_capacity = p.id_capacity\n" +
             "        JOIN\n" +
             "    color ON color.id_color = p.id_color\n" +
+            "        JOIN\n" +
+            "   image i ON p.id_product = i.id_product \n" +
+            "        JOIN\n" +
+            "   type t ON p.id_type = t.id_type\n" +
             "WHERE\n" +
-            "    p.name_product LIKE :searchName \n" +
+            "    p.name_product LIKE :searchName and status_business = 1 \n" +
+            "GROUP BY p.id_product \n" +
             "ORDER BY CASE WHEN :sortName = 'id' THEN p.id_product END DESC, CASE WHEN :sortName = 'price' THEN p.price_product END DESC", nativeQuery = true)
     List<IProductDto> getProductsByNameSortByPriceDESC(@Param("searchName") String name, @Param("sortName") String sortName);
 
@@ -39,15 +47,23 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "    p.id_product AS id,\n" +
             "    p.name_product AS name,\n" +
             "    p.price_product AS price,\n" +
-            "    p.quantity_product AS quantity\n" +
+            "    p.quantity_product AS quantity,\n" +
+            "    t.name as type,\n" +
+            "   capacity.name as capacity,\n" +
+            "    MIN(i.name) AS image \n" +
             "FROM\n" +
             "    product p\n" +
             "        JOIN\n" +
             "    capacity ON capacity.id_capacity = p.id_capacity\n" +
             "        JOIN\n" +
             "    color ON color.id_color = p.id_color\n" +
+            "        JOIN\n" +
+            "   image i ON p.id_product = i.id_product \n" +
+            "        JOIN\n" +
+            "   type t ON p.id_type = t.id_type\n" +
             "WHERE\n" +
-            "    p.name_product LIKE :searchName \n" +
+            "    p.name_product LIKE :searchName and status_business = 1 \n" +
+            "GROUP BY p.id_product \n" +
             "ORDER BY CASE WHEN :sortName = 'id' THEN p.id_product END DESC, CASE WHEN :sortName = 'price' THEN p.price_product END ASC", nativeQuery = true)
     List<IProductDto> getProductsByNameSortByPriceASC(@Param("searchName") String name, @Param("sortName") String sortName);
 
@@ -88,7 +104,7 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "        JOIN\n" +
             "    type t ON t.id_type = p.id_type\n" +
             "WHERE\n" +
-            " p.id_product = :id", nativeQuery = true)
+            " p.id_product = :id and status_business = 1", nativeQuery = true)
     IProductDto getProductById(@Param("id") Long id);
 
     /**
@@ -132,7 +148,7 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "        JOIN\n" +
             "    type t ON t.id_type = p.id_type\n" +
             "WHERE\n" +
-            " p.name_product like :name and ca.name like :capacity and co.name like :color", nativeQuery = true)
+            " p.name_product like :name and ca.name like :capacity and co.name like :color and status_business = 1", nativeQuery = true)
     IProductDto getProductByNameAndCapacityAndColor(@Param("name") String name, @Param("capacity") String capacity, @Param("color") String color);
 
 
@@ -146,7 +162,7 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "FROM\n" +
             "    image\n" +
             "WHERE\n" +
-            "    id_product = :product_id\n" +
+            "    id_product = :product_id and status_image =1 \n" +
             "LIMIT 1", nativeQuery = true)
     String getAvatarByProductId(@Param("product_id") Long product_id);
 
@@ -163,7 +179,7 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "        JOIN\n" +
             "    color ON product.id_color = color.id_color\n" +
             "WHERE\n" +
-            "    name_product LIKE :name", nativeQuery = true)
+            "    name_product LIKE :name and status_business = 1 ", nativeQuery = true)
     List<String> getColorsOfAProductByName(@Param("name") String name);
 
 
@@ -179,7 +195,7 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "        JOIN\n" +
             "    capacity ON capacity.id_capacity = product.id_capacity\n" +
             "WHERE\n" +
-            "    name_product LIKE :name", nativeQuery = true)
+            "    name_product LIKE :name and status_business = 1", nativeQuery = true)
     List<String> getCapacitiesOfProductByName(@Param("name") String name);
 
 
@@ -193,7 +209,7 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "FROM\n" +
             "    image\n" +
             "WHERE\n" +
-            "    id_product = :product_id ", nativeQuery = true)
+            "    id_product = :product_id and status_image = 1", nativeQuery = true)
     List<String> getImageLinksByProductId(@Param("product_id") Long product_id);
 
     /**
@@ -209,9 +225,19 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "    product p\n" +
             "        JOIN\n" +
             "    order_detail o ON o.id_order_detail = p.id_product\n" +
-            "GROUP BY id\n" +
+            "WHERE\n" +
+            "    status_business = 1 \n" +
+            "GROUP BY id \n" +
             "ORDER BY SUM(o.quantity_order) DESC\n" +
-            "LIMIT 8;\n" +
-            "    ", nativeQuery = true)
+            "LIMIT 8\n", nativeQuery = true)
     List<Product> getBestsellers();
+
+    @Query(value = "SELECT \n" +
+            "    name\n" +
+            "FROM\n" +
+            "    series\n" +
+            "WHERE\n" +
+            "    name LIKE :type\n" +
+            "        AND status_series = 1", nativeQuery = true)
+    List<String> getSeriesByProductType(@Param("type") String type);
 }
