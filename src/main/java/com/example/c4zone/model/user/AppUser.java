@@ -34,8 +34,8 @@ public class AppUser {
     @Lob
     private String employeeImage;
     private String employeeIdCard;
-    private java.sql.Date employeeBirthday;
-    private java.sql.Date employeeStartDate;
+    private Date employeeBirthday;
+    private Date employeeStartDate;
 
     private static final long OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 minutes
 
