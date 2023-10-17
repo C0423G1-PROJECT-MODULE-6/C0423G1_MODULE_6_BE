@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static sun.jvm.hotspot.code.CompressedStream.L;
 
 
 @SpringBootTest
@@ -39,10 +40,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(100.0);
+        productDto.setQuantityProduct(100L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -89,10 +90,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(10.0);
+        productDto.setQuantityProduct(10L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -139,10 +140,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -189,10 +190,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -241,10 +242,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -291,10 +292,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
 //        productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -341,10 +342,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(Double.valueOf("ebhdkbqjdnkbe32or893ehoew"));
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -391,10 +392,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(30000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -441,10 +442,10 @@ public class ProductController_createProduct {
 //        productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -491,10 +492,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100!@#");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -543,10 +544,10 @@ public class ProductController_createProduct {
                 "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -593,10 +594,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
 //        productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -643,10 +644,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("$^^&&^*^*");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -699,10 +700,10 @@ public class ProductController_createProduct {
                 "12mp, 12mp, 12mp,12mp, 12mp, 12mp,12mp, 12mp, 12mp,12mp, 12mp, 12mp,12mp, 12mp, 12mp," +
                 "12mp, 12mp, 12mp,12mp, 12mp, 12mp,12mp, 12mp, 12mp,12mp, 12mp, 12mp,12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -752,7 +753,7 @@ public class ProductController_createProduct {
 //        productDto.setQuantityProduct(0.0D);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -799,10 +800,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(Double.valueOf("38249ry2yhu2efef"));
+        productDto.setQuantityProduct(Long.valueOf("38249ry2yhu2efef"));
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -849,10 +850,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.0);
+        productDto.setQuantityProduct(1000000000000000000L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -899,10 +900,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0D);
+        productDto.setQuantityProduct(0L);
 //        productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -949,10 +950,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("#@&*@2823471834ffdgsds");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -999,7 +1000,7 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in," +
                 "64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in," +
                 "64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in," +
@@ -1007,7 +1008,7 @@ public class ProductController_createProduct {
                 "64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in,64 in," +
                 "64 innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -1054,10 +1055,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
 //        productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -1104,10 +1105,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("@#$%^HGHKY$%^R%TYIHI*((^438921490");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -1154,14 +1155,14 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mpmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" +
                 "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" +
                 "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" +
                 "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" +
                 "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -1208,7 +1209,7 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
 //        productDto.setWeightProduct(200.5D);
@@ -1258,10 +1259,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(Double.valueOf("c1ry3782b9r8fucey7ru8n2cru82yr"));
+        productDto.setWeightProduct("c1ry3782b9r8fuc^%&*ey7ru8n2cru82yr");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -1308,10 +1309,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(2000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.5D);
+        productDto.setWeightProduct("2000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -1358,10 +1359,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15m");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Đặc điểm nổi bật của iPhone 15 Pro\n" +
                 "• Chế tác bộ bộ khung viền từ chất liệu Titanium cứng cáp\n" +
@@ -2056,10 +2057,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -2106,10 +2107,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -2156,10 +2157,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -2206,10 +2207,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -2256,10 +2257,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();
@@ -2306,10 +2307,10 @@ public class ProductController_createProduct {
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
-        productDto.setQuantityProduct(0.0D);
+        productDto.setQuantityProduct(0L);
         productDto.setScreenProduct("64 in");
         productDto.setSelfieProduct("15mp");
-        productDto.setWeightProduct(200.5D);
+        productDto.setWeightProduct("200.5");
         productDto.setStatusBusiness(true);
         productDto.setDescriptionProduct("Ngon bổ rẻ");
         Capacity capacity = new Capacity();

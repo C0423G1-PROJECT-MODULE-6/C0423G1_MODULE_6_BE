@@ -12,8 +12,8 @@ public class ProductDto implements Validator {
     private Boolean statusBusiness = true;
     private String selfieProduct;
     private String batteryProduct;
-    private Double weightProduct;
-    private Double quantityProduct;
+    private String weightProduct;
+    private Long quantityProduct;
     private Double priceProduct;
     private ImageDto imageDto;
     private Capacity capacity;
@@ -30,12 +30,12 @@ public class ProductDto implements Validator {
     private static final String BATTERY_PRODUCT_DTO = "batteryProduct";
     private static final String WEIGHT_PRODUCT_DTO = "weightProduct";
     private static final String PRICE_PRODUCT_DTO = "priceProduct";
-    private static final String REGEX_SPECIAL_CHARACTERS = "^(?!.*\\s{2,})[a-zA-Z0-9\\s]*$";
+    private static final String REGEX_SPECIAL_CHARACTERS = "^[a-zA-ZÀ-Úà-úĂăĐđĨĩƠơƯưẠ-ỹ0-9 .,+]*$";
 
     public ProductDto() {
     }
 
-    public ProductDto(Long idProduct, String nameProduct, String screenProduct, String cameraProduct, String descriptionProduct, Boolean statusBusiness, String selfieProduct, String batteryProduct, Double weightProduct, Double quantityProduct, Double priceProduct, ImageDto imageDto, Capacity capacity, Color color, Cpu cpu, Ram ram, Series series, Type type) {
+    public ProductDto(Long idProduct, String nameProduct, String screenProduct, String cameraProduct, String descriptionProduct, Boolean statusBusiness, String selfieProduct, String batteryProduct, String weightProduct, Long quantityProduct, Double priceProduct, ImageDto imageDto, Capacity capacity, Color color, Cpu cpu, Ram ram, Series series, Type type) {
         this.idProduct = idProduct;
         this.nameProduct = nameProduct;
         this.screenProduct = screenProduct;
@@ -128,19 +128,19 @@ public class ProductDto implements Validator {
         this.batteryProduct = batteryProduct;
     }
 
-    public Double getWeightProduct() {
+    public String getWeightProduct() {
         return weightProduct;
     }
 
-    public void setWeightProduct(Double weightProduct) {
+    public void setWeightProduct(String weightProduct) {
         this.weightProduct = weightProduct;
     }
 
-    public Double getQuantityProduct() {
+    public Long getQuantityProduct() {
         return quantityProduct;
     }
 
-    public void setQuantityProduct(Double quantityProduct) {
+    public void setQuantityProduct(Long quantityProduct) {
         this.quantityProduct = quantityProduct;
     }
 
@@ -217,7 +217,7 @@ public class ProductDto implements Validator {
             errors.rejectValue(NAME_PRODUCT_DTO,"","Vui lòng nhập tên hơn 5 ký tự!");
         } else if (productDto.getNameProduct().length() > 70) {
             errors.rejectValue(NAME_PRODUCT_DTO,"","Tên sản phẩm quá dài, nhập tên không quá 70 ký tự!");
-        } else if (!productDto.getNameProduct().matches("^[a-zA-ZÀ-Úà-úĂăĐđĨĩƠơƯưẠ-ỹ ]*$")) {
+        } else if (!productDto.getNameProduct().matches(REGEX_SPECIAL_CHARACTERS)) {
             errors.rejectValue(NAME_PRODUCT_DTO,"","Tên sản phẩm không chứa ký tự đặc biệt!");
         }
         //--------------------Screen product--------------------------//
@@ -269,19 +269,19 @@ public class ProductDto implements Validator {
             errors.rejectValue(BATTERY_PRODUCT_DTO,"","Thông tin pin quá ngắn, vui lòng nhập hơn 5 ký tự!");
         } else if (productDto.getBatteryProduct().length() > 100) {
             errors.rejectValue(BATTERY_PRODUCT_DTO,"","Thông tin pin quá dài, vui lòng nhập ít hơn 100 ký tự!");
-        } else if (productDto.getBatteryProduct().matches(REGEX_SPECIAL_CHARACTERS)) {
+        } else if (!productDto.getBatteryProduct().matches(REGEX_SPECIAL_CHARACTERS)) {
             errors.rejectValue(BATTERY_PRODUCT_DTO,"","Thông tin pin không chứa ký tự đặc biệt!");
         }
         //--------------------Weight Product--------------------//
         if (productDto.getWeightProduct() == null) {
             errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Vui lòng bổ sung thông tin trọng lượng!");
-        } else if (String.valueOf(productDto.getWeightProduct()).isEmpty()) {
+        } else if (productDto.getWeightProduct().trim().equals("")) {
             errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Không được để trống thông tin trọng lượng!!");
-        } else if (productDto.getWeightProduct() != null && productDto.getWeightProduct() < 5) {
+        } else if (productDto.getWeightProduct().length() < 5) {
             errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Thông tin trọng lượng quá ngắn, vui lòng nhập hơn 5 ký tự!");
-        } else if (productDto.getWeightProduct() != null && productDto.getWeightProduct() > 100) {
+        } else if (productDto.getWeightProduct().length() > 100) {
             errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Thông tin trọng lượng quá dài, vui lòng nhập ít hơn 100 ký tự!");
-        } else if (String.valueOf(productDto.getWeightProduct()).matches("^\\d{1,7}$")) {
+        } else if (!productDto.getWeightProduct().matches(REGEX_SPECIAL_CHARACTERS)) {
             errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Thông tin trọng lượng không đúng định dạng!");
         }
         //--------------------Price Product--------------------//
