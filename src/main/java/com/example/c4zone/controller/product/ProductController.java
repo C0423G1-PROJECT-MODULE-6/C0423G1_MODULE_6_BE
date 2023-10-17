@@ -200,12 +200,10 @@ public class ProductController {
      */
     @PatchMapping("/remove")
     public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id){
-        if (productService.findProductById(id)==null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else {
-            productService.removeProduct(id);
+        if (productService.findById(id)==null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
+            productService.removeProduct(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
