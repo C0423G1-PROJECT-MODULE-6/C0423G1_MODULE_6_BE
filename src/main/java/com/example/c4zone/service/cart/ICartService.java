@@ -74,5 +74,12 @@ public interface ICartService {
      */
     AppUser getUserById(Long idUser);
 
-
+    /**
+     * method delete chosen product
+     * Create ThoiND
+     * Date 14-10-2023
+     * param Long idUser,Long idProduct
+     * return status 2xx
+     */
+    void deleteChosenProduct(Long idUser, Long idProduct);
 }

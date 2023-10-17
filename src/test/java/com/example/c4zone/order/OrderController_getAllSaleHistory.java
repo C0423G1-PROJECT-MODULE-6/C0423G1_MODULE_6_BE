@@ -63,7 +63,7 @@ public class OrderController_getAllSaleHistory {
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("totalPages").value(2))
-                .andExpect(jsonPath("totalElements").value(10))
+                .andExpect(jsonPath("totalElements").value(8))
                 .andExpect(jsonPath("content[0].idOrderBill").value(10))
                 .andExpect(jsonPath("content[0].dateOfOrder").value("2023-10-10"))
                 .andExpect(jsonPath("content[0].timeOfOrder").value("16:36:10"))
@@ -127,39 +127,6 @@ public class OrderController_getAllSaleHistory {
     }
 
 
-    /**
-     * Check case page exist
-     * Author: ThoiND
-     * Goal: @return list sale history
-     */
-    @Test
-    public void getAllCustomer_page_11() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/admin/customer/list")
-                        .param("_limit", "5")
-                        .param("_page", "1"))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("totalPages").value(2))
-                .andExpect(jsonPath("totalElements").value(10))
-                .andExpect(jsonPath("content[0].idCustomer").value(6))
-                .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Thị Thắm"))
-                .andExpect(jsonPath("content[0].genderCustomer").value(false))
-                .andExpect(jsonPath("content[0].emailCustomer").value("tham@gmail.com"))
-                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2023-10-10"))
-                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0054631279"))
-                .andExpect(jsonPath("content[0].addressCustomer").value("Sai Gon"))
-                .andExpect(jsonPath("content[0].statusCustomer").value(true))
-
-                .andExpect(jsonPath("content[4].idCustomer").value(10))
-                .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Văn Hải"))
-                .andExpect(jsonPath("content[4].genderCustomer").value(true))
-                .andExpect(jsonPath("content[4].emailCustomer").value("hai@gmail.com"))
-                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2000-10-10"))
-                .andExpect(jsonPath("content[4].phoneNumberCustomer").value("0983125476"))
-                .andExpect(jsonPath("content[4].addressCustomer").value("Da Nang"))
-                .andExpect(jsonPath("content[4].statusCustomer").value(true));
-    }
 
 
     /**

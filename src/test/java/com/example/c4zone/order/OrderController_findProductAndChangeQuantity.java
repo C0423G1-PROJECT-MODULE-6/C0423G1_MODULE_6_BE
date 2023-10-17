@@ -14,58 +14,61 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class OrderController_getAllCart {
+public class OrderController_findProductAndChangeQuantity {
 
     @Autowired
     private MockMvc mockMvc;
     /**
-     * Check case null
+     * Check case success
      * Author: ThoiND
-     * Goal: throw exception
+     * Goal: update quantity of product
      */
     @Test
-    public void getAllCart_idUser_1() throws Exception {
+    public void findProductAndChangeQuantity_18() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/admin/order/cart/{id}", (Object) null))
+                        .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,60)
+                        .param("_quantity", "1"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+    /**
+     * Check case quantity out of quantity product
+     * Author: ThoiND
+     * Goal: update quantity of product
+     */
+    @Test
+    public void findProductAndChangeQuantity_16() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,60)
+                        .param("_quantity", "555"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+    /**
+     * Check case quantity < 0
+     * Author: ThoiND
+     * Goal: update quantity of product
+     */
+    @Test
+    public void findProductAndChangeQuantity_17() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,60)
+                        .param("_quantity", "-1"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+    /**
+     * Check case quantity = 0
+     * Author: ThoiND
+     * Goal: update quantity of product
+     */
+    @Test
+    public void findProductAndChangeQuantity_17_1() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/admin/order/cart/{idUser}/{idProduct}", 1,60)
+                        .param("_quantity", "0"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
-    /**
-     * Check case empty
-     * Author: ThoiND
-     * Goal: throw exception
-     */
-    @Test
-    public void getAllCart_idUser_2() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/admin/order/cart/{id}",""))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
-    }
-    /**
-     * Check case not exist
-     * Author: ThoiND
-     * Goal: throw exception
-     */
-    @Test
-    public void getAllCart_idUser_3() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/admin/order/cart/{id}", 10))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
-    }
-    /**
-     * Check case exist
-     * Author: ThoiND
-     * Goal: return List cart
-     */
-    @Test
-    public void getAllCart_idUser_4() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/admin/order/cart/{id}", 1))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$[0].idCart").value(29));
-    }
 }

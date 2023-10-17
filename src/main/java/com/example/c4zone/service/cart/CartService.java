@@ -104,4 +104,15 @@ public class CartService implements ICartService{
         return cartRepository.getUserById(idUser);
 
     }
+    /**
+     * method delete chosen product
+     * Create ThoiND
+     * Date 14-10-2023
+     * param Long idUser,Long idProduct
+     * return status 2xx
+     */
+    @Override
+    public void deleteChosenProduct(Long idUser, Long idProduct) {
+        cartRepository.deleteChosenProduct(idUser,idProduct);
+    }
 }

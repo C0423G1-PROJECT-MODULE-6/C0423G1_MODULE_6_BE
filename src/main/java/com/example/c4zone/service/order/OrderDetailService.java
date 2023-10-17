@@ -45,7 +45,7 @@ public class OrderDetailService implements IOrderDetailService{
      * Create ThoiND
      * Date 14-10-2023
      * param none
-     * return status 2xx
+     * return Double total money
      */
     @Override
     public Double calculateTotalMoney(Long idUser, Long idCustomerOrder) {
@@ -99,7 +99,7 @@ public class OrderDetailService implements IOrderDetailService{
      * Create ThoiND
      * Date 14-10-2023
      * param pageable, searchName, i to choose case sort
-     * return status 2xx
+     * return Page<IOrderHistoryDtoTotal>
      */
     @Override
     public Page<IOrderHistoryDtoTotal> getAllSaleHistory(Pageable pageable, String valueSearchName, int i) {
@@ -110,30 +110,61 @@ public class OrderDetailService implements IOrderDetailService{
         }
         return orderDetailRepository.getAllHistory(pageable , "%" + valueSearchName +"%");
     }
-
+    /**
+     * method find bill of customer not pay
+     * Create ThoiND
+     * Date 15-10-2023
+     * param id customer
+     * return OrderBill
+     */
     @Override
     public OrderBill isNotPayOfCustomer(Long id) {
         return orderDetailRepository.getOrderBillNotPayOfCus(id);
     }
+    /**
+     * method delete old bill not pay by customer
+     * Create ThoiND
+     * Date 15-10-2023
+     * param id customer
+     * return status 2xx
+     */
 
     @Override
     public void deteleOldBillNotPay(Long id) {
         orderDetailRepository.deleteOldBillNotPay(id);
     }
-
+    /**
+     * method update totalmoney ,payment method
+     * Create ThoiND
+     * Date 15-10-2023
+     * param total money, payment method, id customer, id user
+     * return status 2xx
+     */
     @Override
     public void updateOrderBill(Double totalMoney, Integer paymentMethod,
                                 Long idCustomerOrder, Long idUser) {
         OrderBill orderBill = orderDetailRepository.getOrderBillWithCusAndUser(idCustomerOrder,idUser);
         orderDetailRepository.updateOrderBill(orderBill.getIdOrderBill(),totalMoney,paymentMethod);
     }
-
+    /**
+     * method update print status at final step
+     * Create ThoiND
+     * Date 15-10-2023
+     * param print status, id cus, id user
+     * return status 2xx
+     */
     @Override
     public void updateOrderBill(int printStatus, Long idCus, Long idUser) {
         OrderBill orderBill = orderDetailRepository.getOrderBillWithCusAndUser(idCus,idUser);
         orderDetailRepository.updateOrderBill(printStatus, orderBill.getIdOrderBill());
     }
-
+    /**
+     * method deleteOrderDetail of bill
+     * Create ThoiND
+     * Date 15-10-2023
+     * param id orderbill
+     * return status 2xx
+     */
     @Override
     public void deleteOrderDetailOfBill(Long idOrderBill) {
         orderDetailRepository.deleteOrderDetailOfBill(idOrderBill);

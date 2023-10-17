@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -74,7 +75,7 @@ public class OrderController {
     public ResponseEntity<?> getAllCart(@PathVariable Long idUser){
         List<ICartDto> cart = cartService.getAllCart(idUser);
         if (cart == null){
-            return new ResponseEntity<>("Không tìm thấy",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Không tìm thấy giỏ hàng",HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(cart,HttpStatus.OK);
     }
@@ -103,6 +104,18 @@ public class OrderController {
         }
         cartService.addToCart(idUser,idProduct,quantity);
         return new ResponseEntity<>("Bạn đã thêm sản phẩm vào đơn hàng",HttpStatus.OK);
+    }
+    /**
+     * method delete chosen product
+     * Create ThoiND
+     * Date 14-10-2023
+     * param Long idUser,Long idProduct
+     * return status 2xx
+     */
+    @PostMapping("/cart/deleteChosenProduct/{idUser},{idProduct}")
+    public ResponseEntity<?> deleteChosenProduct(@PathVariable Long idUser,@PathVariable Long idProduct){
+        cartService.deleteChosenProduct(idUser,idProduct);
+        return new ResponseEntity<>("Bạn đã xóa sản phẩm",HttpStatus.OK);
     }
     /**
      * method get bill by customer (other screen modal to choose old bill or create new)
@@ -159,6 +172,7 @@ public class OrderController {
      * return status 2xx
      */
     @PostMapping("/payment/showBill")
+    @Transactional
     public ResponseEntity<?> showOrderBillBeforePay(@RequestBody OrderPaymentDto orderPaymentDto){
 
         List<ICartDto> cartDto = cartService.getAllCart(orderPaymentDto.getIdUser());
@@ -178,6 +192,13 @@ public class OrderController {
         }
         return new ResponseEntity<>(orderBill,HttpStatus.OK);
     }
+    /**
+     * method accepToPay to confirm print contact
+     * Create ThoiND
+     * Date 15-10-2023
+     * param printStatus,idCus,idUser
+     * return status 2xx
+     */
     @PostMapping("/payment/acceptPay/{idCus}/{idUser}")
     public ResponseEntity<?> acceptToPay(@RequestParam(name = "_printStatus") int printStatus,
                                          @PathVariable Long idCus,
