@@ -1,4 +1,5 @@
 package com.example.c4zone.controller.user;
+import com.example.c4zone.dto.user.employee.FormatEmployee;
 import com.example.c4zone.dto.user.employee.IEmployeeDto;
 import com.example.c4zone.model.user.AppRole;
 import com.example.c4zone.model.user.AppUser;
@@ -15,6 +16,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+
+import javax.validation.Valid;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +29,7 @@ import java.util.Map;
 @CrossOrigin("*")
 @RequestMapping("/api/admin/employee")
 public class EmployeeController {
+
     @Autowired
     private IEmployeeService employeeService;
     /**
@@ -94,7 +101,7 @@ public class EmployeeController {
      * @return Response entity
      */
     @PostMapping("/create")
-    public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto, BindingResult bindingResult) {
+    public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeDto employeeDto, BindingResult bindingResult) {
         new EmployeeDto().validate(employeeDto, bindingResult);
         Map<String, String> errorMap= new HashMap<>();
         if (bindingResult.hasErrors()) {
@@ -125,9 +132,11 @@ public class EmployeeController {
      * @return Responese Entity with message
      */
     @PatchMapping("/update/{id}")
-    public ResponseEntity<String> updateEmployee(@PathVariable Long id,
-                                                 @RequestBody EmployeeDto employeeDto,
+    public ResponseEntity<String> updateEmployee( @PathVariable Long id,
+                                                @Valid @RequestBody EmployeeDto employeeDto,
                                                  BindingResult bindingResult){
+        System.err.println(employeeDto);
+        System.err.println(id);
         if (id == null){
             return new ResponseEntity<>("Không có id",HttpStatus.BAD_REQUEST);
         }
@@ -136,11 +145,30 @@ public class EmployeeController {
             return new ResponseEntity<>(bindingResult.getAllErrors().toString(),HttpStatus.NOT_ACCEPTABLE);
         }
         AppUser employee = employeeService.getEmployeeById(id);
+
+
+
         if(employee==null){
             return new ResponseEntity<>("Không tìm thấy",HttpStatus.NOT_FOUND);
         }
         BeanUtils.copyProperties(employeeDto, employee);
-        employeeService.updateEmployee(employee);
+        try {
+            Date date = FormatEmployee.formatDate(employeeDto.getEmployeeStartDate());
+            employee.setEmployeeStartDate(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date date = null;
+        try {
+            date = FormatEmployee.formatDate(employeeDto.getEmployeeBirthday());
+            employee.setEmployeeBirthday(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        employeeService.updateEmployee(employee,id);
         return new ResponseEntity<>("Update thành công",HttpStatus.OK);
     }
 

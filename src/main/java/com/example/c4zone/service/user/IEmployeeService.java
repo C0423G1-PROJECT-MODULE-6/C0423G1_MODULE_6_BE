@@ -78,5 +78,5 @@ public interface IEmployeeService {
      * update employee
      * @param employee
      */
-    void updateEmployee(AppUser employee);
+    void updateEmployee(AppUser employee,Long id);
 }
