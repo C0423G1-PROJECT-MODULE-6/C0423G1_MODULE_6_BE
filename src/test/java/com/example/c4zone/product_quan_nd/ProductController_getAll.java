@@ -17,6 +17,14 @@ public class ProductController_getAll {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * author :QuanND
+     * default list when no param
+     * status: success
+     *
+     * @throws Exception
+     */
+
     @Test
     public void getAll_11() throws Exception {
         this.mockMvc.perform(
@@ -35,10 +43,18 @@ public class ProductController_getAll {
         ;
     }
 
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_name_11() throws Exception {
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/admin/product/list?choose=name&value=", "")).andDo(print())
+                        MockMvcRequestBuilders.get("/api/admin/product/list?choose=name&value=")).andDo(print())
                 .andExpect(jsonPath("totalPages").value(9))
                 .andExpect(jsonPath("totalElements").value(45))
                 .andExpect(jsonPath("content[0].id").value(39))
@@ -53,6 +69,14 @@ public class ProductController_getAll {
         ;
     }
 
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_page_07() throws Exception {
         this.mockMvc.perform(
@@ -60,20 +84,43 @@ public class ProductController_getAll {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_page_08() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/admin/product/list&page=")).andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_page_09() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/admin/product/list&page=-1")).andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
 
     @Test
     public void getAll_page_10() throws Exception {
@@ -81,7 +128,14 @@ public class ProductController_getAll {
                         MockMvcRequestBuilders.get("/api/admin/product/list?choose=name&value=DinhQuan&page=0")).andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_page_11() throws Exception {
         this.mockMvc.perform(
@@ -99,7 +153,14 @@ public class ProductController_getAll {
                 .andExpect(jsonPath("content[0].price").value(7190000.0))
         ;
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_choose_7() throws Exception {
         this.mockMvc.perform(
@@ -117,7 +178,14 @@ public class ProductController_getAll {
                 .andExpect(jsonPath("content[0].price").value(7190000.0))
         ;
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_choose_8() throws Exception {
         this.mockMvc.perform(
@@ -135,7 +203,14 @@ public class ProductController_getAll {
                 .andExpect(jsonPath("content[0].price").value(7190000.0))
         ;
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_choose_9() throws Exception {
         this.mockMvc.perform(
@@ -153,7 +228,14 @@ public class ProductController_getAll {
                 .andExpect(jsonPath("content[0].price").value(7190000.0))
         ;
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_choose_11() throws Exception {
         this.mockMvc.perform(
@@ -171,7 +253,14 @@ public class ProductController_getAll {
                 .andExpect(jsonPath("content[0].price").value(7190000.0))
         ;
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_sort_07() throws Exception {
         this.mockMvc.perform(
@@ -189,7 +278,14 @@ public class ProductController_getAll {
                 .andExpect(jsonPath("content[0].price").value(7190000.0))
         ;
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_sort_08() throws Exception {
         this.mockMvc.perform(
@@ -207,7 +303,14 @@ public class ProductController_getAll {
                 .andExpect(jsonPath("content[0].price").value(7190000.0))
         ;
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_sort_09() throws Exception {
         this.mockMvc.perform(
@@ -225,7 +328,14 @@ public class ProductController_getAll {
                 .andExpect(jsonPath("content[0].price").value(7190000.0))
         ;
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_sort_name_11() throws Exception {
         this.mockMvc.perform(
@@ -243,7 +353,14 @@ public class ProductController_getAll {
                 .andExpect(jsonPath("content[0].price").value(6390000.0))
         ;
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_sort_type_11() throws Exception {
         this.mockMvc.perform(
@@ -262,7 +379,14 @@ public class ProductController_getAll {
                 .andExpect(jsonPath("content[0].type").value("Ipad"))
         ;
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_sort_price_11() throws Exception {
         this.mockMvc.perform(
@@ -280,7 +404,14 @@ public class ProductController_getAll {
                 .andExpect(jsonPath("content[0].price").value(6390000.0))
         ;
     }
-
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_sort_quantity_11() throws Exception {
         this.mockMvc.perform(
@@ -298,6 +429,14 @@ public class ProductController_getAll {
                 .andExpect(jsonPath("content[0].price").value(16490000.0))
         ;
     }
+    /**
+     * author:QuanND
+     *
+     * @throws Exception param URL choose,value
+     *                   choose=name
+     *                   value=""
+     *                   status :success
+     */
     @Test
     public void getAll_choose_name_11() throws Exception {
         this.mockMvc.perform(
