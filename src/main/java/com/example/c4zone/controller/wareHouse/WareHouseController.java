@@ -140,6 +140,21 @@ public class WareHouseController {
         wareHouseService.importProduct(warehouseDto.getProductId(), warehouseDto.getQuantity(), warehouseDto.getSupplierId());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+//    @PostMapping("/create")
+//    public ResponseEntity<?> importProduct(@Valid @RequestBody WarehouseDto warehouseDto, BindingResult bindingResult) {
+//        Map<String, String> errors = new HashMap<>();
+//        new WarehouseDto().validate(warehouseDto, bindingResult);
+//        if (bindingResult.hasErrors()) {
+//            for (FieldError err : bindingResult.getFieldErrors()) {
+//                errors.put(err.getField(), err.getDefaultMessage());
+//            }
+//            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+//        }
+//        WareHouse wareHouse = new WareHouse();
+//        BeanUtils.copyProperties(warehouseDto,wareHouse);
+//        wareHouseService.importProduct(wareHouse);
+//        return new ResponseEntity<>(HttpStatus.CREATED);
+//    }
 
 
 }
