@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/admin/product/**",
 
                         "/api/admin/employee/list/**",
-                        "/api/user/register/**"
+                        "/api/user/register/**",
 
 
                         "/api/admin/employee/list/**",
@@ -71,7 +71,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/admin/customer/history/**",
 
                         "/api/user/get-id-app-user/{userName}",
-                        "/api/admin/employee/**"
+                        "/api/admin/employee/**",
+                        "/api/admin/warehouse/**",
+                        "/api/admin/warehouse/create"
 
                 ).permitAll()
 
