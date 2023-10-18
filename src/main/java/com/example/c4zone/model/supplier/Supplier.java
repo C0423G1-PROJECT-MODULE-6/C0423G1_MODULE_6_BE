@@ -18,8 +18,6 @@ public class Supplier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_supplier")
     private Long idSupplier;
-    @Column(name = "code_supplier")
-    private Integer codeSupplier;
     @Column(name = "name_supplier")
     private String nameSupplier;
     @Column(name = "address_supplier")
@@ -28,6 +26,6 @@ public class Supplier {
     private String phoneNumberSupplier;
     @Column(name = "email_supplier")
     private String emailSupplier;
-    @Column(name = "status_supplier", columnDefinition = "boolean default false")
+    @Column(name = "status_supplier", columnDefinition = "boolean default true")
     private Boolean statusSupplier;
 }

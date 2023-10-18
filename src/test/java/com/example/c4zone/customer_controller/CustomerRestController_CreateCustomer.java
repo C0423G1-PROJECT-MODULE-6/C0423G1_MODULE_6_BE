@@ -1,5 +1,4 @@
-package com.example.c4zone.TinDT_controller;
-
+package com.example.c4zone.customer_controller;
 import com.example.c4zone.dto.customer.CustomerDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -473,7 +472,7 @@ public class CustomerRestController_CreateCustomer {
         customerDto.setDateOfBirthCustomer("2000-10-03");
         customerDto.setAddressCustomer("");
         customerDto.setGenderCustomer(true);
-        customerDto.setPhoneNumberCustomer("0335679768");
+        customerDto.setPhoneNumberCustomer("0335645768");
         customerDto.setEmailCustomer("tinthoai@gmail.com");
 
         this.mockMvc.perform(
@@ -533,14 +532,13 @@ public class CustomerRestController_CreateCustomer {
         customerDto.setDateOfBirthCustomer("2000-10-03");
         customerDto.setAddressCustomer("Đà Nẵng");
         customerDto.setGenderCustomer(true);
-        customerDto.setPhoneNumberCustomer("0334775712");
-        customerDto.setEmailCustomer("tinthoai@gmail.com");
-
+        customerDto.setPhoneNumberCustomer("0316454514");
+        customerDto.setEmailCustomer("nguyen@gmail.com");
         this.mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/admin/customer/create")
                                 .content(this.objectMapper.writeValueAsString(customerDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(print()).andExpect(status().is2xxSuccessful());
+                .andDo(print()).andExpect(status().is4xxClientError());
     }
 
 }

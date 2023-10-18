@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import java.util.Optional;
+
+
 @Repository
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
@@ -94,6 +97,11 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "from product " +
             "where id_product = :id", nativeQuery = true)
     IProductDtoOrder findProductByIdOrder(Long id);
+    @Query(value = "select id_product as id," +
+            "              name_product as name " +
+            "            from product " +
+            "            where id_product = :id",nativeQuery = true)
+    IProductDto getProductById(Long id);
 
 
     /**
@@ -312,6 +320,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
+            "    t.name AS type,"+
             "    ca.name AS capacity," +
             "    c.name AS cpu," +
             "    co.name AS color " +
@@ -331,7 +340,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    series s ON p.id_series = s.id_series " +
             " WHERE " +
             "    p.status_business = TRUE  " +
-            "    AND p.quantity_product <= :max", nativeQuery = true)
+            "    AND p.quantity_product < :max", nativeQuery = true)
     Page<IProductDto> getAllByQuantityMax(Pageable pageable, @Param("max") int max);
 
     /**
@@ -349,6 +358,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
+            "    t.name AS type,"+
             "    ca.name AS capacity," +
             "    c.name AS cpu," +
             "    co.name AS color " +
@@ -385,6 +395,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
+            "    t.name AS type,"+
             "    ca.name AS capacity," +
             "    c.name AS cpu," +
             "    co.name AS color " +
@@ -404,7 +415,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    series s ON p.id_series = s.id_series " +
             " WHERE " +
             "    p.status_business = TRUE  " +
-            "    AND p.price_product >= :min", nativeQuery = true)
+            "    AND p.quantity_product >= :min", nativeQuery = true)
     Page<IProductDto> getAllByQuantityMin(Pageable pageable, @Param("min") int min);
 
     /**
@@ -412,6 +423,8 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
      *
      * @param id :id of product remove
      */
+    @Transactional
+    @Modifying
     @Query(value = "UPDATE product p " +
             " SET p.status_business= false " +
             " where p.id_product = :id ", nativeQuery = true)

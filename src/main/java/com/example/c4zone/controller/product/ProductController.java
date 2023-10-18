@@ -11,6 +11,10 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import org.json.JSONObject;
+import com.example.c4zone.model.product.Image;
+import com.example.c4zone.model.product.Product;
+import com.example.c4zone.service.product.IImageService;
+import com.example.c4zone.service.product.IProductService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,6 +36,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 
 @RestController
 @CrossOrigin("*")
@@ -191,42 +199,52 @@ public class ProductController {
     public ResponseEntity<Page<IProductDto>> getAll(
             @RequestParam(value = "choose", required = false, defaultValue = "name") String choose,
             @RequestParam(value = "sort", required = false, defaultValue = "") String sort,
+            @RequestParam(value = "otherSort", required = false, defaultValue = "asc") String otherSort,
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(value = "value", required = false, defaultValue = "") String value) {
         Page<IProductDto> productDtoPage;
         Pageable pageable;
-        if (page < 0) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        Sort sort1;
+        int size = 5;
         switch (sort) {
             case "name":
-                pageable = PageRequest.of(page, 5, Sort.by("name").ascending());
+                sort1 = Sort.by("name");
                 break;
             case "type":
-                pageable = PageRequest.of(page, 5, Sort.by("type").ascending());
+                sort1 = Sort.by("type");
                 break;
             case "price":
-                pageable = PageRequest.of(page, 5, Sort.by("price").ascending());
+                sort1 = Sort.by("price");
                 break;
             case "quantity":
-                pageable = PageRequest.of(page, 5, Sort.by("quantity").ascending());
+                sort1 = Sort.by("quantity");
                 break;
             default:
-                pageable = PageRequest.of(page, 5);
+                sort1 = Sort.unsorted();
                 break;
         }
+        if (otherSort.equals("dsc")) {
+            sort1 = sort1.descending();
+        } else {
+            sort1 = sort1.ascending();
+        }
+        pageable = PageRequest.of(page, size, sort1);
         switch (choose) {
             case "name":
-                if (value.matches("^\\w+$")) {
-                    productDtoPage = productService.getAllByName(pageable, value);
-                    break;
-                } else {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                }
+                productDtoPage = productService.getAllByName(pageable, value);
+                break;
             case "price":
+                if (Objects.equals(value, "")) {
+                    productDtoPage = productService.getAllByName(pageable, "");
+                    break;
+                }
                 productDtoPage = productService.getAllByPrice(pageable, value);
                 break;
             case "type":
+                if (Objects.equals(value, "")) {
+                    productDtoPage = productService.getAllByName(pageable, "");
+                    break;
+                }
                 productDtoPage = productService.getAllByType(pageable, value);
                 break;
             case "quantity":
@@ -237,7 +255,7 @@ public class ProductController {
                 break;
         }
         if (productDtoPage.getContent().isEmpty()) {
-            return new ResponseEntity<>(productDtoPage, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(productDtoPage, HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(productDtoPage, HttpStatus.OK);
     }
@@ -250,13 +268,11 @@ public class ProductController {
      * @return if Http status
      */
     @PatchMapping("/remove")
-    public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id) {
-        if (productService.findProductById(id) == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            productService.removeProduct(id);
+    public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id){
+        if (productService.findById(id)==null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
+            productService.removeProduct(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

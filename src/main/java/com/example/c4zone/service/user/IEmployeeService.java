@@ -1,4 +1,7 @@
 package com.example.c4zone.service.user;
+import com.example.c4zone.dto.user.employee.EmployeeDto;
+import com.example.c4zone.dto.user.employee.IEmployeeDto;
+import com.example.c4zone.model.user.AppRole;
 import com.example.c4zone.model.user.AppUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +28,7 @@ public interface IEmployeeService {
      * @param: pageable,searchJob,searchName,searchPhone
      * return: Page<AppUser>
      */
-    Page<AppUser> findAllEmployeeBy(Pageable pageable, String searchJob, String searchName, String searchPhone);
+    Page<IEmployeeDto> findAllEmployeeBy(Pageable pageable, String searchJob, String searchName, String searchPhone);
 
     /**
      * method :deleteEmployeeById()
@@ -48,6 +51,8 @@ public interface IEmployeeService {
     AppUser getEmployeeById(Long id);
 
 
+
+
     void editUser(AppUser user);
     /**
      * Author: CaoNV
@@ -56,9 +61,16 @@ public interface IEmployeeService {
      * @return new code
      */
     String getNextCode();
+    /**
+     * Author: CaoNV
+     * Date create: 15/09/2023
+     * Get next code of employee
+     * @return new code
+     */
+    String getNextId();
 
     /**
-     * Author: TanNV
+     * Author: CaoNV
      * Date create: 15/09/2023
      * Save employee
      *
@@ -73,5 +85,5 @@ public interface IEmployeeService {
      * update employee
      * @param employee
      */
-    void updateEmployee(AppUser employee);
+    void updateEmployee(AppUser employee,Long id);
 }

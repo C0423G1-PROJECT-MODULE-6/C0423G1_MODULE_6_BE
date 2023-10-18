@@ -55,12 +55,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                        "/api/**",
                         "/api/user/create/**",
                         "/api/user/confirm/**",
-//                        "/api/user/information/**",
                         "/api/user/resetOTP/**",
                         "/api/user/login-by-username/**",
+
 //                        "/api/user/logout/{userName}/**",
 //                        "/api/user/get-id-app-user/{userName}",
 //                        "/api/user/register/**",
+
                         "/api/admin/product/**",
                         "/api/admin/capacity/**",
                         "/api/admin/color/**",
@@ -70,37 +71,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/admin/type/**",
 
                         "/api/admin/employee/list/**",
+                        "/api/admin/product/list/**",
+                        "/api/admin/product/remove/**",
                         "/api/user/register/**",
 
 
-                        "/api/admin/employee/list/**",
                         "/api/admin/customer/list/**",
                         "/api/admin/customer/history/**",
 
-                        "/api/user/get-id-app-user/{userName}",
+
 
                         "/api/admin/employee/**","/api/admin/orderHistory/**",
                         "/api/admin/order/**","/api/amin/order/cart/**",
 
 
                         "/api/admin/employee/**",
+                        "/api/admin/role/**",
                         "/api/admin/supplier/**"
 
                 ).permitAll()
 
                 .antMatchers(
-//                        "/api/user/register/**",
-//                        "/api/user/information/**",
-//                        "/api/user/logout/{userName}/**",
-//                        "/api/user/get-id-app-user/{userName}"
+                        "/api/user/register/**",
+                        "/api/user/information/**",
+                        "/api/user/logout/{userName}/**",
+                        "/api/user/get-id-app-user/{userName}"
                 ).hasAnyAuthority("ROLE_ADMIN", "ROLE_SALE", "ROLE_BUSINESS", "ROLE_WAREHOUSE")//
 
                 .antMatchers(
                         //admin
 
-                        "/api/user/information/**",
-                        "/api/user/logout/{userName}/**",
-                        "/api/user/get-id-app-user/{userName}/**"
+//                        "/api/user/information/**",
+//                        "/api/user/logout/{userName}/**",
+//                        "/api/user/get-id-app-user/{userName}/**"
 
                 ).hasAnyAuthority("ROLE_ADMIN")//
 

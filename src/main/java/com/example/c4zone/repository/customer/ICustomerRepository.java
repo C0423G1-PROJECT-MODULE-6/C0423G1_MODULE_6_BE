@@ -42,7 +42,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
      * Goal: save customers
      */
 
-    @Query(value = "select * from  c4_zone.customer where email_customer = :email_customer  ", nativeQuery = true)
+    @Query(value = "select * from  c4_zone.customer where email_customer = :email_customer", nativeQuery = true)
     Customer findCustomerByEmail(@Param("email_customer") String email);
 
 
@@ -87,12 +87,32 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query(value = "select c.id_customer as idCustomer, c.name_customer as nameCustomer, c.gender_customer as genderCustomer, c.email_customer as emailCustomer, c.birth_date_customer as dateOfBirthCustomer, c.phone_number_customer as phoneNumberCustomer, c.address_customer as addressCustomer, count(o.id_customer ) as totalPurchases " +
             " from customer c " +
-            " left join order_bill o on c.id_customer = o.id_customer " +
             " where c.name_customer like :name " +
             " and TIMESTAMPDIFF(YEAR, c.birth_date_customer, CURDATE()) =:age " +
             " group by c.id_customer ", nativeQuery = true)
     Page<ICustomerListDto> findAllCustomerByNameAndAge(Pageable pageable, @Param("name") String valueSearchName, @Param("age") String valueSearchAge);
+    /**
+     * method findByCustomer
+     * Create TinDT
+     * Date 12-10-2023
+     * param String phoneNumber
+     * return HttpStatus
+     */
+    @Query(value = "select c.id_customer as idCustomer, c.name_customer as nameCustomer, c.gender_customer as genderCustomer, c.email_customer as emailCustomer, c.birth_date_customer as dateOfBirthCustomer, c.phone_number_customer as phoneNumberCustomer, c.address_customer as addressCustomer\n" +
+            "   from customer c \n" +
+            "             where c.phone_number_customer =  :phone_number_customer\n" +
+            "             and TIMESTAMPDIFF(YEAR, c.birth_date_customer, CURDATE()) >= 0 \n" +
+            "             and c.status_customer = true", nativeQuery = true)
+    Page<ICustomerListDto> findAllCustomerByPhone(Pageable pageable, @Param("phone_number_customer") String valueSearchName);
 
+    @Query(value = " select c.id_customer as idCustomer, c.name_customer as nameCustomer, c.gender_customer as genderCustomer, c.email_customer as emailCustomer, c.birth_date_customer as dateOfBirthCustomer, c.phone_number_customer as phoneNumberCustomer, c.address_customer as addressCustomer  " +
+            " from customer c " +
+            " where c.name_customer like :name " +
+            " and TIMESTAMPDIFF(YEAR, c.birth_date_customer, CURDATE()) >= 0 " +
+            " and  c.status_customer = true" +
+            " and c.gender_customer = :gender " +
+            " group by c.id_customer ", nativeQuery = true)
+    Page<ICustomerListDto> findAllCustomerByGenderModal(Pageable pageable, @Param("name") String valueSearchName, @Param("gender") String valueSearchGender);
 
     /**
      * method findByCustomer
@@ -127,5 +147,23 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             " order by ob.date_of_order desc ", nativeQuery = true)
     Page<IShoppingHistoryDto> findShoppingHistory(Pageable pageable, @Param("name") String valueSearchName, @Param("id") Long id);
 
-
+    @Query(value = " select c.id_customer as idCustomer, c.name_customer as nameCustomer, c.gender_customer as genderCustomer, c.email_customer as emailCustomer, c.birth_date_customer as dateOfBirthCustomer, c.phone_number_customer as phoneNumberCustomer, c.address_customer as addressCustomer  " +
+            " from customer c " +
+            " where c.name_customer like :name " +
+            " and TIMESTAMPDIFF(YEAR, c.birth_date_customer, CURDATE()) >= 0 " +
+            " and  c.status_customer = true" +
+            " and c.gender_customer = :gender ", nativeQuery = true)
+    Page<ICustomerListDto> findAllCustomerByAgeAndGenderModal(Pageable pageable,@Param("name") String name,@Param("gender") String valueSearchGender);
+    @Query(value = " select c.id_customer as idCustomer, c.name_customer as nameCustomer, c.gender_customer as genderCustomer, c.email_customer as emailCustomer, c.birth_date_customer as dateOfBirthCustomer, c.phone_number_customer as phoneNumberCustomer, c.address_customer as addressCustomer  " +
+            " from customer c " +
+            " where c.name_customer like :name " +
+            " and TIMESTAMPDIFF(YEAR, c.birth_date_customer, CURDATE()) >= 0 " +
+            " and  c.status_customer = true", nativeQuery = true)
+    Page<ICustomerListDto> findAllCustomerByNameModal(Pageable pageable,@Param("name") String s);
+    @Query(value = " select c.id_customer as idCustomer, c.name_customer as nameCustomer, c.gender_customer as genderCustomer, c.email_customer as emailCustomer, c.birth_date_customer as dateOfBirthCustomer, c.phone_number_customer as phoneNumberCustomer, c.address_customer as addressCustomer  " +
+            " from customer c " +
+            " where c.name_customer like :name " +
+            " and TIMESTAMPDIFF(YEAR, c.birth_date_customer, CURDATE()) = :age " +
+            " and  c.status_customer = true", nativeQuery = true)
+    Page<ICustomerListDto> findAllCustomerByAgeModal(Pageable pageable,@Param("name") String s,@Param("age") String valueSearchAge);
 }
