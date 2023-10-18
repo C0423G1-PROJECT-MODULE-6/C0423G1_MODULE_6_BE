@@ -49,7 +49,7 @@ public class SupplierController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSupplier(@PathVariable Long id) {
         if (id.equals("")) {
-            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body("Giá trị của id không thể mang giá trị rỗng");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá trị của id không thể mang giá trị rỗng");
         }
         if (id == null) {
             return ResponseEntity.badRequest().body("Giá trị của id không thể là null");
