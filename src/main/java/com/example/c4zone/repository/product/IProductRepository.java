@@ -12,7 +12,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+
 
 @Repository
 public interface IProductRepository extends JpaRepository<Product, Long> {
@@ -25,7 +27,8 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
      * @return object to find for idProduct
      */
     @Query(value = "select p.id_product, p.name_product, p.battery_product, p.camera_product, p.price_product," +
-            " p.quantity_product, p.description_product, p.screen_product, p.selfie_product, p.weight_product" +
+            " p.quantity_product, p.description_product, p.screen_product, p.selfie_product, p.weight_product," +
+            " c.id_capacity, co.id_color, cp.id_cpu, r.id_ram, s.id_series, t.id_type, p.status_business" +
             " from c4_zone.product as p" +
             " JOIN capacity as c on p.id_capacity = c.id_capacity" +
             " JOIN color as co on p.id_color = co.id_color" +
@@ -34,7 +37,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             " JOIN series as s on p.id_series = s.id_series" +
             " JOIN type as t on p.id_type = t.id_type" +
             " WHERE p.id_product= :idProduct and p.status_business = true", nativeQuery = true)
-    Product findProductById(@Param("idProduct") Long idProduct);
+    Product findByProductId(@Param("idProduct") Long idProduct);
 
     /**
      * author: DaoPTA
@@ -69,9 +72,9 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
      *
      * @param product update object product
      */
-    @Transactional
+    @Transactional(readOnly = true)
     @Modifying
-    @Query(value = "UPDATE product set name_product = :#{#product.nameProduct},battery_product = :#{#product.batteryProduct}, " +
+    @Query(value = "UPDATE product set name_product = :#{#product.nameProduct}, battery_product = :#{#product.batteryProduct}, " +
             "description_product= :#{#product.descriptionProduct}, camera_product = :#{#product.cameraProduct}, " +
             "price_product = :#{#product.priceProduct}, quantity_product = :#{#product.quantityProduct}, " +
             "screen_product = :#{#product.screenProduct}, selfie_product = :#{#product.selfieProduct}, " +
@@ -80,6 +83,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "id_series = :#{#product.series.idSeries}, id_type = :#{#product.type.idType} " +
             "WHERE id_product = :#{#product.idProduct}", nativeQuery = true)
     void updateProduct(@Param("product") Product product);
+
     /**
      * method findByProduct
      * Create ThoiND
@@ -90,7 +94,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select id_product as idProductOrder, name_product as nameProductOrder, " +
             "price_product as priceProductOrder " +
             "from product " +
-            "where id_product = :id",nativeQuery = true)
+            "where id_product = :id", nativeQuery = true)
     IProductDtoOrder findProductByIdOrder(Long id);
     @Query(value = "select id_product as id," +
             "              name_product as name " +
@@ -252,7 +256,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
      * author :QuanND
      *
      * @param pageable :page control size and number page
-     * @param max max of price product
+     * @param max      max of price product
      * @return a page did control and satisfy the search and sorting conditions
      */
     @Query(value = "SELECT " +
@@ -305,7 +309,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
      * author :QuanND
      *
      * @param pageable :page control size and number page
-     * @param max max of quantity product
+     * @param max      max of quantity product
      * @return a page did control and satisfy the search and sorting conditions
      */
     @Query(value = "SELECT " +
@@ -343,7 +347,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
      *
      * @param pageable :page control size and number page
      * @param min      : quantity of product min :min
-     * @param max max of quantity product
+     * @param max      max of quantity product
      * @return a page did control and satisfy the search and sorting conditions
      */
     @Query(value = "SELECT " +
@@ -422,9 +426,9 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     @Modifying
     @Query(value = "UPDATE product p " +
             " SET p.status_business= false " +
-            " where p.id_product = :id " , nativeQuery = true)
-
+            " where p.id_product = :id ", nativeQuery = true)
     void removeProduct(@Param("id") Long id);
+
     /**
      * method find product by id product
      * Create ThoiND
@@ -432,7 +436,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
      * param id product
      * return product
      */
-    @Query(value = "select * from product where id_product = :id",nativeQuery = true)
+    @Query(value = "select * from product where id_product = :id", nativeQuery = true)
     Product findProductByIdProduct(@Param("id") Long idProduct);
 
     /**
@@ -442,7 +446,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
      * param id product
      * return quantity current product
      */
-    @Query(value = "select quantity_product from product where id_product = :id",nativeQuery = true)
+    @Query(value = "select quantity_product from product where id_product = :id", nativeQuery = true)
     Integer getQuantityByid(@Param("id") Long idProduct);
 
     /**
@@ -454,7 +458,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
      */
     @Modifying
     @Transactional
-    @Query(value = "update product set quantity_product = :quantity where id_product = :id",nativeQuery = true)
-    void updateQuantityOfProduct(@Param("id") Long idProduct,@Param("quantity") Integer quantityOfProductAfterPayment);
+    @Query(value = "update product set quantity_product = :quantity where id_product = :id", nativeQuery = true)
+    void updateQuantityOfProduct(@Param("id") Long idProduct, @Param("quantity") Integer quantityOfProductAfterPayment);
 
 }
