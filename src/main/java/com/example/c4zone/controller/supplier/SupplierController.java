@@ -76,7 +76,8 @@ public class SupplierController {
     public ResponseEntity<Object> editSupplier(@PathVariable Long id,
                                                @RequestBody SupplierDto supplierDto,
                                                BindingResult bindingResult) {
-        if (supplierService.findByIdSupplier(id) == null) {
+        Supplier availableSupplier = supplierService.findById(id);
+        if (availableSupplier == null) {
             return new ResponseEntity<>("Không tìm thấy đối tượng Supplier!", HttpStatus.NOT_FOUND);
         }
         if (id == null) {
@@ -92,17 +93,23 @@ public class SupplierController {
                 errors.put(fieldError.getField(), fieldError.getDefaultMessage());
             }
         }
-        Supplier duplicatedNameSupplier = supplierService.findSupplierByName(supplierDto.getNameSupplier());
-        if (duplicatedNameSupplier != null) {
-            errors.put("nameSupplier", "Tên nhà cung cấp đã tồn tại!");
+        if (!(availableSupplier.getNameSupplier()).equals(supplierDto.getNameSupplier())) {
+            Supplier duplicatedNameSupplier = supplierService.findSupplierByName(supplierDto.getNameSupplier());
+            if (duplicatedNameSupplier != null) {
+                errors.put("nameSupplier", "Tên nhà cung cấp đã tồn tại!");
+            }
         }
-        Supplier duplicatedPhoneNumberSupplier = supplierService.findSupplierByPhoneNumber(supplierDto.getPhoneNumberSupplier());
-        if (duplicatedPhoneNumberSupplier != null) {
-            errors.put("phoneNumberSupplier", "SĐT đã tồn tại!");
+        if (!(availableSupplier.getPhoneNumberSupplier()).equals(supplierDto.getPhoneNumberSupplier())) {
+            Supplier duplicatedPhoneNumberSupplier = supplierService.findSupplierByPhoneNumber(supplierDto.getPhoneNumberSupplier());
+            if (duplicatedPhoneNumberSupplier != null) {
+                errors.put("phoneNumberSupplier", "SĐT đã tồn tại!");
+            }
         }
-        Supplier duplicatedEmailSupplier = supplierService.findSupplierByEmail(supplierDto.getEmailSupplier());
-        if (duplicatedEmailSupplier != null) {
-            errors.put("emailSupplier", "Email đã tồn tại!");
+        if (!(availableSupplier.getEmailSupplier()).equals(supplierDto.getEmailSupplier())) {
+            Supplier duplicatedEmailSupplier = supplierService.findSupplierByEmail(supplierDto.getEmailSupplier());
+            if (duplicatedEmailSupplier != null) {
+                errors.put("emailSupplier", "Email đã tồn tại!");
+            }
         }
         if (errors.size() != 0) {
             return new ResponseEntity<>(errors, HttpStatus.NOT_ACCEPTABLE);
@@ -166,10 +173,10 @@ public class SupplierController {
     private ResponseEntity<Object> getSupplierById(@PathVariable Long id) {
         Supplier supplier = supplierService.findById(id);
         if (id == null) {
-            return new ResponseEntity<>("Giá trị id không thể null!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Giá trị id không được null!", HttpStatus.BAD_REQUEST);
         }
         if (id.equals("")) {
-            return new ResponseEntity<>("Giá trị id không thể rỗng!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Giá trị id không được rỗng!", HttpStatus.BAD_REQUEST);
         }
         if (supplier == null) {
             return new ResponseEntity<>("Không tìm thấy đối tượng Supplier!", HttpStatus.NOT_FOUND);
