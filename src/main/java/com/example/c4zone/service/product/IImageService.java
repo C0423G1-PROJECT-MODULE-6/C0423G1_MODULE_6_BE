@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface IImageService {
     void createImageProduct(Image image, Long idProduct);
-    Image findImageProductByIdProduct(Long idProduct);
+    List<Image> findImageProductByIdProduct(Long idProduct);
     void updateImageProduct(Image image, Long idProduct);
+
+    void insertImageByProductId(List<String> imageDtoList, Long idProduct);
 }

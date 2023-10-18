@@ -25,7 +25,7 @@ public class ImageService implements IImageService{
     }
 
     @Override
-    public Image findImageProductByIdProduct(Long idProduct) {
+    public List<Image> findImageProductByIdProduct(Long idProduct) {
         return imageProductRepository.findImageByIdProduct(idProduct);
     }
 
@@ -39,5 +39,15 @@ public class ImageService implements IImageService{
     @Override
     public void updateImageProduct(Image image, Long idProduct) {
         imageProductRepository.updateImage(image, idProduct);
+    }
+
+    @Override
+    public void insertImageByProductId(List<String> imageDtoList, Long idProduct) {
+        if (imageDtoList != null) {
+            for (String name: imageDtoList) {
+                imageProductRepository.insertImageProduct(name,idProduct);
+            }
+        }
+
     }
 }

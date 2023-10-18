@@ -3,6 +3,8 @@ import com.example.c4zone.model.product.*;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.util.List;
+
 public class ProductDto implements Validator {
     private Long idProduct;
     private String nameProduct;
@@ -16,12 +18,13 @@ public class ProductDto implements Validator {
     private Long quantityProduct;
     private Double priceProduct;
     private ImageDto imageDto;
-    private Capacity capacity;
-    private Color color;
-    private Cpu cpu;
-    private Ram ram;
-    private Series series;
-    private Type type;
+    private CapacityDto capacityDto;
+    private ColorDto colorDto;
+    private CpuDto cpuDto;
+    private RamDto ramDto;
+    private SeriesDto seriesDto;
+    private TypeDto typeDto;
+    private List<String> imageDtoList;
     private static final String NAME_PRODUCT_DTO = "nameProduct";
     private static final String SCREEN_PRODUCT_DTO = "screenProduct";
     private static final String CAMERA_PRODUCT_DTO = "cameraProduct";
@@ -35,7 +38,7 @@ public class ProductDto implements Validator {
     public ProductDto() {
     }
 
-    public ProductDto(Long idProduct, String nameProduct, String screenProduct, String cameraProduct, String descriptionProduct, Boolean statusBusiness, String selfieProduct, String batteryProduct, String weightProduct, Long quantityProduct, Double priceProduct, ImageDto imageDto, Capacity capacity, Color color, Cpu cpu, Ram ram, Series series, Type type) {
+    public ProductDto(Long idProduct, String nameProduct, String screenProduct, String cameraProduct, String descriptionProduct, Boolean statusBusiness, String selfieProduct, String batteryProduct, String weightProduct, Long quantityProduct, Double priceProduct, ImageDto imageDto, CapacityDto capacityDto, ColorDto colorDto, CpuDto cpuDto, RamDto ramDto, SeriesDto seriesDto, TypeDto typeDto) {
         this.idProduct = idProduct;
         this.nameProduct = nameProduct;
         this.screenProduct = screenProduct;
@@ -48,12 +51,42 @@ public class ProductDto implements Validator {
         this.quantityProduct = quantityProduct;
         this.priceProduct = priceProduct;
         this.imageDto = imageDto;
-        this.capacity = capacity;
-        this.color = color;
-        this.cpu = cpu;
-        this.ram = ram;
-        this.series = series;
-        this.type = type;
+        this.capacityDto = capacityDto;
+        this.colorDto = colorDto;
+        this.cpuDto = cpuDto;
+        this.ramDto = ramDto;
+        this.seriesDto = seriesDto;
+        this.typeDto = typeDto;
+    }
+
+    public ProductDto(Long idProduct, String nameProduct, String screenProduct, String cameraProduct, String descriptionProduct, Boolean statusBusiness, String selfieProduct, String batteryProduct, String weightProduct, Long quantityProduct, Double priceProduct, ImageDto imageDto, CapacityDto capacityDto, ColorDto colorDto, CpuDto cpuDto, RamDto ramDto, SeriesDto seriesDto, TypeDto typeDto, List<String> imageDtoList) {
+        this.idProduct = idProduct;
+        this.nameProduct = nameProduct;
+        this.screenProduct = screenProduct;
+        this.cameraProduct = cameraProduct;
+        this.descriptionProduct = descriptionProduct;
+        this.statusBusiness = statusBusiness;
+        this.selfieProduct = selfieProduct;
+        this.batteryProduct = batteryProduct;
+        this.weightProduct = weightProduct;
+        this.quantityProduct = quantityProduct;
+        this.priceProduct = priceProduct;
+        this.imageDto = imageDto;
+        this.capacityDto = capacityDto;
+        this.colorDto = colorDto;
+        this.cpuDto = cpuDto;
+        this.ramDto = ramDto;
+        this.seriesDto = seriesDto;
+        this.typeDto = typeDto;
+        this.imageDtoList = imageDtoList;
+    }
+
+    public List<String> getImageDtoList() {
+        return imageDtoList;
+    }
+
+    public void setImageDtoList(List<String> imageDtoList) {
+        this.imageDtoList = imageDtoList;
     }
 
     public ImageDto getImageDto() {
@@ -152,52 +185,52 @@ public class ProductDto implements Validator {
         this.priceProduct = priceProduct;
     }
 
-    public Capacity getCapacity() {
-        return capacity;
+    public CapacityDto getCapacityDto() {
+        return capacityDto;
     }
 
-    public void setCapacity(Capacity capacity) {
-        this.capacity = capacity;
+    public void setCapacityDto(CapacityDto capacityDto) {
+        this.capacityDto = capacityDto;
     }
 
-    public Color getColor() {
-        return color;
+    public ColorDto getColorDto() {
+        return colorDto;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    public void setColorDto(ColorDto colorDto) {
+        this.colorDto = colorDto;
     }
 
-    public Cpu getCpu() {
-        return cpu;
+    public CpuDto getCpuDto() {
+        return cpuDto;
     }
 
-    public void setCpu(Cpu cpu) {
-        this.cpu = cpu;
+    public void setCpuDto(CpuDto cpuDto) {
+        this.cpuDto = cpuDto;
     }
 
-    public Ram getRam() {
-        return ram;
+    public RamDto getRamDto() {
+        return ramDto;
     }
 
-    public void setRam(Ram ram) {
-        this.ram = ram;
+    public void setRamDto(RamDto ramDto) {
+        this.ramDto = ramDto;
     }
 
-    public Series getSeries() {
-        return series;
+    public SeriesDto getSeriesDto() {
+        return seriesDto;
     }
 
-    public void setSeries(Series series) {
-        this.series = series;
+    public void setSeriesDto(SeriesDto seriesDto) {
+        this.seriesDto = seriesDto;
     }
 
-    public Type getType() {
-        return type;
+    public TypeDto getTypeDto() {
+        return typeDto;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setTypeDto(TypeDto typeDto) {
+        this.typeDto = typeDto;
     }
 
     @Override

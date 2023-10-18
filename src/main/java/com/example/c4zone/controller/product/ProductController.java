@@ -2,9 +2,9 @@ package com.example.c4zone.controller.product;
 
 import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.dto.product.ImageDto;
+import com.example.c4zone.dto.product.ListImageDto;
 import com.example.c4zone.dto.product.ProductDto;
-import com.example.c4zone.model.product.Image;
-import com.example.c4zone.model.product.Product;
+import com.example.c4zone.model.product.*;
 import com.example.c4zone.service.product.*;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -41,6 +41,18 @@ public class ProductController {
     private IProductService productService;
     @Autowired
     private IImageService imageService;
+//    @Autowired
+//    private ICapacityService capacityService;
+//    @Autowired
+//    private IColorService colorService;
+//    @Autowired
+//    private ICpuService cpuService;
+//    @Autowired
+//    private IRamService ramService;
+//    @Autowired
+//    private ISeriesService seriesService;
+//    @Autowired
+//    private ITypeService typeService;
 
     /**
      * author: DaoPTA
@@ -52,9 +64,7 @@ public class ProductController {
     public ResponseEntity<ProductDto> getProductForCreate() {
         ProductDto productDto = new ProductDto();
         ImageDto imageDto = new ImageDto();
-        imageDto.setName("https://firebasestorage.googleapis.com/v0/b/c4zone-da49c.appspot.com/o" +
-                "/iphone-11-pro-max-vang-4-1-org.jpg?alt=media&token=28942019-622c-4713-be08-47bd3f13d56b&_gl" +
-                "=1*1fq0a6k*_ga*MTQ5MDIxMDE1Mi4xNjkxNDc3ODQy*_ga_CW55HF8NVT*MTY5NzAzNDk1Ni4zLjEuMTY5NzAzNTQyNi40Ny4wLjA.");
+        imageDto.setName("");
         productDto.setImageDto(imageDto);
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
@@ -69,7 +79,7 @@ public class ProductController {
     @GetMapping("/{idProduct}")
     @ResponseBody
     public ResponseEntity<ProductDto> findProductById(@PathVariable("idProduct") Long idProduct) {
-        Image image = imageService.findImageProductByIdProduct(idProduct);
+        List<Image> image = imageService.findImageProductByIdProduct(idProduct);
         Product product = productService.findProductById(idProduct);
         ImageDto imageDto = new ImageDto();
         BeanUtils.copyProperties(image, imageDto);
@@ -91,7 +101,10 @@ public class ProductController {
      */
     @PostMapping("/add")
     @ResponseBody
-    public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult) throws WriterException, IOException {
+    public ResponseEntity<Object> createProduct(@Valid @RequestBody(required = false) ProductDto productDto,
+                                                BindingResult bindingResult
+                                                ) throws WriterException, IOException {
+
         Map<String, String> error = new HashMap<>();
         new ProductDto().validate(productDto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -101,19 +114,12 @@ public class ProductController {
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
         Product product = new Product();
-        Image image = new Image();
         BeanUtils.copyProperties(productDto, product);
-        BeanUtils.copyProperties(productDto.getImageDto(), image);
         productService.createProduct(product);
         Long idProduct = productService.getLastInsertedId();
-        if (idProduct != null) {
-            if (image.getName() == null) {
-                image.setName("");
-                imageService.createImageProduct(image, idProduct);
-            } else {
-                imageService.createImageProduct(image, idProduct);
-            }
-        }
+        imageService.insertImageByProductId(productDto.getImageDtoList(),idProduct);
+
+
         String qrCodeText = product.toString();
         int width = 300;
         int height = 300;
