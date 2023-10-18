@@ -315,6 +315,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
+            "    t.name AS type,"+
             "    ca.name AS capacity," +
             "    c.name AS cpu," +
             "    co.name AS color " +
@@ -334,7 +335,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    series s ON p.id_series = s.id_series " +
             " WHERE " +
             "    p.status_business = TRUE  " +
-            "    AND p.quantity_product <= :max", nativeQuery = true)
+            "    AND p.quantity_product < :max", nativeQuery = true)
     Page<IProductDto> getAllByQuantityMax(Pageable pageable, @Param("max") int max);
 
     /**
@@ -352,6 +353,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
+            "    t.name AS type,"+
             "    ca.name AS capacity," +
             "    c.name AS cpu," +
             "    co.name AS color " +
@@ -388,6 +390,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    p.name_product AS name," +
             "    p.price_product AS price," +
             "    p.quantity_product AS quantity," +
+            "    t.name AS type,"+
             "    ca.name AS capacity," +
             "    c.name AS cpu," +
             "    co.name AS color " +
@@ -407,7 +410,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "    series s ON p.id_series = s.id_series " +
             " WHERE " +
             "    p.status_business = TRUE  " +
-            "    AND p.price_product >= :min", nativeQuery = true)
+            "    AND p.quantity_product >= :min", nativeQuery = true)
     Page<IProductDto> getAllByQuantityMin(Pageable pageable, @Param("min") int min);
 
     /**

@@ -1,9 +1,7 @@
 package com.example.c4zone.dto.user.employee;
 
-import java.text.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Random;
 
 public class FormatEmployee {
@@ -48,11 +46,12 @@ public class FormatEmployee {
         return !date.isAfter(currentDate);
     }
 
-    public static Date formatDate(String employeeDate) throws ParseException {
-            DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
-            Date date = df.parse(employeeDate);
-            return date;
-    }
+ public static LocalDate formatDate(String startDate){
+     LocalDate currentDate = LocalDate.now();
+     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+     LocalDate date = LocalDate.parse(startDate, formatter);
+     return date;
+ }
 
 
 }

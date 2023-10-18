@@ -20,6 +20,7 @@ import org.springframework.validation.FieldError;
 import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -152,20 +153,13 @@ public class EmployeeController {
             return new ResponseEntity<>("Không tìm thấy",HttpStatus.NOT_FOUND);
         }
         BeanUtils.copyProperties(employeeDto, employee);
-        try {
-            Date date = FormatEmployee.formatDate(employeeDto.getEmployeeStartDate());
-            employee.setEmployeeStartDate(date);
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Date date = null;
-        try {
-            date = FormatEmployee.formatDate(employeeDto.getEmployeeBirthday());
-            employee.setEmployeeBirthday(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        LocalDate date = FormatEmployee.formatDate(employeeDto.getEmployeeStartDate());
+        employee.setEmployeeStartDate(date);
+
+
+        date = FormatEmployee.formatDate(employeeDto.getEmployeeBirthday());
+        employee.setEmployeeBirthday(date);
 
 
         employeeService.updateEmployee(employee,id);

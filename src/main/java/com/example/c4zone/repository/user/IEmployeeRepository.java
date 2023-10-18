@@ -67,7 +67,7 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
      * Get code of employee latest
      * @return  code of employee latest
      */
-    @Query(value = "select employee_code from users where id = (select max(id) from users) and flag_delete = false",nativeQuery = true)
+    @Query(value = "select employee_code from app_user where id = (select max(id) from app_user) and flag_deleted = false",nativeQuery = true)
     String getLastCodeEmployee();
 
     /**
