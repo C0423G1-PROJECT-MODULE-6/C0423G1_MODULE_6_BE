@@ -58,6 +58,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/user/resetOTP/**",
                         "/api/user/login-by-username/**",
 
+//                        "/api/user/logout/{userName}/**",
+//                        "/api/user/get-id-app-user/{userName}",
+//                        "/api/user/register/**",
+                        "/api/admin/product/list/**",
+                        "/api/admin/product/remove/**",
+                        "/api/user/register/**",
 
 
                         "/api/admin/customer/list/**",
