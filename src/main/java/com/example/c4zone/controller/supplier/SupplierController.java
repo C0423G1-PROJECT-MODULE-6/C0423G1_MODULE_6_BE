@@ -41,8 +41,11 @@ public class SupplierController {
             listSupplier = supplierService.getAll(nameSearch, addressSearch, emailSearch, pageable);
         }
 
-        if (listSupplier == null || listSupplier.isEmpty()) {
-            return new ResponseEntity<>(listSupplier, HttpStatus.NOT_FOUND);
+        if (listSupplier == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if(listSupplier.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(listSupplier, HttpStatus.OK);
     }
