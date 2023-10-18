@@ -1,9 +1,13 @@
 package com.example.c4zone.controller.user;
+
 import com.example.c4zone.dto.user.employee.FormatEmployee;
 import com.example.c4zone.dto.user.employee.IEmployeeDto;
 import com.example.c4zone.model.user.AppRole;
 import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.dto.user.employee.EmployeeDto;
+import com.example.c4zone.model.user.UserRole;
+import com.example.c4zone.repository.user.IUserRoleRepository;
+import com.example.c4zone.service.user.IAppRoleService;
 import com.example.c4zone.service.user.IEmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +25,7 @@ import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin("*")
@@ -33,6 +34,11 @@ public class EmployeeController {
 
     @Autowired
     private IEmployeeService employeeService;
+    @Autowired
+    private IAppRoleService appRoleService;
+    @Autowired
+    private IUserRoleRepository userRoleRepository;
+
     /**
      * method :findAllEmployeeBy()
      * created by :PhuocLQ
@@ -42,14 +48,14 @@ public class EmployeeController {
      * return: Page<AppUser>
      */
     @GetMapping("/list")
-    public ResponseEntity<Page<IEmployeeDto>> findAllEmployeeBy(@RequestParam(name = "page", defaultValue = "0",required = false) int page,
-                                                                @RequestParam(name = "searchJob", defaultValue = "",required = false)String searchJob,
-                                                                @RequestParam(name = "searchName",defaultValue = "",required = false)String searchName,
-                                                                @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
+    public ResponseEntity<Page<IEmployeeDto>> findAllEmployeeBy(@RequestParam(name = "page", defaultValue = "0", required = false) int page,
+                                                                @RequestParam(name = "searchJob", defaultValue = "", required = false) String searchJob,
+                                                                @RequestParam(name = "searchName", defaultValue = "", required = false) String searchName,
+                                                                @RequestParam(name = "searchPhone", defaultValue = "", required = false) String searchPhone) {
 
-        Pageable pageable = PageRequest.of(page,5);
-        Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable,'%'+searchJob+'%',"%"+searchName+"%","%"+searchPhone+"%");
-        if (employeeDtoPage.getTotalElements()==0 ){
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable, '%' + searchJob + '%', "%" + searchName + "%", "%" + searchPhone + "%");
+        if (employeeDtoPage.getTotalElements() == 0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(employeeDtoPage, HttpStatus.OK);
@@ -64,16 +70,15 @@ public class EmployeeController {
      * return: void
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<AppUser> deleteEmployeeById(@PathVariable Long id){
+    public ResponseEntity<AppUser> deleteEmployeeById(@PathVariable Long id) {
         AppUser user = employeeService.getEmployeeById(id);
-        if (user==null){
+        if (user == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }else {
+        } else {
             employeeService.deleteEmployeeById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
-
 
 
     /**
@@ -97,60 +102,74 @@ public class EmployeeController {
      * Receive data and validate, if there is an error, return BAD_REQUEST,
      * then save the employee to the DB. If saved successfully, return OK, otherwise NO_CONTENT
      *
-     * @param employeeDto validate
+     * @param employeeDto   validate
      * @param bindingResult errors
      * @return Response entity
      */
     @PostMapping("/create")
     public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeDto employeeDto, BindingResult bindingResult) {
         new EmployeeDto().validate(employeeDto, bindingResult);
-        Map<String, String> errorMap= new HashMap<>();
+        Map<String, String> errorMap = new HashMap<>();
         if (bindingResult.hasErrors()) {
-            for (FieldError fieldError: bindingResult.getFieldErrors()
+            for (FieldError fieldError : bindingResult.getFieldErrors()
             ) {
-                errorMap.put(fieldError.getField(),fieldError.getDefaultMessage());
+                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
             }
-            return new ResponseEntity<>(errorMap,HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(errorMap, HttpStatus.NOT_ACCEPTABLE);
         }
-        if(errorMap.size()>0){
-            return new ResponseEntity<>(errorMap,HttpStatus.NOT_ACCEPTABLE);
+        if (errorMap.size() > 0) {
+            return new ResponseEntity<>(errorMap, HttpStatus.NOT_ACCEPTABLE);
         }
 
         AppUser employee = new AppUser();
         BeanUtils.copyProperties(employeeDto, employee);
+        LocalDate date = FormatEmployee.formatDate(employeeDto.getEmployeeStartDate());
+        employee.setEmployeeStartDate(date);
+        System.err.println(date);
+        LocalDate dateBirth = FormatEmployee.formatDate(employeeDto.getEmployeeBirthday());
+        employee.setEmployeeBirthday(dateBirth);
+        System.err.println(dateBirth);
+        AppRole appRole = appRoleService.findById(employeeDto.getRoleId());
+        employee.setFlagDeleted(false);
+        employee.setPassword("123456");
         employeeService.createEmployee(employee);
-
+        UserRole userRole = new UserRole();
+        userRole.setAppRole(appRole);
+        userRole.setAppUser(employee);
+        userRoleRepository.save(userRole);
+        System.out.println(userRole);
         return new ResponseEntity<>("Thêm mới thành công", HttpStatus.OK);
     }
+
     /**
      * Author: CaoNV
      * Date: 12/10/2023
      * Receive data and validate, if there is an error, return BAD_REQUEST,
      * then save the employee to the DB. If saved successfully, return OK
-     * @param id id employee
-     * @param employeeDto validate info
+     *
+     * @param id            id employee
+     * @param employeeDto   validate info
      * @param bindingResult return error
      * @return Responese Entity with message
      */
     @PatchMapping("/update/{id}")
-    public ResponseEntity<String> updateEmployee( @PathVariable Long id,
-                                                @Valid @RequestBody EmployeeDto employeeDto,
-                                                 BindingResult bindingResult){
+    public ResponseEntity<String> updateEmployee(@PathVariable Long id,
+                                                 @Valid @RequestBody EmployeeDto employeeDto,
+                                                 BindingResult bindingResult) {
         System.err.println(employeeDto);
         System.err.println(id);
-        if (id == null){
-            return new ResponseEntity<>("Không có id",HttpStatus.BAD_REQUEST);
+        if (id == null) {
+            return new ResponseEntity<>("Không có id", HttpStatus.BAD_REQUEST);
         }
         new EmployeeDto().validate(employeeDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(bindingResult.getAllErrors().toString(),HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(bindingResult.getAllErrors().toString(), HttpStatus.NOT_ACCEPTABLE);
         }
         AppUser employee = employeeService.getEmployeeById(id);
 
 
-
-        if(employee==null){
-            return new ResponseEntity<>("Không tìm thấy",HttpStatus.NOT_FOUND);
+        if (employee == null) {
+            return new ResponseEntity<>("Không tìm thấy", HttpStatus.NOT_FOUND);
         }
         BeanUtils.copyProperties(employeeDto, employee);
 
@@ -162,8 +181,8 @@ public class EmployeeController {
         employee.setEmployeeBirthday(date);
 
 
-        employeeService.updateEmployee(employee,id);
-        return new ResponseEntity<>("Update thành công",HttpStatus.OK);
+        employeeService.updateEmployee(employee, id);
+        return new ResponseEntity<>("Update thành công", HttpStatus.OK);
     }
 
 
