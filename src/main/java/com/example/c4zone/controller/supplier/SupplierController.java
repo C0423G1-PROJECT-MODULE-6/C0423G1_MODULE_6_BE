@@ -35,11 +35,12 @@ public class SupplierController {
     ) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Supplier> listSupplier;
-        if (nameSearch != null && !nameSearch.isEmpty()) {
-            listSupplier = supplierService.getAll(nameSearch, addressSearch, emailSearch, pageable);
-        } else {
+        if (nameSearch.isEmpty() && addressSearch.isEmpty() && emailSearch.isEmpty()) {
             listSupplier = supplierService.getAllNoCondition(pageable);
+        } else {
+            listSupplier = supplierService.getAll(nameSearch, addressSearch, emailSearch, pageable);
         }
+
         if (listSupplier == null || listSupplier.isEmpty()) {
             return new ResponseEntity<>(listSupplier, HttpStatus.NOT_FOUND);
         }
