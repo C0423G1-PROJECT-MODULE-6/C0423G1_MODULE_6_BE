@@ -91,8 +91,11 @@ public class ProductController {
     public ResponseEntity<ProductDto> findProductById(@PathVariable("idProduct") Long idProduct) {
         List<Image> image = imageService.findImageProductByIdProduct(idProduct);
         Product product = productService.findProductById(idProduct);
-        ImageDto imageDto = new ImageDto();
-        BeanUtils.copyProperties(image, imageDto);
+        List<String> imageDtoList = new ArrayList<>();
+        for (Image i: image) {
+            String imageDtoLists = i.getName();
+            imageDtoList.add(imageDtoLists);
+        }
         CapacityDto capacityDto = new CapacityDto();
         BeanUtils.copyProperties(product.getCapacity(), capacityDto);
         ColorDto colorDto = new ColorDto();
@@ -113,7 +116,7 @@ public class ProductController {
         productDto.setSeriesDto(seriesDto);
         productDto.setTypeDto(typeDto);
         BeanUtils.copyProperties(product, productDto);
-        imageDto.setProduct(product.getIdProduct());
+        productDto.setImageDtoList(imageDtoList);
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
