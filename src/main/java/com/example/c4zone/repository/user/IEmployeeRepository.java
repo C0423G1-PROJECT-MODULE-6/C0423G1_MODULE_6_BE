@@ -67,7 +67,7 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
      * Get code of employee latest
      * @return  code of employee latest
      */
-    @Query(value = "select employee_code from users where id = (select max(id) from users) and flag_delete = false",nativeQuery = true)
+    @Query(value = "select employee_code from app_user where id = (select max(id) from app_user) and flag_deleted = false",nativeQuery = true)
     String getLastCodeEmployee();
 
     /**
@@ -80,7 +80,17 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
      */
     @Modifying
     @Transactional
-    @Query(value = "UPDATE `c4_zone`.`app_user` SET `employee_address` = :#{#employee.employeeAddress}, `employee_birthday` = :#{#employee.employeeBirthday}, `employee_id_card` = :#{#employee.employeeIdCard}, `employee_image` = :#{#employee.employeeImage}, `employee_name` = :#{#employee.employeeName}, `employee_phone` = :#{#employee.employeePhone}, `employee_start_date` = :#{#employee.employeeStartDate} WHERE (`id` = :id) and flag_delete = false",nativeQuery = true)
+    @Query(value = "UPDATE `c4_zone`.`app_user` \n" +
+            "SET \n" +
+            "    `employee_address` = :#{#employee.employeeAddress},\n" +
+            "    `employee_birthday` = :#{#employee.employeeBirthday},\n" +
+            "    `employee_id_card` = :#{#employee.employeeIdCard},\n" +
+            "    `employee_image` = '' ,\n" +
+            "    `employee_name` = :#{#employee.employeeName},\n" +
+            "    `employee_phone` = :#{#employee.employeePhone},\n" +
+            "    `employee_start_date` = :#{#employee.employeeStartDate}\n" +
+            " WHERE " +
+            "    `app_user`.`id` = :id AND flag_deleted = FALSE",nativeQuery = true)
     void updateEmployee(@Param(value = "employee")AppUser employee,
                         @Param(value = "id") Long id
     );
