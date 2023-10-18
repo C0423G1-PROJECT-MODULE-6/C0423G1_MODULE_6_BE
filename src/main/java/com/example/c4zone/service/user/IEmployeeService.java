@@ -61,9 +61,16 @@ public interface IEmployeeService {
      * @return new code
      */
     String getNextCode();
+    /**
+     * Author: CaoNV
+     * Date create: 15/09/2023
+     * Get next code of employee
+     * @return new code
+     */
+    String getNextId();
 
     /**
-     * Author: TanNV
+     * Author: CaoNV
      * Date create: 15/09/2023
      * Save employee
      *
@@ -78,5 +85,5 @@ public interface IEmployeeService {
      * update employee
      * @param employee
      */
-    void updateEmployee(AppUser employee);
+    void updateEmployee(AppUser employee,Long id);
 }

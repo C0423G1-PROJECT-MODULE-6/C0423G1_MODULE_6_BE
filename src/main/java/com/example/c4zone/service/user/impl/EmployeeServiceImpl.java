@@ -53,13 +53,19 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
+    public String getNextId() {
+        Long nextId = Long.valueOf(employeeRepository.getLastIdEmployee());
+        return null;
+    }
+
+    @Override
     public void createEmployee(AppUser user) {
         employeeRepository.save(user);
     }
 
     @Override
-    public void updateEmployee(AppUser employee) {
-        employeeRepository.updateEmployee(employee, employee.getId());
+    public void updateEmployee(AppUser employee, Long id) {
+        employeeRepository.updateEmployee(employee, id);
     }
 
     @Override
