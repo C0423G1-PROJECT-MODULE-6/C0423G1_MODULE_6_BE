@@ -61,6 +61,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                        "/api/user/logout/{userName}/**",
 //                        "/api/user/get-id-app-user/{userName}",
 //                        "/api/user/register/**",
+                        "/api/admin/product/**",
+                        "/api/admin/capacity/**",
+                        "/api/admin/color/**",
+                        "/api/admin/cpu/**",
+                        "/api/admin/ram/**",
+                        "/api/admin/series/**",
+                        "/api/admin/type/**",
 
                         "/api/user/register/**",
 

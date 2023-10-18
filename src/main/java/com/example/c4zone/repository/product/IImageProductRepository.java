@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface IImageProductRepository extends JpaRepository<Image, Long> {
 
     /**
@@ -21,6 +23,13 @@ public interface IImageProductRepository extends JpaRepository<Image, Long> {
     @Query(value = "INSERT INTO image (name, status_image, id_product)" +
             " VALUES (:#{#image.name}, true, :idProduct) ", nativeQuery = true)
     void createImage(@Param("image") Image image, Long idProduct);
+
+    @Transactional
+    @Modifying
+    @Query(value = " INSERT INTO image (name, status_image, id_product)" +
+            " VALUES ( :name, true, :idProduct)",nativeQuery = true)
+    void insertImageProduct(@Param("name") String name,  Long idProduct);
+
 
     /**
      * author: DaoPTA
@@ -41,8 +50,8 @@ public interface IImageProductRepository extends JpaRepository<Image, Long> {
      * @param idProduct find by image with idProduct
      * @return image with idProduct
      */
-    @Query(value = "SELECT i.id_image, i.name, i.id_product, i.status_image " +
+    @Query(value = "SELECT i.id_image, i.name, i.id_product " +
             "FROM image as i WHERE id_product = :idProduct",nativeQuery = true)
-    Image findImageByIdProduct(@Param("idProduct") Long idProduct);
+    List<Image> findImageByIdProduct(@Param("idProduct") Long idProduct);
 
 }
