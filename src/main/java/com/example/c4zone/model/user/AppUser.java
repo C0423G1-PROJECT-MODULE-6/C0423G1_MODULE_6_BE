@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -34,8 +35,8 @@ public class AppUser {
     @Lob
     private String employeeImage;
     private String employeeIdCard;
-    private java.sql.Date employeeBirthday;
-    private java.sql.Date employeeStartDate;
+    private LocalDate employeeBirthday;
+    private LocalDate employeeStartDate;
 
     private static final long OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 minutes
 

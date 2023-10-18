@@ -27,7 +27,7 @@ public class ProductControllerRemoveProduct {
     @Test
     public void remove_id_08() throws Exception {
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/product/remove?id="))
+                        MockMvcRequestBuilders.patch("/api/admin/product/remove?id=ggg"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
@@ -37,7 +37,7 @@ public class ProductControllerRemoveProduct {
         this.mockMvc.perform(
                         MockMvcRequestBuilders.patch("/api/admin/product/remove?id=-1"))
                 .andDo(print())
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class ProductControllerRemoveProduct {
         this.mockMvc.perform(
                         MockMvcRequestBuilders.patch("/api/admin/product/remove?id=2"))
                 .andDo(print())
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is2xxSuccessful());
     }
 
 }

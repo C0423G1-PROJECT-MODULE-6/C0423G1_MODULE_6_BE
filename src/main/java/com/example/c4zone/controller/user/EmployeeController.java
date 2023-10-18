@@ -1,4 +1,7 @@
 package com.example.c4zone.controller.user;
+import com.example.c4zone.dto.user.employee.FormatEmployee;
+import com.example.c4zone.dto.user.employee.IEmployeeDto;
+import com.example.c4zone.model.user.AppRole;
 import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.dto.user.employee.EmployeeDto;
 import com.example.c4zone.service.user.IEmployeeService;
@@ -13,13 +16,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+
+import javax.validation.Valid;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/admin/employee")
+@RequestMapping("/api/admin/employee")
 public class EmployeeController {
+
     @Autowired
     private IEmployeeService employeeService;
     /**
@@ -31,16 +42,17 @@ public class EmployeeController {
      * return: Page<AppUser>
      */
     @GetMapping("/list")
-    public ResponseEntity<Page<?>> displayAllUser(@RequestParam(name = "page", defaultValue = "0",required = false) int page,
-                                                        @RequestParam(name = "searchJob", defaultValue = "",required = false)String searchJob,
-                                                        @RequestParam(name = "searchName",defaultValue = "",required = false)String searchName,
-                                                        @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
+    public ResponseEntity<Page<IEmployeeDto>> findAllEmployeeBy(@RequestParam(name = "page", defaultValue = "0",required = false) int page,
+                                                                @RequestParam(name = "searchJob", defaultValue = "",required = false)String searchJob,
+                                                                @RequestParam(name = "searchName",defaultValue = "",required = false)String searchName,
+                                                                @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
+
         Pageable pageable = PageRequest.of(page,5);
-        Page<AppUser> userPage = employeeService.findAllEmployeeBy(pageable,"%"+searchJob+"%","%"+searchName+"%","%"+searchPhone+"%");
-        if (userPage.getTotalElements()==0 ){
+        Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable,'%'+searchJob+'%',"%"+searchName+"%","%"+searchPhone+"%");
+        if (employeeDtoPage.getTotalElements()==0 ){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(userPage, HttpStatus.OK);
+        return new ResponseEntity<>(employeeDtoPage, HttpStatus.OK);
     }
 
     /**
@@ -61,6 +73,8 @@ public class EmployeeController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
+
 
     /**
      * Author: CaoNV
@@ -88,7 +102,7 @@ public class EmployeeController {
      * @return Response entity
      */
     @PostMapping("/create")
-    public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto, BindingResult bindingResult) {
+    public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeDto employeeDto, BindingResult bindingResult) {
         new EmployeeDto().validate(employeeDto, bindingResult);
         Map<String, String> errorMap= new HashMap<>();
         if (bindingResult.hasErrors()) {
@@ -119,9 +133,11 @@ public class EmployeeController {
      * @return Responese Entity with message
      */
     @PatchMapping("/update/{id}")
-    public ResponseEntity<String> updateEmployee(@PathVariable Long id,
-                                                 @RequestBody EmployeeDto employeeDto,
+    public ResponseEntity<String> updateEmployee( @PathVariable Long id,
+                                                @Valid @RequestBody EmployeeDto employeeDto,
                                                  BindingResult bindingResult){
+        System.err.println(employeeDto);
+        System.err.println(id);
         if (id == null){
             return new ResponseEntity<>("Không có id",HttpStatus.BAD_REQUEST);
         }
@@ -130,11 +146,23 @@ public class EmployeeController {
             return new ResponseEntity<>(bindingResult.getAllErrors().toString(),HttpStatus.NOT_ACCEPTABLE);
         }
         AppUser employee = employeeService.getEmployeeById(id);
+
+
+
         if(employee==null){
             return new ResponseEntity<>("Không tìm thấy",HttpStatus.NOT_FOUND);
         }
         BeanUtils.copyProperties(employeeDto, employee);
-        employeeService.updateEmployee(employee);
+
+        LocalDate date = FormatEmployee.formatDate(employeeDto.getEmployeeStartDate());
+        employee.setEmployeeStartDate(date);
+
+
+        date = FormatEmployee.formatDate(employeeDto.getEmployeeBirthday());
+        employee.setEmployeeBirthday(date);
+
+
+        employeeService.updateEmployee(employee,id);
         return new ResponseEntity<>("Update thành công",HttpStatus.OK);
     }
 

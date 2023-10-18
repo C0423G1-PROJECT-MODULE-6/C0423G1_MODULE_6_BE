@@ -11,6 +11,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
 @Repository
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
@@ -89,6 +92,11 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "from product " +
             "where id_product = :id",nativeQuery = true)
     IProductDtoOrder findProductByIdOrder(Long id);
+    @Query(value = "select id_product as id," +
+            "              name_product as name " +
+            "            from product " +
+            "            where id_product = :id",nativeQuery = true)
+    IProductDto getProductById(Long id);
 
 
     /**
@@ -407,6 +415,8 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
      *
      * @param id :id of product remove
      */
+    @Transactional
+    @Modifying
     @Query(value = "UPDATE product p " +
             " SET p.status_business= false " +
             " where p.id_product = :id " , nativeQuery = true)

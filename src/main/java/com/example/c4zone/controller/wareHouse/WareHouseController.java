@@ -53,7 +53,10 @@ public class WareHouseController {
                 @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
                 @RequestParam(value = "value", required = false, defaultValue = "") String value) {
         Page<IWarehouseProjection> warehouseProjections = null;
-        Pageable pageable = PageRequest.of(page,5);
+        Pageable pageable;
+        if(page < 0){
+            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         switch (sort){
             case "name":
                 pageable = PageRequest.of(page, 5, Sort.by("name").ascending());
@@ -120,13 +123,12 @@ public class WareHouseController {
      * Create: 12-10-2023
      * @param warehouseDto create object by warehouseDto
      * @param bindingResult returns error results
-     * @return if true, return of HttpStatus.OK
+     * @return if true, return of HttpStatus.CREATE
      *         else, return of HttpStatus.BAD_REQUEST
      */
 
     @PostMapping("/create")
     public ResponseEntity<?> importProduct(@Valid @RequestBody WarehouseDto warehouseDto, BindingResult bindingResult) {
-        WareHouse wareHouse = new WareHouse();
         Map<String, String> errors = new HashMap<>();
         new WarehouseDto().validate(warehouseDto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -135,9 +137,8 @@ public class WareHouseController {
             }
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
-        BeanUtils.copyProperties(warehouseDto, wareHouse);
-        wareHouseService.importProduct(wareHouse);
-        return new ResponseEntity<>(HttpStatus.OK);
+        wareHouseService.importProduct(warehouseDto.getProductId(), warehouseDto.getQuantity(), warehouseDto.getSupplierId());
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 

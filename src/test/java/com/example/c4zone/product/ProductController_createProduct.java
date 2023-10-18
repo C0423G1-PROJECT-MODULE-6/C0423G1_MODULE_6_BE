@@ -85,7 +85,7 @@ public class ProductController_createProduct {
     @Test
     public void createProduct_name_2 () throws Exception {
         ProductDto productDto = new ProductDto();
-//        productDto.setNameProduct("Phan Tá Anh Đào");
+        productDto.setNameProduct(null);
         productDto.setBatteryProduct("100%");
         productDto.setCameraProduct("12mp, 12mp, 12mp");
         productDto.setPriceProduct(11000000.0);
