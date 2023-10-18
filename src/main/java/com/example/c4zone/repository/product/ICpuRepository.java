@@ -18,8 +18,7 @@ public interface ICpuRepository extends JpaRepository<Cpu, Long> {
      */
     @Query(value = "SELECT cpu.id_cpu, cpu.name, cpu.status_cpu FROM c4_zone.cpu as cpu", nativeQuery = true)
     List<Cpu> findAll();
-    @Transactional
-    @Modifying
+
     @Query(value = "SELECT cp.id_cpu, cp.name FROM c4_zone.cpu as cp " +
             "WHERE id_cpu = :idCpu and status_cpu = true", nativeQuery = true)
     Cpu findCpuById(@Param("idCpu") Long idCpu);

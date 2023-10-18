@@ -54,18 +54,18 @@ public class ProductController {
     private IProductService productService;
     @Autowired
     private IImageService imageService;
-//    @Autowired
-//    private ICapacityService capacityService;
-//    @Autowired
-//    private IColorService colorService;
-//    @Autowired
-//    private ICpuService cpuService;
-//    @Autowired
-//    private IRamService ramService;
-//    @Autowired
-//    private ISeriesService seriesService;
-//    @Autowired
-//    private ITypeService typeService;
+    @Autowired
+    private ICapacityService capacityService;
+    @Autowired
+    private IColorService colorService;
+    @Autowired
+    private ICpuService cpuService;
+    @Autowired
+    private IRamService ramService;
+    @Autowired
+    private ISeriesService seriesService;
+    @Autowired
+    private ITypeService typeService;
 
     /**
      * author: DaoPTA
@@ -114,7 +114,7 @@ public class ProductController {
      */
     @PostMapping("/add")
     @ResponseBody
-    public ResponseEntity<Object> createProduct(@Valid @RequestBody(required = false) ProductDto productDto,
+    public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductDto productDto,
                                                 BindingResult bindingResult) throws WriterException, IOException {
 
         Map<String, String> error = new HashMap<>();
@@ -126,7 +126,25 @@ public class ProductController {
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
         Product product = new Product();
+        Capacity capacity = new Capacity();
+        Color color = new Color();
+        Cpu cpu = new Cpu();
+        Ram ram = new Ram();
+        Series series = new Series();
+        Type type = new Type();
         BeanUtils.copyProperties(productDto, product);
+        BeanUtils.copyProperties(productDto.getCapacityDto(),capacity);
+        product.setCapacity(capacity);
+        BeanUtils.copyProperties(productDto.getColorDto(), color);
+        product.setColor(color);
+        BeanUtils.copyProperties(productDto.getCpuDto(), cpu);
+        product.setCpu(cpu);
+        BeanUtils.copyProperties(productDto.getRamDto(), ram);
+        product.setRam(ram);
+        BeanUtils.copyProperties(productDto.getSeriesDto(), series);
+        product.setSeries(series);
+        BeanUtils.copyProperties(productDto.getTypeDto(), type);
+        product.setType(type);
         productService.createProduct(product);
         Long idProduct = productService.getLastInsertedId();
         imageService.insertImageByProductId(productDto.getImageDtoList(),idProduct);
@@ -173,7 +191,7 @@ public class ProductController {
     @PatchMapping("/{idProduct}")
     @ResponseBody
     public ResponseEntity updateProduct(@Valid @RequestBody ProductDto productDto, @PathVariable Long idProduct, BindingResult bindingResult) {
-        Product product = (Product) productService.findProductById(idProduct);
+        Product product = productService.findProductById(idProduct);
         new ProductDto().validate(productDto, bindingResult);
         Map<String, String> error = new HashMap<>();
         if (bindingResult.hasErrors()) {

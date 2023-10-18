@@ -19,8 +19,6 @@ public interface ICapacityRepository extends JpaRepository<Capacity, Long> {
     @Query(value = "SELECT c.id_capacity, c.name, c.status_capacity FROM c4_zone.capacity as c",nativeQuery = true)
     List<Capacity>findAll();
 
-    @Transactional
-    @Modifying
     @Query(value = "SELECT c.id_capacity, c.name FROM c4_zone.capacity as c " +
             "WHERE id_capacity = :idCapacity and status_capacity = true", nativeQuery = true)
     Capacity findCapacityById(@Param("idCapacity") Long idCapacity);

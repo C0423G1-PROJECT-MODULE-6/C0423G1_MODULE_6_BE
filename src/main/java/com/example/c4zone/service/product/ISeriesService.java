@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ISeriesService {
     List<Series> findAll();
+    Series findByIdSeries(Long idSeries);
 }
