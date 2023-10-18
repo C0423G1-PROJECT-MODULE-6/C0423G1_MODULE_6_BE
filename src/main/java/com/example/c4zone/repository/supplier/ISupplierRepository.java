@@ -107,6 +107,6 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
             "phone_number_supplier, " +
             "status_supplier " +
             "from c4_zone.supplier " +
-            "where id_supplier = :id", nativeQuery = true)
+            "where id_supplier = :id and status_supplier = true", nativeQuery = true)
     Supplier getSupplierById(@Param("id") Long id);
 }
