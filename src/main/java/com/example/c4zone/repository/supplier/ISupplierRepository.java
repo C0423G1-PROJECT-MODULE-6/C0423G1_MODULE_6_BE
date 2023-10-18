@@ -16,7 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ISupplierRepository extends JpaRepository<Supplier,Long> {
     @Query(value = "SELECT * FROM  Supplier s WHERE s.name_supplier LIKE concat('%',:nameSearch,'%') " +
             "AND s.address_supplier LIKE concat('%',:addressSearch,'%') " +
-            "AND s.email_supplier LIKE concat('%',:emailSearch,'%') ",nativeQuery = true)
+            "AND s.email_supplier LIKE concat('%',:emailSearch,'%')" +
+            " AND s.status_supplier = 0",nativeQuery = true)
     Page<Supplier> getAllSupplier(@Param("nameSearch") String name, @Param("addressSearch") String addressSearch
             , @Param("emailSearch") String emailSearch, Pageable pageable);
 
@@ -25,7 +26,7 @@ public interface ISupplierRepository extends JpaRepository<Supplier,Long> {
     @Query(value = "update Supplier as s set s.status_supplier = 1 where s.id_supplier = :id",nativeQuery = true)
     void deleteSupplier(@Param(value = "id") Long id);
 
-    @Query("select s from Supplier s")
+    @Query(value = "select * from Supplier s where s.status_supplier = 0",nativeQuery = true)
     Page<Supplier> getAllSupplierNoCondition(Pageable pageable);
     @Query(value = "SELECT * FROM Supplier s WHERE s.id_supplier = :id",nativeQuery = true)
     Supplier findSupplierById(@Param("id") Long id);
