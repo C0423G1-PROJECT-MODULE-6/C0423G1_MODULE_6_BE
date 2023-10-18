@@ -9,4 +9,9 @@ import java.util.List;
 public interface IAppRoleRepository extends JpaRepository<AppRole,Integer> {
     @Query(nativeQuery = true,value = "select * from app_role")
     List<AppRole> getAllRole();
+
+
+
+    AppRole findById(Long id);
+
 }
