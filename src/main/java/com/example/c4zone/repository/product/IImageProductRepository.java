@@ -50,7 +50,7 @@ public interface IImageProductRepository extends JpaRepository<Image, Long> {
      * @param idProduct find by image with idProduct
      * @return image with idProduct
      */
-    @Query(value = "SELECT i.id_image, i.name, i.id_product " +
+    @Query(value = "SELECT i.id_image, i.name, i.id_product, i.status_image " +
             "FROM image as i WHERE id_product = :idProduct",nativeQuery = true)
     List<Image> findImageByIdProduct(@Param("idProduct") Long idProduct);
 

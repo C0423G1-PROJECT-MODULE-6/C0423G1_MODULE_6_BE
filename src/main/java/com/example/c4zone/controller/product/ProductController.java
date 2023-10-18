@@ -1,9 +1,6 @@
 package com.example.c4zone.controller.product;
 
-import com.example.c4zone.dto.product.IProductDto;
-import com.example.c4zone.dto.product.ImageDto;
-import com.example.c4zone.dto.product.ListImageDto;
-import com.example.c4zone.dto.product.ProductDto;
+import com.example.c4zone.dto.product.*;
 
 import com.example.c4zone.model.product.*;
 import com.example.c4zone.service.product.*;
@@ -17,7 +14,6 @@ import com.example.c4zone.model.product.Image;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.service.product.IImageService;
 import com.example.c4zone.service.product.IProductService;
-
 
 
 import org.springframework.beans.BeanUtils;
@@ -44,6 +40,7 @@ import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -96,10 +93,27 @@ public class ProductController {
         Product product = productService.findProductById(idProduct);
         ImageDto imageDto = new ImageDto();
         BeanUtils.copyProperties(image, imageDto);
+        CapacityDto capacityDto = new CapacityDto();
+        BeanUtils.copyProperties(product.getCapacity(), capacityDto);
+        ColorDto colorDto = new ColorDto();
+        BeanUtils.copyProperties(product.getColor(), colorDto);
+        CpuDto cpuDto = new CpuDto();
+        BeanUtils.copyProperties(product.getCpu(), cpuDto);
+        RamDto ramDto = new RamDto();
+        BeanUtils.copyProperties(product.getRam(), ramDto);
+        SeriesDto seriesDto = new SeriesDto();
+        BeanUtils.copyProperties(product.getSeries(), seriesDto);
+        TypeDto typeDto = new TypeDto();
+        BeanUtils.copyProperties(product.getType(), typeDto);
         ProductDto productDto = new ProductDto();
+        productDto.setCapacityDto(capacityDto);
+        productDto.setColorDto(colorDto);
+        productDto.setCpuDto(cpuDto);
+        productDto.setRamDto(ramDto);
+        productDto.setSeriesDto(seriesDto);
+        productDto.setTypeDto(typeDto);
         BeanUtils.copyProperties(product, productDto);
         imageDto.setProduct(product.getIdProduct());
-        productDto.setImageDto(imageDto);
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
@@ -133,7 +147,7 @@ public class ProductController {
         Series series = new Series();
         Type type = new Type();
         BeanUtils.copyProperties(productDto, product);
-        BeanUtils.copyProperties(productDto.getCapacityDto(),capacity);
+        BeanUtils.copyProperties(productDto.getCapacityDto(), capacity);
         product.setCapacity(capacity);
         BeanUtils.copyProperties(productDto.getColorDto(), color);
         product.setColor(color);
@@ -147,7 +161,7 @@ public class ProductController {
         product.setType(type);
         productService.createProduct(product);
         Long idProduct = productService.getLastInsertedId();
-        imageService.insertImageByProductId(productDto.getImageDtoList(),idProduct);
+        imageService.insertImageByProductId(productDto.getImageDtoList(), idProduct);
 
 
         String qrCodeText = product.toString();
@@ -291,11 +305,11 @@ public class ProductController {
      * @return if Http status
      */
     @PatchMapping("/remove")
-    public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id){
-        if (productService.findById(id)==null){
+    public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id) {
+        if (productService.findById(id) == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-            productService.removeProduct(id);
+        productService.removeProduct(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
