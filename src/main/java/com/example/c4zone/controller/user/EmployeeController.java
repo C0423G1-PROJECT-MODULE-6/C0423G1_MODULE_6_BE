@@ -48,14 +48,15 @@ public class EmployeeController {
      * return: Page<AppUser>
      */
     @GetMapping("/list")
-    public ResponseEntity<Page<IEmployeeDto>> findAllEmployeeBy(@RequestParam(name = "page", defaultValue = "0", required = false) int page,
-                                                                @RequestParam(name = "searchJob", defaultValue = "", required = false) String searchJob,
-                                                                @RequestParam(name = "searchName", defaultValue = "", required = false) String searchName,
-                                                                @RequestParam(name = "searchPhone", defaultValue = "", required = false) String searchPhone) {
+    public ResponseEntity<Page<IEmployeeDto>> findAllEmployeeBy(@RequestParam(name = "page", defaultValue = "0",required = false) int page,
+                                                                @RequestParam(name = "searchJob", defaultValue = "",required = false)String searchJob,
+                                                                @RequestParam(name = "searchName",defaultValue = "",required = false)String searchName,
+                                                                @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
 
-        Pageable pageable = PageRequest.of(page, 5);
-        Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable, '%' + searchJob + '%', "%" + searchName + "%", "%" + searchPhone + "%");
-        if (employeeDtoPage.getTotalElements() == 0) {
+        Pageable pageable = PageRequest.of(page,5,Sort.by("id").descending());
+        Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable,'%'+searchJob+'%',"%"+searchName+"%","%"+searchPhone+"%");
+        if (employeeDtoPage.getTotalElements()==0 ){
+
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(employeeDtoPage, HttpStatus.OK);
