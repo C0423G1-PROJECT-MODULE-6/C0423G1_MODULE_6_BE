@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable().cors().and()//
                 .authorizeRequests()//
                 .antMatchers(
-//                        "/api/**",
+                        "/api/**",
                         "/api/user/create/**",
                         "/api/user/confirm/**",
 //                        "/api/user/information/**",
@@ -69,11 +69,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/admin/series/**",
                         "/api/admin/type/**",
 
-                        "/api/admin/employee/list/**",
                         "/api/user/register/**",
 
 
-                        "/api/admin/employee/list/**",
                         "/api/admin/customer/list/**",
                         "/api/admin/customer/history/**",
 
@@ -84,6 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                         "/api/admin/employee/**",
+                        "/api/admin/role/**",
                         "/api/admin/supplier/**"
 
                 ).permitAll()

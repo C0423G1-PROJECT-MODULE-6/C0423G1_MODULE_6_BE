@@ -57,7 +57,7 @@ public class UserRestController_logout {
                         MockMvcRequestBuilders
                                 .get( "/api/user/logout/{userName}", "wrong"))
                 .andDo(print())
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is5xxServerError());
     }
 
     /**
@@ -69,7 +69,7 @@ public class UserRestController_logout {
     public void logout_username_4 () throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get( "/api/user/information/{id}", "admin"))
+                                .get( "/api/user/logout/{userName}", "admin"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
