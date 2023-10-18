@@ -102,8 +102,7 @@ public class ProductController {
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<Object> createProduct(@Valid @RequestBody(required = false) ProductDto productDto,
-                                                BindingResult bindingResult
-                                                ) throws WriterException, IOException {
+                                                BindingResult bindingResult) throws WriterException, IOException {
 
         Map<String, String> error = new HashMap<>();
         new ProductDto().validate(productDto, bindingResult);
