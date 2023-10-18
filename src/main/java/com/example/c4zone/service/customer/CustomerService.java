@@ -37,6 +37,22 @@ public class CustomerService implements ICustomerService {
         return customerRepository.findCustomerByPhone(phoneNumberCustomer);
     }
 
+    @Override
+    public Page<ICustomerListDto> getPageCustomerForModal(Pageable pageable, String valueSearchName, String valueSearchAge, String valueSearchGender,String phoneNumber) {
+        if(!phoneNumber.equals("")) {
+            return customerRepository.findAllCustomerByPhone(pageable,phoneNumber);
+        }
+        if (!(valueSearchGender.equals("2"))) {
+            return customerRepository.findAllCustomerByGenderModal(pageable, "%" + valueSearchName + "%", valueSearchGender);
+        }
+
+        if (!(valueSearchAge).equals("")) {
+            return customerRepository.findAllCustomerByAgeModal(pageable, "%" + valueSearchName + "%",valueSearchAge);
+        }
+
+        return customerRepository.findAllCustomerByNameModal(pageable, "%" + valueSearchName + "%");
+    }
+
     /**
      * Author: TinDT
      * Goal: find customers by email
