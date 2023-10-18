@@ -30,7 +30,7 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
     @Query(nativeQuery = true,value = " SELECT app_user.id as id, app_user.employee_Name as employeeName, app_user.employee_Birthday as employeeBirthday, app_user.employee_Address as employeeAddress, app_role.name as employeeRoleName , app_user.employee_Phone as employeePhone FROM app_user  " +
             "             JOIN user_role on app_user.id = user_role.app_user_id  " +
             "             JOIN app_role on user_role.app_role_id = app_role.id  " +
-            "             where app_user.flag_deleted = 0 and app_role.id like :searchJob and app_user.employee_name like :searchName and app_user.employee_phone like :searchPhone ")
+            "             where app_user.flag_deleted = 0 and app_role.name like :searchJob and app_user.employee_name like :searchName and app_user.employee_phone like :searchPhone ")
     Page<IEmployeeDto> findAllEmployee(Pageable pageable, @Param("searchJob") String searchJob, @Param("searchName") String searchName, @Param("searchPhone") String searchPhone);
 
     /**
@@ -80,7 +80,17 @@ public interface IEmployeeRepository extends JpaRepository<AppUser,Long> {
      */
     @Modifying
     @Transactional
-    @Query(value = "UPDATE `c4_zone`.`app_user` SET `employee_address` = :#{#employee.employeeAddress}, `employee_birthday` = :#{#employee.employeeBirthday}, `employee_id_card` = :#{#employee.employeeIdCard}, `employee_image` = :#{#employee.employeeImage}, `employee_name` = :#{#employee.employeeName}, `employee_phone` = :#{#employee.employeePhone}, `employee_start_date` = :#{#employee.employeeStartDate} WHERE (`id` = :id) and flag_delete = false",nativeQuery = true)
+    @Query(value = "UPDATE `c4_zone`.`app_user` \n" +
+            "SET \n" +
+            "    `employee_address` = :#{#employee.employeeAddress},\n" +
+            "    `employee_birthday` = :#{#employee.employeeBirthday},\n" +
+            "    `employee_id_card` = :#{#employee.employeeIdCard},\n" +
+            "    `employee_image` = '' ,\n" +
+            "    `employee_name` = :#{#employee.employeeName},\n" +
+            "    `employee_phone` = :#{#employee.employeePhone},\n" +
+            "    `employee_start_date` = :#{#employee.employeeStartDate}\n" +
+            " WHERE " +
+            "    `app_user`.`id` = :id AND flag_deleted = FALSE",nativeQuery = true)
     void updateEmployee(@Param(value = "employee")AppUser employee,
                         @Param(value = "id") Long id
     );

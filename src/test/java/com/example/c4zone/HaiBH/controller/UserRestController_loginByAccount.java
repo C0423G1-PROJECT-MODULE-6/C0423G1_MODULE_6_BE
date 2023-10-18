@@ -35,7 +35,7 @@ public class UserRestController_loginByAccount {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put( "/api/user/login-by-username")
+                                .post( "/api/user/login-by-username")
                                 .content(this.objectMapper.writeValueAsString(null))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -56,7 +56,7 @@ public class UserRestController_loginByAccount {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put( "/api/user/login-by-username")
+                                .post( "/api/user/login-by-username")
                                 .content(this.objectMapper.writeValueAsString(appUserDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -77,7 +77,7 @@ public class UserRestController_loginByAccount {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put( "/api/user/login-by-username")
+                                .post( "/api/user/login-by-username")
                                 .content(this.objectMapper.writeValueAsString(appUserDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())

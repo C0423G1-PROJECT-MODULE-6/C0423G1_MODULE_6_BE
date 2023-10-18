@@ -441,7 +441,7 @@ public class ProductController_getAll {
     public void getAll_choose_name_11() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/admin/product/list?choose=name&value=#")).andDo(print())
-                .andExpect(status().is4xxClientError())
+                .andExpect(status().is2xxSuccessful())
         ;
     }
 

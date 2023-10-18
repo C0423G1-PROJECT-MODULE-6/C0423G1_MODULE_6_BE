@@ -55,7 +55,7 @@ public class UserRestController_showInformation {
     public void showInformation_id_3 () throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get( "/api/user/information/{id}", 1))
+                                .get( "/api/user/information/{id}", 10))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
@@ -69,15 +69,15 @@ public class UserRestController_showInformation {
     public void showInformation_id_4 () throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get( "/api/user/information/{id}", 2))
+                                .get( "/api/user/information/{id}", 1))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("id").value(2))
+                .andExpect(jsonPath("id").value(1))
                 .andExpect(jsonPath("userName").value("admin"))
-                .andExpect(jsonPath("employeeName").value("hai admin"))
+                .andExpect(jsonPath("employeeName").value("Bui Huu Hai"))
                 .andExpect(jsonPath("employeePhone").value("0942409424"))
-                .andExpect(jsonPath("employeeBirthday").value("1996-08-31"))
-                .andExpect(jsonPath("email").value("buihuuhai318@gmail.com"))
+                .andExpect(jsonPath("employeeBirthday").value("2005-10-10"))
+                .andExpect(jsonPath("email").value("buihuuhai3108@gmail.com"))
                 .andExpect(jsonPath("employeeAddress").value("da nang"));
     }
 }

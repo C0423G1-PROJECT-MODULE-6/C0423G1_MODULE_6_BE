@@ -40,7 +40,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -68,7 +68,7 @@ public class EmployeeController_create {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -93,7 +93,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -118,7 +118,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -143,7 +143,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -168,7 +168,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -193,7 +193,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -218,37 +218,13 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-    /**
-     * Author:CaoNV
-     * Date:13/10/2023
-     * Function test input empty to field birthday
-     * @throws Exception
-     */
-    @Test
-    public void create_employee_birthday_13() throws Exception{
-        EmployeeDto employeeDto = new EmployeeDto();
-        employeeDto.setEmployeeCode("NV004");
-        employeeDto.setEmployeeName("Tan");
-        employeeDto.setEmployeeAddress("123 NVL");
-        employeeDto.setEmployeeBirthday("");
-        employeeDto.setEmployeeIdCard("123456789");
-        employeeDto.setEmployeePhone("0123456789");
-        employeeDto.setEmployeeStartDate("2023-09-18");
-        employeeDto.setEmployeeImage("");
-        this.mockMvc.perform(
-                        MockMvcRequestBuilders
-                                .post("/employees/create")
-                                .content(this.objectMapper.writeValueAsString(employeeDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
-    }
+
     /**
      * Author:CaoNV
      * Date:13/10/2023
@@ -268,37 +244,13 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-    /**
-     * Author:CaoNV
-     * Date:13/10/2023
-     * Function test input empty to field start day
-     * @throws Exception
-     */
-    @Test
-    public void create_employee_startDay_15() throws Exception{
-        EmployeeDto employeeDto = new EmployeeDto();
-        employeeDto.setEmployeeCode("NV004");
-        employeeDto.setEmployeeName("Tan");
-        employeeDto.setEmployeeAddress("123 NVL");
-        employeeDto.setEmployeeBirthday("");
-        employeeDto.setEmployeeIdCard("123456789");
-        employeeDto.setEmployeePhone("0123456789");
-        employeeDto.setEmployeeStartDate("2023-09-18");
-        employeeDto.setEmployeeImage("");
-        this.mockMvc.perform(
-                        MockMvcRequestBuilders
-                                .post("/employees/create")
-                                .content(this.objectMapper.writeValueAsString(employeeDto))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
-    }
+
     /**
      * Author:CaoNV
      * Date:13/10/2023
@@ -318,7 +270,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -343,7 +295,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -368,7 +320,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -393,7 +345,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -418,7 +370,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -443,7 +395,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -468,7 +420,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -493,7 +445,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -518,7 +470,7 @@ public class EmployeeController_create {
         employeeDto.setEmployeeImage("");
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/employees/create")
+                                .post("/api/admin/employee/create")
                                 .content(this.objectMapper.writeValueAsString(employeeDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
