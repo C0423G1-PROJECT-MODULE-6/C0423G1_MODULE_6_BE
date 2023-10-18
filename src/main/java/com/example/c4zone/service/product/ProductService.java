@@ -3,13 +3,14 @@ package com.example.c4zone.service.product;
 
 import com.example.c4zone.dto.order.IProductDtoOrder;
 import com.example.c4zone.dto.product.IProductDto;
-import com.example.c4zone.dto.warehouse.IProductDtoWarehouse;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.repository.product.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ProductService implements IProductService{
@@ -26,6 +27,18 @@ public class ProductService implements IProductService{
     @Override
     public Product findProductById(Long idProduct) {
         return productRepository.findProductById(idProduct);
+    }
+
+    /**
+     * author:QuanND
+     *
+     * @param id
+     * @return a product with id=:id
+     * day: 17/10/2023
+     */
+    @Override
+    public IProductDto findById(Long id) {
+        return productRepository.getProductById(id);
     }
 
     /**
@@ -152,5 +165,11 @@ public class ProductService implements IProductService{
     public void removeProduct(Long id) {
         productRepository.removeProduct(id);
     }
+
+    @Override
+    public Integer getQuantityById(Long idProduct) {
+        return productRepository.getQuantityByid(idProduct);
+    }
+
 
 }

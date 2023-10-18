@@ -7,7 +7,17 @@ public interface IProductDto {
     String getName();
     String getCapacity();
     String getCpu();
+    String getType();
     String getColor();
     Double getPrice();
-    Double getQuantity();
+    Long getQuantity();
+    String getImage();
+    String getScreen();
+    String getSelfie();
+    String getWeight();
+    String getRam();
+    String getSeries();
+
+
+
 }

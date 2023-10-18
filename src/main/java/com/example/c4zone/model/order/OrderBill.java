@@ -3,6 +3,7 @@ package com.example.c4zone.model.order;
 
 import com.example.c4zone.model.customer.Customer;
 import com.example.c4zone.model.user.AppUser;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 public class OrderBill {
     @Id
@@ -25,9 +27,9 @@ public class OrderBill {
     @Column(columnDefinition = "time")
     private String timeOfOrder;
     private Double totalMoney;
-    private String paymentMethod;
+    private Integer paymentMethod;
     private Integer printStatus;
-
+    private Integer paymentStatus = 0;
 
     @ManyToOne
     @JoinColumn(name = "id_customer",referencedColumnName = "idCustomer")
@@ -35,10 +37,20 @@ public class OrderBill {
 
     @ManyToOne
     @JoinColumn(name = "id_user",referencedColumnName = "id")
-
     private AppUser user;
 
-    @OneToMany(mappedBy = "orderBill", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderDetail> orderDetails = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "OrderBill{" +
+                "idOrderBill=" + idOrderBill +
+                ", dateOfOrder='" + dateOfOrder + '\'' +
+                ", timeOfOrder='" + timeOfOrder + '\'' +
+                ", totalMoney=" + totalMoney +
+                ", paymentMethod='" + paymentMethod + '\'' +
+                ", printStatus=" + printStatus +
+                ", customer=" + customer +
+                ", user=" + user +
+                '}';
+    }
 }

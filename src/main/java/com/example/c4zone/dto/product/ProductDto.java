@@ -1,40 +1,19 @@
 package com.example.c4zone.dto.product;
-
 import com.example.c4zone.model.product.*;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.*;
-
 public class ProductDto implements Validator {
     private Long idProduct;
-    @NotBlank(message = "Không được để trống tên điện thoại!")
-    @Size(min = 5, max = 50, message = "Phải lớn hơn 5 ký tự và ít hơn 50 ký tự!")
     private String nameProduct;
-    @NotBlank(message = "Không được để trống màn hình!")
-    @Size(min = 5, max = 100, message = "Nhập vào ít nhất 5 ký tự và nhỏ hơn 100 ký tự!")
     private String screenProduct;
-    @NotBlank(message = "Không được để trống camera!")
-    @Size(min = 5, max = 100, message = "Nhập vào ít nhất 5 ký tự và nhỏ hơn 100 ký tự!")
     private String cameraProduct;
-    @Size(max = 10000, message = "Mô tả không được quá 10000 từ!")
     private String descriptionProduct;
     private Boolean statusBusiness = true;
-    @NotBlank(message = "Không được để trống camera trước!")
-    @Size(min = 5, max = 100, message = "Nhập vào ít nhất 5 ký tự và nhỏ hơn 100 ký tự!")
     private String selfieProduct;
-    @NotBlank(message = "Không được để trống tên điện thoại!")
     private String batteryProduct;
-    @NotNull(message = "Không được để trống trọng lượng điện thoại!")
-    @Min(10)
-    @Max(500)
     private Double weightProduct;
-    @NotNull(message = "Không được để trống số lượng điện thoại!")
-    @Min(0)
     private Double quantityProduct;
-    @NotNull(message = "Không được để trống giá điện thoại!")
-    @Min(0)
-    @Max(30000000)
     private Double priceProduct;
     private ImageDto imageDto;
     private Capacity capacity;
@@ -43,6 +22,15 @@ public class ProductDto implements Validator {
     private Ram ram;
     private Series series;
     private Type type;
+    private static final String NAME_PRODUCT_DTO = "nameProduct";
+    private static final String SCREEN_PRODUCT_DTO = "screenProduct";
+    private static final String CAMERA_PRODUCT_DTO = "cameraProduct";
+    private static final String DESCRIPTION_PRODUCT_DTO = "descriptionProduct";
+    private static final String SELFIE_PRODUCT_DTO = "selfieProduct";
+    private static final String BATTERY_PRODUCT_DTO = "batteryProduct";
+    private static final String WEIGHT_PRODUCT_DTO = "weightProduct";
+    private static final String PRICE_PRODUCT_DTO = "priceProduct";
+    private static final String REGEX_SPECIAL_CHARACTERS = "^(?!.*\\s{2,})[a-zA-Z0-9\\s]*$";
 
     public ProductDto() {
     }
@@ -219,6 +207,94 @@ public class ProductDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-    // custom lại sau
+        ProductDto productDto = (ProductDto) target;
+        //-------------------Name product----------------------------//
+        if (productDto.getNameProduct() == null){
+            errors.rejectValue(NAME_PRODUCT_DTO,"","Vui lòng bổ sung tên sản phẩm!");
+        } else if (productDto.getNameProduct().trim().equals("")) {
+            errors.rejectValue(NAME_PRODUCT_DTO,"","Không được để trống tên sản phẩm!");
+        } else if (productDto.getNameProduct().length() < 5) {
+            errors.rejectValue(NAME_PRODUCT_DTO,"","Vui lòng nhập tên hơn 5 ký tự!");
+        } else if (productDto.getNameProduct().length() > 70) {
+            errors.rejectValue(NAME_PRODUCT_DTO,"","Tên sản phẩm quá dài, nhập tên không quá 70 ký tự!");
+        } else if (!productDto.getNameProduct().matches("^[a-zA-ZÀ-Úà-úĂăĐđĨĩƠơƯưẠ-ỹ ]*$")) {
+            errors.rejectValue(NAME_PRODUCT_DTO,"","Tên sản phẩm không chứa ký tự đặc biệt!");
+        }
+        //--------------------Screen product--------------------------//
+        if (productDto.getScreenProduct() == null){
+            errors.rejectValue(SCREEN_PRODUCT_DTO,"","Vui lòng bổ sung thông tin màn hình sản phẩm!");
+        } else if (productDto.getScreenProduct().trim().equals("")) {
+            errors.rejectValue(SCREEN_PRODUCT_DTO,"","Không được để trống màn hình sản phẩm!");
+        } else if (productDto.getScreenProduct().length() < 5) {
+            errors.rejectValue(SCREEN_PRODUCT_DTO, "", "Thông tin màn hình phải dài hơn 5 ký tự!");
+        } else if (productDto.getScreenProduct().length() > 50) {
+            errors.rejectValue(SCREEN_PRODUCT_DTO,"","Thông tin màn hình quá dài, vui lòng nhập ít hơn 50 ký tự!");
+        } else if (!productDto.getScreenProduct().matches(REGEX_SPECIAL_CHARACTERS)){
+            errors.rejectValue(SCREEN_PRODUCT_DTO,"","Thông tin màn hình khng chứa ký tự đặc biệt!");
+        }
+        //--------------------Camera product--------------------//
+        if (productDto.getCameraProduct() == null){
+            errors.rejectValue(CAMERA_PRODUCT_DTO,"","Vui lòng bổ sung thông tin camera sản phẩm!");
+        } else if (productDto.getCameraProduct().trim().equals("")) {
+            errors.rejectValue(CAMERA_PRODUCT_DTO,"","Không được để trống thông tin camera sản phẩm!");
+        } else if (productDto.getCameraProduct().length() < 5) {
+            errors.rejectValue(CAMERA_PRODUCT_DTO,"","Thông tin camera sản phẩm dài hơn 5 ký tự!");
+        } else if (productDto.getCameraProduct().length() > 100) {
+            errors.rejectValue(CAMERA_PRODUCT_DTO,"","Thông tin camera quá dài, vui lòng nhập không quá 100 ký tự!");
+        } else if (!productDto.getCameraProduct().matches(REGEX_SPECIAL_CHARACTERS)) {
+            errors.rejectValue(CAMERA_PRODUCT_DTO,"","Thông tin camera không chứa ký tự đặc bIệt!");
+        }
+        //--------------------Description Product--------------------//
+        if (productDto.getDescriptionProduct().length() > 1000000){
+            errors.rejectValue(DESCRIPTION_PRODUCT_DTO,"","Thông tin chi tiết sản phẩm quá dài, vui lòng nhập dưới 1.000.000 ký tự");
+        }
+        //--------------------Selfie Product--------------------//
+        if (productDto.getSelfieProduct() == null){
+            errors.rejectValue(SELFIE_PRODUCT_DTO,"","Vui lòng bổ sung thông tin selfie!");
+        } else if (productDto.getSelfieProduct().trim().equals("")) {
+            errors.rejectValue(SELFIE_PRODUCT_DTO,"","Không được để trống thông tin Selfie");
+        } else if (productDto.getSelfieProduct().length() < 5) {
+            errors.rejectValue(SELFIE_PRODUCT_DTO,"","Thông tin selfie quá ngắn, vui lòng nhập hơn 5 ký tự!");
+        } else if (productDto.getSelfieProduct().length() > 100){
+            errors.rejectValue(SELFIE_PRODUCT_DTO,"","Thông tin selfie quá dài, vui lòng nhập ít hơn 100 ký tự!");
+        } else if (!productDto.getSelfieProduct().matches(REGEX_SPECIAL_CHARACTERS)) {
+            errors.rejectValue(SELFIE_PRODUCT_DTO,"","Thông tin selfie không chứa ký tự đặc biệt!");
+        }
+        //--------------------Battery Product--------------------//
+        if (productDto.getBatteryProduct() == null ){
+            errors.rejectValue(BATTERY_PRODUCT_DTO,"","Vui lòng bổ sung thông tin pin!");
+        } else if (productDto.getBatteryProduct().trim().equals("")) {
+            errors.rejectValue(BATTERY_PRODUCT_DTO,"","Không được để trống thông tin pin!");
+        } else if (productDto.getBatteryProduct().length() < 5) {
+            errors.rejectValue(BATTERY_PRODUCT_DTO,"","Thông tin pin quá ngắn, vui lòng nhập hơn 5 ký tự!");
+        } else if (productDto.getBatteryProduct().length() > 100) {
+            errors.rejectValue(BATTERY_PRODUCT_DTO,"","Thông tin pin quá dài, vui lòng nhập ít hơn 100 ký tự!");
+        } else if (productDto.getBatteryProduct().matches(REGEX_SPECIAL_CHARACTERS)) {
+            errors.rejectValue(BATTERY_PRODUCT_DTO,"","Thông tin pin không chứa ký tự đặc biệt!");
+        }
+        //--------------------Weight Product--------------------//
+        if (productDto.getWeightProduct() == null) {
+            errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Vui lòng bổ sung thông tin trọng lượng!");
+        } else if (String.valueOf(productDto.getWeightProduct()).isEmpty()) {
+            errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Không được để trống thông tin trọng lượng!!");
+        } else if (productDto.getWeightProduct() != null && productDto.getWeightProduct() < 5) {
+            errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Thông tin trọng lượng quá ngắn, vui lòng nhập hơn 5 ký tự!");
+        } else if (productDto.getWeightProduct() != null && productDto.getWeightProduct() > 100) {
+            errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Thông tin trọng lượng quá dài, vui lòng nhập ít hơn 100 ký tự!");
+        } else if (String.valueOf(productDto.getWeightProduct()).matches("^\\d{1,7}$")) {
+            errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Thông tin trọng lượng không đúng định dạng!");
+        }
+        //--------------------Price Product--------------------//
+        if (productDto.getPriceProduct() == null) {
+            errors.rejectValue(PRICE_PRODUCT_DTO,"","Vui lòng bổ sung thông tin giá!");
+        } else if (String.valueOf(productDto.getPriceProduct()).isEmpty()) {
+            errors.rejectValue(PRICE_PRODUCT_DTO,"","Không được để trống thông tin giá!!");
+        } else if (productDto.getPriceProduct() != null && productDto.getPriceProduct() < 0) {
+            errors.rejectValue(PRICE_PRODUCT_DTO,"","Giá không được là số âm!");
+        } else if (productDto.getPriceProduct() != null && productDto.getPriceProduct() > 300000000) {
+            errors.rejectValue(PRICE_PRODUCT_DTO,"","Giá không quá 300.000.000");
+        } else if (String.valueOf(productDto.getPriceProduct()).matches("^\\d{1,7}$")) {
+            errors.rejectValue(PRICE_PRODUCT_DTO,"","Thông tin giá không đúng định dạng!");
+        }
     }
 }

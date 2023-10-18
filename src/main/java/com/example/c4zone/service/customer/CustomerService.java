@@ -1,6 +1,7 @@
 package com.example.c4zone.service.customer;
 
-import com.example.c4zone.dto.customer.IShoppingHistory;
+import com.example.c4zone.dto.customer.ICustomerListDto;
+import com.example.c4zone.dto.customer.IShoppingHistoryDto;
 import com.example.c4zone.dto.order.ICustomerDtoOrder;
 import com.example.c4zone.model.customer.Customer;
 import com.example.c4zone.repository.customer.ICustomerRepository;
@@ -36,6 +37,22 @@ public class CustomerService implements ICustomerService {
         return customerRepository.findCustomerByPhone(phoneNumberCustomer);
     }
 
+    @Override
+    public Page<ICustomerListDto> getPageCustomerForModal(Pageable pageable, String valueSearchName, String valueSearchAge, String valueSearchGender,String phoneNumber) {
+        if(!phoneNumber.equals("")) {
+            return customerRepository.findAllCustomerByPhone(pageable,phoneNumber);
+        }
+        if (!(valueSearchGender.equals("2"))) {
+            return customerRepository.findAllCustomerByGenderModal(pageable, "%" + valueSearchName + "%", valueSearchGender);
+        }
+
+        if (!(valueSearchAge).equals("")) {
+            return customerRepository.findAllCustomerByAgeModal(pageable, "%" + valueSearchName + "%",valueSearchAge);
+        }
+
+        return customerRepository.findAllCustomerByNameModal(pageable, "%" + valueSearchName + "%");
+    }
+
     /**
      * Author: TinDT
      * Goal: find customers by email
@@ -45,17 +62,23 @@ public class CustomerService implements ICustomerService {
         return customerRepository.findCustomerByEmail(emailCustomer);
     }
 
+
+
+
     @Override
-    public Page<Customer> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, Boolean valueSearchGender) {
-        if (!valueSearchAge.equals("") && valueSearchGender != null) {
+    public Page<ICustomerListDto> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, String valueSearchGender) {
+        if (!valueSearchAge.equals("") && !valueSearchGender.equals("3")) {
             return customerRepository.findAllCustomerByAgeAndGender(pageable, "%" + valueSearchName + "%", valueSearchAge, valueSearchGender);
         }
-        if (valueSearchGender != null) {
+        if (!valueSearchGender.equals("3")) {
             return customerRepository.findAllCustomerByGender(pageable, "%" + valueSearchName + "%", valueSearchGender);
         }
         if (!valueSearchAge.equals("")) {
             return customerRepository.findAllCustomerByAge(pageable, "%" + valueSearchName + "%",valueSearchAge);
         }
+//        if (!valueSearchAge.equals("")&&valueSearchGender.equals("3")){
+//            return customerRepository.findAllCustomerByNameAndAge(pageable, "%" + valueSearchName + "%", valueSearchAge);
+//        }
         return customerRepository.findAllCustomerByName(pageable, "%" + valueSearchName + "%");
 
 
@@ -72,6 +95,14 @@ public class CustomerService implements ICustomerService {
     public ICustomerDtoOrder findCustomerByIdOrder(Long id) {
         return customerRepository.findCustomerByIdOrder(id);
     }
+    /**
+     * method check customer not pay
+     * Create ThoiND
+     * Date 15-10-2023
+     * param Long id
+     * return true/false
+     */
+
 
     @Override
     public Optional<Customer> findById(Long id) {
@@ -79,7 +110,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Page<IShoppingHistory> findShoppingHistory(Pageable pageable, String valueSearchName, Long id) {
+    public Page<IShoppingHistoryDto> findShoppingHistory(Pageable pageable, String valueSearchName, Long id) {
         return customerRepository.findShoppingHistory(pageable, "%" + valueSearchName + "%", id);
     }
 }

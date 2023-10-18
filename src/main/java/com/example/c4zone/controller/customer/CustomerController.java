@@ -1,8 +1,8 @@
 package com.example.c4zone.controller.customer;
 
 import com.example.c4zone.dto.customer.CustomerDto;
-import com.example.c4zone.dto.customer.IShoppingHistory;
-import com.example.c4zone.dto.product.ProductDto;
+import com.example.c4zone.dto.customer.ICustomerListDto;
+import com.example.c4zone.dto.customer.IShoppingHistoryDto;
 import com.example.c4zone.model.customer.Customer;
 import com.example.c4zone.service.customer.ICustomerService;
 import org.springframework.beans.BeanUtils;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +28,9 @@ import java.util.Optional;
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
+    private static final String EMAIL_DTO = "emailCustomer";
+    private static final String PHONE_DTO = "phoneNumberCustomer";
 
-    private static final String EMAIL = "emailCustomer";
-    private static final String PHONE = "phoneNumberCustomer";
 
     /**
      * Author: NguyenNH
@@ -39,13 +38,13 @@ public class CustomerController {
      * * return HttpStatus
      */
     @GetMapping("/list")
-    public ResponseEntity<Page<Customer>> listCustomer(@RequestParam(name = "_limit") int limit,
-                                                       @RequestParam(name = "_page") int page,
-                                                       @RequestParam(name = "name_like") Optional<String> searchName,
-                                                       @RequestParam(name = "age") Optional<String> searchAge,
-                                                       @RequestParam(name = "gender") Optional<Boolean> searchGender,
-                                                       @RequestParam(name = "sortName") Optional<String> sortName,
-                                                       @RequestParam(name = "sortCount") Optional<String> sortCount) {
+    public ResponseEntity<Page<ICustomerListDto>> getAllCustomer(@RequestParam(name = "_limit") int limit,
+                                                                 @RequestParam(name = "_page") int page,
+                                                                 @RequestParam(name = "name_like") Optional<String> searchName,
+                                                                 @RequestParam(name = "age") Optional<String> searchAge,
+                                                                 @RequestParam(name = "gender") Optional<String> searchGender,
+                                                                 @RequestParam(name = "sortName") Optional<String> sortName,
+                                                                 @RequestParam(name = "sortCount") Optional<String> sortCount) {
         String valueSearchName = "";
         if (searchName.isPresent()) {
             valueSearchName = searchName.get();
@@ -56,7 +55,7 @@ public class CustomerController {
             valueSearchAge = searchAge.get();
         }
 
-        Boolean valueSearchGender = null;
+        String valueSearchGender = "3";
         if (searchGender.isPresent()) {
             valueSearchGender = searchGender.get();
         }
@@ -73,17 +72,39 @@ public class CustomerController {
 
         Pageable pageable = PageRequest.of(page, limit);
         if (valueSortName){
-            pageable = PageRequest.of(page, limit, Sort.by("name_customer").ascending());
+            pageable = PageRequest.of(page, limit, Sort.by("nameCustomer").ascending());
         } else if (valueSortCount){
-            pageable = PageRequest.of(page, limit, Sort.by("total_purchases").ascending());
+            pageable = PageRequest.of(page, limit, Sort.by("totalPurchases").descending());
         }
 
-        Page<Customer> customerList = customerService.findCustomerByNameAndAge(pageable, valueSearchName, valueSearchAge, valueSearchGender);
+
+        Page<ICustomerListDto> customerList = customerService.findCustomerByNameAndAge(pageable, valueSearchName, valueSearchAge, valueSearchGender);
         if (customerList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(customerList, HttpStatus.OK);
+    }
+
+    /**
+     * Author: TinDT
+     * Goal: get all customers
+     * return list of customers
+     */
+    @GetMapping("/modal")
+    public ResponseEntity<Page<ICustomerListDto>> getAllCustomers(@RequestParam(name = "_limit") Integer limit,
+                                                                  @RequestParam(defaultValue = "0", required = false,name = "_page") Integer page,
+                                                                  @RequestParam(defaultValue = "", required = false,name = "name_like") String name,
+                                                                  @RequestParam(defaultValue = "", required = false,name = "age") String age,
+                                                                  @RequestParam(defaultValue = "2", required = false,name = "gender") String gender,
+                                                                  @RequestParam(defaultValue = "", required = false,name = "phone") String phoneNumber
+                                                                 ) {
+        Pageable pageable = PageRequest.of(page, 5, Sort.by("nameCustomer").ascending());
+        Page<ICustomerListDto> customers = customerService.getPageCustomerForModal(pageable,name,age,gender,phoneNumber);
+        if (customers.getTotalElements() != 0) {
+            return ResponseEntity.ok(customers);
+        }
+        return ResponseEntity.noContent().build();
     }
 
     /**
@@ -92,10 +113,10 @@ public class CustomerController {
      * * return HttpStatus
      */
     @GetMapping("list/{id}")
-    public ResponseEntity<Customer> findById(@PathVariable Long id) {
+    public ResponseEntity<Customer> findCustomerById(@PathVariable Long id) {
         Customer customer = customerService.findById(id).orElse(null);
         if (customer == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
@@ -106,18 +127,18 @@ public class CustomerController {
      * * return HttpStatus
      */
     @GetMapping("/history/{id}")
-    public ResponseEntity<Page<IShoppingHistory>> shoppingHistory(@RequestParam(name = "_limit") int limit,
-                                                                  @RequestParam(name = "_page") int page,
-                                                                  @RequestParam(name = "name_like") Optional<String> searchName,
-                                                                  @PathVariable Long id) {
+    public ResponseEntity<Page<IShoppingHistoryDto>> getShoppingHistory(@RequestParam(name = "_limit") int limit,
+                                                                        @RequestParam(name = "_page") int page,
+                                                                        @RequestParam(name = "name_like") Optional<String> searchName,
+                                                                        @PathVariable Long id) {
         String valueSearchName = "";
         if (searchName.isPresent()) {
             valueSearchName = searchName.get();
         }
         Pageable pageable = PageRequest.of(page, limit);
-        Page<IShoppingHistory> shoppingHistoryPage = customerService.findShoppingHistory(pageable, valueSearchName, id);
+        Page<IShoppingHistoryDto> shoppingHistoryPage = customerService.findShoppingHistory(pageable, valueSearchName, id);
         if (shoppingHistoryPage.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(shoppingHistoryPage, HttpStatus.OK);
@@ -139,12 +160,12 @@ public class CustomerController {
             }
         }
         Customer customerCheck = customerService.findCustomerByEmail(customerDto.getEmailCustomer());
-        if (customerCheck != null) {
-            errors.put(EMAIL, "Email đã được đăng ký");
+        if (customerCheck != null){
+            errors.put(EMAIL_DTO,"Email đã được đăng ký");
         }
         Customer customerCheckPhone = customerService.findCustomerByPhone(customerDto.getPhoneNumberCustomer());
         if (customerCheckPhone != null) {
-            errors.put(PHONE, "Số điện thoại đã được đăng ký");
+            errors.put(PHONE_DTO, "Số điện thoại đã được đăng ký");
         }
         if (errors.size() != 0) {
             return new ResponseEntity<>(errors, HttpStatus.NOT_ACCEPTABLE);
