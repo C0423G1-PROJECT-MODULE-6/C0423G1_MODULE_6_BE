@@ -48,7 +48,6 @@ public class SupplierService implements ISupplierService {
     @Override
     public void editSupplier(Supplier supplier) {
         supplierRepository.updateSupplier(supplier.getIdSupplier(),
-                supplier.getCodeSupplier(),
                 supplier.getNameSupplier(),
                 supplier.getAddressSupplier(),
                 supplier.getPhoneNumberSupplier(),
@@ -70,19 +69,6 @@ public class SupplierService implements ISupplierService {
     /**
      * author: NghiaNPX
      * date: 13/10/2023
-     * goal: find supplier by codeSupplier
-     *
-     * @param codeSupplier is passing value
-     * @return object from SQL statement
-     */
-    @Override
-    public Supplier findSupplierByCode(Integer codeSupplier) {
-        return supplierRepository.findByCode("%" + codeSupplier + "%");
-    }
-
-    /**
-     * author: NghiaNPX
-     * date: 13/10/2023
      * goal: find supplier by nameSupplier
      *
      * @param nameSupplier is passing value
@@ -90,7 +76,7 @@ public class SupplierService implements ISupplierService {
      */
     @Override
     public Supplier findSupplierByName(String nameSupplier) {
-        return supplierRepository.findByName("%" + nameSupplier + "%");
+        return supplierRepository.findByName(nameSupplier);
     }
 
     /**
@@ -103,7 +89,7 @@ public class SupplierService implements ISupplierService {
      */
     @Override
     public Supplier findSupplierByPhoneNumber(String phoneNumberSupplier) {
-        return supplierRepository.findByPhoneNumber("%" + phoneNumberSupplier + "%");
+        return supplierRepository.findByPhoneNumber(phoneNumberSupplier);
     }
 
     /**
@@ -116,6 +102,19 @@ public class SupplierService implements ISupplierService {
      */
     @Override
     public Supplier findSupplierByEmail(String emailSupplier) {
-        return supplierRepository.findByEmail("%" + emailSupplier + "%");
+        return supplierRepository.findByEmail(emailSupplier);
+    }
+
+    /**
+     * author: NghiaNPX
+     * date: 13/10/2023
+     * goal: find a supplier by id
+     *
+     * @param id passing value
+     * @return a supplier
+     */
+    @Override
+    public Supplier findById(Long id) {
+        return supplierRepository.getSupplierById(id);
     }
 }
