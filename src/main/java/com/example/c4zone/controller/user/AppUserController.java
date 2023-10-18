@@ -317,7 +317,7 @@ public class AppUserController {
 
         AppUser appUser = new AppUser();
         appUser.setUserName(appUserDto.getUserName());
-        appUser.setPassword(passwordEncoder.encode("123"));
+        appUser.setPassword(passwordEncoder.encode(appUserDto.getPassword()));
         Boolean checkAddNewAppUser = appUserService.createNewAppUser(appUser, "ROLE_ADMIN");
         if (!Boolean.TRUE.equals(checkAddNewAppUser)) {
             return ResponseEntity

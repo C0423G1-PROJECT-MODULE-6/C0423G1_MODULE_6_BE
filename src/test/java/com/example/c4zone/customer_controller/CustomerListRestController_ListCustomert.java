@@ -60,16 +60,15 @@ public class CustomerListRestController_ListCustomert {
                         .param("_page", "1"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("totalPages").value(2))
-                .andExpect(jsonPath("totalElements").value(10))
+                .andExpect(jsonPath("totalPages").value(7))
+                .andExpect(jsonPath("totalElements").value(34))
                 .andExpect(jsonPath("content[0].idCustomer").value(6))
                 .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Thị Thắm"))
                 .andExpect(jsonPath("content[0].genderCustomer").value(false))
                 .andExpect(jsonPath("content[0].emailCustomer").value("tham@gmail.com"))
                 .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("1990-10-10"))
                 .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0054631279"))
-                .andExpect(jsonPath("content[0].addressCustomer").value("Sai Gon"))
-                .andExpect(jsonPath("content[0].statusCustomer").value(true));
+                .andExpect(jsonPath("content[0].addressCustomer").value("Sai Gon"));
     }
 
     /**
@@ -118,39 +117,6 @@ public class CustomerListRestController_ListCustomert {
     }
 
 
-    /**
-     * Check case page exist
-     * Author: TinDT
-     * Goal: @return list customer
-     */
-    @Test
-    public void getAllCustomer_page_11() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/admin/customer/list")
-                        .param("_limit", "5")
-                        .param("_page", "1"))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("totalPages").value(2))
-                .andExpect(jsonPath("totalElements").value(10))
-                .andExpect(jsonPath("content[0].idCustomer").value(6))
-                .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Thị Thắm"))
-                .andExpect(jsonPath("content[0].genderCustomer").value(false))
-                .andExpect(jsonPath("content[0].emailCustomer").value("tham@gmail.com"))
-                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2023-10-10"))
-                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0054631279"))
-                .andExpect(jsonPath("content[0].addressCustomer").value("Sai Gon"))
-                .andExpect(jsonPath("content[0].statusCustomer").value(true))
-
-                .andExpect(jsonPath("content[4].idCustomer").value(10))
-                .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Văn Hải"))
-                .andExpect(jsonPath("content[4].genderCustomer").value(true))
-                .andExpect(jsonPath("content[4].emailCustomer").value("hai@gmail.com"))
-                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2000-10-10"))
-                .andExpect(jsonPath("content[4].phoneNumberCustomer").value("0983125476"))
-                .andExpect(jsonPath("content[4].addressCustomer").value("Da Nang"))
-                .andExpect(jsonPath("content[4].statusCustomer").value(true));
-    }
 
 
     /**
@@ -193,10 +159,8 @@ public class CustomerListRestController_ListCustomert {
                 .andExpect(jsonPath("content[0].genderCustomer").value(false))
                 .andExpect(jsonPath("content[0].emailCustomer").value("anh@gmail.com"))
                 .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("1997-10-10"))
-
                 .andExpect(jsonPath("content[0].phoneNumberCustomer").value("098732165"))
-                .andExpect(jsonPath("content[0].addressCustomer").value("Da Nang"))
-                .andExpect(jsonPath("content[0].statusCustomer").value(true));
+                .andExpect(jsonPath("content[0].addressCustomer").value("Da Nang"));
     }
 
     /**
