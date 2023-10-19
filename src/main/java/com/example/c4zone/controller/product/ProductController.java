@@ -13,11 +13,13 @@ import com.example.c4zone.model.product.Product;
 import com.example.c4zone.service.product.IImageService;
 import com.example.c4zone.service.product.IProductService;
 
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import org.json.JSONObject;
+
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
