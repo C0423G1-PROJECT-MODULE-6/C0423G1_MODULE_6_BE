@@ -53,9 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable().cors().and()//
                 .authorizeRequests()//
                 .antMatchers(
+                        "/api/**",
+                        "/api/user/create/**",
+                        "/api/user/confirm/**",
+                        "/api/user/resetOTP/**",
+                        "/api/user/login-by-username/**"
 
-                       "/api/**"
-                    
+
+                      
                 ).permitAll()
 
                 .antMatchers(
@@ -71,11 +76,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 .antMatchers(
+
                         // "/api/admin/sales-report/**",
                         // "/api/admin/scanner-qr",
                         // "/api/admin/orderHistory/**",
                         // "/api/admin/order/**",
                         // "/api/amin/order/cart/**"
+
                 ).hasAnyAuthority("ROLE_SALE")
 
 
