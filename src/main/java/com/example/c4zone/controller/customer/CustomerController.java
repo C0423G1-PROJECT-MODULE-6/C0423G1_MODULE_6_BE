@@ -91,12 +91,12 @@ public class CustomerController {
      * Goal: get all customers
      * return list of customers
      */
-    @GetMapping("/modal")
-    public ResponseEntity<Page<ICustomerListDto>> getAllCustomers(@RequestParam(name = "_limit") Integer limit,
+    @GetMapping("/list/modal")
+    public ResponseEntity<Page<ICustomerListDto>> getAllCustomers(
                                                                   @RequestParam(defaultValue = "0", required = false,name = "_page") Integer page,
                                                                   @RequestParam(defaultValue = "", required = false,name = "name_like") String name,
                                                                   @RequestParam(defaultValue = "", required = false,name = "age") String age,
-                                                                  @RequestParam(defaultValue = "2", required = false,name = "gender") String gender,
+                                                                  @RequestParam(defaultValue = "3", required = false,name = "gender") String gender,
                                                                   @RequestParam(defaultValue = "", required = false,name = "phone") String phoneNumber
                                                                  ) {
         Pageable pageable = PageRequest.of(page, 5, Sort.by("nameCustomer").ascending());
@@ -150,7 +150,7 @@ public class CustomerController {
      * * return HttpStatus
      */
     @PostMapping("/create")
-    public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> createCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult) {
         Customer customer = new Customer();
         Map<String, String> errors = new HashMap<>();
         new CustomerDto().validate(customerDto, bindingResult);

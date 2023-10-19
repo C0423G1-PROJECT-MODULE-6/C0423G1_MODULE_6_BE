@@ -39,13 +39,12 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Page<ICustomerListDto> getPageCustomerForModal(Pageable pageable, String valueSearchName, String valueSearchAge, String valueSearchGender,String phoneNumber) {
-        if(!phoneNumber.equals("")) {
+        if(!(phoneNumber.equals("")) ){
             return customerRepository.findAllCustomerByPhone(pageable,phoneNumber);
         }
-        if (!(valueSearchGender.equals("2"))) {
+        if (!(valueSearchGender.equals("3"))) {
             return customerRepository.findAllCustomerByGenderModal(pageable, "%" + valueSearchName + "%", valueSearchGender);
         }
-
         if (!(valueSearchAge).equals("")) {
             return customerRepository.findAllCustomerByAgeModal(pageable, "%" + valueSearchName + "%",valueSearchAge);
         }
