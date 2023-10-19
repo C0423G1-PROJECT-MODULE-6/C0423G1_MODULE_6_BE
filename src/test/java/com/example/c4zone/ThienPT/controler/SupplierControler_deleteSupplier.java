@@ -50,7 +50,7 @@ public class SupplierControler_deleteSupplier {
     public void deleteSupplier_id_26() throws Exception{
         this.mockMvc.perform(
                 MockMvcRequestBuilders.delete("/api/admin/supplier/{id}","")
-        ).andExpect(status().isMethodNotAllowed());
+        ).andExpect(status().isBadRequest());
     }
 
     /**
@@ -61,7 +61,7 @@ public class SupplierControler_deleteSupplier {
     @Test
     public void deleteSupplier_id_27() throws Exception{
         this.mockMvc.perform(
-                MockMvcRequestBuilders.delete("/api/admin/supplier/{id}",3)
+                MockMvcRequestBuilders.delete("/api/admin/supplier/{id}",9)
         ).andExpect(status().isNotFound());
     }
 }

@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.List;
 
-import java.util.Optional;
 
 @Service
 public class ProductService implements IProductService{
@@ -26,7 +27,7 @@ public class ProductService implements IProductService{
      */
     @Override
     public Product findProductById(Long idProduct) {
-        return productRepository.findProductById(idProduct);
+        return productRepository.findByProductId(idProduct);
     }
 
     /**
@@ -91,6 +92,11 @@ public class ProductService implements IProductService{
         return productRepository.findProductByIdWarehouse(id);
     }
 
+    @Override
+    public List<IProductDto> findProductWarehouse(Long id) {
+        return productRepository.findProductWarehouse(id);
+    }
+
     /**
      * author :QuanND
      * work day : 12/10/2023
@@ -120,8 +126,9 @@ public class ProductService implements IProductService{
                 return productRepository.getAllByPrice(pageable, 5000000.0, 10000000.0);
             case "better 10m":
                 return productRepository.getAllByPriceMin(pageable, 10000000.0);
+            default:
+                return productRepository.getAllByName(pageable, "%%");
         }
-        return null;
     }
 
     /**
@@ -149,11 +156,12 @@ public class ProductService implements IProductService{
             case "smaller 10":
                 return productRepository.getAllByQuantityMax(pageable, 10);
             case "10 to 50":
-                return productRepository.getAllByQuantity(pageable, 10,50);
+                return productRepository.getAllByQuantity(pageable, 10, 50);
             case "better 50":
                 return productRepository.getAllByQuantityMin(pageable, 50);
+            default:
+                return productRepository.getAllByName(pageable, "%%");
         }
-        return null;
     }
 
     /**
@@ -170,6 +178,7 @@ public class ProductService implements IProductService{
     public Integer getQuantityById(Long idProduct) {
         return productRepository.getQuantityByid(idProduct);
     }
+
 
 
 }

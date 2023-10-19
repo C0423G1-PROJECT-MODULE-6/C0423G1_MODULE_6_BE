@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface IAppRoleService {
     List<AppRole> findAllAppRole();
+    AppRole findById(Long id);
 }
