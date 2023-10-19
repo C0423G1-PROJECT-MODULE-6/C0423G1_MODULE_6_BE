@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable().cors().and()//
                 .authorizeRequests()//
                 .antMatchers(
-//                        "/api/**",
+                        "/api/**",
                         "/api/user/create/**",
                         "/api/user/confirm/**",
                         "/api/user/resetOTP/**",
@@ -68,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ).hasAnyAuthority("ROLE_ADMIN", "ROLE_SALE", "ROLE_BUSINESS", "ROLE_WAREHOUSE")//
 
                 .antMatchers(
-                        "/api/**"
+//                        "/api/**"
                 ).hasAnyAuthority("ROLE_ADMIN")//
 
 
