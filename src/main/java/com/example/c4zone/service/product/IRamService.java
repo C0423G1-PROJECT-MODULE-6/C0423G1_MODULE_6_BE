@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IRamService {
     List<Ram> findAll();
+    Ram findByIdRam(Long idRam);
 }

@@ -5,7 +5,9 @@ import com.example.c4zone.dto.reportsales.SalesReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.c4zone.repository.reportsales.SalesReportRepository;
+
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class SalesReportService implements ISalesReportService {
@@ -13,9 +15,9 @@ public class SalesReportService implements ISalesReportService {
     private SalesReportRepository salesReportRepository;
 
     @Override
-    public List<SalesReport> getData(String startDate, String endDate, String searchTerm) {
-        System.out.println(salesReportRepository.getData(startDate, endDate, searchTerm));
-        return salesReportRepository.getData(startDate, endDate, searchTerm);
+    public List<SalesReport> getData() {
+        System.out.println(salesReportRepository.getData());
+        return salesReportRepository.getData();
 
     }
 
@@ -32,7 +34,15 @@ public class SalesReportService implements ISalesReportService {
                 return salesReportRepository.getDataSreach(startDate, endDate, products.get(i).getIdProduct());
             }
         }
+        if (Objects.equals(startDate, "") || Objects.equals(endDate, "")) {
+            return salesReportRepository.getData();
+        }
         return salesReportRepository.getDataSreachNull(startDate, endDate);
+    }
+
+    @Override
+    public Product getById(Long idProduct) {
+        return salesReportRepository.getByIdProduct(idProduct);
     }
 
 }

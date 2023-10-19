@@ -4,11 +4,9 @@ import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.dto.warehouse.ISupplierDtoWarehouse;
 import com.example.c4zone.dto.warehouse.WarehouseDto;
 import com.example.c4zone.model.wareHouse.IWarehouseProjection;
-import com.example.c4zone.model.wareHouse.WareHouse;
 import com.example.c4zone.service.product.IProductService;
 import com.example.c4zone.service.supplier.ISupplierService;
 import com.example.c4zone.service.wareHouse.IWareHouseService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,48 +38,55 @@ public class WareHouseController {
      * Method find All
      * Author PhapTM
      * Create 12-10-2023
+     *
      * @param choose : Select type to search
-     * @param sort : Arranged in many ways
-     * @param page : number page
-     * @param value :  value of option choose
+     * @param sort   : Arranged in many ways
+     * @param page   : number page
+     * @param value  :  value of option choose
      * @return list Warehouse Management
      */
 
     @GetMapping("")
     public ResponseEntity<Page<IWarehouseProjection>> findAll(
-                @RequestParam(value = "choose", required = false, defaultValue = "name") String choose,
-                @RequestParam(value = "sort", required = false, defaultValue = "") String sort,
-                @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-                @RequestParam(value = "value", required = false, defaultValue = "") String value) {
+            @RequestParam(value = "sort", required = false, defaultValue = "") String sort,
+            @RequestParam(value = "choose", required = false, defaultValue = "name") String choose,
+            @RequestParam(value = "value", required = false, defaultValue = "") String value,
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page) {
         Page<IWarehouseProjection> warehouseProjections = null;
         Pageable pageable;
-        if(page < 0){
-            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        switch (sort){
+
+        switch (sort) {
             case "name":
-                pageable = PageRequest.of(page, 5, Sort.by("name").ascending());
+                pageable = PageRequest.of(page, 5, Sort.by("nameProduct").ascending());
                 break;
             case "price":
-                pageable = PageRequest.of(page, 5, Sort.by("price").ascending());
+                pageable = PageRequest.of(page, 5, Sort.by("priceProduct").ascending());
                 break;
             case "supplier":
-                pageable = PageRequest.of(page, 5, Sort.by("supplier").ascending());
+                pageable = PageRequest.of(page, 5, Sort.by("nameSupplier").ascending());
+                break;
+            case "quantity":
+                pageable = PageRequest.of(page, 5, Sort.by("quantity").ascending());
+                break;
+            case "totalPrice":
+                pageable = PageRequest.of(page, 5, Sort.by("totalPrice").ascending());
                 break;
             default:
                 pageable = PageRequest.of(page, 5);
                 break;
         }
-        switch (choose){
+        switch (choose) {
             case "name":
-                warehouseProjections = wareHouseService.findAllByName(pageable,value);
+                warehouseProjections = wareHouseService.findAllByName(pageable, value);
                 break;
             case "price":
-                warehouseProjections = wareHouseService.findAllByPrice(pageable,value);
+                warehouseProjections = wareHouseService.findAllByPrice(pageable, value);
                 break;
             case "supplier":
-                warehouseProjections = wareHouseService.findAllBySupplier(pageable,value);
+                warehouseProjections = wareHouseService.findAllBySupplier(pageable, value);
                 break;
+            default:
+                warehouseProjections = wareHouseService.findAllByName(pageable, "");
         }
         return new ResponseEntity<>(warehouseProjections, HttpStatus.OK);
     }
@@ -90,22 +95,15 @@ public class WareHouseController {
      * Method: chooseProduct
      * Author: PhapTM
      * Create: 12-10-2023
+     *
      * @param id find id by product
      * @return object of product
      */
-//    @GetMapping("/product/{id}")
-//    public ResponseEntity<IProductDto> chooseProduct(@PathVariable Long id) {
-//        IProductDto productDto = productService.findProductByIdWarehouse(id);
-//        if(productDto == null) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//        return new ResponseEntity<>(productDto, HttpStatus.OK);
-//    }
- @GetMapping("/product/{id}")
-    public ResponseEntity<List<IProductDto>> chooseProduct2(@PathVariable Long id) {
-        List<IProductDto> productDto = productService.findProductWarehouse(id);
-        if(productDto == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @GetMapping("/product/{id}")
+    public ResponseEntity<IProductDto> chooseProduct(@PathVariable Long id) {
+        IProductDto productDto = productService.findProductByIdWarehouse(id);
+        if (productDto == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
@@ -114,14 +112,15 @@ public class WareHouseController {
      * Method: chooseProduct
      * Author: PhapTM
      * Create: 12-10-2023
+     *
      * @param id find by id by supplier
      * @return object of supplier
      */
     @GetMapping("/supplier/{id}")
     public ResponseEntity<ISupplierDtoWarehouse> getSupplier(@PathVariable Long id) {
         ISupplierDtoWarehouse supplierDtoWarehouse = supplierService.findSupplierByIdWarehouse(id);
-        if(supplierDtoWarehouse ==null ){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (supplierDtoWarehouse == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(supplierDtoWarehouse, HttpStatus.OK);
     }
@@ -130,14 +129,16 @@ public class WareHouseController {
      * Method: chooseSupplier
      * Author: PhapTM
      * Create: 12-10-2023
-     * @param warehouseDto create object by warehouseDto
+     *
+     * @param warehouseDto  create object by warehouseDto
      * @param bindingResult returns error results
      * @return if true, return of HttpStatus.CREATE
-     *         else, return of HttpStatus.BAD_REQUEST
+     * else, return of HttpStatus.BAD_REQUEST
      */
 
     @PostMapping("/create")
-    public ResponseEntity<?> importProduct(@Valid @RequestBody WarehouseDto warehouseDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> importProduct(@Valid @RequestBody WarehouseDto warehouseDto, BindingResult bindingResult) {
+
         Map<String, String> errors = new HashMap<>();
         new WarehouseDto().validate(warehouseDto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -149,6 +150,5 @@ public class WareHouseController {
         wareHouseService.importProduct(warehouseDto.getProductId(), warehouseDto.getQuantity(), warehouseDto.getSupplierId());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
 
 }
