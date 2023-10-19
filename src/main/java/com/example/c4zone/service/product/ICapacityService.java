@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ICapacityService {
     List<Capacity> findAll();
+    Capacity findByIdCapacity(Long idCapacity);
 }

@@ -21,4 +21,9 @@ public class TypeService implements ITypeService{
     public List<Type> findAll() {
         return typeRepository.findAll();
     }
+
+    @Override
+    public Type findByIdType(Long idType) {
+        return typeRepository.findTypeById(idType);
+    }
 }

@@ -1,17 +1,19 @@
 package com.example.c4zone.controller.product;
 
-import com.example.c4zone.dto.product.IProductDto;
-import com.example.c4zone.dto.product.ImageDto;
-import com.example.c4zone.dto.product.ProductDto;
-import com.example.c4zone.model.product.Image;
-import com.example.c4zone.model.product.Product;
-import com.example.c4zone.service.product.IImageService;
-import com.example.c4zone.service.product.IProductService;
+import com.example.c4zone.dto.product.*;
+
+import com.example.c4zone.model.product.*;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import org.json.JSONObject;
+
+import com.example.c4zone.model.product.Image;
+import com.example.c4zone.model.product.Product;
+import com.example.c4zone.service.product.IImageService;
+import com.example.c4zone.service.product.IProductService;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,6 +37,7 @@ import java.io.IOException;
 import java.util.*;
 
 
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("api/admin/product")
@@ -43,33 +46,6 @@ public class ProductController {
     private IProductService productService;
     @Autowired
     private IImageService imageService;
-//    @Autowired
-//    private ICapacityService capacityService;
-//    @Autowired
-//    private IColorService colorService;
-//    @Autowired
-//    private ICpuService cpuService;
-//    @Autowired
-//    private IRamService ramService;
-//    @Autowired
-//    private ISeriesService seriesService;
-//    @Autowired
-//    private ITypeService typeService;
-
-    /**
-     * author: DaoPTA
-     * workday: 12/10/2023
-     *
-     * @return set image by firebase in list
-     */
-    @GetMapping("/create")
-    public ResponseEntity<ProductDto> getProductForCreate() {
-        ProductDto productDto = new ProductDto();
-        ImageDto imageDto = new ImageDto();
-        imageDto.setName("");
-        productDto.setImageDto(imageDto);
-        return new ResponseEntity<>(productDto, HttpStatus.OK);
-    }
 
     /**
      * author: DaoPTA
@@ -83,12 +59,32 @@ public class ProductController {
     public ResponseEntity<ProductDto> findProductById(@PathVariable("idProduct") Long idProduct) {
         List<Image> image = imageService.findImageProductByIdProduct(idProduct);
         Product product = productService.findProductById(idProduct);
-        ImageDto imageDto = new ImageDto();
-        BeanUtils.copyProperties(image, imageDto);
+        List<String> imageDtoList = new ArrayList<>();
+        for (Image i: image) {
+            String imageDtoLists = i.getName();
+            imageDtoList.add(imageDtoLists);
+        }
+        CapacityDto capacityDto = new CapacityDto();
+        BeanUtils.copyProperties(product.getCapacity(), capacityDto);
+        ColorDto colorDto = new ColorDto();
+        BeanUtils.copyProperties(product.getColor(), colorDto);
+        CpuDto cpuDto = new CpuDto();
+        BeanUtils.copyProperties(product.getCpu(), cpuDto);
+        RamDto ramDto = new RamDto();
+        BeanUtils.copyProperties(product.getRam(), ramDto);
+        SeriesDto seriesDto = new SeriesDto();
+        BeanUtils.copyProperties(product.getSeries(), seriesDto);
+        TypeDto typeDto = new TypeDto();
+        BeanUtils.copyProperties(product.getType(), typeDto);
         ProductDto productDto = new ProductDto();
+        productDto.setCapacityDto(capacityDto);
+        productDto.setColorDto(colorDto);
+        productDto.setCpuDto(cpuDto);
+        productDto.setRamDto(ramDto);
+        productDto.setSeriesDto(seriesDto);
+        productDto.setTypeDto(typeDto);
         BeanUtils.copyProperties(product, productDto);
-        imageDto.setProduct(product.getIdProduct());
-        productDto.setImageDto(imageDto);
+        productDto.setImageDtoList(imageDtoList);
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
@@ -103,7 +99,7 @@ public class ProductController {
      */
     @PostMapping("/add")
     @ResponseBody
-    public ResponseEntity<Object> createProduct(@Valid @RequestBody(required = false) ProductDto productDto,
+    public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductDto productDto,
                                                 BindingResult bindingResult) throws WriterException, IOException {
 
         Map<String, String> error = new HashMap<>();
@@ -115,10 +111,28 @@ public class ProductController {
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
         Product product = new Product();
+        Capacity capacity = new Capacity();
+        Color color = new Color();
+        Cpu cpu = new Cpu();
+        Ram ram = new Ram();
+        Series series = new Series();
+        Type type = new Type();
         BeanUtils.copyProperties(productDto, product);
+        BeanUtils.copyProperties(productDto.getCapacityDto(), capacity);
+        product.setCapacity(capacity);
+        BeanUtils.copyProperties(productDto.getColorDto(), color);
+        product.setColor(color);
+        BeanUtils.copyProperties(productDto.getCpuDto(), cpu);
+        product.setCpu(cpu);
+        BeanUtils.copyProperties(productDto.getRamDto(), ram);
+        product.setRam(ram);
+        BeanUtils.copyProperties(productDto.getSeriesDto(), series);
+        product.setSeries(series);
+        BeanUtils.copyProperties(productDto.getTypeDto(), type);
+        product.setType(type);
         productService.createProduct(product);
         Long idProduct = productService.getLastInsertedId();
-        imageService.insertImageByProductId(productDto.getImageDtoList(),idProduct);
+        imageService.insertImageByProductId(productDto.getImageDtoList(), idProduct);
 
 
         String qrCodeText = product.toString();
@@ -161,21 +175,39 @@ public class ProductController {
      */
     @PatchMapping("/{idProduct}")
     @ResponseBody
-    public ResponseEntity updateProduct(@Valid @RequestBody ProductDto productDto, @PathVariable Long idProduct, BindingResult bindingResult) {
-        Product product = (Product) productService.findProductById(idProduct);
-        new ProductDto().validate(productDto, bindingResult);
+    public ResponseEntity<Object> updateProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
         Map<String, String> error = new HashMap<>();
+        new ProductDto().validate(productDto, bindingResult);
         if (bindingResult.hasErrors()) {
             for (FieldError err : bindingResult.getFieldErrors()) {
                 error.put(err.getField(), err.getDefaultMessage());
             }
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
-        Image image = new Image();
+//        List<String> imageList = new ArrayList<>();
+        Product product = new Product();
+        Capacity capacity = new Capacity();
+        Color color = new Color();
+        Cpu cpu = new Cpu();
+        Ram ram = new Ram();
+        Series series = new Series();
+        Type type = new Type();
         BeanUtils.copyProperties(productDto, product);
-        BeanUtils.copyProperties(productDto.getImageDto(), image);
+        BeanUtils.copyProperties(productDto.getCapacityDto(), capacity);
+        product.setCapacity(capacity);
+        BeanUtils.copyProperties(productDto.getColorDto(), color);
+        product.setColor(color);
+        BeanUtils.copyProperties(productDto.getCpuDto(), cpu);
+        product.setCpu(cpu);
+        BeanUtils.copyProperties(productDto.getRamDto(), ram);
+        product.setRam(ram);
+        BeanUtils.copyProperties(productDto.getSeriesDto(), series);
+        product.setSeries(series);
+        BeanUtils.copyProperties(productDto.getTypeDto(), type);
+        product.setType(type);
+        imageService.deleteImg(productDto.getIdProduct());
+        imageService.insertImageByProductId(productDto.getImageDtoList(), productDto.getIdProduct());
         productService.updateProduct(product);
-        imageService.updateImageProduct(image, product.getIdProduct());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -262,11 +294,11 @@ public class ProductController {
      * @return if Http status
      */
     @PatchMapping("/remove")
-    public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id){
-        if (productService.findById(id)==null){
+    public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id) {
+        if (productService.findById(id) == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-            productService.removeProduct(id);
+        productService.removeProduct(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

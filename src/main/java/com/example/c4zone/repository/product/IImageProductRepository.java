@@ -40,8 +40,13 @@ public interface IImageProductRepository extends JpaRepository<Image, Long> {
      */
     @Transactional
     @Modifying
-    @Query(value = "UPDATE image SET name = :#{#image.name} WHERE id_product = :idProduct", nativeQuery = true)
-    void updateImage(@Param("image") Image image, Long idProduct);
+    @Query(value = "call update_img(:image , :idProduct)", nativeQuery = true)
+    void updateImage(@Param("image") String image,@Param("idProduct") Long idProduct);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update image set status_image = false where image.id_product = :id",nativeQuery = true)
+    void deleteImg(Long id);
 
     /**
      * author: DaoPTA
@@ -50,7 +55,7 @@ public interface IImageProductRepository extends JpaRepository<Image, Long> {
      * @param idProduct find by image with idProduct
      * @return image with idProduct
      */
-    @Query(value = "SELECT i.id_image, i.name, i.id_product " +
+    @Query(value = "SELECT i.id_image, i.name, i.id_product, i.status_image " +
             "FROM image as i WHERE id_product = :idProduct",nativeQuery = true)
     List<Image> findImageByIdProduct(@Param("idProduct") Long idProduct);
 

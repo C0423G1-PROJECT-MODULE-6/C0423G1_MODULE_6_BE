@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ITypeService {
     List<Type> findAll();
+    Type findByIdType(Long idType);
 }
