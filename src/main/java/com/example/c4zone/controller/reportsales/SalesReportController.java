@@ -1,6 +1,7 @@
 package com.example.c4zone.controller.reportsales;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.c4zone.dto.reportsales.SalesReport;
 import com.example.c4zone.service.reportsales.ISalesReportService;
@@ -16,31 +17,24 @@ public class SalesReportController {
     private ISalesReportService salesReportService;
 
     @GetMapping("")
-    public List<SalesReport> getSalesReport() {
+    public ResponseEntity<List<SalesReport>> getSalesReport() {
         List<SalesReport> salesReportData = salesReportService.getData();
-        return salesReportData;
+        return ResponseEntity.ok(salesReportData);
     }
 
     @GetMapping("/product")
-    public List<Product> getProduct() {
+    public ResponseEntity<List<Product>> getProduct() {
         List<Product> dataProduct = salesReportService.getDataProduct();
-        return dataProduct;
-
+        return ResponseEntity.ok(dataProduct);
     }
 
     @GetMapping("/sreach")
-    public List<SalesReport> getSalesReportSearch(
+    public ResponseEntity<List<SalesReport>> getSalesReportSearch(
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
             @RequestParam("searchTerm") String searchTerm) {
         String resultString = searchTerm.replace("'", "");
-        List<SalesReport> dataSreach = salesReportService.getDataSreach(startDate, endDate, resultString);
-        return dataSreach;
+        List<SalesReport> dataSearch = salesReportService.getDataSreach(startDate, endDate, resultString);
+        return ResponseEntity.ok(dataSearch);
     }
 }
-
-
-
-
-
-

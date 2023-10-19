@@ -21,4 +21,9 @@ public class CapacityService implements ICapacityService{
     public List<Capacity> findAll() {
         return capacityRepository.findAll();
     }
+
+    @Override
+    public Capacity findByIdCapacity(Long idCapacity) {
+        return capacityRepository.findCapacityById(idCapacity);
+    }
 }

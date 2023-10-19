@@ -121,10 +121,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
      * param Long id
      * return HttpStatus
      */
-    @Query(value = "select id_customer as idCustomerOrder, name_customer as customerNameOrder" +
-            ",phone_number_customer as customerPhoneorder " +
-            ",address_customer as addressCustomerOrder,birth_date_customer as birthDayCustomerOrder" +
-            ",email_customer as emailCustomerOrder " +
+    @Query(value = "select id_customer as idCustomer, name_customer as nameCustomer" +
+            ",phone_number_customer as phoneNumberCustomer " +
+            ",address_customer as addressCustomer,birth_date_customer as dateOfBirthCustomer" +
+            ",email_customer as emailCustomer " +
             "from customer " +
             "where id_customer = :id", nativeQuery = true)
     ICustomerDtoOrder findCustomerByIdOrder(Long id);

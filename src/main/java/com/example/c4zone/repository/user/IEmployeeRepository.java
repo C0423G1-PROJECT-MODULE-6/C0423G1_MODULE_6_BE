@@ -78,7 +78,7 @@ public interface IEmployeeRepository extends JpaRepository<AppUser, Long> {
      * @return code of employee latest
      */
     @Query(value = "select max(id) from app_user ", nativeQuery = true)
-    String getLastIdEmployee();
+    Long getLastIdEmployee();
 
     /**
      * Author: CaoNV
@@ -119,7 +119,8 @@ public interface IEmployeeRepository extends JpaRepository<AppUser, Long> {
      */
     @Transactional
     @Query(value = " INSERT INTO app_user (email,employee_address,employee_birthday,employee_code,employee_gender,employee_id_card,employee_image,employee_name,employee_phone,employee_start_date,flag_deleted,`password`,user_name) " +
-            " VALUES ( :#{#employee.email},:#{#employee.employeeAddress},:#{#employee.employeeBirthday},:#{#employee.employeeCode},:#{#employee.employeeGender},:#{#employee.employeeIdCard},:#{#employee.employeeImage},:#{#employee.employeeName}, :#{#employee.employeePhone},:#{#employee.employeeStartDate}, :#{#employee.flagDeleted}, :#{#employee.password},:#{#employee.userName})", nativeQuery = true)
+            " VALUES ( :#{#employee.email},:#{#employee.employeeAddress},:#{#employee.employeeBirthday},:#{#employee.employeeCode},:#{#employee.employeeGender},:#{#employee.employeeIdCard},:#{#employee.employeeImage},:#{#employee.employeeName}, :#{#employee.employeePhone},:#{#employee.employeeStartDate}, :#{#employee.flagDeleted}, :#{#employee.password}, :#{#employee.userName})", nativeQuery = true)
     void createEmployee(@Param(value = "employee") AppUser employee
+
     );
 }

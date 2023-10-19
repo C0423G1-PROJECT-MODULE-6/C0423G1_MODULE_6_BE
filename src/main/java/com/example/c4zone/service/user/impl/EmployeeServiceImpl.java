@@ -51,9 +51,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public String getNextId() {
-        Long nextId = Long.valueOf(employeeRepository.getLastIdEmployee());
-        return null;
+    public Long getNextId() {
+
+        return employeeRepository.getLastIdEmployee()   ;
     }
 
     @Override
