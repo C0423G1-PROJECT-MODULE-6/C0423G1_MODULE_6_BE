@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()//
                 .antMatchers(
 
-                       "/api/**"git
+                       "/api/**"
                     
                 ).permitAll()
 
