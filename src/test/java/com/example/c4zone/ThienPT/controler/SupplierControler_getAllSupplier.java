@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SupplierControler_getAllSupplier {
+ class SupplierControler_getAllSupplier {
     @Autowired
     private MockMvc mockMvc;
 
@@ -27,7 +27,7 @@ public class SupplierControler_getAllSupplier {
      * */
 
     @Test
-    public void getAllStudent_6() throws  Exception{
+     void getAllStudent_6() throws  Exception{
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(
                         "/api/admin/supplier?_page=0&_limit=3&name_like=&addressSearch=&emailSearch="
@@ -49,7 +49,7 @@ public class SupplierControler_getAllSupplier {
      * */
 
     @Test
-    public void getAllStudent_5() throws  Exception{
+    void getAllStudent_5() throws  Exception{
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get("/api/admin/supplier?_page=0&_limit=3&name_like=&addressSearch=&emailSearch=")
         ).andDo(print())
