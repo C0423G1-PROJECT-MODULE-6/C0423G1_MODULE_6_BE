@@ -12,6 +12,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
@@ -300,6 +302,18 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             " WHERE " +
             "    p.id_product =:id", nativeQuery = true)
     IProductDto findProductByIdWarehouse(Long id);
+    @Query(value = "   SELECT " +
+            "    p.id_product AS id," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price" +
+            "    i.name as image " +
+            " FROM  " +
+            "    c4_zone.product p " +
+            " JOIN image i " +
+            " ON p.id=i.id_image " +
+            " WHERE " +
+            "    p.id_product =:id ", nativeQuery = true)
+    List<IProductDto> findProductWarehouse(Long id);
 
     /**
      * author :QuanND

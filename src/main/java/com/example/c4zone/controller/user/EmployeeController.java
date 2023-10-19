@@ -1,5 +1,4 @@
 package com.example.c4zone.controller.user;
-
 import com.example.c4zone.dto.user.employee.FormatEmployee;
 import com.example.c4zone.dto.user.employee.IEmployeeDto;
 import com.example.c4zone.model.user.AppRole;
@@ -14,18 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-
 import javax.validation.Valid;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 @CrossOrigin("*")
@@ -48,14 +46,15 @@ public class EmployeeController {
      * return: Page<AppUser>
      */
     @GetMapping("/list")
-    public ResponseEntity<Page<IEmployeeDto>> findAllEmployeeBy(@RequestParam(name = "page", defaultValue = "0", required = false) int page,
-                                                                @RequestParam(name = "searchJob", defaultValue = "", required = false) String searchJob,
-                                                                @RequestParam(name = "searchName", defaultValue = "", required = false) String searchName,
-                                                                @RequestParam(name = "searchPhone", defaultValue = "", required = false) String searchPhone) {
+    public ResponseEntity<Page<IEmployeeDto>> findAllEmployeeBy(@RequestParam(name = "page", defaultValue = "0",required = false) int page,
+                                                                @RequestParam(name = "searchJob", defaultValue = "",required = false)String searchJob,
+                                                                @RequestParam(name = "searchName",defaultValue = "",required = false)String searchName,
+                                                                @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
 
-        Pageable pageable = PageRequest.of(page, 5);
-        Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable, '%' + searchJob + '%', "%" + searchName + "%", "%" + searchPhone + "%");
-        if (employeeDtoPage.getTotalElements() == 0) {
+        Pageable pageable = PageRequest.of(page,5,Sort.by("id").descending());
+        Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable,'%'+searchJob+'%',"%"+searchName+"%","%"+searchPhone+"%");
+        if (employeeDtoPage.getTotalElements()==0 ){
+
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(employeeDtoPage, HttpStatus.OK);
@@ -106,6 +105,7 @@ public class EmployeeController {
      * @param bindingResult errors
      * @return Response entity
      */
+    @Transactional
     @PostMapping("/create")
     public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeDto employeeDto, BindingResult bindingResult) {
         new EmployeeDto().validate(employeeDto, bindingResult);
@@ -133,11 +133,24 @@ public class EmployeeController {
         employee.setFlagDeleted(false);
         employee.setPassword("123456");
         employeeService.createEmployee(employee);
-        UserRole userRole = new UserRole();
-        userRole.setAppRole(appRole);
-        userRole.setAppUser(employee);
+        // id appUser
+        Long appUser = employeeService.getNextId();
+
+        // id appRole
+        Long appRole1 = employeeDto.getRoleId();
+
+
+        AppRole appRole2 = new AppRole();
+        appRole2.setId(appRole1);
+
+        AppUser appUser1 = new AppUser();
+        appUser1.setId(appUser);
+
+        UserRole userRole = new UserRole(appUser1,appRole2);
+
         userRoleRepository.save(userRole);
-        System.out.println(userRole);
+
+
         return new ResponseEntity<>("Thêm mới thành công", HttpStatus.OK);
     }
 

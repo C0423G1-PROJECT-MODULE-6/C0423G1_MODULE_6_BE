@@ -25,14 +25,49 @@ public class SupplierController {
     @Autowired
     private ISupplierService supplierService;
 
+
+    /**
+     * author: ThienPT
+     * date: 18/10/2023
+     * goal: Get list all supplier
+     *
+     * @param page to find supplier by id
+     * @param size to find supplier by id
+     * @param nameSearch to find supplier by id
+     * @param addressSearch to find supplier by id
+     * @param emailSearch to find supplier by id
+     * @return HttpStatus
+     */
+
     @GetMapping("")
-    public ResponseEntity<Page<Supplier>> getAllSupplier(
-            @RequestParam("_page") int page,
-            @RequestParam("_limit") int size,
+    public ResponseEntity<Object> getAllSupplier(
+            @RequestParam("_page") Integer page,
+            @RequestParam("_limit") Integer size,
             @RequestParam("name_like") String nameSearch,
             @RequestParam("addressSearch") String addressSearch,
             @RequestParam("emailSearch") String emailSearch
     ) {
+        if (page == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá trị của trang hiện tại không thể là null");
+        }
+        if (size == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá trị của kích cỡ dòng trong 1 trang không thể null");
+        }
+        if (page.equals("")){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá trị của trang hiện tại không thể là rỗng");
+        }
+        if (size.equals("")){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá trị của kích cỡ dòng trong 1 trang không thể rỗng");
+        }
+        if (nameSearch == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá trị của trường tên nhà cung cấp không thể là null");
+        }
+        if (addressSearch == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá trị của trường địa chỉ nhà cung cấp không thể là null");
+        }
+        if (emailSearch == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá trị của trường email nhà cung cấp không thể là null");
+        }
         Pageable pageable = PageRequest.of(page, size);
         Page<Supplier> listSupplier;
         if (nameSearch.isEmpty() && addressSearch.isEmpty() && emailSearch.isEmpty()) {
@@ -50,13 +85,23 @@ public class SupplierController {
         return new ResponseEntity<>(listSupplier, HttpStatus.OK);
     }
 
+
+    /**
+     * author: ThienPT
+     * date: 18/10/2023
+     * goal: Delete available supplier
+     *
+     * @param id to find supplier by id
+     * @return HttpStatus
+     */
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteSupplier(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteSupplier(@PathVariable Long id) {
         if (id.equals("")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá trị của id không thể mang giá trị rỗng");
         }
         if (id == null) {
-            return ResponseEntity.badRequest().body("Giá trị của id không thể là null");
+            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body("Giá trị của id không thể là null");
         }
         if (supplierService.findByIdSupplier(id) == null) {
             return ResponseEntity.notFound().build();
@@ -173,7 +218,7 @@ public class SupplierController {
      * @return HttpResponse
      */
     @GetMapping("/{id}")
-    private ResponseEntity<Object> getSupplierById(@PathVariable Long id) {
+    public ResponseEntity<Object> getSupplierById(@PathVariable Long id) {
         Supplier supplier = supplierService.findById(id);
         if (id == null) {
             return new ResponseEntity<>("Giá trị id không được null!", HttpStatus.BAD_REQUEST);

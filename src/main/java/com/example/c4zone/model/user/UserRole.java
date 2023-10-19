@@ -1,8 +1,6 @@
 package com.example.c4zone.model.user;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -24,11 +22,17 @@ public class UserRole {
     public UserRole() {
     }
 
+    public UserRole(AppUser appUser, AppRole appRole) {
+        this.appUser = appUser;
+        this.appRole = appRole;
+    }
+
     public UserRole(Long id, AppUser appUser, AppRole appRole) {
         this.id = id;
         this.appUser = appUser;
         this.appRole = appRole;
     }
+
 
     public Long getId() {
         return id;
