@@ -12,11 +12,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-import java.util.Optional;
-
-
 @Repository
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
@@ -73,7 +68,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
      *
      * @param product update object product
      */
-    @Transactional(readOnly = true)
+    @Transactional
     @Modifying
     @Query(value = "UPDATE product set name_product = :#{#product.nameProduct}, battery_product = :#{#product.batteryProduct}, " +
             "description_product= :#{#product.descriptionProduct}, camera_product = :#{#product.cameraProduct}, " +

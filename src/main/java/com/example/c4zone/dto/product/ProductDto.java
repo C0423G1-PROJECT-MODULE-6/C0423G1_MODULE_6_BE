@@ -1,5 +1,4 @@
 package com.example.c4zone.dto.product;
-import com.example.c4zone.model.product.*;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

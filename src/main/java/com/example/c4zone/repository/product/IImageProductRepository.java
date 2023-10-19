@@ -40,8 +40,13 @@ public interface IImageProductRepository extends JpaRepository<Image, Long> {
      */
     @Transactional
     @Modifying
-    @Query(value = "UPDATE image SET name = :#{#image.name} WHERE id_product = :idProduct", nativeQuery = true)
-    void updateImage(@Param("image") Image image, Long idProduct);
+    @Query(value = "call update_img(:image , :idProduct)", nativeQuery = true)
+    void updateImage(@Param("image") String image,@Param("idProduct") Long idProduct);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update image set status_image = false where image.id_product = :id",nativeQuery = true)
+    void deleteImg(Long id);
 
     /**
      * author: DaoPTA
