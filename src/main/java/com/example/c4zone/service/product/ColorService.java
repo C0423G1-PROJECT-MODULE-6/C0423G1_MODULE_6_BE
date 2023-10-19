@@ -21,4 +21,9 @@ public class ColorService implements IColorService{
     public List<Color> findAll() {
         return colorRepository.findAll();
     }
+
+    @Override
+    public Color findByIdColor(Long idColor) {
+        return colorRepository.findColorById(idColor);
+    }
 }

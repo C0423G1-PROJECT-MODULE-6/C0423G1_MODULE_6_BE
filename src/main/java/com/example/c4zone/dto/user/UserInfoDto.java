@@ -40,7 +40,7 @@ public class UserInfoDto implements Validator {
     private java.sql.Date employeeBirthday;
     private java.sql.Date employeeStartDate;
 
-    private static final long OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 minutes
+    private static final int OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 minutes
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private static final String EMAIL_DTO = "emailEmployee";
     private static final String NAME_DTO = "nameEmployee";

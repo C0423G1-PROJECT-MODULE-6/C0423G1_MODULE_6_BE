@@ -16,11 +16,8 @@ public class SalesReportController {
     private ISalesReportService salesReportService;
 
     @GetMapping("")
-    public List<SalesReport> getSalesReport(
-            @RequestParam("startDate") String startDate,
-            @RequestParam("endDate") String endDate,
-            @RequestParam("searchTerm") String searchTerm) {
-        List<SalesReport> salesReportData = salesReportService.getData(startDate, endDate, searchTerm);
+    public List<SalesReport> getSalesReport() {
+        List<SalesReport> salesReportData = salesReportService.getData();
         return salesReportData;
     }
 
@@ -32,7 +29,7 @@ public class SalesReportController {
     }
 
     @GetMapping("/sreach")
-    public List<SalesReport> getSalesReportSreach(
+    public List<SalesReport> getSalesReportSearch(
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
             @RequestParam("searchTerm") String searchTerm) {

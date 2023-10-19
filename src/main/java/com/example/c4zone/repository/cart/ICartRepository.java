@@ -85,7 +85,7 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      */
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "insert into c4_zone.cart (quantity_product_order, id_product, id_user) VALUES (:id_user, :id_product, :newQuantity) ON DUPLICATE KEY UPDATE quantity_product_order = quantity_product_order + :newQuantity")
+    @Query(nativeQuery = true, value = "insert into c4_zone.cart (id_user,id_product,quantity_product_order ) VALUES (:id_user, :id_product, :newQuantity) ON DUPLICATE KEY UPDATE quantity_product_order = quantity_product_order + :newQuantity")
     void createCard(@Param("id_user") Long idUser,@Param("id_product") Long idProduct, @Param("newQuantity") Long newQuantity);
 //    ALTER TABLE cart ADD UNIQUE INDEX user_medicine_index (app_user_id, medicine_id);
     /**

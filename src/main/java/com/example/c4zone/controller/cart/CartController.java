@@ -28,17 +28,17 @@ public class CartController {
     @Autowired
     private IEmployeeService employeeService;
     @PostMapping("/create")
-    public ResponseEntity<?> createCart(@RequestParam (defaultValue = "0") Long idUSer,
-                                        @RequestParam (defaultValue = "0") Long idProduct,
-                                        @RequestParam (defaultValue = "0") Long quantity) {
+    public ResponseEntity<?> createCart(@RequestParam (defaultValue = "0", name="id_user") Long idUSer,
+                                        @RequestParam (defaultValue = "0", name = "id_product") Long idProduct,
+                                        @RequestParam (defaultValue = "0",name = "quantity") Long quantity) {
         AppUser user = employeeService.getEmployeeById(idUSer);
-        Product product = productService.findProductById(idUSer);
+//        Product product = productService.findProductById(idUSer);
         if (user == null){
             return new ResponseEntity<>("Không tìm thấy idUser", HttpStatus.NOT_ACCEPTABLE);
         }
-        if (product == null){
-            return new ResponseEntity<>("Không tìm thấy idProduct", HttpStatus.NOT_ACCEPTABLE);
-        }
+//        if (product == null){
+//            return new ResponseEntity<>("Không tìm thấy idProduct", HttpStatus.NOT_ACCEPTABLE);
+//        }
         if (idProduct == null || idProduct < 1) {
             return new ResponseEntity<>("Không tìm thấy idProduct", HttpStatus.NOT_ACCEPTABLE);
         }
@@ -53,11 +53,11 @@ public class CartController {
 
         if (checkQuantityProduct == 0) {
             System.out.println(checkQuantityProduct);
-            return new ResponseEntity<>("Sản phẩm đã hết hàng", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("Sản phẩm đã hết hàng", HttpStatus.NO_CONTENT);
         }
         if (checkQuantityCart != null) {
             if ((checkQuantityCart + quantity) > checkQuantityProduct) {
-                return new ResponseEntity<>("Số lượng vượt quá số lượng kho", HttpStatus.NOT_ACCEPTABLE);
+                return new ResponseEntity<>("Số lượng vượt quá số lượng kho", HttpStatus.CREATED);
             }
         }
         cartService.saveCart(idUSer, idProduct, quantity);

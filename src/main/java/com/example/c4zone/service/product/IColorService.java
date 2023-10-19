@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IColorService {
     List<Color> findAll();
+    Color findByIdColor(Long idColor);
 }

@@ -1,7 +1,5 @@
 package com.example.c4zone.service.user.impl;
-import com.example.c4zone.dto.user.employee.EmployeeDto;
 import com.example.c4zone.dto.user.employee.IEmployeeDto;
-import com.example.c4zone.model.user.AppRole;
 import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.repository.user.IEmployeeRepository;
 import com.example.c4zone.service.user.IEmployeeService;
@@ -53,9 +51,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public String getNextId() {
-        Long nextId = Long.valueOf(employeeRepository.getLastIdEmployee());
-        return null;
+    public Long getNextId() {
+
+        return employeeRepository.getLastIdEmployee()   ;
     }
 
     @Override
