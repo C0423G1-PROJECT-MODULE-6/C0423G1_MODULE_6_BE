@@ -45,7 +45,7 @@ import java.util.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/admin/product")
+@RequestMapping("/api/admin/product")
 public class ProductController {
     @Autowired
     private IProductService productService;
@@ -189,7 +189,6 @@ public class ProductController {
             }
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
-//        List<String> imageList = new ArrayList<>();
         Product product = new Product();
         Capacity capacity = new Capacity();
         Color color = new Color();
