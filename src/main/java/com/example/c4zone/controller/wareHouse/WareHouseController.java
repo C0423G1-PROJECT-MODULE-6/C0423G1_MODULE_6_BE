@@ -99,11 +99,10 @@ public class WareHouseController {
      * @param id find id by product
      * @return object of product
      */
-
- @GetMapping("/product/{id}")
-    public ResponseEntity<List<IProductDto>> chooseProduct2(@PathVariable Long id) {
-        List<IProductDto> productDto = productService.findProductWarehouse(id);
-        if(productDto == null) {
+    @GetMapping("/product/{id}")
+    public ResponseEntity<IProductDto> chooseProduct(@PathVariable Long id) {
+        IProductDto productDto = productService.findProductByIdWarehouse(id);
+        if (productDto == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(productDto, HttpStatus.OK);

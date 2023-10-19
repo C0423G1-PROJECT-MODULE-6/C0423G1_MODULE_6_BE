@@ -52,10 +52,10 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
     @Query(value = "SELECT * FROM Supplier s WHERE s.id_supplier = :id and s.status_supplier = 1", nativeQuery = true)
     Supplier findSupplierById(@Param("id") Long id);
 
-    @Query(value = "select s.id_supplier as idSupplier, s.name_supplier as nameSupplier, " +
-            "from supplier s" +
-            "where s.id_supplier = :id", nativeQuery = true)
-    ISupplierDtoWarehouse findSupplierByIdWarehouse(Long id);
+    @Query(value = " select s.id_supplier as idSupplier, s.name_supplier as nameSupplier " +
+            " from supplier s " +
+            " where s.id_supplier = :id ", nativeQuery = true)
+    ISupplierDtoWarehouse findSupplierByIdWarehouse(@Param("id") Long id);
 
     /**
      * author: NghiaNPX
