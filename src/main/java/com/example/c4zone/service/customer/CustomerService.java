@@ -45,6 +45,7 @@ public class CustomerService implements ICustomerService {
         if (!(valueSearchGender.equals("3"))) {
             return customerRepository.findAllCustomerByGenderModal(pageable, "%" + valueSearchName + "%", valueSearchGender);
         }
+
         if (!(valueSearchAge).equals("")) {
             return customerRepository.findAllCustomerByAgeModal(pageable, "%" + valueSearchName + "%",valueSearchAge);
         }

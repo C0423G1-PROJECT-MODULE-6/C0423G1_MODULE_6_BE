@@ -1,12 +1,12 @@
 package com.example.c4zone.dto.user.employee;
-import com.example.c4zone.model.user.AppRole;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 public class EmployeeDto implements Validator {
     private Long id;
     private String userName;
-    private AppRole role;
+    private Long roleId;
+
     private String employeeName;
     private String employeeCode;
     private String employeeAddress;
@@ -15,6 +15,7 @@ public class EmployeeDto implements Validator {
     private String employeeIdCard;
     private String employeeBirthday;
     private String employeeStartDate;
+
     private String email;
     private String employeeGender;
     private boolean flagDelete;
@@ -22,10 +23,10 @@ public class EmployeeDto implements Validator {
     public EmployeeDto() {
     }
 
-    public EmployeeDto(Long id, String userName, AppRole role, String name, String employeeCode, String employeeAddress, String employeePhone, String employeeImage, String employeeIdCard, String employeeBirthday, String employeeStartDate, String email, String employeeGender, boolean flagDelete) {
+    public EmployeeDto(Long id, String userName, Long role, String name, String employeeCode, String employeeAddress, String employeePhone, String employeeImage, String employeeIdCard, String employeeBirthday, String employeeStartDate, String email, String employeeGender, boolean flagDelete) {
         this.id = id;
         this.userName = userName;
-        this.role = role;
+        this.roleId = role;
         this.employeeName = name;
         this.employeeCode = employeeCode;
         this.employeeAddress = employeeAddress;
@@ -55,12 +56,12 @@ public class EmployeeDto implements Validator {
         this.userName = userName;
     }
 
-    public AppRole getRole() {
-        return role;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setRole(AppRole role) {
-        this.role = role;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public String getEmployeeName() {
