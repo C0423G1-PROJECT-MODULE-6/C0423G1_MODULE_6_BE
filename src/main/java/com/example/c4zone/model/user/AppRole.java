@@ -19,6 +19,7 @@ public class AppRole {
     private Long id;
     private String name;
     private Boolean flagDeleted;
+    private String type;
     @OneToMany(mappedBy = "appRole")
     @JsonBackReference
     private Set<UserRole> userRoleSet;
@@ -26,10 +27,12 @@ public class AppRole {
     public AppRole() {
     }
 
-    public AppRole(Long id, String name, Boolean flagDeleted) {
+
+    public AppRole(Long id, String name, Boolean flagDeleted, String type) {
         this.id = id;
         this.name = name;
         this.flagDeleted = flagDeleted;
+        this.type = type;
     }
 
     public Long getId() {
@@ -54,5 +57,13 @@ public class AppRole {
 
     public void setFlagDeleted(Boolean flagDeleted) {
         this.flagDeleted = flagDeleted;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
