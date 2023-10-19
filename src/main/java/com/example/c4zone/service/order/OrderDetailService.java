@@ -141,10 +141,10 @@ public class OrderDetailService implements IOrderDetailService{
      * return status 2xx
      */
     @Override
-    public void updateOrderBill(Double totalMoney, Integer paymentMethod,
+    public void updateOrderBill(Double totalMoney, Integer printStatus,
                                 Long idCustomerOrder, Long idUser) {
         OrderBill orderBill = orderDetailRepository.getOrderBillWithCusAndUser(idCustomerOrder,idUser);
-        orderDetailRepository.updateOrderBill(orderBill.getIdOrderBill(),totalMoney,paymentMethod);
+        orderDetailRepository.updateOrderBill(orderBill.getIdOrderBill(),totalMoney, printStatus);
     }
     /**
      * method update print status at final step
@@ -154,9 +154,8 @@ public class OrderDetailService implements IOrderDetailService{
      * return status 2xx
      */
     @Override
-    public void updateOrderBill(int printStatus, Long idCus, Long idUser) {
-        OrderBill orderBill = orderDetailRepository.getOrderBillWithCusAndUser(idCus,idUser);
-        orderDetailRepository.updateOrderBill(printStatus, orderBill.getIdOrderBill());
+    public void updateOrderBill(Double totalMoney, int printStatus, OrderBill orderBill) {
+        orderDetailRepository.updateOrderBill(totalMoney,printStatus, orderBill.getIdOrderBill());
     }
     /**
      * method deleteOrderDetail of bill
@@ -169,4 +168,9 @@ public class OrderDetailService implements IOrderDetailService{
     public void deleteOrderDetailOfBill(Long idOrderBill) {
         orderDetailRepository.deleteOrderDetailOfBill(idOrderBill);
     }
+    @Override
+    public OrderBill findBillNewest(){
+       return orderDetailRepository.findOrderBillWithNewest();
+    }
 }
+

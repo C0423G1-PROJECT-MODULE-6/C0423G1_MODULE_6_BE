@@ -27,9 +27,11 @@ public interface IOrderDetailService {
 
     void deteleOldBillNotPay(Long id);
 
-    void updateOrderBill(Double totalMoney, Integer paymentMethod, Long idCustomerOrder, Long idUser);
+    void updateOrderBill(Double totalMoney, Integer printStatus, Long idCustomerOrder, Long idUser);
 
-    void updateOrderBill(int printStatus, Long idCus, Long idUser);
+    void updateOrderBill(Double totalMoney, int printStatus, OrderBill orderBill);
 
     void deleteOrderDetailOfBill(Long idOrderBill);
+
+    OrderBill findBillNewest();
 }

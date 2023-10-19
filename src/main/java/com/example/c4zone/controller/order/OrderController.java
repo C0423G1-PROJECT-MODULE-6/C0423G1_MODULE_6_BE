@@ -11,7 +11,7 @@ import com.example.c4zone.service.order.IOrderDetailService;
 import com.example.c4zone.service.product.IProductService;
 
 import com.example.c4zone.service.user.IAppUserService;
-import com.example.c4zone.service.user.IEmployeeService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -57,10 +57,15 @@ public class OrderController {
     public ResponseEntity<?> findCustomer(@PathVariable Long id){
         ICustomerDtoOrder customerDtoOrder = customerService.findCustomerByIdOrder(id);
         OrderBill orderBillByCustomerNotPay = orderDetailService.isNotPayOfCustomer(id);
+        ObjectResponseDto objectResponseDto = new ObjectResponseDto();
         if (orderBillByCustomerNotPay != null){
-            return new ResponseEntity<>(orderBillByCustomerNotPay,HttpStatus.OK);
+            objectResponseDto.setType("orderBill");
+            objectResponseDto.setObjectResponse(orderBillByCustomerNotPay);
+            return new ResponseEntity<>(objectResponseDto,HttpStatus.OK);
         }
-        return new ResponseEntity<>(customerDtoOrder,HttpStatus.OK);
+        objectResponseDto.setType("customer");
+        objectResponseDto.setObjectResponse(customerDtoOrder);
+        return new ResponseEntity<>(objectResponseDto,HttpStatus.OK);
     }
     /**
      * method getAllCart
@@ -72,10 +77,7 @@ public class OrderController {
     @GetMapping("/cart/{idUser}")
     public ResponseEntity<?> getAllCart(@PathVariable Long idUser){
         List<ICartDto> cart = cartService.getAllCart(idUser);
-//        if (cart == null){
-//            return new ResponseEntity<>("Không tìm thấy giỏ hàng",HttpStatus.NOT_FOUND);
-//        }
-        if (cart.isEmpty()){
+        if (cart == null){
             return new ResponseEntity<>("Không tìm thấy giỏ hàng",HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(cart,HttpStatus.OK);
@@ -143,6 +145,7 @@ public class OrderController {
             return new ResponseEntity<>("Không tìm thấy",HttpStatus.NOT_FOUND);
         }else {
             if (choose == 1){
+//                cartService.findCartById(orderBillByCustomerNotPay);
                 return new ResponseEntity<>(orderBillByCustomerNotPay,HttpStatus.OK);
             }else if (choose == 2){
                 orderDetailService.deleteOrderDetailOfBill(orderBillByCustomerNotPay.getIdOrderBill());
@@ -168,6 +171,7 @@ public class OrderController {
                 orderBill.setPrintStatus(0);
                 orderBill.setPaymentStatus(0);
                 orderDetailService.createOrderBill(orderBill);
+                cartService.deleteCart(idUser);
                 return new ResponseEntity<>(orderBill,HttpStatus.OK);
             }
         }
@@ -185,7 +189,6 @@ public class OrderController {
     @Transactional
     public ResponseEntity<?> showOrderBillBeforePay(@RequestBody OrderPaymentDto orderPaymentDto){
 
-        List<ICartDto> cartDto = cartService.getAllCart(orderPaymentDto.getIdUser());
         OrderBill orderBillNotPay = orderDetailService.isNotPayOfCustomer(orderPaymentDto.getIdCustomerOrder());
         if (orderBillNotPay == null){
             OrderBill orderBill = new OrderBill();
@@ -211,19 +214,44 @@ public class OrderController {
             orderDetailService.createOrderBill(orderBill);
         }
 
-        orderDetailService.createOrderDetail(cartDto,orderPaymentDto.getIdCustomerOrder(),orderPaymentDto.getIdUser());
+//        orderDetailService.createOrderDetail(cartDto,orderPaymentDto.getIdCustomerOrder(),orderPaymentDto.getIdUser());
 
-        Double totalMoney = orderDetailService.calculateTotalMoney(orderPaymentDto.getIdUser(),orderPaymentDto.getIdCustomerOrder());
+        OrderBill orderBill = new OrderBill();
+            Optional<Customer> customer = customerService.findById(orderPaymentDto.getIdCustomerOrder());
+            if (!customer.isPresent()){
+                return new ResponseEntity<>("Không tìm thấy khách hàng",HttpStatus.NOT_FOUND);
+            }
+            AppUser appUser = appUserService.findAppUserById(orderPaymentDto.getIdUser());
+            if (appUser == null){
+                return new ResponseEntity<>("Không tìm thấy tài khoản",HttpStatus.NOT_FOUND);
+            }
+            LocalDate localDate = LocalDate.now();
+            LocalTime localTime = LocalTime.now();
 
-        orderDetailService.updateOrderBill(totalMoney,orderPaymentDto.getPaymentMethod(),
-                orderPaymentDto.getIdCustomerOrder(),orderPaymentDto.getIdUser());
+            orderBill.setCustomer(customer.orElse(null));
+            orderBill.setUser(appUser);
+            orderBill.setDateOfOrder(String.valueOf(localDate));
+            orderBill.setTimeOfOrder(String.valueOf(localTime));
+            orderBill.setTotalMoney(0.0);
+            orderBill.setPaymentMethod(orderPaymentDto.getPaymentMethod());
+            orderBill.setPrintStatus(0);
+            orderBill.setPaymentStatus(0);
+            orderDetailService.createOrderBill(orderBill);
+//        Double totalMoney = orderDetailService.calculateTotalMoney(orderPaymentDto.getIdUser(),orderPaymentDto.getIdCustomerOrder());
 
+//        orderDetailService.updateOrderBill(totalMoney,orderPaymentDto.getPaymentMethod(),
+//                orderPaymentDto.getIdCustomerOrder(),orderPaymentDto.getIdUser());
 
-        OrderBill orderBill = orderDetailService.isNotPayOfCustomer(orderPaymentDto.getIdCustomerOrder());
-
-        if (orderBill == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+//
+//
+//        if (orderBill == null){
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+        return new ResponseEntity<>(orderBill,HttpStatus.OK);
+    }
+    @GetMapping("/payment/showBillNewest")
+    public ResponseEntity<OrderBill> showBillNewest(){
+        OrderBill orderBill = orderDetailService.findBillNewest();
         return new ResponseEntity<>(orderBill,HttpStatus.OK);
     }
     /**
@@ -233,17 +261,26 @@ public class OrderController {
      * param printStatus,idCus,idUser
      * return status 2xx
      */
-    @PostMapping("/payment/acceptPay/{idCus}/{idUser}")
+    @PostMapping("/payment/acceptPay")
     public ResponseEntity<?> acceptToPay(@RequestParam(name = "_printStatus") int printStatus,
-                                         @PathVariable Long idCus,
-                                         @PathVariable Long idUser){
+                                         @RequestBody OrderBill orderBill){
+        List<ICartDto> cartDto = cartService.getAllCart(orderBill.getUser().getId());
+        orderDetailService.createOrderDetail(cartDto,orderBill.getCustomer().getIdCustomer(),orderBill.getUser().getId());
+        Double totalMoney = orderDetailService.calculateTotalMoney(orderBill.getUser().getId(),orderBill.getCustomer().getIdCustomer());
+        ObjectResponseDto objectResponseDto = new ObjectResponseDto();
 
         if (printStatus == 1){
-            orderDetailService.updateOrderBill(printStatus,idCus,idUser);
-            return new ResponseEntity<>("innnn",HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>("ok",HttpStatus.OK);
+            orderDetailService.updateOrderBill(totalMoney,printStatus,orderBill);
+            objectResponseDto.setType("print");
+            objectResponseDto.setObjectResponse(orderBill);
+            return new ResponseEntity<>(objectResponseDto,HttpStatus.OK);
+        }else if (printStatus == 0){
+            orderDetailService.updateOrderBill(totalMoney,printStatus,orderBill);
+            objectResponseDto.setType("noPrint");
+            objectResponseDto.setObjectResponse(orderBill);
+            return new ResponseEntity<>(objectResponseDto,HttpStatus.OK);
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     /**
      * method get all history

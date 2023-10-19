@@ -219,4 +219,10 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
     @Transactional
     @Query(value = "delete from order_detail where id_order= :id",nativeQuery = true)
     void deleteOrderDetailOfBill(@Param("id") Long idOrderBill);
+
+    @Query(value = "select * from order_detail where id_order = :id",nativeQuery = true)
+    List<OrderDetail> getAllOrderDetail(@Param("id") Long idOrderBill);
+    @Modifying
+    @Query(value = "update order_bill set total_money = :total,print_status = :print,payment_status = 1 where id_order_bill = :id",nativeQuery = true)
+    void updateOrderBill(@Param("total") Double totalMoney,@Param("print") int printStatus,@Param("id") Long idOrderBill);
 }

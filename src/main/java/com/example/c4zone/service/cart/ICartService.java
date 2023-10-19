@@ -2,6 +2,7 @@ package com.example.c4zone.service.cart;
 
 import com.example.c4zone.dto.order.ICartDto;
 import com.example.c4zone.model.order.Cart;
+import com.example.c4zone.model.order.OrderBill;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.model.user.AppUser;
 import org.springframework.data.jpa.repository.Query;
@@ -82,4 +83,8 @@ public interface ICartService {
      * return status 2xx
      */
     void deleteChosenProduct(Long idUser, Long idProduct);
+
+
+
+    void findCartById(OrderBill orderBillByCustomerNotPay);
 }

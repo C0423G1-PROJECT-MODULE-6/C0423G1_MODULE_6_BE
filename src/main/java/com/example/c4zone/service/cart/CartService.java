@@ -2,10 +2,17 @@ package com.example.c4zone.service.cart;
 
 
 import com.example.c4zone.dto.order.ICartDto;
+import com.example.c4zone.dto.order.IOrderDetailDto;
+import com.example.c4zone.model.order.Cart;
+import com.example.c4zone.model.order.OrderBill;
+import com.example.c4zone.model.order.OrderDetail;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.model.user.AppUser;
 
 import com.example.c4zone.repository.cart.ICartRepository;
+import com.example.c4zone.repository.order.IOrderDetailRepository;
+import com.example.c4zone.repository.product.IProductRepository;
+import com.example.c4zone.service.order.IOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +22,10 @@ import java.util.List;
 public class CartService implements ICartService{
     @Autowired
     ICartRepository cartRepository;
+    @Autowired
+    IOrderDetailRepository orderDetailRepository;
+    @Autowired
+    IProductRepository  productRepository;
     /**
      * method create Cart
      * Create TinDT
@@ -104,6 +115,9 @@ public class CartService implements ICartService{
         return cartRepository.getUserById(idUser);
 
     }
+
+
+
     /**
      * method delete chosen product
      * Create ThoiND
@@ -113,6 +127,16 @@ public class CartService implements ICartService{
      */
     @Override
     public void deleteChosenProduct(Long idUser, Long idProduct) {
-        cartRepository.deleteChosenProduct(idUser,idProduct);
+         cartRepository.deleteChosenProduct(idUser,idProduct);
+    }
+
+    @Override
+    public void findCartById(OrderBill orderBillByCustomerNotPay) {
+        List<OrderDetail> orderDetailByOrderBill = orderDetailRepository
+                .getAllOrderDetail(orderBillByCustomerNotPay.getIdOrderBill());
+        for (OrderDetail orderDetail : orderDetailByOrderBill){
+            cartRepository.addToCart(orderBillByCustomerNotPay.getUser().getId(),orderDetail.getProduct().getIdProduct(),
+                            orderDetail.getQuantityOrder());
+        }
     }
 }
