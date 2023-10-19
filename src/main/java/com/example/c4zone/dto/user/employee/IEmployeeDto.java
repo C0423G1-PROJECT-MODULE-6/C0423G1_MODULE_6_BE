@@ -5,6 +5,6 @@ public interface IEmployeeDto {
     String getEmployeeName();
     String getEmployeeBirthday();
     String getEmployeeAddress();
-    String getEmployeeRoleName();
+    String getEmployeeTypeName();
     String getEmployeePhone();
 }

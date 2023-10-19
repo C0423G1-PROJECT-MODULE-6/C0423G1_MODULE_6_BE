@@ -1,5 +1,6 @@
 package com.example.c4zone.repository.home;
 
+import com.example.c4zone.dto.product.IColorDto;
 import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.model.product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -152,20 +153,6 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
     IProductDto getProductByNameAndCapacityAndColor(@Param("name") String name, @Param("capacity") String capacity, @Param("color") String color);
 
 
-    /**
-     * @param product_id
-     * @return URL of the avatar of the product
-     * @author Tai Phat
-     */
-    @Query(value = "  SELECT \n" +
-            "    name\n" +
-            "FROM\n" +
-            "    image\n" +
-            "WHERE\n" +
-            "    id_product = :product_id and status_image =1 \n" +
-            "LIMIT 1", nativeQuery = true)
-    String getAvatarByProductId(@Param("product_id") Long product_id);
-
 
     /**
      * @param name: this name must be formatted before receive ex: Iphone 14 pro max 128GB -> Iphone 14 pro max
@@ -173,14 +160,16 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
      * @author Tai Phat
      */
     @Query(value = "SELECT DISTINCT\n" +
-            "    color.name\n" +
+            "    color.id_color as id,color.name as name\n" +
             "FROM\n" +
             "    product\n" +
             "        JOIN\n" +
             "    color ON product.id_color = color.id_color\n" +
+            "        JOIN\n" +
+            "    capacity ON product.id_capacity = capacity.id_capacity\n" +
             "WHERE\n" +
-            "    name_product LIKE :name and status_business = 1 ", nativeQuery = true)
-    List<String> getColorsOfAProductByName(@Param("name") String name);
+            "    product.name_product LIKE :name and capacity.name like :capacity and product.status_business = 1 ", nativeQuery = true)
+    List<IColorDto> getColorsOfAProductByNameAndCapacity(@Param("name") String name, @Param("capacity") String capacity);
 
 
     /**
@@ -194,9 +183,11 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "    product\n" +
             "        JOIN\n" +
             "    capacity ON capacity.id_capacity = product.id_capacity\n" +
+            "        JOIN\n" +
+            "    color ON color.id_color = product.id_color\n" +
             "WHERE\n" +
-            "    name_product LIKE :name and status_business = 1", nativeQuery = true)
-    List<String> getCapacitiesOfProductByName(@Param("name") String name);
+            "    name_product LIKE :name and color.name like :color and status_business = 1", nativeQuery = true)
+    List<String> getCapacitiesOfProductByNameAndColor(@Param("name") String name,@Param("color") String color);
 
 
     /**
