@@ -38,7 +38,7 @@ public class AppUser {
     private LocalDate employeeBirthday;
     private LocalDate employeeStartDate;
 
-    private static final long OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 minutes
+    private static final int OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 minutes
 
     @Column(name = "one_time_password")
     private String oneTimePassword;
