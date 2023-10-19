@@ -54,7 +54,7 @@ public class OrderController {
      * return Customer status 2xx
      */
     @GetMapping("/customer/{id}")
-    public ResponseEntity<?> findCustomer(@PathVariable Long id){
+    public ResponseEntity<Object> findCustomer(@PathVariable Long id){
         ICustomerDtoOrder customerDtoOrder = customerService.findCustomerByIdOrder(id);
         OrderBill orderBillByCustomerNotPay = orderDetailService.isNotPayOfCustomer(id);
         ObjectResponseDto objectResponseDto = new ObjectResponseDto();
@@ -75,7 +75,7 @@ public class OrderController {
      * return cartList status 2xx
      */
     @GetMapping("/cart/{idUser}")
-    public ResponseEntity<?> getAllCart(@PathVariable Long idUser){
+    public ResponseEntity<Object> getAllCart(@PathVariable Long idUser){
         List<ICartDto> cart = cartService.getAllCart(idUser);
         if (cart == null){
             return new ResponseEntity<>("Không tìm thấy giỏ hàng",HttpStatus.NOT_FOUND);
@@ -117,7 +117,7 @@ public class OrderController {
      * return status 2xx
      */
     @PostMapping("/cart/deleteChosenProduct/{idUser},{idProduct}")
-    public ResponseEntity<?> deleteChosenProduct(@PathVariable Long idUser,@PathVariable Long idProduct){
+    public ResponseEntity<Object> deleteChosenProduct(@PathVariable Long idUser,@PathVariable Long idProduct){
         if (idUser == null){
             return new ResponseEntity<>("Không tìm thấy idUser",HttpStatus.BAD_REQUEST);
         }
@@ -136,7 +136,7 @@ public class OrderController {
      * return status 2xx
      */
     @GetMapping("/customer/getOrderNotPay/{idCus}/{idUser}")
-    public ResponseEntity<?> getOrderNotPayByChoose(
+    public ResponseEntity<Object> getOrderNotPayByChoose(
             @RequestParam(name = "_choose") Integer choose,
             @PathVariable Long idCus,
             @PathVariable Long idUser){
@@ -145,7 +145,6 @@ public class OrderController {
             return new ResponseEntity<>("Không tìm thấy",HttpStatus.NOT_FOUND);
         }else {
             if (choose == 1){
-//                cartService.findCartById(orderBillByCustomerNotPay);
                 return new ResponseEntity<>(orderBillByCustomerNotPay,HttpStatus.OK);
             }else if (choose == 2){
                 orderDetailService.deleteOrderDetailOfBill(orderBillByCustomerNotPay.getIdOrderBill());
@@ -187,7 +186,7 @@ public class OrderController {
      */
     @PostMapping("/payment/showBill")
     @Transactional
-    public ResponseEntity<?> showOrderBillBeforePay(@RequestBody OrderPaymentDto orderPaymentDto){
+    public ResponseEntity<Object> showOrderBillBeforePay(@RequestBody OrderPaymentDto orderPaymentDto){
 
         OrderBill orderBillNotPay = orderDetailService.isNotPayOfCustomer(orderPaymentDto.getIdCustomerOrder());
         if (orderBillNotPay == null){
@@ -218,19 +217,7 @@ public class OrderController {
             return new ResponseEntity<>(orderBillNotPay,HttpStatus.OK);
         }
 
-//        orderDetailService.createOrderDetail(cartDto,orderPaymentDto.getIdCustomerOrder(),orderPaymentDto.getIdUser());
 
-
-//        Double totalMoney = orderDetailService.calculateTotalMoney(orderPaymentDto.getIdUser(),orderPaymentDto.getIdCustomerOrder());
-
-//        orderDetailService.updateOrderBill(totalMoney,orderPaymentDto.getPaymentMethod(),
-//                orderPaymentDto.getIdCustomerOrder(),orderPaymentDto.getIdUser());
-
-//
-//
-//        if (orderBill == null){
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
     }
     @GetMapping("/payment/showBillNewest")
     public ResponseEntity<OrderBill> showBillNewest(){
@@ -245,7 +232,7 @@ public class OrderController {
      * return status 2xx
      */
     @PostMapping("/payment/acceptPay")
-    public ResponseEntity<?> acceptToPay(@RequestParam(name = "_printStatus") int printStatus,
+    public ResponseEntity<Object> acceptToPay(@RequestParam(name = "_printStatus") int printStatus,
                                          @RequestBody OrderBill orderBill){
         List<ICartDto> cartDto = cartService.getAllCart(orderBill.getUser().getId());
         orderDetailService.createOrderDetail(cartDto,orderBill.getCustomer().getIdCustomer(),orderBill.getUser().getId());
