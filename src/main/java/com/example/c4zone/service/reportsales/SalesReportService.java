@@ -13,9 +13,9 @@ public class SalesReportService implements ISalesReportService {
     private SalesReportRepository salesReportRepository;
 
     @Override
-    public List<SalesReport> getData(String startDate, String endDate, String searchTerm) {
-        System.out.println(salesReportRepository.getData(startDate, endDate, searchTerm));
-        return salesReportRepository.getData(startDate, endDate, searchTerm);
+    public List<SalesReport> getData() {
+        System.out.println(salesReportRepository.getData());
+        return salesReportRepository.getData();
 
     }
 
@@ -33,6 +33,11 @@ public class SalesReportService implements ISalesReportService {
             }
         }
         return salesReportRepository.getDataSreachNull(startDate, endDate);
+    }
+
+    @Override
+    public Product getById(Long idProduct) {
+        return salesReportRepository.getByIdProduct(idProduct);
     }
 
 }

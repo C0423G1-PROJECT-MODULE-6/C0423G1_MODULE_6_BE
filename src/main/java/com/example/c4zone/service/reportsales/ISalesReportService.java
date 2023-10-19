@@ -6,9 +6,11 @@ import com.example.c4zone.dto.reportsales.SalesReport;
 import java.util.List;
 
 public interface ISalesReportService {
-    List<SalesReport> getData(String startDate, String endDate, String searchTerm);
+    List<SalesReport> getData();
 
     List<Product> getDataProduct();
 
     List<SalesReport> getDataSreach(String startDate, String endDate, String searchTerm);
+
+    Product getById(Long idProduct);
 }
