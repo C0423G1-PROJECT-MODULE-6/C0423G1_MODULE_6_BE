@@ -7,7 +7,6 @@ import com.example.c4zone.dto.user.UserInfoDto;
 import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.model.user.JwtResponse;
 import com.example.c4zone.service.user.IAppUserService;
-import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -155,7 +154,7 @@ public class AppUserController {
      * return ResponseEntity<>();
      */
     @PostMapping("/confirm")
-    public ResponseEntity<?> confirm(@RequestBody AppUserDto appUserDto) {
+    public ResponseEntity<Object> confirm(@RequestBody AppUserDto appUserDto) {
         try {
             AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
             if (appUser != null) {
@@ -186,7 +185,7 @@ public class AppUserController {
      * return ResponseEntity<>();
      */
     @PostMapping("/resetOTP")
-    public ResponseEntity<?> resetOTP(@RequestBody AppUserDto appUserDto) throws MessagingException, UnsupportedEncodingException {
+    public ResponseEntity<Object> resetOTP(@RequestBody AppUserDto appUserDto) throws MessagingException, UnsupportedEncodingException {
         AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
         if (appUser != null) {
             appUserService.generateOneTimePassword(appUser, passwordEncoder);
@@ -240,7 +239,7 @@ public class AppUserController {
      * return ResponseEntity<>();
      */
     @PostMapping("/confirmRegister")
-    public ResponseEntity<?> confirmRegister(@RequestBody AppUserDto appUserDto, HttpServletRequest request) {
+    public ResponseEntity<Object> confirmRegister(@RequestBody AppUserDto appUserDto, HttpServletRequest request) {
         AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
         if (appUser != null) {
             String userName = getUserNameFormJWT(request);
@@ -303,7 +302,7 @@ public class AppUserController {
      * return ResponseEntity<>();
      */
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody AppUserDto appUserDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> create(@RequestBody AppUserDto appUserDto, BindingResult bindingResult) {
         new AppUserDto().validate(appUserDto, bindingResult);
         Map<String, String> errorMap = new HashMap<>();
         if (bindingResult.hasErrors()) {
