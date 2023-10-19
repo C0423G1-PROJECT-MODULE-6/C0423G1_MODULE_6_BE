@@ -21,4 +21,9 @@ public class RamService implements IRamService{
     public List<Ram> findAll() {
         return ramRepository.findAll();
     }
+
+    @Override
+    public Ram findByIdRam(Long idRam) {
+        return ramRepository.findRamById(idRam);
+    }
 }

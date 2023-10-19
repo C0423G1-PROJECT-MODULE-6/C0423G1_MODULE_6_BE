@@ -6,6 +6,5 @@ public interface ICartDto {
     String getNameProduct();
     Double getPriceProduct();
     Integer getQuantityOrder();
-
-
+    Integer getQuantityProduct();
 }
