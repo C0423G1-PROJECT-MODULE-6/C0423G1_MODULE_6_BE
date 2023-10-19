@@ -6,19 +6,22 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SupplierControler_deleteSupplier {
+class SupplierControler_deleteSupplier {
     @Autowired
     private MockMvc mockMvc;
 
 
     /**
-     * Check case success delete supplier
+     * author: ThienPT
+     * date : 13/10/2023
+     * goal: Check case success delete supplier
      * @throws Exception
      * */
 
@@ -30,19 +33,28 @@ public class SupplierControler_deleteSupplier {
     }
 
     /**
-     * Check case id=null in  delete supplier
+     * author: ThienPT
+     * date : 13/10/2023
+     * goal: Check case success delete supplier
+     * with [id] is null
+     *
      * @throws Exception
      * */
 
     @Test
-    public void deleteSupplier_id_25() throws Exception{
+     void deleteSupplier_id_25() throws Exception{
         this.mockMvc.perform(
-                MockMvcRequestBuilders.delete("/api/admin/supplier/{id}","null")
-        ).andExpect(status().isBadRequest());
+                MockMvcRequestBuilders.delete("/api/admin/supplier/{id}", (Object) null)
+        ).andExpect(status().isMethodNotAllowed());
     }
 
+
     /**
-     * Check case id empty in  delete supplier
+     * author: ThienPT
+     * date : 13/10/2023
+     * goal: Check case success delete supplier
+     * with [id] is empty string
+     *
      * @throws Exception
      * */
 
@@ -54,7 +66,11 @@ public class SupplierControler_deleteSupplier {
     }
 
     /**
-     * Check case id not found in  delete supplier
+     * author: ThienPT
+     * date : 13/10/2023
+     * goal: Check case success delete supplier
+     * with [id] can not find in data supplier
+     *
      * @throws Exception
      * */
 

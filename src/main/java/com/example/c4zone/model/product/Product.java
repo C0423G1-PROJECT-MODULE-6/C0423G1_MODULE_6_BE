@@ -48,3 +48,5 @@ public class Product {
     @JoinColumn(name = "id_series", referencedColumnName = "idSeries")
     private Series series;
 }
+
+

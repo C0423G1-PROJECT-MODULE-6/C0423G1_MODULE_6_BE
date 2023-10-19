@@ -59,9 +59,16 @@ public interface IEmployeeService {
      * @return new code
      */
     String getNextCode();
+    /**
+     * Author: CaoNV
+     * Date create: 15/09/2023
+     * Get next code of employee
+     * @return new code
+     */
+    String getNextId();
 
     /**
-     * Author: TanNV
+     * Author: CaoNV
      * Date create: 15/09/2023
      * Save employee
      *
