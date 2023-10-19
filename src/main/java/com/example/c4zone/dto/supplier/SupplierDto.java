@@ -27,17 +27,13 @@ public class SupplierDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         SupplierDto supplierDto = (SupplierDto) target;
-        //address
-        if (supplierDto.getAddressSupplier() == null) {
-            errors.rejectValue("addressSupplier", "", "Địa chỉ không tồn tại!");
-        }
         //name
         if (supplierDto.getNameSupplier() == null) {
-            errors.rejectValue("nameSupplier", "", "Tên nhà cung cấp không tồn tại!");
+            errors.rejectValue("nameSupplier", "", "Tên nhà cung cấp không được null!");
         } else if (supplierDto.getNameSupplier().trim().equals("")) {
             errors.rejectValue("nameSupplier", "", "Không được để trống!");
-        } else if (!supplierDto.getNameSupplier().matches("^[^0-9`~!@#$%^()_\\-=\\[{\\]}\\\\|;:\",></?]+$")) {
-            errors.rejectValue("nameSupplier", "", "Tên chỉ chứa chữ cái và một số ký tự đặc biệt &,.,*,'!");
+        } else if (!supplierDto.getNameSupplier().matches("^[^0-9`~!@#$%^()_\\-=\\[{\\]}\\\\|;:\",><?]+$")) {
+            errors.rejectValue("nameSupplier", "", "Tên chỉ chứa chữ cái và một số ký tự đặc biệt &,.,*,'!,/");
         } else if (supplierDto.getNameSupplier().length() > 100) {
             errors.rejectValue("nameSupplier", "", "Tên không được quá 100 ký tự!");
         } else if (supplierDto.getNameSupplier().length() < 2) {
@@ -45,7 +41,7 @@ public class SupplierDto implements Validator {
         }
         //phone number
         if (supplierDto.getPhoneNumberSupplier() == null) {
-            errors.rejectValue("phoneNumberSupplier", "", "Số điện thoại không tồn tại!");
+            errors.rejectValue("phoneNumberSupplier", "", "SĐT không được null!");
         } else if (supplierDto.getPhoneNumberSupplier().trim().equals("")) {
             errors.rejectValue("phoneNumberSupplier", "", "Không được để trống!");
         } else if (!supplierDto.getPhoneNumberSupplier().matches("^[^a-zA-Z`~!@#$%^&*()_\\-+=\\[{\\]}\\\\|;:'\",<.>/?]+$")) {
@@ -59,7 +55,7 @@ public class SupplierDto implements Validator {
         }
         //email
         if (supplierDto.getEmailSupplier() == null) {
-            errors.rejectValue("emailSupplier", "", "Email không tồn tại!");
+            errors.rejectValue("emailSupplier", "", "Email không được null!");
         } else if (supplierDto.getEmailSupplier().trim().equals("")) {
             errors.rejectValue("emailSupplier", "", "Không được để trống!");
         } else if (!supplierDto.getEmailSupplier().matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {

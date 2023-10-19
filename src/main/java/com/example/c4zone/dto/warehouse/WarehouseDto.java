@@ -5,21 +5,22 @@
     import org.springframework.validation.Errors;
     import org.springframework.validation.Validator;
 
+    import javax.validation.constraints.Max;
     import javax.validation.constraints.Min;
     import javax.validation.constraints.NotBlank;
     import javax.validation.constraints.NotNull;
 
     public class WarehouseDto implements Validator {
-
         private Long idWarehouse;
         private String inputDate;
         @NotNull(message = "Không được để trống số lượng")
-        @Min(0)
+        @Min(value = 0, message = "Số lượng không được nhỏ hơn 0")
+        @Max(2000)
         private Integer quantity;
 
-        @NotBlank(message = "Vui lòng chọn nhà cung cấp")
+        @NotNull(message = "Vui lòng chọn nhà cung cấp")
         private Long supplierId;
-        @NotBlank(message = "Vui lòng chọn sản phẩm")
+        @NotNull(message = "Vui lòng chọn sản phẩm")
         private Long productId;
 
         public WarehouseDto() {
@@ -80,6 +81,30 @@
 
         @Override
         public void validate(Object target, Errors errors) {
+            WarehouseDto warehouseDto = (WarehouseDto) target;
+            if(warehouseDto.getQuantity() == null){
+                errors.rejectValue("quantity","", "Vui lòng không để trống số lượng");
+            }else if(warehouseDto.getQuantity() < 0) {
+                errors.rejectValue("quantity", "vui lòng nhập số lượng lớn hơn 0");
+            } else if (warehouseDto.getQuantity() > 2000 ) {
+                errors.rejectValue("quantity", "Vui lòng nhập không quá 2000 sản phẩm");
+            }
+            if(warehouseDto.getProductId() == null){
+                errors.rejectValue("productId","", "Vui lòng không để trống sản phẩm");
+            }
+            if(warehouseDto.getSupplierId() == null){
+                errors.rejectValue("supplierId","", "Vui lòng không để trống nhà cung cấp");
+            }
+        }
 
+        @Override
+        public String toString() {
+            return "WarehouseDto{" +
+                    "idWarehouse=" + idWarehouse +
+                    ", inputDate='" + inputDate + '\'' +
+                    ", quantity=" + quantity +
+                    ", supplierId=" + supplierId +
+                    ", productId=" + productId +
+                    '}';
         }
     }

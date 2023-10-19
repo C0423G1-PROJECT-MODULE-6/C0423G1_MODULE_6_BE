@@ -41,7 +41,6 @@ public class CustomerDto implements Validator {
     public void validate(Object target, Errors errors) {
         CustomerDto customerDto = (CustomerDto) target;
         // Check name
-
         if (customerDto.getNameCustomer() == null){
            errors.rejectValue(NAME_DTO, "", "Vui lòng bổ sung tên khách hàng!");
        }else if (customerDto.getNameCustomer().trim().equals("")) {
