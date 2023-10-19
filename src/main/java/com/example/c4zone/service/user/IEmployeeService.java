@@ -67,7 +67,7 @@ public interface IEmployeeService {
      * Get next code of employee
      * @return new code
      */
-    String getNextId();
+    Long getNextId();
 
     /**
      * Author: CaoNV
