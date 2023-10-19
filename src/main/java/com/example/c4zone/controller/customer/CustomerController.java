@@ -152,7 +152,7 @@ public class CustomerController {
      * Goal: create customer
      * * return HttpStatus
      */
-    @PostMapping("/create")
+    @PostMapping("/list/create")
     public ResponseEntity<Object> createCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult) {
         Customer customer = new Customer();
         Map<String, String> errors = new HashMap<>();
