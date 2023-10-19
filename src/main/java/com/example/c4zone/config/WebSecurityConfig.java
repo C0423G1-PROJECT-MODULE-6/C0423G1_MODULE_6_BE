@@ -77,7 +77,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                         "/api/admin/employee/**",
                         "/api/admin/role/**",
-                        "/api/admin/supplier/**"
+                        "/api/admin/supplier/**",
+                        "/api/admin/sales-report/**",
+                        "/api/admin/scanner-qr"
+
 
                 ).permitAll()
 
