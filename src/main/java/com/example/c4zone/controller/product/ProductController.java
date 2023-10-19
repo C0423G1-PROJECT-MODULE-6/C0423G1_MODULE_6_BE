@@ -14,7 +14,6 @@ import com.example.c4zone.model.product.Product;
 import com.example.c4zone.service.product.IImageService;
 import com.example.c4zone.service.product.IProductService;
 
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,9 +35,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 
 
