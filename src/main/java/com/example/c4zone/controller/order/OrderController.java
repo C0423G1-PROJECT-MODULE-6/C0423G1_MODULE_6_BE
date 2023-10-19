@@ -208,35 +208,19 @@ public class OrderController {
             orderBill.setDateOfOrder(String.valueOf(localDate));
             orderBill.setTimeOfOrder(String.valueOf(localTime));
             orderBill.setTotalMoney(0.0);
-            orderBill.setPaymentMethod(0);
-            orderBill.setPrintStatus(0);
-            orderBill.setPaymentStatus(0);
-            orderDetailService.createOrderBill(orderBill);
-        }
-
-//        orderDetailService.createOrderDetail(cartDto,orderPaymentDto.getIdCustomerOrder(),orderPaymentDto.getIdUser());
-
-        OrderBill orderBill = new OrderBill();
-            Optional<Customer> customer = customerService.findById(orderPaymentDto.getIdCustomerOrder());
-            if (!customer.isPresent()){
-                return new ResponseEntity<>("Không tìm thấy khách hàng",HttpStatus.NOT_FOUND);
-            }
-            AppUser appUser = appUserService.findAppUserById(orderPaymentDto.getIdUser());
-            if (appUser == null){
-                return new ResponseEntity<>("Không tìm thấy tài khoản",HttpStatus.NOT_FOUND);
-            }
-            LocalDate localDate = LocalDate.now();
-            LocalTime localTime = LocalTime.now();
-
-            orderBill.setCustomer(customer.orElse(null));
-            orderBill.setUser(appUser);
-            orderBill.setDateOfOrder(String.valueOf(localDate));
-            orderBill.setTimeOfOrder(String.valueOf(localTime));
-            orderBill.setTotalMoney(0.0);
             orderBill.setPaymentMethod(orderPaymentDto.getPaymentMethod());
             orderBill.setPrintStatus(0);
             orderBill.setPaymentStatus(0);
             orderDetailService.createOrderBill(orderBill);
+            return new ResponseEntity<>(orderBill,HttpStatus.OK);
+
+        }else {
+            return new ResponseEntity<>(orderBillNotPay,HttpStatus.OK);
+        }
+
+//        orderDetailService.createOrderDetail(cartDto,orderPaymentDto.getIdCustomerOrder(),orderPaymentDto.getIdUser());
+
+
 //        Double totalMoney = orderDetailService.calculateTotalMoney(orderPaymentDto.getIdUser(),orderPaymentDto.getIdCustomerOrder());
 
 //        orderDetailService.updateOrderBill(totalMoney,orderPaymentDto.getPaymentMethod(),
@@ -247,7 +231,6 @@ public class OrderController {
 //        if (orderBill == null){
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //        }
-        return new ResponseEntity<>(orderBill,HttpStatus.OK);
     }
     @GetMapping("/payment/showBillNewest")
     public ResponseEntity<OrderBill> showBillNewest(){

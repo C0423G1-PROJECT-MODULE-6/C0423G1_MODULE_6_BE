@@ -91,7 +91,7 @@ public class CustomerController {
      * Goal: get all customers
      * return list of customers
      */
-    @GetMapping("/modal")
+    @GetMapping("/list/modal")
     public ResponseEntity<Page<ICustomerListDto>> getAllCustomers(@RequestParam(name = "_limit") Integer limit,
                                                                   @RequestParam(defaultValue = "0", required = false,name = "_page") Integer page,
                                                                   @RequestParam(defaultValue = "", required = false,name = "name_like") String name,
