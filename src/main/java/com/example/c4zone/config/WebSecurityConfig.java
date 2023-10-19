@@ -71,8 +71,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/admin/type/**",
 
 
+                        "/api/admin/employee/list/**",
                         "/api/admin/product/list/**",
                         "/api/admin/product/remove/**",
+
+
+                        "/api/admin/product/list/**",
+                        "/api/admin/product/remove/**",
+
 
                         "/api/user/register/**",
 
