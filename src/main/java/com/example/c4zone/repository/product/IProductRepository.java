@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
 @Repository
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
