@@ -53,91 +53,45 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable().cors().and()//
                 .authorizeRequests()//
                 .antMatchers(
-//                        "/api/**",
-                        "/api/user/create/**",
-                        "/api/user/confirm/**",
-                        "/api/user/resetOTP/**",
-
-                        "/api/user/login-by-username/**",
-
-//                        "/api/user/logout/{userName}/**",
-//                        "/api/user/get-id-app-user/{userName}",
-//                        "/api/user/register/**",
-
-                        "/api/admin/product/**",
-                        "/api/admin/capacity/**",
-                        "/api/admin/color/**",
-                        "/api/admin/cpu/**",
-                        "/api/admin/ram/**",
-                        "/api/admin/series/**",
-                        "/api/admin/type/**",
-
-
-                        "/api/admin/employee/list/**",
-                        "/api/admin/product/list/**",
-                        "/api/admin/product/remove/**",
-
-
-                        "/api/admin/product/list/**",
-                        "/api/admin/product/remove/**",
-
-
-                        "/api/user/register/**",
-
-
-                        "/api/admin/customer/list/**",
-                        "/api/admin/customer/history/**",
-
-
-
-                        "/api/admin/employee/**","/api/admin/orderHistory/**",
-                        "/api/admin/order/**","/api/amin/order/cart/**",
-
-
-                        "/api/admin/employee/**",
-                        "/api/admin/role/**",
-
-                        "/api/admin/supplier/**",
-
-                        "/api/user/login-by-username/**"
-
+                       "/api/**",
+                     
                 ).permitAll()
 
                 .antMatchers(
-                        "/api/user/register/**",
-                        "/api/user/information/**",
-                        "/api/user/logout/{userName}/**",
-                        "/api/user/get-id-app-user/{userName}"
+                        // "/api/user/register/**",
+                        // "/api/user/information/**",
+                        // "/api/user/logout/{userName}/**",
+                        // "/api/user/get-id-app-user/{userName}"
                 ).hasAnyAuthority("ROLE_ADMIN", "ROLE_SALE", "ROLE_BUSINESS", "ROLE_WAREHOUSE")//
 
                 .antMatchers(
-                        "/api/**"
+                        // "/api/**"
                 ).hasAnyAuthority("ROLE_ADMIN")//
 
 
                 .antMatchers(
-                        "/api/admin/sales-report/**",
-                        "/api/admin/scanner-qr",
-                        "/api/admin/orderHistory/**",
-                        "/api/admin/order/**",
-                        "/api/amin/order/cart/**"
+                        // "/api/admin/sales-report/**",
+                        // "/api/admin/scanner-qr",
+                        // "/api/admin/orderHistory/**",
+                        // "/api/admin/order/**",
+                        // "/api/amin/order/cart/**"
                 ).hasAnyAuthority("ROLE_SALE")
 
 
                 .antMatchers(
-                        "/api/admin/product/**",
-                        "/api/admin/capacity/**",
-                        "/api/admin/color/**",
-                        "/api/admin/cpu/**",
-                        "/api/admin/ram/**",
-                        "/api/admin/series/**",
-                        "/api/admin/type/**"
+                        // "/api/admin/product/**",
+                        // "/api/admin/capacity/**",
+                        // "/api/admin/color/**",
+                        // "/api/admin/cpu/**",
+                        // "/api/admin/ram/**",
+                        // "/api/admin/series/**",
+                        // "/api/admin/type/**"
                 ).hasAnyAuthority("ROLE_BUSINESS")
 
 
                 .antMatchers(
-                        "/api/admin/warehouse/**",
-                        "/api/admin/supplier/**"
+                        // "/api/admin/warehouse/**",
+                        // "/api/admin/supplier/**"
                 ).hasAnyAuthority("ROLE_WAREHOUSE")
 
                 .anyRequest()//
