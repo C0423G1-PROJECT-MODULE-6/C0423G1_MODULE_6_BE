@@ -126,7 +126,7 @@ public class ProductController_getAll {
     public void getAll_page_10() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/admin/product/list?choose=name&value=DinhQuan&page=0")).andDo(print())
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is2xxSuccessful());
     }
     /**
      * author:QuanND
