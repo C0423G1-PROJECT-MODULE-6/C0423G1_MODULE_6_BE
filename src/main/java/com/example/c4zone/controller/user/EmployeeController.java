@@ -1,7 +1,6 @@
 package com.example.c4zone.controller.user;
 import com.example.c4zone.dto.user.employee.FormatEmployee;
 import com.example.c4zone.dto.user.employee.IEmployeeDto;
-import com.example.c4zone.model.user.AppRole;
 import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.dto.user.employee.EmployeeDto;
 import com.example.c4zone.service.user.IEmployeeService;
@@ -16,14 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-
 import javax.validation.Valid;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
