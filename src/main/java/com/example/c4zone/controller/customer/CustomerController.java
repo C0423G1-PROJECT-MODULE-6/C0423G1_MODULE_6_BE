@@ -92,6 +92,7 @@ public class CustomerController {
      * return list of customers
      */
 
+
     @GetMapping("/list/modal")
     public ResponseEntity<Page<ICustomerListDto>> getAllCustomers(
                                                                   @RequestParam(defaultValue = "0", required = false,name = "_page") Integer page,
