@@ -58,7 +58,7 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
     ISupplierDtoWarehouse findSupplierByIdWarehouse(@Param("id") Long id);
 
     /**
-     * author: NghiaNPXThi
+     * author: NghiaNPX
      * date: 12/10/2023
      * goal: edit an object in DB
      */
