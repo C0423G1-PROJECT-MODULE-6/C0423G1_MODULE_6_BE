@@ -5,6 +5,8 @@ import com.example.c4zone.repository.product.IImageProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ImageService implements IImageService{
     @Autowired
@@ -22,15 +24,8 @@ public class ImageService implements IImageService{
         imageProductRepository.createImage(image, idProduct);
     }
 
-    /**
-     * author: DaoPTA
-     * workday: 12/10/2023
-     *
-     * @param idProduct find by image with idProduct
-     * @return object image after find by
-     */
     @Override
-    public Image findImageProductByIdProduct(Long idProduct) {
+    public List<Image> findImageProductByIdProduct(Long idProduct) {
         return imageProductRepository.findImageByIdProduct(idProduct);
     }
 
@@ -44,5 +39,15 @@ public class ImageService implements IImageService{
     @Override
     public void updateImageProduct(Image image, Long idProduct) {
         imageProductRepository.updateImage(image, idProduct);
+    }
+
+    @Override
+    public void insertImageByProductId(List<String> imageDtoList, Long idProduct) {
+        if (imageDtoList != null) {
+            for (String name: imageDtoList) {
+                imageProductRepository.insertImageProduct(name,idProduct);
+            }
+        }
+
     }
 }
