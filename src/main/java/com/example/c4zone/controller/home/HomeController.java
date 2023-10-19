@@ -48,21 +48,13 @@ public class HomeController {
 
     @GetMapping("/detail")
     public ResponseEntity<IProductDto> getProductByNameAndCapacityAndColor(@RequestParam(value = "name") String name, @RequestParam(value = "capacity") String capacity, @RequestParam(value = "color") String color) {
-        IProductDto productDto = homeService.getProductByNameAndCapacityAndColor(name + "%", capacity, color);
+        IProductDto productDto = homeService.getProductByNameAndCapacityAndColor(name, capacity, color);
         if (productDto == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
-    @GetMapping("/bestsellers")
-    public ResponseEntity<List<Product>> getBestsellers() {
-        List<Product> getBestsellers = homeService.getBestsellers();
-        if (getBestsellers.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(getBestsellers, HttpStatus.OK);
-    }
 
     @GetMapping("/avatar/{id}")
     public ResponseEntity<String> getAvatarByProductId(@PathVariable Long id) {
@@ -75,7 +67,7 @@ public class HomeController {
 
     @GetMapping("/colors")
     public ResponseEntity<List<String>> getColorsOfAProductByName(@RequestParam(value = "name") String name) {
-        List<String> colors = homeService.getColorsOfAProductByName(name + "%");
+        List<String> colors = homeService.getColorsOfAProductByName(name);
         if (colors == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -83,8 +75,8 @@ public class HomeController {
     }
 
     @GetMapping("/capacities")
-    public ResponseEntity<List<String>> getCapacitiesByName(@RequestParam String name) {
-        List<String> capacities = homeService.getCapacitiesByName(name + "%");
+    public ResponseEntity<List<String>> getCapacitiesByName(@RequestParam(value = "name") String name) {
+        List<String> capacities = homeService.getCapacitiesByName(name);
         if (capacities.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -92,7 +84,7 @@ public class HomeController {
     }
 
     @GetMapping("/images/{id}")
-    public ResponseEntity<List<String>> getImageLinksById(@PathVariable Long id) {
+    public ResponseEntity<List<String>> getImageLinksByProductId(@PathVariable Long id) {
         List<String> images = homeService.getImageLinksByProductId(id);
         if (images.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -100,4 +92,21 @@ public class HomeController {
         return new ResponseEntity<>(images, HttpStatus.OK);
     }
 
+    @GetMapping("/bestsellers")
+    public ResponseEntity<List<Product>> getBestsellers() {
+        List<Product> getBestsellers = homeService.getBestsellers();
+        if (getBestsellers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(getBestsellers, HttpStatus.OK);
+    }
+
+    @GetMapping("/series/{type}")
+    public ResponseEntity<List<String>> getSeriesByProductType(@PathVariable String type) {
+        List<String> getSeriesByProductType = homeService.getSeriesByProductType("%" + type + "%");
+        if (getSeriesByProductType.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(getSeriesByProductType, HttpStatus.OK);
+    }
 }

@@ -45,7 +45,7 @@ public class HomeController_getProductById {
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("id").value(1))
-                .andExpect(jsonPath("name").value("iPhone 12 128GB"))
+                .andExpect(jsonPath("name").value("iPhone 12"))
                 .andExpect(jsonPath("battery").value("2815 mAh"))
                 .andExpect(jsonPath("camera").value("12 MP"))
                 .andExpect(jsonPath("price").value("1.649E7"))

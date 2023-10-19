@@ -31,6 +31,7 @@ public interface ICustomerService {
     void saveCustomer(Customer customer);
 
     Customer findCustomerByPhone(String phoneNumberCustomer);
+    Page<ICustomerListDto> getPageCustomerForModal(Pageable pageable, String valueSearchName, String valueSearchAge, String valueSearchGender,String phoneNumber);
 
 
     Customer findCustomerByEmail(String emailCustomer);
