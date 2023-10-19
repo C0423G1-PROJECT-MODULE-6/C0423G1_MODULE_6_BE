@@ -8,12 +8,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
+
+    /**
+     * author: ThienPT
+     * date: 12/10/2023
+     * goal: get all data of list supplier for condition search
+     */
     @Query(value = "SELECT * FROM  Supplier s WHERE s.name_supplier LIKE concat('%',:nameSearch,'%') " +
             "AND s.address_supplier LIKE concat('%',:addressSearch,'%') " +
             "AND s.email_supplier LIKE concat('%',:emailSearch,'%') " +
@@ -21,20 +26,35 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
     Page<Supplier> getAllSupplier(@Param("nameSearch") String name, @Param("addressSearch") String addressSearch
             , @Param("emailSearch") String emailSearch, Pageable pageable);
 
+    /**
+     * author: ThienPT
+     * date: 12/10/2023
+     * goal: delete supplier
+     */
     @Modifying
     @Transactional
     @Query(value = "update Supplier as s set s.status_supplier = 0 where s.id_supplier = :id", nativeQuery = true)
     void deleteSupplier(@Param(value = "id") Long id);
 
+    /**
+     * author: ThienPT
+     * date: 12/10/2023
+     * goal: get all data of list supplier
+     */
     @Query(value = "select * from Supplier s where s.status_supplier = 1",nativeQuery = true)
     Page<Supplier> getAllSupplierNoCondition(Pageable pageable);
 
+    /**
+     * author: ThienPT
+     * date: 12/10/2023
+     * goal: find supplier by id
+     */
     @Query(value = "SELECT * FROM Supplier s WHERE s.id_supplier = :id and s.status_supplier = 1", nativeQuery = true)
     Supplier findSupplierById(@Param("id") Long id);
 
-    @Query(value = "select id_supplier as idSupplier, name_supplier as nameSupplier, " +
-            "from supplier " +
-            "where id_supplier = :id", nativeQuery = true)
+    @Query(value = "select s.id_supplier as idSupplier, s.name_supplier as nameSupplier, " +
+            "from supplier s" +
+            "where s.id_supplier = :id", nativeQuery = true)
     ISupplierDtoWarehouse findSupplierByIdWarehouse(Long id);
 
     /**
@@ -107,6 +127,6 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
             "phone_number_supplier, " +
             "status_supplier " +
             "from c4_zone.supplier " +
-            "where id_supplier = :id", nativeQuery = true)
+            "where id_supplier = :id and status_supplier = true", nativeQuery = true)
     Supplier getSupplierById(@Param("id") Long id);
 }
