@@ -11,7 +11,6 @@
     import javax.validation.constraints.NotNull;
 
     public class WarehouseDto implements Validator {
-        @NotNull(message = "ID không được để trống")
         private Long idWarehouse;
         private String inputDate;
         @NotNull(message = "Không được để trống số lượng")
@@ -83,13 +82,6 @@
         @Override
         public void validate(Object target, Errors errors) {
             WarehouseDto warehouseDto = (WarehouseDto) target;
-            if(warehouseDto.getIdWarehouse() == null){
-                errors.rejectValue("idWarehouse","", "Vui lòng không để trống id");
-            }
-            if(warehouseDto.getInputDate() == null){
-                errors.rejectValue("inputDate","", "Vui lòng nhập ngày");
-            }
-
             if(warehouseDto.getQuantity() == null){
                 errors.rejectValue("quantity","", "Vui lòng không để trống số lượng");
             }else if(warehouseDto.getQuantity() < 0) {
