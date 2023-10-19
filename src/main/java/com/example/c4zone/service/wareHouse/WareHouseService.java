@@ -44,8 +44,9 @@ public class WareHouseService implements IWareHouseService {
                 return wareHouseRepository.findAllWareHouseByPrice(pageable, 5000000.0, 10000000.0);
             case "better 10m":
                 return wareHouseRepository.findAllWareHouseByPriceMin(pageable, 10000000.0);
+            default:
+                return wareHouseRepository.findAllWareHouseByName(pageable, "%%");
         }
-        return null;
     }
 
     /**

@@ -92,6 +92,7 @@ public class CustomerController {
      * return list of customers
      */
 
+
     @GetMapping("/list/modal")
     public ResponseEntity<Page<ICustomerListDto>> getAllCustomers(
                                                                   @RequestParam(defaultValue = "0", required = false,name = "_page") Integer page,
@@ -151,7 +152,7 @@ public class CustomerController {
      * Goal: create customer
      * * return HttpStatus
      */
-    @PostMapping("/create")
+    @PostMapping("/list/create")
     public ResponseEntity<Object> createCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult) {
         Customer customer = new Customer();
         Map<String, String> errors = new HashMap<>();
