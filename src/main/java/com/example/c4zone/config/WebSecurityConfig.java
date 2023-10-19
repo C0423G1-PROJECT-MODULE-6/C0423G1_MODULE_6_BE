@@ -91,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(
                         "/api/admin/sales-report/**",
-                        "/api/admin/scanner-qr"
+                        "/api/admin/scanner-qr",
                         "/api/admin/orderHistory/**",
                         "/api/admin/order/**",
                         "/api/amin/order/cart/**"
