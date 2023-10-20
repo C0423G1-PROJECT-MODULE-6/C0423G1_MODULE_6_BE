@@ -18,7 +18,7 @@ public class ScannerQRControllerTest {
     private MockMvc mockMvc;
 
     /**
-     * Returns list of products
+     * Show list when not found in database
      * Author : LoiVT
      * Date : 19/10/2023
      */
@@ -32,7 +32,25 @@ public class ScannerQRControllerTest {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$").doesNotExist());
     }
+    /**
+     * show list when all are null
+     * Author : LoiVT
+     * Date : 19/10/2023
+     */
+    @Test
+    public void getByIdProduct_1() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/admin/scanner-qr")
+                        .param("idProduct",  "null"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
 
+    /**
+     * Returns list of products
+     * Author : LoiVT
+     * Date : 19/10/2023
+     */
 
     @Test
     public void getByIdProduct_4() throws Exception {

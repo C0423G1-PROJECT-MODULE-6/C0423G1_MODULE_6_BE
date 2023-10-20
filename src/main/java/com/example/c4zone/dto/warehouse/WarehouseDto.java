@@ -23,6 +23,10 @@ public class WarehouseDto implements Validator {
     @NotNull(message = "Vui lòng chọn sản phẩm")
     private Long productId;
 
+    private static final String QUANTITY_WAREHOUSE_DTO = "quantity";
+    private static final String PRODUCT_ID_WAREHOUSE_DTO = "productId";
+    private static final String SUPPLIER_ID_WAREHOUSE_DTO = "supplierId";
+
     public WarehouseDto() {
     }
 
@@ -83,17 +87,17 @@ public class WarehouseDto implements Validator {
     public void validate(Object target, Errors errors) {
         WarehouseDto warehouseDto = (WarehouseDto) target;
         if (warehouseDto.getQuantity() == null) {
-            errors.rejectValue("quantity", "", "Vui lòng không để trống số lượng");
+            errors.rejectValue(QUANTITY_WAREHOUSE_DTO, "", "Vui lòng không để trống số lượng");
         } else if (warehouseDto.getQuantity() < 0) {
-            errors.rejectValue("quantity", "vui lòng nhập số lượng lớn hơn 0");
+            errors.rejectValue(QUANTITY_WAREHOUSE_DTO, "vui lòng nhập số lượng lớn hơn 0");
         } else if (warehouseDto.getQuantity() > 2000) {
-            errors.rejectValue("quantity", "Vui lòng nhập không quá 2000 sản phẩm");
+            errors.rejectValue(QUANTITY_WAREHOUSE_DTO, "Vui lòng nhập không quá 2000 sản phẩm");
         }
         if (warehouseDto.getProductId() == null) {
-            errors.rejectValue("productId", "", "Vui lòng không để trống sản phẩm");
+            errors.rejectValue(PRODUCT_ID_WAREHOUSE_DTO, "", "Vui lòng không để trống sản phẩm");
         }
         if (warehouseDto.getSupplierId() == null) {
-            errors.rejectValue("supplierId", "", "Vui lòng không để trống nhà cung cấp");
+            errors.rejectValue(SUPPLIER_ID_WAREHOUSE_DTO, "", "Vui lòng không để trống nhà cung cấp");
         }
     }
 
