@@ -34,8 +34,9 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      * return List<ICartDto>
      */
 
+
     @Query(value = "select c.id_cart as idCart,c.id_product as idProduct,c.quantity_product_order as quantityOrder ,p.name_product as nameProduct " +
-            ",p.price_product as priceProduct " +
+            ",p.price_product as priceProduct, p.quantity_product as quantityProduct " +
             "from cart as c " +
             "join product " +
             "as p on c.id_product = p.id_product " +
@@ -86,7 +87,6 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
     @Modifying
     @Query(nativeQuery = true, value = "insert into c4_zone.cart (id_user,id_product,quantity_product_order ) VALUES (:id_user, :id_product, :newQuantity) ON DUPLICATE KEY UPDATE quantity_product_order = quantity_product_order + :newQuantity")
     void createCard(@Param("id_user") Long idUser,@Param("id_product") Long idProduct, @Param("newQuantity") Long newQuantity);
-//    ALTER TABLE cart ADD UNIQUE INDEX user_medicine_index (app_user_id, medicine_id);
     /**
      * method get quantity cart from iProduct and iUserof cart
      * Create TinDT
@@ -118,5 +118,15 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
     @Query(value =" select * from app_user where id = :id_user ",nativeQuery = true)
     AppUser getUserById(@Param("id_user") Long idUser);
 
-
+    /**
+     * method delete chosen product
+     * Create ThoiND
+     * Date 14-10-2023
+     * param Long idUser,Long idProduct
+     * return status 2xx
+     */
+    @Modifying
+    @Transactional
+    @Query(value = "delete from cart where id_user = :id and id_product = :idProduct",nativeQuery = true)
+    void deleteChosenProduct(@Param("id") Long idUser,@Param("idProduct") Long idProduct);
 }

@@ -21,4 +21,9 @@ public class CpuService implements ICpuService{
     public List<Cpu> findAll() {
         return cpuRepository.findAll();
     }
+
+    @Override
+    public Cpu findByIdCpu(Long idCpu) {
+        return cpuRepository.findCpuById(idCpu);
+    }
 }

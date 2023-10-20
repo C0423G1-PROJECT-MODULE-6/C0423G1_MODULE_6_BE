@@ -1,5 +1,7 @@
 package com.example.c4zone.controller.home;
 
+
+import com.example.c4zone.dto.product.IColorDto;
 import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.service.home.IHomeService;
@@ -55,19 +57,9 @@ public class HomeController {
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
-
-    @GetMapping("/avatar/{id}")
-    public ResponseEntity<String> getAvatarByProductId(@PathVariable Long id) {
-        String avatar = homeService.getAvatarByProductId(id);
-        if (avatar == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(avatar, HttpStatus.OK);
-    }
-
     @GetMapping("/colors")
-    public ResponseEntity<List<String>> getColorsOfAProductByName(@RequestParam(value = "name") String name) {
-        List<String> colors = homeService.getColorsOfAProductByName(name);
+    public ResponseEntity<List<IColorDto>> getColorsOfAProductByNameAndCapacity(@RequestParam(value = "name") String name,@RequestParam(value = "capacity") String capacity) {
+        List<IColorDto> colors = homeService.getColorsOfAProductByNameAndCapacity(name,capacity);
         if (colors == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -75,8 +67,8 @@ public class HomeController {
     }
 
     @GetMapping("/capacities")
-    public ResponseEntity<List<String>> getCapacitiesByName(@RequestParam(value = "name") String name) {
-        List<String> capacities = homeService.getCapacitiesByName(name);
+    public ResponseEntity<List<String>> getCapacitiesOfProductByNameAndColor(@RequestParam(value = "name") String name,@RequestParam(value = "color") String color) {
+        List<String> capacities = homeService.getCapacitiesOfProductByNameAndColor(name,color);
         if (capacities.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -93,8 +85,8 @@ public class HomeController {
     }
 
     @GetMapping("/bestsellers")
-    public ResponseEntity<List<Product>> getBestsellers() {
-        List<Product> getBestsellers = homeService.getBestsellers();
+    public ResponseEntity<List<IProductDto>> getBestsellers() {
+        List<IProductDto> getBestsellers = homeService.getBestsellers();
         if (getBestsellers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

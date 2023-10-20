@@ -21,4 +21,9 @@ public class SeriesService implements ISeriesService{
     public List<Series> findAll() {
         return seriesRepository.findAll();
     }
+
+    @Override
+    public Series findByIdSeries(Long idSeries) {
+        return seriesRepository.findSeriesById(idSeries);
+    }
 }

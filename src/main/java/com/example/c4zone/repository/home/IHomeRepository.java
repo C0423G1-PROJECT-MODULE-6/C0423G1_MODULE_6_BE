@@ -1,5 +1,6 @@
 package com.example.c4zone.repository.home;
 
+import com.example.c4zone.dto.product.IColorDto;
 import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.model.product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -152,20 +153,6 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
     IProductDto getProductByNameAndCapacityAndColor(@Param("name") String name, @Param("capacity") String capacity, @Param("color") String color);
 
 
-    /**
-     * @param product_id
-     * @return URL of the avatar of the product
-     * @author Tai Phat
-     */
-    @Query(value = "  SELECT \n" +
-            "    name\n" +
-            "FROM\n" +
-            "    image\n" +
-            "WHERE\n" +
-            "    id_product = :product_id and status_image =1 \n" +
-            "LIMIT 1", nativeQuery = true)
-    String getAvatarByProductId(@Param("product_id") Long product_id);
-
 
     /**
      * @param name: this name must be formatted before receive ex: Iphone 14 pro max 128GB -> Iphone 14 pro max
@@ -173,14 +160,16 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
      * @author Tai Phat
      */
     @Query(value = "SELECT DISTINCT\n" +
-            "    color.name\n" +
+            "    color.id_color as id,color.name as name\n" +
             "FROM\n" +
             "    product\n" +
             "        JOIN\n" +
             "    color ON product.id_color = color.id_color\n" +
+            "        JOIN\n" +
+            "    capacity ON product.id_capacity = capacity.id_capacity\n" +
             "WHERE\n" +
-            "    name_product LIKE :name and status_business = 1 ", nativeQuery = true)
-    List<String> getColorsOfAProductByName(@Param("name") String name);
+            "    product.name_product LIKE :name and capacity.name like :capacity and product.status_business = 1 ", nativeQuery = true)
+    List<IColorDto> getColorsOfAProductByNameAndCapacity(@Param("name") String name, @Param("capacity") String capacity);
 
 
     /**
@@ -194,9 +183,11 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "    product\n" +
             "        JOIN\n" +
             "    capacity ON capacity.id_capacity = product.id_capacity\n" +
+            "        JOIN\n" +
+            "    color ON color.id_color = product.id_color\n" +
             "WHERE\n" +
-            "    name_product LIKE :name and status_business = 1", nativeQuery = true)
-    List<String> getCapacitiesOfProductByName(@Param("name") String name);
+            "    name_product LIKE :name and color.name like :color and status_business = 1", nativeQuery = true)
+    List<String> getCapacitiesOfProductByNameAndColor(@Param("name") String name,@Param("color") String color);
 
 
     /**
@@ -218,19 +209,38 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
      */
     @Query(value = "SELECT \n" +
             "    p.id_product AS id,\n" +
-            "    p.name_product AS name,\n" +
-            "    p.price_product AS price,\n" +
-            "    p.quantity_product AS quantity\n" +
+            "    p.name_product as name,\n" +
+            "    co.name AS color,\n" +
+            "    p.price_product as price,\n" +
+            "    p.quantity_product as quantity_in_stock,\n" +
+            "    ca.name AS capacity,\n" +
+            "    t.name AS type,\n" +
+            "    quantity_total,\n" +
+            "    MIN(i.name) AS image\n" +
             "FROM\n" +
             "    product p\n" +
             "        JOIN\n" +
-            "    order_detail o ON o.id_order_detail = p.id_product\n" +
-            "WHERE\n" +
-            "    status_business = 1 \n" +
-            "GROUP BY id \n" +
-            "ORDER BY SUM(o.quantity_order) DESC\n" +
-            "LIMIT 8\n", nativeQuery = true)
-    List<Product> getBestsellers();
+            "    type t ON p.id_type = t.id_type\n" +
+            "        JOIN\n" +
+            "    capacity ca ON p.id_capacity = ca.id_capacity\n" +
+            "        JOIN\n" +
+            "    color co ON co.id_color = p.id_color\n" +
+            "        JOIN\n" +
+            "    image i ON p.id_product = i.id_product\n" +
+            "        JOIN\n" +
+            "    (SELECT \n" +
+            "        p.id_product,sum(o.quantity_order) as quantity_total\n" +
+            "    FROM\n" +
+            "        order_detail o\n" +
+            "    JOIN product p ON o.id_product = p.id_product\n" +
+            "    JOIN type t ON p.id_type = t.id_type\n" +
+            "    JOIN capacity ca ON p.id_capacity = ca.id_capacity\n" +
+            "    JOIN color co ON co.id_color = p.id_color\n" +
+            "    GROUP BY o.id_product\n" +
+            "    ORDER BY SUM(o.quantity_order) DESC\n" +
+            "    LIMIT 10) AS subquery ON p.id_product = subquery.id_product\n" +
+            "GROUP BY p.id_product;", nativeQuery = true)
+    List<IProductDto> getBestsellers();
 
     @Query(value = "SELECT \n" +
             "    name\n" +

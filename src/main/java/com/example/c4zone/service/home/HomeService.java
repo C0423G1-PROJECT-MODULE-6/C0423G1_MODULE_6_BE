@@ -1,5 +1,7 @@
 package com.example.c4zone.service.home;
 
+import com.example.c4zone.dto.product.ColorDto;
+import com.example.c4zone.dto.product.IColorDto;
 import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.repository.home.IHomeRepository;
@@ -30,18 +32,14 @@ public class HomeService implements IHomeService {
     }
 
     @Override
-    public List<Product> getBestsellers() {
+    public List<IProductDto> getBestsellers() {
         return homeRepository.getBestsellers();
     }
 
-    @Override
-    public String getAvatarByProductId(Long product_id) {
-        return homeRepository.getAvatarByProductId(product_id);
-    }
 
     @Override
-    public List<String> getColorsOfAProductByName(String name) {
-        return homeRepository.getColorsOfAProductByName(name);
+    public List<IColorDto> getColorsOfAProductByNameAndCapacity(String name,String capacity) {
+        return homeRepository.getColorsOfAProductByNameAndCapacity(name,capacity);
     }
 
     @Override
@@ -50,8 +48,8 @@ public class HomeService implements IHomeService {
     }
 
     @Override
-    public List<String> getCapacitiesByName(String name) {
-        return homeRepository.getCapacitiesOfProductByName(name);
+    public List<String> getCapacitiesOfProductByNameAndColor(String name,String color) {
+        return homeRepository.getCapacitiesOfProductByNameAndColor(name,color);
     }
 
     @Override

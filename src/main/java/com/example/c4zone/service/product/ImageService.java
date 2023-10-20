@@ -37,8 +37,13 @@ public class ImageService implements IImageService{
      * @param idProduct update image with idProduct
      */
     @Override
-    public void updateImageProduct(Image image, Long idProduct) {
+    public void updateImageProduct(String image, Long idProduct) {
         imageProductRepository.updateImage(image, idProduct);
+    }
+
+    @Override
+    public void deleteImg(Long id) {
+        imageProductRepository.deleteImg(id);
     }
 
     @Override

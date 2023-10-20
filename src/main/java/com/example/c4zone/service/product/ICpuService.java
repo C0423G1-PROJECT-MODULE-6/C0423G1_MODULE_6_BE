@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ICpuService {
     List<Cpu> findAll();
+    Cpu findByIdCpu (Long idCpu);
 }
