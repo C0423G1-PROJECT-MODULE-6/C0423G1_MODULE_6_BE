@@ -93,7 +93,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public List<IProductDto> findProductWarehouse(Long id) {
+    public IProductDto findProductWarehouse(Long id) {
         return productRepository.findProductWarehouse(id);
     }
 
