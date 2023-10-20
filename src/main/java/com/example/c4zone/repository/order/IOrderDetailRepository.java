@@ -97,7 +97,8 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
             "    product P ON OD.id_product = P.id_product " +
             "WHERE C.name_customer like :name and OB.payment_status = 1 " +
             "GROUP BY " +
-            "    OB.id_order_bill",nativeQuery = true)
+            "    OB.id_order_bill " +
+            "ORDER BY OB.date_of_order DESC, OB.time_of_order DESC", nativeQuery = true)
     Page<IOrderHistoryDtoTotal> getAllHistory(Pageable pageable,@Param("name") String s);
     /**
      * method get all sale history sort by name product

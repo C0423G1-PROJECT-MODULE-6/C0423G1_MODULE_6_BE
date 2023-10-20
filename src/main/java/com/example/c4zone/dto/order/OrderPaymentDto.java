@@ -14,18 +14,10 @@ import javax.validation.constraints.NotNull;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderPaymentDto implements Validator {
+public class OrderPaymentDto{
     private Long idCustomerOrder;
     private Integer paymentMethod;
     private Long idUser;
 
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return false;
-    }
 
-    @Override
-    public void validate(Object target, Errors errors) {
-
-    }
 }

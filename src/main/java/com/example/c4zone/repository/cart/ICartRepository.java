@@ -35,11 +35,16 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      */
 
 
-    @Query(value = "select c.id_cart as idCart,c.id_product as idProduct,c.quantity_product_order as quantityOrder ,p.name_product as nameProduct " +
+    @Query(value = "select c.id_cart as idCart,c.id_product as idProduct,c.quantity_product_order as quantityOrder " +
+            ",concat(p.name_product, ', ', cl.name, ', ', cp.name) as nameProduct " +
             ",p.price_product as priceProduct, p.quantity_product as quantityProduct " +
             "from cart as c " +
             "join product " +
             "as p on c.id_product = p.id_product " +
+            "join color " +
+            "as cl on cl.id_color = p.id_color " +
+            "join capacity " +
+            "as cp on cp.id_capacity = p.id_capacity " +
             "where c.id_user = :id",nativeQuery = true)
     List<ICartDto> getAllCart(@Param("id")Long idUser);
 
