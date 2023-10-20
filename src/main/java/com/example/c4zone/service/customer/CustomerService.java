@@ -64,7 +64,10 @@ public class CustomerService implements ICustomerService {
 
 
 
-
+    /**
+     * Author: NguyenNH
+     * Goal: get all list Customer
+     */
     @Override
     public Page<ICustomerListDto> findCustomerByNameAndAge(Pageable pageable, String valueSearchName, String valueSearchAge, String valueSearchGender) {
         if (!valueSearchAge.equals("") && !valueSearchGender.equals("3")) {
@@ -76,9 +79,6 @@ public class CustomerService implements ICustomerService {
         if (!valueSearchAge.equals("")) {
             return customerRepository.findAllCustomerByAge(pageable, "%" + valueSearchName + "%",valueSearchAge);
         }
-//        if (!valueSearchAge.equals("")&&valueSearchGender.equals("3")){
-//            return customerRepository.findAllCustomerByNameAndAge(pageable, "%" + valueSearchName + "%", valueSearchAge);
-//        }
         return customerRepository.findAllCustomerByName(pageable, "%" + valueSearchName + "%");
 
 
@@ -109,6 +109,10 @@ public class CustomerService implements ICustomerService {
         return customerRepository.findCustomerById(id);
     }
 
+    /**
+     * Author: NguyenNH
+     * Goal: get all list shopping history
+     */
     @Override
     public Page<IShoppingHistoryDto> findShoppingHistory(Pageable pageable, String valueSearchName, Long id) {
         return customerRepository.findShoppingHistory(pageable, "%" + valueSearchName + "%", id);

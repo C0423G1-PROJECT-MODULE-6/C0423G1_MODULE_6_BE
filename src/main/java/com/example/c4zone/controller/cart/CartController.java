@@ -1,4 +1,5 @@
 package com.example.c4zone.controller.cart;
+import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.service.cart.ICartService;
@@ -32,7 +33,7 @@ public class CartController {
                                         @RequestParam (defaultValue = "0", name = "id_product") Long idProduct,
                                         @RequestParam (defaultValue = "0",name = "quantity") Long quantity) {
         AppUser user = employeeService.getEmployeeById(idUSer);
-//        Product product = productService.findProductById(idUSer);
+        IProductDto product = productService.findById(idProduct);
         if (user == null){
             return new ResponseEntity<>("Không tìm thấy idUser", HttpStatus.NOT_ACCEPTABLE);
         }
@@ -53,15 +54,15 @@ public class CartController {
 
         if (checkQuantityProduct == 0) {
             System.out.println(checkQuantityProduct);
-            return new ResponseEntity<>("Sản phẩm đã hết hàng", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Sản phẩm "+product.getName() +" đã hết hàng", HttpStatus.NO_CONTENT);
         }
         if (checkQuantityCart != null) {
             if ((checkQuantityCart + quantity) > checkQuantityProduct) {
-                return new ResponseEntity<>("Số lượng vượt quá số lượng kho", HttpStatus.CREATED);
+                return new ResponseEntity<>("Số lượng " + product.getName() +" vượt quá số lượng kho", HttpStatus.CREATED);
             }
         }
         cartService.saveCart(idUSer, idProduct, quantity);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(product.getName() +"chọn thành công ",HttpStatus.OK);
 
     }
 

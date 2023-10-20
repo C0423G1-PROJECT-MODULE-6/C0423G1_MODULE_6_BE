@@ -17,7 +17,8 @@ public interface IProductDto {
     String getWeight();
     String getRam();
     String getSeries();
-
+    String getQuantity_in_stock();
+    String getQuantity_total();
 
 
 }

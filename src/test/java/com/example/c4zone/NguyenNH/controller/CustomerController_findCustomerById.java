@@ -71,7 +71,7 @@ public class CustomerController_findCustomerById {
                 .andExpect(jsonPath("nameCustomer").value("Nguyễn Hoàng Anh"))
                 .andExpect(jsonPath("genderCustomer").value(false))
                 .andExpect(jsonPath("emailCustomer").value("anh@gmail.com"))
-                .andExpect(jsonPath("dateOfBirthCustomer").value("2022-10-10"))
+                .andExpect(jsonPath("dateOfBirthCustomer").value("1997-10-10"))
                 .andExpect(jsonPath("phoneNumberCustomer").value("098732165"))
                 .andExpect(jsonPath("addressCustomer").value("Da Nang"))
                 .andExpect(jsonPath("statusCustomer").value(true));
