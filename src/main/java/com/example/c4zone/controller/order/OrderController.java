@@ -238,7 +238,6 @@ public class OrderController {
         orderDetailService.createOrderDetail(cartDto,orderBill.getCustomer().getIdCustomer(),orderBill.getUser().getId());
         Double totalMoney = orderDetailService.calculateTotalMoney(orderBill.getUser().getId(),orderBill.getCustomer().getIdCustomer());
         ObjectResponseDto objectResponseDto = new ObjectResponseDto();
-
         if (printStatus == 1){
             orderDetailService.updateOrderBill(totalMoney,printStatus,orderBill);
             objectResponseDto.setType("print");
