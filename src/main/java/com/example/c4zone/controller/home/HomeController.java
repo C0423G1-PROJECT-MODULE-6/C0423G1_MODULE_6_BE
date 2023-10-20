@@ -85,8 +85,8 @@ public class HomeController {
     }
 
     @GetMapping("/bestsellers")
-    public ResponseEntity<List<Product>> getBestsellers() {
-        List<Product> getBestsellers = homeService.getBestsellers();
+    public ResponseEntity<List<IProductDto>> getBestsellers() {
+        List<IProductDto> getBestsellers = homeService.getBestsellers();
         if (getBestsellers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

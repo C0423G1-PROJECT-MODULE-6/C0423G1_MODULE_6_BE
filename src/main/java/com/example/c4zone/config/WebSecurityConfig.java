@@ -60,7 +60,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/user/login-by-username/**"
 
 
-                      
                 ).permitAll()
 
                 .antMatchers(
@@ -71,6 +70,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ).hasAnyAuthority("ROLE_ADMIN", "ROLE_SALE", "ROLE_BUSINESS", "ROLE_WAREHOUSE")//
 
                 .antMatchers(
+          
+//                        "/api/**"
 
                 ).hasAnyAuthority("ROLE_ADMIN")//
 

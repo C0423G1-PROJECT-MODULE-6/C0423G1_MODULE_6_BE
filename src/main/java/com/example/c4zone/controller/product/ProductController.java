@@ -1,19 +1,19 @@
 package com.example.c4zone.controller.product;
 
 import com.example.c4zone.dto.product.*;
-
 import com.example.c4zone.model.product.*;
+import com.example.c4zone.dto.product.IProductDto;
+import com.example.c4zone.dto.product.ImageDto;
+import com.example.c4zone.dto.product.ProductDto;
+import com.example.c4zone.model.product.Image;
+import com.example.c4zone.model.product.Product;
+import com.example.c4zone.service.product.IImageService;
+import com.example.c4zone.service.product.IProductService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import org.json.JSONObject;
-
-import com.example.c4zone.model.product.Image;
-import com.example.c4zone.model.product.Product;
-import com.example.c4zone.service.product.IImageService;
-import com.example.c4zone.service.product.IProductService;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +27,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
 import javax.imageio.ImageIO;
 import javax.validation.Valid;
 import java.awt.image.BufferedImage;
@@ -40,7 +39,7 @@ import java.util.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/admin/product")
+@RequestMapping("/api/admin/product")
 public class ProductController {
     @Autowired
     private IProductService productService;
@@ -147,7 +146,7 @@ public class ProductController {
                 bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
             }
         }
-        File qrCodeFile = new File("D:\\Sprint_6_Continute\\QRcode" + product.getIdProduct() + ".png");
+        File qrCodeFile = new File("D:\\Sprint_6_Continute\\C0423G1_MODULE_6_FE\\public\\images_qr" + product.getIdProduct() + ".png");
         ImageIO.write(bufferedImage, "png", qrCodeFile);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -184,7 +183,6 @@ public class ProductController {
             }
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
-//        List<String> imageList = new ArrayList<>();
         Product product = new Product();
         Capacity capacity = new Capacity();
         Color color = new Color();
@@ -294,8 +292,8 @@ public class ProductController {
      * @return if Http status
      */
     @PatchMapping("/remove")
-    public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id) {
-        if (productService.findById(id) == null) {
+    public ResponseEntity removeProduct(@RequestParam(name = "id") Long id){
+        if (productService.findById(id)==null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         productService.removeProduct(id);
