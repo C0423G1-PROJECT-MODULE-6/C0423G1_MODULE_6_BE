@@ -104,7 +104,7 @@ public class WareHouseController {
      */
     @GetMapping("/product/{id}")
     public ResponseEntity<IProductDto> chooseProduct(@PathVariable Long id) {
-        IProductDto productDto = productService.findProductByIdWarehouse(id);
+        IProductDto productDto = productService.findProductWarehouse(id);
         if (productDto == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
