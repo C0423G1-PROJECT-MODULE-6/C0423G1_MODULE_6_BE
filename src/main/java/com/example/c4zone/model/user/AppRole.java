@@ -1,9 +1,9 @@
 package com.example.c4zone.model.user;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -20,6 +20,7 @@ public class AppRole {
     private String name;
     private Boolean flagDeleted;
     @OneToMany(mappedBy = "appRole")
+    @JsonBackReference
     private Set<UserRole> userRoleSet;
 
     public AppRole() {

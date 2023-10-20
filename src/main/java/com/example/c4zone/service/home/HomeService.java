@@ -58,4 +58,9 @@ public class HomeService implements IHomeService {
     public IProductDto getProductByNameAndCapacityAndColor(String name, String capacity,String color) {
         return homeRepository.getProductByNameAndCapacityAndColor(name, capacity,color);
     }
+
+    @Override
+    public List<String> getSeriesByProductType(String type) {
+        return homeRepository.getSeriesByProductType(type);
+    }
 }

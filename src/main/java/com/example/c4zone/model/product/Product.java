@@ -3,7 +3,6 @@ package com.example.c4zone.model.product;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -49,3 +48,5 @@ public class Product {
     @JoinColumn(name = "id_series", referencedColumnName = "idSeries")
     private Series series;
 }
+
+

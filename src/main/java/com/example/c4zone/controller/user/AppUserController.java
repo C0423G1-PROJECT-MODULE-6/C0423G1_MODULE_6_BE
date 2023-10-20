@@ -22,6 +22,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -45,6 +46,23 @@ public class AppUserController {
     private static final String LOGIN_FAILED = "Đăng nhập thất bại";
 
     /**
+     * method getUserNameFormJWT
+     * Create HaiBH
+     * Date 18-10-2023
+     * param HttpServletRequest request
+     * return String
+     */
+    public String getUserNameFormJWT(HttpServletRequest request) {
+        final String requestTokenHeader = request.getHeader("Authorization");
+        String username = null;
+        String jwtToken = null;
+        jwtToken = requestTokenHeader.substring(7);
+        username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+        return username;
+    }
+
+
+    /**
      * method showInformation
      * Create HaiBH
      * Date 12-10-2023
@@ -52,12 +70,16 @@ public class AppUserController {
      * return ResponseEntity<>();
      */
     @GetMapping("/information/{id}")
-    public ResponseEntity<Object> showInformation(@PathVariable Long id) {
+    public ResponseEntity<Object> showInformation(@PathVariable Long id, HttpServletRequest request) {
         AppUser appUser = appUserService.findAppUserById(id);
+        String userName = getUserNameFormJWT(request);
         if (appUser == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(appUser, HttpStatus.OK);
+        if (appUser.getUserName().equals(userName)) {
+            return new ResponseEntity<>(appUser, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -69,18 +91,22 @@ public class AppUserController {
      */
     @PutMapping("/information/edit")
     public ResponseEntity<Object> editInformation(@Valid @RequestBody UserInfoDto userInfoDto,
-                                                  BindingResult bindingResult) {
+                                                  BindingResult bindingResult, HttpServletRequest request) {
+        String userName = getUserNameFormJWT(request);
         AppUser appUser = appUserService.findAppUserById(userInfoDto.getId());
-//        new AppUserDto().validate(userInfoDto, bindingResult);
-//        if (bindingResult.hasErrors()) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
         if (appUser == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        BeanUtils.copyProperties(userInfoDto, appUser);
-        appUserService.updateInfoUser(appUser);
-        return new ResponseEntity<>(appUser, HttpStatus.OK);
+        if (userName.equals(appUser.getUserName())) {
+            new UserInfoDto().validate(userInfoDto, bindingResult);
+            if (bindingResult.hasErrors()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            BeanUtils.copyProperties(userInfoDto, appUser);
+            appUserService.updateInfoUser(appUser);
+            return new ResponseEntity<>(appUser, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -128,22 +154,27 @@ public class AppUserController {
      * return ResponseEntity<>();
      */
     @PostMapping("/confirm")
-    public ResponseEntity<?> confirm(@RequestBody AppUserDto appUserDto) {
-        AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
-        if (appUser != null) {
-            if (passwordEncoder.matches(appUserDto.getOtp(), appUser.getOneTimePassword()) && appUser.isOTPRequired()) {
+    public ResponseEntity<Object> confirm(@RequestBody AppUserDto appUserDto) {
+        try {
+            AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
+            if (appUser != null) {
+                if (passwordEncoder.matches(appUserDto.getOtp(), appUser.getOneTimePassword()) && appUser.isOTPRequired()) {
 
-                UserDetails userDetails = appUserService.loadUserByUsername(appUser.getUserName());
+                    UserDetails userDetails = appUserService.loadUserByUsername(appUser.getUserName());
 
-                String jwtToken = jwtTokenUtil.generateToken(userDetails);
+                    String jwtToken = jwtTokenUtil.generateToken(userDetails);
 
-                return ResponseEntity.ok().body(new JwtResponse(jwtToken));
+                    return ResponseEntity.ok().body(new JwtResponse(jwtToken));
 
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
             }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 
     /**
@@ -154,7 +185,7 @@ public class AppUserController {
      * return ResponseEntity<>();
      */
     @PostMapping("/resetOTP")
-    public ResponseEntity<?> resetOTP(@RequestBody AppUserDto appUserDto) throws MessagingException, UnsupportedEncodingException {
+    public ResponseEntity<Object> resetOTP(@RequestBody AppUserDto appUserDto) throws MessagingException, UnsupportedEncodingException {
         AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
         if (appUser != null) {
             appUserService.generateOneTimePassword(appUser, passwordEncoder);
@@ -171,13 +202,18 @@ public class AppUserController {
      * param AppUserDto appUserDto
      * return ResponseEntity<>();
      */
-//    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/register")
-    public ResponseEntity<Object> register(@RequestBody AppUserDto appUserDto) throws MessagingException, UnsupportedEncodingException {
-
+    public ResponseEntity<Object> register(@RequestBody AppUserDto appUserDto, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    appUserDto.getUserName(), appUserDto.getPassword()));
+            String userName = getUserNameFormJWT(request);
+            AppUser appUser = appUserService.findAppUserById(appUserDto.getId());
+            if (appUser == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            if (userName.equals(appUser.getUserName())) {
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                        appUserDto.getUserName(), appUserDto.getPassword()));
+            }
         } catch (DisabledException e) {
             return ResponseEntity
                     .status(HttpStatus.FORBIDDEN)
@@ -203,18 +239,21 @@ public class AppUserController {
      * return ResponseEntity<>();
      */
     @PostMapping("/confirmRegister")
-    public ResponseEntity<?> confirmRegister(@RequestBody AppUserDto appUserDto) {
+    public ResponseEntity<Object> confirmRegister(@RequestBody AppUserDto appUserDto, HttpServletRequest request) {
         AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
         if (appUser != null) {
-            if (passwordEncoder.matches(appUserDto.getOtp(), appUser.getOneTimePassword()) && appUser.isOTPRequired()) {
-                appUser.setPassword(passwordEncoder.encode(appUserDto.getPassword()));
-                appUserService.updatePass(appUser);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            String userName = getUserNameFormJWT(request);
+            if (userName.equals(appUser.getUserName())) {
+                if (passwordEncoder.matches(appUserDto.getOtp(), appUser.getOneTimePassword()) && appUser.isOTPRequired()) {
+                    appUser.setPassword(passwordEncoder.encode(appUserDto.getPassword()));
+                    appUserService.updatePass(appUser);
+                    return new ResponseEntity<>(HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
             }
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 
@@ -244,12 +283,15 @@ public class AppUserController {
      * return ResponseEntity<>();
      */
     @GetMapping("/get-id-app-user/{userName}")
-    public ResponseEntity<Object> getIdByAppUserName(@PathVariable String userName) {
+    public ResponseEntity<Object> getIdByAppUserName(@PathVariable String userName, HttpServletRequest request) {
+        String userNameJWT = getUserNameFormJWT(request);
         Long id = appUserService.findAppUserIdByUserName(userName);
         if (id == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có dữ liệu");
+        } else if (userNameJWT.equals(userName)){
+            return ResponseEntity.ok().body(id);
         }
-        return ResponseEntity.ok().body(id);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có dữ liệu");
     }
 
     /**
@@ -260,7 +302,7 @@ public class AppUserController {
      * return ResponseEntity<>();
      */
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody AppUserDto appUserDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> create(@RequestBody AppUserDto appUserDto, BindingResult bindingResult) {
         new AppUserDto().validate(appUserDto, bindingResult);
         Map<String, String> errorMap = new HashMap<>();
         if (bindingResult.hasErrors()) {
@@ -274,7 +316,7 @@ public class AppUserController {
 
         AppUser appUser = new AppUser();
         appUser.setUserName(appUserDto.getUserName());
-        appUser.setPassword(passwordEncoder.encode("123"));
+        appUser.setPassword(passwordEncoder.encode(appUserDto.getPassword()));
         Boolean checkAddNewAppUser = appUserService.createNewAppUser(appUser, "ROLE_ADMIN");
         if (!Boolean.TRUE.equals(checkAddNewAppUser)) {
             return ResponseEntity

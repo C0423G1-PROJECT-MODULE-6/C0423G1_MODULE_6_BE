@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WareHouseService implements IWareHouseService{
+public class WareHouseService implements IWareHouseService {
     @Autowired
     private IWareHouseRepository wareHouseRepository;
 
@@ -17,20 +17,22 @@ public class WareHouseService implements IWareHouseService{
      * Method: findAll
      * Author: PhapTM
      * Create: 12-10-2023
+     *
      * @param pageable control page: size and number
      * @return page Warehouse
      */
     @Override
     public Page<IWarehouseProjection> findAllByName(Pageable pageable, String name) {
-        return wareHouseRepository.findAllWareHouseByName(pageable, '%'+name+'%');
+        return wareHouseRepository.findAllWareHouseByName(pageable, '%' + name + '%');
     }
 
     /**
      * method findAll by Price
      * author PhapTM
      * create 12-10-2023
+     *
      * @param pageable return page
-     * @param price search by filter
+     * @param price    search by filter
      * @return
      */
     @Override
@@ -50,6 +52,7 @@ public class WareHouseService implements IWareHouseService{
      * method findAll by supplier
      * author PhapTM
      * create 12-10-2023
+     *
      * @param pageable page
      * @param supplier search by name supplier
      * @return
@@ -61,15 +64,16 @@ public class WareHouseService implements IWareHouseService{
     }
 
     /**
-     * Method: import product
-     * Author: PhapTM
-     * Create: 12-10-2023
-     * @param wareHouse use add object
+     * method: Import Product
+     * author: PhapTM
+     * craete: 13-10-2023
+     * @param productId
+     * @param quantity
+     * @param supplierId
      */
     @Override
-    public void importProduct(WareHouse wareHouse) {
-        wareHouseRepository.ImportProduct(wareHouse);
+    public void importProduct(Long productId, int quantity, Long supplierId) {
+        wareHouseRepository.importProduct(productId, quantity, supplierId);
     }
-
 
 }

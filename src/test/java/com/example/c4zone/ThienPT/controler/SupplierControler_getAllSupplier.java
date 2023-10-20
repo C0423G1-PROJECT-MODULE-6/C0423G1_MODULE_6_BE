@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SupplierControler_getAllSupplier {
+ class SupplierControler_getAllSupplier {
     @Autowired
     private MockMvc mockMvc;
 
@@ -27,7 +27,7 @@ public class SupplierControler_getAllSupplier {
      * */
 
     @Test
-    public void getAllStudent_6() throws  Exception{
+     void getAllStudent_6() throws  Exception{
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(
                         "/api/admin/supplier?_page=0&_limit=3&name_like=&addressSearch=&emailSearch="
@@ -35,11 +35,11 @@ public class SupplierControler_getAllSupplier {
         ).andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("content[0].idSupplier").value(1))
-                .andExpect(jsonPath("content[0].codeSupplier").value(1))
-                .andExpect(jsonPath("content[0].nameSupplier").value("1"))
-                .andExpect(jsonPath("content[0].addressSupplier").value("1"))
-                .andExpect(jsonPath("content[0].phoneNumberSupplier").value("1"))
-                .andExpect(jsonPath("content[0].emailSupplier").value("1"))
+                .andExpect(jsonPath("content[0].codeSupplier").value(202301))
+                .andExpect(jsonPath("content[0].nameSupplier").value("Công Ty TNHH Bao La"))
+                .andExpect(jsonPath("content[0].addressSupplier").value("Thành phố Hồ Chí Minh"))
+                .andExpect(jsonPath("content[0].phoneNumberSupplier").value("02835119060"))
+                .andExpect(jsonPath("content[0].emailSupplier").value("baolamobile@gmail.com"))
                 .andExpect(jsonPath("content[0].statusSupplier").value(false));
     }
 
@@ -49,7 +49,7 @@ public class SupplierControler_getAllSupplier {
      * */
 
     @Test
-    public void getAllStudent_5() throws  Exception{
+    void getAllStudent_5() throws  Exception{
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get("/api/admin/supplier?_page=0&_limit=3&name_like=&addressSearch=&emailSearch=")
         ).andDo(print())
