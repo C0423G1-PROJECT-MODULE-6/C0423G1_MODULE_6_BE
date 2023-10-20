@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +52,7 @@ public class EmployeeController {
                                                                 @RequestParam(name = "searchName",defaultValue = "",required = false)String searchName,
                                                                 @RequestParam(name = "searchPhone",defaultValue = "",required = false)String searchPhone){
 
-        Pageable pageable = PageRequest.of(page,5,Sort.by("id").descending());
+        Pageable pageable = PageRequest.of(page,5, Sort.by("id").descending());
         Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable,'%'+searchJob+'%',"%"+searchName+"%","%"+searchPhone+"%");
         if (employeeDtoPage.getTotalElements()==0 ){
 
