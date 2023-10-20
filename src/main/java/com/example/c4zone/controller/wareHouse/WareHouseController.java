@@ -137,7 +137,7 @@ public class WareHouseController {
      */
 
     @PostMapping("/create")
-    public ResponseEntity<?> importProduct(@Valid @RequestBody WarehouseDto warehouseDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> importProduct(@Valid @RequestBody WarehouseDto warehouseDto, BindingResult bindingResult) {
 
         Map<String, String> errors = new HashMap<>();
         new WarehouseDto().validate(warehouseDto, bindingResult);

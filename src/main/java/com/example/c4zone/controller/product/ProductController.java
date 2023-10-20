@@ -1,26 +1,18 @@
 package com.example.c4zone.controller.product;
 
-
 import com.example.c4zone.dto.product.*;
-
 import com.example.c4zone.model.product.*;
-
 import com.example.c4zone.dto.product.IProductDto;
-
 import com.example.c4zone.dto.product.ProductDto;
 import com.example.c4zone.model.product.Image;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.service.product.IImageService;
 import com.example.c4zone.service.product.IProductService;
-
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import org.json.JSONObject;
-
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,7 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
 import javax.imageio.ImageIO;
 import javax.validation.Valid;
 import java.awt.image.BufferedImage;
