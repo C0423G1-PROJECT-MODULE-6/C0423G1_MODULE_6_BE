@@ -27,10 +27,10 @@ public interface IEmployeeRepository extends JpaRepository<AppUser, Long> {
      *
      * @param: return Page<User>
      */
-    @Query(nativeQuery = true, value = " SELECT app_user.id as id, app_user.employee_Name as employeeName, app_user.employee_Birthday as employeeBirthday, app_user.employee_Address as employeeAddress, app_role.name as employeeRoleName , app_user.employee_Phone as employeePhone FROM app_user  " +
+    @Query(nativeQuery = true, value = " SELECT app_user.id as id, app_user.employee_Name as employeeName, app_user.employee_Birthday as employeeBirthday, app_user.employee_Address as employeeAddress, app_role.type as employeeTypeName , app_user.employee_Phone as employeePhone FROM app_user  " +
             "             JOIN user_role on app_user.id = user_role.app_user_id  " +
             "             JOIN app_role on user_role.app_role_id = app_role.id  " +
-            "             where app_user.flag_deleted = 0 and app_role.name like :searchJob and app_user.employee_name like :searchName and app_user.employee_phone like :searchPhone ")
+            "             where app_user.flag_deleted = 0 and app_role.type like :searchJob and app_user.employee_name like :searchName and app_user.employee_phone like :searchPhone ")
     Page<IEmployeeDto> findAllEmployee(Pageable pageable, @Param("searchJob") String searchJob, @Param("searchName") String searchName, @Param("searchPhone") String searchPhone);
 
     /**
