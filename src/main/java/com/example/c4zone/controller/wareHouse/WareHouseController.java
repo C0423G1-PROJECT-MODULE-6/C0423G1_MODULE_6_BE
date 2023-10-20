@@ -71,6 +71,9 @@ public class WareHouseController {
             case "totalPrice":
                 pageable = PageRequest.of(page, 5, Sort.by("totalPrice").ascending());
                 break;
+            case "inputDate":
+                pageable = PageRequest.of(page, 5, Sort.by("inputDate").descending());
+                break;
             default:
                 pageable = PageRequest.of(page, 5);
                 break;
