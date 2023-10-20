@@ -32,7 +32,7 @@ public class HomeService implements IHomeService {
     }
 
     @Override
-    public List<Product> getBestsellers() {
+    public List<IProductDto> getBestsellers() {
         return homeRepository.getBestsellers();
     }
 
