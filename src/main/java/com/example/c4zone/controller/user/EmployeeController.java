@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
@@ -39,6 +40,8 @@ public class EmployeeController {
     private IAppRoleService appRoleService;
     @Autowired
     private IUserRoleRepository userRoleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * method :findAllEmployeeBy()
@@ -53,7 +56,6 @@ public class EmployeeController {
                                                                 @RequestParam(name = "searchJob", defaultValue = "", required = false) String searchJob,
                                                                 @RequestParam(name = "searchName", defaultValue = "", required = false) String searchName,
                                                                 @RequestParam(name = "searchPhone", defaultValue = "", required = false) String searchPhone) {
-
 
         Pageable pageable = PageRequest.of(page, 5, Sort.by("id").descending());
         Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable, '%' + searchJob + '%', "%" + searchName + "%", "%" + searchPhone + "%");
@@ -134,7 +136,7 @@ public class EmployeeController {
         System.err.println(dateBirth);
         AppRole appRole = appRoleService.findById(employeeDto.getRoleId());
         employee.setFlagDeleted(false);
-        employee.setPassword("123456");
+        employee.setPassword(passwordEncoder.encode("123456"));
         employeeService.createEmployee(employee);
         // id appUser
         Long appUser = employeeService.getNextId();
