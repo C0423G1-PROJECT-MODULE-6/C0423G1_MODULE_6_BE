@@ -117,4 +117,12 @@ public class CustomerService implements ICustomerService {
     public Page<IShoppingHistoryDto> findShoppingHistory(Pageable pageable, String valueSearchName, Long id) {
         return customerRepository.findShoppingHistory(pageable, "%" + valueSearchName + "%", id);
     }
+    /**
+     * Author: TinDT
+     * Goal: find customers by email
+     */
+    @Override
+    public Customer findCustomerById(Long id) {
+        return customerRepository.findCustomerByIdForModal(id);
+    }
 }

@@ -7,6 +7,7 @@ import com.example.c4zone.model.order.Cart;
 import com.example.c4zone.model.order.OrderBill;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.model.user.AppUser;
+import com.example.c4zone.model.wareHouse.WareHouse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -59,7 +60,7 @@ public interface ICartService {
      * param  Long idProduct
      * return Long
      */
-    Long getQuantityProductOrder(Long idProduct, Long idUser);
+    Long getQuantityProductOrder(Long idProduct, Long idCustomer);
 
     /**
      * method get product  from iProduct
@@ -123,4 +124,12 @@ public interface ICartService {
      * @return page had control
      */
     Page<IProductCartDto> getAllByQuantity(Pageable pageable, String value);
+    /**
+     * author :TinDT
+     * work day : 12/10/2023
+     * @param Long idProduct
+     * @param value : value of choose product
+     * @return page had control
+     */
+    WareHouse findProductById(Long idProduct);
 }

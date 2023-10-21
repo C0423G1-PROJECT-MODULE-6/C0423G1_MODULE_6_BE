@@ -11,6 +11,7 @@ import com.example.c4zone.model.order.OrderDetail;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.model.user.AppUser;
 
+import com.example.c4zone.model.wareHouse.WareHouse;
 import com.example.c4zone.repository.cart.ICartRepository;
 import com.example.c4zone.repository.order.IOrderDetailRepository;
 import com.example.c4zone.repository.product.IProductRepository;
@@ -88,8 +89,8 @@ public class CartService implements ICartService{
      * return Long
      */
     @Override
-    public Long getQuantityProductOrder(Long idProduct, Long idUser) {
-        return cartRepository.quantityProductCart(idProduct,idUser);
+    public Long getQuantityProductOrder(Long idProduct, Long idCustomer) {
+        return cartRepository.quantityProductCart(idProduct,idCustomer);
     }
     /**
      * method get product  from iProduct
@@ -208,6 +209,15 @@ public class CartService implements ICartService{
                 return cartRepository.getAllByName(pageable, "%%");
         }
     }
+    /**
+     * author :TinDT
+     * work day : 12/10/2023
+     * @param idProduct control page return
+     * @return page had control
+     */
 
-
+    @Override
+    public WareHouse findProductById(Long idProduct) {
+        return cartRepository.getProductWareById(idProduct);
+    }
 }

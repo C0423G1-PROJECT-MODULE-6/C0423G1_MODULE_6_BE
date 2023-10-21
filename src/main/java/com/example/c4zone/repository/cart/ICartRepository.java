@@ -5,6 +5,7 @@ import com.example.c4zone.dto.product.IProductCartDto;
 import com.example.c4zone.model.order.Cart;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.model.user.AppUser;
+import com.example.c4zone.model.wareHouse.WareHouse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -78,7 +79,7 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      * param Cart cart
      * return Long
      */
-    @Query(value =" select p.quantity_product  from product p where p.id_product = :id ",nativeQuery = true)
+    @Query(value =" select quantity from c4_zone.ware_house  where product_id = :id",nativeQuery = true)
     Long quantityProduct(@Param("id") Long id);
     /**
      * method  create cart for sale pages
@@ -91,7 +92,7 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      */
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "insert into c4_zone.cart (id_user,id_product,quantity_product_order ) VALUES (:id_user, :id_product, :newQuantity) ON DUPLICATE KEY UPDATE quantity_product_order = quantity_product_order + :newQuantity")
+    @Query(nativeQuery = true, value = "insert into c4_zone.cart (id_customer,id_product,quantity_product_order ) VALUES (:id_user, :id_product, :newQuantity) ON DUPLICATE KEY UPDATE quantity_product_order = quantity_product_order + :newQuantity")
     void createCard(@Param("id_user") Long idUser,@Param("id_product") Long idProduct, @Param("newQuantity") Long newQuantity);
     /**
      * method get quantity cart from iProduct and iUserof cart
@@ -101,8 +102,8 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      * param Long idUser
      * return Long
      */
-    @Query(value =" select c.quantity_product_order  from cart c where c.id_product = :id_product and c.id_user = :id_user",nativeQuery = true)
-    Long quantityProductCart(@Param("id_product") Long idProduct,@Param("id_user") Long idUser);
+    @Query(value =" select c.quantity_product_order  from cart c where c.id_product = :id_product and c.id_customer = :id_customer",nativeQuery = true)
+    Long quantityProductCart(@Param("id_product") Long idProduct,@Param("id_customer") Long idCustomer);
     /**
      * method get product  from iProduct
      * Create TinDT
@@ -378,4 +379,6 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
             "    p.status_business = TRUE  " +
             "    AND w.quantity >= :min group by w.product_id", nativeQuery = true)
     Page<IProductCartDto> getAllByQuantityMin(Pageable pageable, @Param("min") int min);
+    @Query(value =" select * from ware_house where product_id = :id_product ",nativeQuery = true)
+    WareHouse getProductWareById(@Param("id_product") Long idProduct);
 }

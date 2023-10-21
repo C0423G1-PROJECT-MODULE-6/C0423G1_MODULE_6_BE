@@ -1,9 +1,9 @@
 package com.example.c4zone.controller.cart;
 import com.example.c4zone.dto.product.IProductCartDto;
-import com.example.c4zone.dto.product.IProductDto;
-import com.example.c4zone.model.product.Product;
-import com.example.c4zone.model.user.AppUser;
+import com.example.c4zone.model.customer.Customer;
+import com.example.c4zone.model.wareHouse.WareHouse;
 import com.example.c4zone.service.cart.ICartService;
+import com.example.c4zone.service.customer.ICustomerService;
 import com.example.c4zone.service.product.IProductService;
 import com.example.c4zone.service.user.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,44 +33,39 @@ public class CartController {
     @Autowired
     private ICartService cartService;
     @Autowired
-    private IProductService productService;
-    @Autowired
-    private IEmployeeService employeeService;
+    private ICustomerService customerService;
     @PostMapping("/create")
-    public ResponseEntity<?> createCart(@RequestParam (defaultValue = "0", name="id_user") Long idUSer,
+    public ResponseEntity<?> createCart(@RequestParam (defaultValue = "0", name="id_customer") Long idCustomer,
                                         @RequestParam (defaultValue = "0", name = "id_product") Long idProduct,
                                         @RequestParam (defaultValue = "0",name = "quantity") Long quantity) {
-        AppUser user = employeeService.getEmployeeById(idUSer);
-        IProductDto product = productService.findById(idProduct);
+        Customer user = customerService.findCustomerById(idCustomer);
+//        WareHouse product = cartService.findProductById(idProduct);
         if (user == null){
             return new ResponseEntity<>("Không tìm thấy idUser", HttpStatus.NOT_ACCEPTABLE);
         }
-//        if (product == null){
-//            return new ResponseEntity<>("Không tìm thấy idProduct", HttpStatus.NOT_ACCEPTABLE);
-//        }
-        if (idProduct == null || idProduct < 1) {
+        if (idProduct == 0 || idProduct < 1) {
             return new ResponseEntity<>("Không tìm thấy idProduct", HttpStatus.NOT_ACCEPTABLE);
         }
-        if (idUSer == null || idUSer < 1) {
+        if (idCustomer == null || idCustomer < 1) {
             return new ResponseEntity<>("Không tìm thấy idUser", HttpStatus.NOT_ACCEPTABLE);
         }
         if (quantity == null || quantity < 0) {
             return new ResponseEntity<>("Sai số lượng chọn hàng", HttpStatus.NOT_ACCEPTABLE);
         }
         Long checkQuantityProduct = cartService.getQuantityProduct(idProduct);
-        Long checkQuantityCart = cartService.getQuantityProductOrder(idProduct, idUSer);
+        Long checkQuantityCart = cartService.getQuantityProductOrder(idProduct, idCustomer);
 
         if (checkQuantityProduct == 0) {
             System.out.println(checkQuantityProduct);
-            return new ResponseEntity<>("Sản phẩm "+product.getName() +" đã hết hàng", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Sản phẩm  đã hết hàng", HttpStatus.NO_CONTENT);
         }
         if (checkQuantityCart != null) {
             if ((checkQuantityCart + quantity) > checkQuantityProduct) {
-                return new ResponseEntity<>("Số lượng " + product.getName() +" vượt quá số lượng kho", HttpStatus.CREATED);
+                return new ResponseEntity<>("Số lượng  vượt quá số lượng kho", HttpStatus.CREATED);
             }
         }
-        cartService.saveCart(idUSer, idProduct, quantity);
-        return new ResponseEntity<>(product.getName() +"chọn thành công ",HttpStatus.OK);
+        cartService.saveCart(idCustomer, idProduct, quantity);
+        return new ResponseEntity<>( "chọn thành công ",HttpStatus.OK);
 
     }
     /**
