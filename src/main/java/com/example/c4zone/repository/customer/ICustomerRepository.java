@@ -172,4 +172,6 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             " and TIMESTAMPDIFF(YEAR, c.birth_date_customer, CURDATE()) = :age " +
             " and  c.status_customer = true", nativeQuery = true)
     Page<ICustomerListDto> findAllCustomerByAgeModal(Pageable pageable,@Param("name") String s,@Param("age") String valueSearchAge);
+    @Query(value = "select * from customer where id_customer = :id and status_customer = true", nativeQuery = true)
+    Customer findCustomerByIdForModal(@Param("id") Long id);
 }
