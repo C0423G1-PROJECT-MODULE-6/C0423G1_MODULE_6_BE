@@ -3,6 +3,8 @@ package com.example.c4zone.service.cart;
 
 import com.example.c4zone.dto.order.ICartDto;
 import com.example.c4zone.dto.order.IOrderDetailDto;
+import com.example.c4zone.dto.product.IProductCartDto;
+import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.model.order.Cart;
 import com.example.c4zone.model.order.OrderBill;
 import com.example.c4zone.model.order.OrderDetail;
@@ -14,6 +16,8 @@ import com.example.c4zone.repository.order.IOrderDetailRepository;
 import com.example.c4zone.repository.product.IProductRepository;
 import com.example.c4zone.service.order.IOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +30,7 @@ public class CartService implements ICartService{
     IOrderDetailRepository orderDetailRepository;
     @Autowired
     IProductRepository  productRepository;
+
     /**
      * method create Cart
      * Create TinDT
@@ -139,4 +144,70 @@ public class CartService implements ICartService{
                             orderDetail.getQuantityOrder());
         }
     }
+    /**
+     * method delete chosen product
+     * Create TinDT
+     * Date 14-10-2023
+     * param Long idUser,Long idProduct
+     * return list product
+     */
+    @Override
+    public Page<IProductCartDto> getAllByNameModal(Pageable pageable, String name) {
+        return cartRepository.getAllByName(pageable, '%'+name+'%');
+    }
+    /**
+     * author :TinDT
+     * work day : 12/10/2023
+     * @param pageable control page return
+     * @param price : price of product
+     * @return page had control
+     */
+
+    @Override
+    public Page<IProductCartDto> getAllByPrice(Pageable pageable, String price) {
+        switch (price) {
+            case "smaller 5m":
+                return cartRepository.getAllByPriceMax(pageable, 5000000.0);
+            case "5m to 10m":
+                return cartRepository.getAllByPrice(pageable, 5000000.0, 10000000.0);
+            case "better 10m":
+                return cartRepository.getAllByPriceMin(pageable, 10000000.0);
+            default:
+                return cartRepository.getAllByName(pageable, "%%");
+        }
+    }
+    /**
+     * author :TinDT
+     * work day : 12/10/2023
+     * @param pageable : control page return
+     * @param idType : id type's of product
+     * @return page had control
+     */
+    @Override
+    public Page<IProductCartDto> getAllByType(Pageable pageable, String idType) {
+        return cartRepository.getAllByType(pageable, Long.parseLong(idType));
+    }
+
+    /**
+     * author :TinDT
+     * work day : 12/10/2023
+     * @param pageable control page return
+     * @param value : value of choose quantity
+     * @return page had control
+     */
+    @Override
+    public Page<IProductCartDto> getAllByQuantity(Pageable pageable, String value) {
+        switch (value) {
+            case "smaller 10":
+                return cartRepository.getAllByQuantityMax(pageable, 10);
+            case "10 to 50":
+                return cartRepository.getAllByQuantity(pageable, 10, 50);
+            case "better 50":
+                return cartRepository.getAllByQuantityMin(pageable, 50);
+            default:
+                return cartRepository.getAllByName(pageable, "%%");
+        }
+    }
+
+
 }
