@@ -1,5 +1,6 @@
 package com.example.c4zone.service.user.impl;
 
+import com.example.c4zone.common.email.EmailTemplate;
 import com.example.c4zone.service.user.IAppUserService;
 import com.example.c4zone.dto.user.JwtResponseUserDetails;
 import com.example.c4zone.model.user.AppUser;
@@ -7,7 +8,6 @@ import com.example.c4zone.model.user.UserRole;
 import com.example.c4zone.repository.user.IAppUserRepository;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.GrantedAuthority;
@@ -166,17 +166,12 @@ public class AppUserService implements IAppUserService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom("contact@shopme.com", "Shopme Support");
+        helper.setFrom("c4zone@gmail.com", "C4Zone");
         helper.setTo(appUser.getEmail());
 
         String subject = "Here's your One Time Password (OTP) - Expire in 5 minutes!";
 
-        String content = "<p>Hello " + appUser.getEmployeeName() + "</p>"
-                + "<p>For security reason, you're required to use the following "
-                + "One Time Password to login:</p>"
-                + "<p><b>" + OTP + "</b></p>"
-                + "<br>"
-                + "<p>Note: this OTP is set to expire in 5 minutes.</p>";
+        String content = EmailTemplate.getTemplateEmail(appUser.getUserName(), OTP);
 
         helper.setSubject(subject);
 
