@@ -54,7 +54,7 @@ public class OrderDetailService implements IOrderDetailService{
             return null;
         }
         List<IOrderDetailDto> orderDetails = orderDetailRepository.getAllOrderDetailByOrderBill(orderBill.getIdOrderBill());
-        if (orderDetails.size() == 0){
+        if (orderDetails.isEmpty()){
             return null;
         }
         double total = 0;

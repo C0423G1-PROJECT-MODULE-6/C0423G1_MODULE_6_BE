@@ -129,7 +129,8 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
             "JOIN product p ON w.product_id = p.id_product " +
             "JOIN supplier s ON w.supplier_id = s.id_supplier " +
             " WHERE s.name_supplier like:name " +
-            " GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
+            " GROUP BY w.id_warehouse, w.input_date " +
+            " ORDER BY  w.input_date ", nativeQuery = true)
     Page<IWarehouseProjection> findAllWareHouseBySupplier(Pageable pageable, @Param("name") String name);
 
 

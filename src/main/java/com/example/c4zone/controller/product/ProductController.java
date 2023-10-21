@@ -3,6 +3,7 @@ package com.example.c4zone.controller.product;
 import com.example.c4zone.dto.product.*;
 import com.example.c4zone.model.product.*;
 import com.example.c4zone.dto.product.IProductDto;
+import com.example.c4zone.dto.product.ImageDto;
 import com.example.c4zone.dto.product.ProductDto;
 import com.example.c4zone.model.product.Image;
 import com.example.c4zone.model.product.Product;
@@ -291,8 +292,8 @@ public class ProductController {
      * @return if Http status
      */
     @PatchMapping("/remove")
-    public ResponseEntity<?> removeProduct(@RequestParam(name = "id") Long id) {
-        if (productService.findById(id) == null) {
+    public ResponseEntity removeProduct(@RequestParam(name = "id") Long id){
+        if (productService.findById(id)==null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         productService.removeProduct(id);
