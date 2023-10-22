@@ -29,6 +29,11 @@ public interface ICustomerService {
      * Goal: save customers
      */
     void saveCustomer(Customer customer);
+    /**
+     * Author: TinDT
+     * Goal: save customers
+     */
+    Customer findCustomerById(Long id);
 
     Customer findCustomerByPhone(String phoneNumberCustomer);
     Page<ICustomerListDto> getPageCustomerForModal(Pageable pageable, String valueSearchName, String valueSearchAge, String valueSearchGender,String phoneNumber);
