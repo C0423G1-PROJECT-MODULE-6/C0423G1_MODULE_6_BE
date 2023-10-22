@@ -80,26 +80,26 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
      * param pageable, searchName
      * return page
      */
-    @Query(value = "SELECT " +
-            "    OB.id_order_bill as idOrderBill, " +
-            "    OB.date_of_order as dateOfOrder , " +
-            "    OB.time_of_order as timeOfOrder, " +
-            "    C.name_customer as nameCustomer, " +
-            "    GROUP_CONCAT(CONCAT(P.name_product, ' x', OD.quantity_order) SEPARATOR ', ') as infoBuy , " +
-            "    OB.total_money as totalMoney " +
-            "FROM " +
-            "    order_bill OB " +
-            "LEFT JOIN " +
-            "    order_detail OD ON OB.id_order_bill = OD.id_order " +
-            "LEFT JOIN " +
-            "    customer C ON OB.id_customer = C.id_customer " +
-            "LEFT JOIN " +
-            "    product P ON OD.id_product = P.id_product " +
-            "WHERE C.name_customer like :name and OB.payment_status = 1 " +
-            "GROUP BY " +
-            "    OB.id_order_bill " +
-            "ORDER BY OB.date_of_order DESC, OB.time_of_order DESC", nativeQuery = true)
-    Page<IOrderHistoryDtoTotal> getAllHistory(Pageable pageable,@Param("name") String s);
+    @Query(value =
+            "SELECT " +
+                    "    OB.id_order_bill as idOrderBill, " +
+                    "    OB.date_of_order as dateOfOrder, " +
+                    "    OB.time_of_order as timeOfOrder, " +
+                    "    C.name_customer as nameCustomer, " +
+                    "    GROUP_CONCAT(CONCAT(P.name_product, ' (', C2.name, ' - ', C3.name, ') x', OD.quantity_order) SEPARATOR ', \\n') as infoBuy, " +
+                    "    OB.total_money as totalMoney " +
+                    "FROM order_bill OB " +
+                    "LEFT JOIN order_detail OD ON OB.id_order_bill = OD.id_order " +
+                    "LEFT JOIN customer C ON OB.id_customer = C.id_customer " +
+                    "LEFT JOIN product P ON OD.id_product = P.id_product " +
+                    "LEFT JOIN color C2 ON P.id_color = C2.id_color " +
+                    "LEFT JOIN capacity C3 ON P.id_capacity = C3.id_capacity " +
+                    "WHERE C.name_customer LIKE :name AND OB.payment_status = 1 " +
+                    "GROUP BY OB.id_order_bill " +
+                    "ORDER BY OB.date_of_order DESC, OB.time_of_order DESC", nativeQuery = true)
+    Page<IOrderHistoryDtoTotal> getAllHistory(Pageable pageable, @Param("name") String s);
+
+
     /**
      * method get all sale history sort by name product
      * Create ThoiND
