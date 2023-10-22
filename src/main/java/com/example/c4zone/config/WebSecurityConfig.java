@@ -84,6 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         // "/api/admin/order/**",
                         // "/api/amin/order/cart/**"
 
+
                 ).hasAnyAuthority("ROLE_SALE")
 
 
