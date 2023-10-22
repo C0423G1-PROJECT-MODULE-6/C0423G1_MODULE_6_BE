@@ -2,10 +2,12 @@ package com.example.c4zone.repository.cart;
 
 import com.example.c4zone.dto.order.ICartDto;
 import com.example.c4zone.dto.product.IProductCartDto;
-import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.model.order.Cart;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.model.user.AppUser;
+import com.example.c4zone.model.wareHouse.WareHouse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -45,15 +47,15 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
             "as cl on cl.id_color = p.id_color " +
             "join capacity " +
             "as cp on cp.id_capacity = p.id_capacity " +
-            "where c.id_user = :id",nativeQuery = true)
-    List<ICartDto> getAllCart(@Param("id")Long idUser);
+            "where c.id_customer = :id",nativeQuery = true)
+    List<ICartDto> getAllCart(@Param("id")Long idCustomer);
 
     @Modifying
     @Transactional
-    @Query(value = "insert into cart (id_user, id_product, quantity_product_order) " +
-             "values (:userId, :productId, :newQuantity) "  +
+    @Query(value = "insert into cart (id_customer, id_product, quantity_product_order) " +
+             "values (:customerId, :productId, :newQuantity) "  +
              "on duplicate key update quantity_product_order = :newQuantity",nativeQuery = true)
-    void addToCart(@Param("userId") Long userId,
+    void addToCart(@Param("customerId") Long customerId,
                    @Param("productId") Long productId, @Param("newQuantity") Integer newQuantity);
 
     /**
@@ -77,7 +79,7 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      * param Cart cart
      * return Long
      */
-    @Query(value =" select p.quantity_product  from product p where p.id_product = :id ",nativeQuery = true)
+    @Query(value =" select quantity from c4_zone.ware_house  where product_id = :id",nativeQuery = true)
     Long quantityProduct(@Param("id") Long id);
     /**
      * method  create cart for sale pages
@@ -90,7 +92,7 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      */
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "insert into c4_zone.cart (id_user,id_product,quantity_product_order ) VALUES (:id_user, :id_product, :newQuantity) ON DUPLICATE KEY UPDATE quantity_product_order = quantity_product_order + :newQuantity")
+    @Query(nativeQuery = true, value = "insert into c4_zone.cart (id_customer,id_product,quantity_product_order ) VALUES (:id_user, :id_product, :newQuantity) ON DUPLICATE KEY UPDATE quantity_product_order = quantity_product_order + :newQuantity")
     void createCard(@Param("id_user") Long idUser,@Param("id_product") Long idProduct, @Param("newQuantity") Long newQuantity);
     /**
      * method get quantity cart from iProduct and iUserof cart
@@ -100,8 +102,8 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      * param Long idUser
      * return Long
      */
-    @Query(value =" select c.quantity_product_order  from cart c where c.id_product = :id_product and c.id_user = :id_user",nativeQuery = true)
-    Long quantityProductCart(@Param("id_product") Long idProduct,@Param("id_user") Long idUser);
+    @Query(value =" select c.quantity_product_order  from cart c where c.id_product = :id_product and c.id_customer = :id_customer",nativeQuery = true)
+    Long quantityProductCart(@Param("id_product") Long idProduct,@Param("id_customer") Long idCustomer);
     /**
      * method get product  from iProduct
      * Create TinDT
@@ -132,6 +134,265 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      */
     @Modifying
     @Transactional
-    @Query(value = "delete from cart where id_user = :id and id_product = :idProduct",nativeQuery = true)
+    @Query(value = "delete from cart where id_customer = :id and id_product = :idProduct",nativeQuery = true)
     void deleteChosenProduct(@Param("id") Long idUser,@Param("idProduct") Long idProduct);
+    /**
+     * author :TinDT
+     *
+     * @param pageable :page control size and number page
+     * @param name     : of input search
+     * @return
+     */
+    @Query(value = "SELECT " +
+            "    p.id_product AS id," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    SUM(w.quantity) AS quantity," +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
+            " FROM " +
+            "    c4_zone.ware_house w " +
+            "        JOIN " +
+            "    product p ON w.product_id = p.id_product" +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN" +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "    AND p.name_product like :name " +
+            " group by w.product_id", nativeQuery = true)
+    Page<IProductCartDto> getAllByName(Pageable pageable, @Param("name") String name);
+
+    /**
+     * author :TinDT
+     *
+     * @param pageable :page control size and number page
+     * @param min      : price of product min :min
+     * @return a page did control and satisfy the search and sorting conditions
+     */
+    @Query(value = "SELECT " +
+            "    p.id_product AS id," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    SUM(w.quantity) AS quantity," +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
+            " FROM " +
+            "    c4_zone.ware_house w " +
+            "        JOIN " +
+            "    product p ON w.product_id = p.id_product" +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN" +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "    AND p.price_product >= :min " +
+            " group by w.product_id", nativeQuery = true)
+    Page<IProductCartDto> getAllByPriceMin(Pageable pageable, @Param("min") Double min);
+    /**
+     * author :TinDT
+     *
+     * @param pageable :page control size and number page
+     * @param max      : price of product min :min
+     * @return a page did control and satisfy the search and sorting conditions
+     */
+    @Query(value = "SELECT " +
+            "    p.id_product AS id," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    SUM(w.quantity) AS quantity," +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
+            " FROM " +
+            "    c4_zone.ware_house w " +
+            "        JOIN " +
+            "    product p ON w.product_id = p.id_product" +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN" +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "    AND p.price_product <= :max " +
+            " group by w.product_id", nativeQuery = true)
+    Page<IProductCartDto> getAllByPriceMax(Pageable pageable, @Param("max") Double max);
+    /**
+     * author :TinDT
+     *
+     * @param pageable :page control size and number page
+     * @param min      :price of product min :min
+     * @param max      :price of product max:max
+     * @return a page did control and satisfy the search and sorting conditions
+     */
+    @Query(value = "SELECT " +
+            "    p.id_product AS id," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    SUM(w.quantity) AS quantity," +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
+            " FROM " +
+            "    c4_zone.ware_house w " +
+            "        JOIN " +
+            "    product p ON w.product_id = p.id_product" +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN" +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "   AND p.price_product between :min and :max " +
+            " group by w.product_id", nativeQuery = true)
+    Page<IProductCartDto> getAllByPrice(Pageable pageable, @Param("min") Double min, @Param("max") Double max);
+    /**
+     * author :TinDT
+     *
+     * @param pageable :page control size and number page
+     * @param type     :value :id_type
+     * @return
+     */
+    @Query(value ="SELECT " +
+            "    p.id_product AS id," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    SUM(w.quantity) AS quantity," +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
+            " FROM " +
+            "    c4_zone.ware_house w " +
+            "        JOIN " +
+            "    product p ON w.product_id = p.id_product" +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN" +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            "        JOIN " +
+            "    type t ON t.id_type = p.id_type" +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "    AND t.id_type = :type " +
+            "group by w.product_id", nativeQuery = true)
+    Page<IProductCartDto> getAllByType(Pageable pageable, @Param("type") Long type);
+    /**
+     * author :TinDT
+     *
+     * @param pageable :page control size and number page
+     * @param min      : quantity of product min :min
+     * @param max      max of quantity product
+     * @return a page did control and satisfy the search and sorting conditions
+     */
+    @Query(value ="SELECT " +
+            "    p.id_product AS id," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    SUM(w.quantity) AS quantity," +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
+            " FROM " +
+            "    c4_zone.ware_house w " +
+            "        JOIN " +
+            "    product p ON w.product_id = p.id_product" +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN" +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "    AND w.quantity <= :max and p.quantity_product >=:min group by w.product_id", nativeQuery = true)
+    Page<IProductCartDto> getAllByQuantity(Pageable pageable, @Param("min") Integer min, @Param("max") Integer max);
+    /**
+     * author :TinDt
+     *
+     * @param pageable :page control size and number page
+     * @param max      max of quantity product
+     * @return a page did control and satisfy the search and sorting conditions
+     */
+    @Query(value ="SELECT " +
+            "    p.id_product AS id," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    SUM(w.quantity) AS quantity," +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
+            " FROM " +
+            "    c4_zone.ware_house w " +
+            "        JOIN " +
+            "    product p ON w.product_id = p.id_product" +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN" +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "    AND w.quantity < :max group by w.product_id", nativeQuery = true)
+    Page<IProductCartDto> getAllByQuantityMax(Pageable pageable, @Param("max") Integer max);
+
+    /**
+     * author :TinDT
+     *
+     * @param pageable :page control size and number page
+     * @param min      : quantity of product min :min
+     * @return :a page did control and satisfy the search and sorting conditions
+     */
+    @Query(value ="SELECT " +
+            "    p.id_product AS id," +
+            "    p.name_product AS name," +
+            "    p.price_product AS price," +
+            "    SUM(w.quantity) AS quantity," +
+            "    ca.name AS capacity," +
+            "    c.name AS cpu," +
+            "    co.name AS color " +
+            " FROM " +
+            "    c4_zone.ware_house w " +
+            "        JOIN " +
+            "    product p ON w.product_id = p.id_product" +
+            "        JOIN " +
+            "    capacity ca ON p.id_capacity = ca.id_capacity" +
+            "        JOIN" +
+            "    color co ON p.id_color = co.id_color" +
+            "        JOIN " +
+            "    cpu c ON p.id_cpu = c.id_cpu" +
+            " WHERE " +
+            "    p.status_business = TRUE  " +
+            "    AND w.quantity >= :min group by w.product_id", nativeQuery = true)
+    Page<IProductCartDto> getAllByQuantityMin(Pageable pageable, @Param("min") int min);
+    @Query(value =" select * from ware_house where product_id = :id_product ",nativeQuery = true)
+    WareHouse getProductWareById(@Param("id_product") Long idProduct);
+
+
+    @Query(value = "select * from cart where id_customer = :id",nativeQuery = true)
+    List<Cart> getAllCartOfCustomer(@Param("id") Long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from cart where id_customer = :id",nativeQuery = true)
+    void deleteCartByIdCus(@Param("id") Long idCus);
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO cart (id_customer) VALUES (:id)",nativeQuery = true)
+    void createNewCart(@Param("id") Long idCus);
 }
