@@ -300,7 +300,7 @@ public class OrderController {
     @PostMapping("/payment/acceptPay")
     public ResponseEntity<Object> acceptToPay(@RequestParam(name = "_printStatus") int printStatus,
                                          @RequestBody OrderBill orderBill){
-        List<ICartDto> cartDto = cartService.getAllCart(orderBill.getUser().getId());
+        List<ICartDto> cartDto = cartService.getAllCart(orderBill.getCustomer().getIdCustomer());
         orderDetailService.createOrderDetail(cartDto,orderBill.getCustomer().getIdCustomer(),orderBill.getUser().getId());
         Double totalMoney = orderDetailService.calculateTotalMoney(orderBill.getUser().getId(),orderBill.getCustomer().getIdCustomer());
         ObjectResponseDto objectResponseDto = new ObjectResponseDto();
