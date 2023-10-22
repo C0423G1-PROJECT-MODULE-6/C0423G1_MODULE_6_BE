@@ -2,9 +2,7 @@ package com.example.c4zone.service.cart;
 
 
 import com.example.c4zone.dto.order.ICartDto;
-import com.example.c4zone.dto.order.IOrderDetailDto;
 import com.example.c4zone.dto.product.IProductCartDto;
-import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.model.order.Cart;
 import com.example.c4zone.model.order.OrderBill;
 import com.example.c4zone.model.order.OrderDetail;
@@ -15,7 +13,6 @@ import com.example.c4zone.model.wareHouse.WareHouse;
 import com.example.c4zone.repository.cart.ICartRepository;
 import com.example.c4zone.repository.order.IOrderDetailRepository;
 import com.example.c4zone.repository.product.IProductRepository;
-import com.example.c4zone.service.order.IOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,8 +63,8 @@ public class CartService implements ICartService{
      * return List<ICartDto>
      */
     @Override
-    public List<ICartDto> getAllCart(Long idUser) {
-        return cartRepository.getAllCart(idUser);
+    public List<ICartDto> getAllCart(Long idCustomer) {
+        return cartRepository.getAllCart(idCustomer);
     }
 
 
@@ -220,4 +217,20 @@ public class CartService implements ICartService{
     public WareHouse findProductById(Long idProduct) {
         return cartRepository.getProductWareById(idProduct);
     }
+
+    @Override
+    public List<Cart> findCartOfCustomer(Long id) {
+        return cartRepository.getAllCartOfCustomer(id);
+    }
+
+    @Override
+    public void deleteCartByCustomer(Long idCus) {
+        cartRepository.deleteCartByIdCus(idCus);
+    }
+
+    @Override
+    public void creatNewCart(Long idCus) {
+        cartRepository.createNewCart(idCus);
+    }
+
 }
