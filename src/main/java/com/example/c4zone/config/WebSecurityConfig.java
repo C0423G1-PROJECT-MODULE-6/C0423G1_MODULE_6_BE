@@ -94,7 +94,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/admin/business/cpu/**",
                         "/api/admin/business/ram/**",
                         "/api/admin/business/series/**",
-                        "/api/admin/business/type/**"
+                        "/api/admin/business/type/**",
+                        "/api/admin/business/customer/**"
+
                 ).hasAnyAuthority("ROLE_BUSINESS")
 
 
