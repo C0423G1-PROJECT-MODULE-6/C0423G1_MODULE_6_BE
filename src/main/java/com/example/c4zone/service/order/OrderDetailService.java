@@ -91,7 +91,7 @@ public class OrderDetailService implements IOrderDetailService{
                 Integer quantityOfProductAfterPayment = quantityOfProduct - orderDetail.getQuantityOrder();
                 productRepository.updateQuantityOfProduct(cartDto1.getIdProduct(),quantityOfProductAfterPayment);
             }
-            cartRepository.deleteCart(idUser);
+            cartRepository.deleteCartByIdCus(idCustomerOrder);
         }
     }
     /**
