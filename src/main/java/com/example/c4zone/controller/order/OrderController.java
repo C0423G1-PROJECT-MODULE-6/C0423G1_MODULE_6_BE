@@ -21,7 +21,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -32,7 +31,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@RequestMapping("/api/admin/order")
+@RequestMapping("api/admin/sale/order")
 @CrossOrigin("*")
 @RestController
 public class OrderController {
@@ -253,7 +252,6 @@ public class OrderController {
      * return status 2xx
      */
     @PostMapping("/payment/showBill")
-    @Transactional
     public ResponseEntity<Object> showOrderBillBeforePay(@RequestBody OrderPaymentDto orderPaymentDto){
         OrderBill orderBillNotPay = orderDetailService.isNotPayOfCustomer(orderPaymentDto.getIdCustomerOrder());
         if (orderBillNotPay == null){
@@ -326,55 +324,53 @@ public class OrderController {
      */
     @GetMapping("/saleHistory")
     public ResponseEntity<Page<IOrderHistoryDtoTotal>> getAllSaleHistory(
-            @RequestParam(name = "_limit") int limit,
-            @RequestParam(name = "_page") int page,
-            @RequestParam(name = "name_like") Optional<String> searchName,
-            @RequestParam(name = "sortNameCustomer") Optional<String> sortCustomer,
-            @RequestParam(name = "sortTime") Optional<String> sortTime,
-            @RequestParam(name = "sortNameProduct") Optional<String> sortNameProduct,
-            @RequestParam(name = "sortQuantity") Optional<String> sortQuantity,
-            @RequestParam(name = "sortTotalMoney") Optional<String> sortTotalMoney) {
-        String valueSearchName = "";
-        if (searchName.isPresent()) {
-            valueSearchName = searchName.get();
-        }
-        Boolean valueSortNameCustomer = false;
-        if (sortCustomer.isPresent()){
-            valueSortNameCustomer = true;
-        }
-        Boolean valueSortTime = false;
-        if (sortTime.isPresent()){
-            valueSortTime = true;
-        }
-        Boolean valueSortNameProduct = false;
-        if (sortNameProduct.isPresent()){
-            valueSortNameProduct = true;
-        }
-        Boolean valueSortQuantity = false;
-        if (sortQuantity.isPresent()){
-            valueSortQuantity = true;
-        }
-        Boolean valueSortTotalMoney = false;
-        if (sortTotalMoney.isPresent()){
-            valueSortTotalMoney = true;
-        }
+            @RequestParam(name = "_limit",required = false,defaultValue = "10") int limit,
+            @RequestParam(name = "_page" ,required = false,defaultValue = "0") int page,
+            @RequestParam(name = "name_like",required = false,defaultValue = "") Optional<String> searchName,
+            @RequestParam(name = "sort",required = false,defaultValue = "date") String sort,
+            @RequestParam(name = "orther",required = false,defaultValue = "asc") String orther
+//            @RequestParam(name = "sortNameCustomer") Optional<String> sortCustomer,
+//            @RequestParam(name = "sortTime") Optional<String> sortTime,
+//            @RequestParam(name = "sortNameProduct") Optional<String> sortNameProduct,
+//            @RequestParam(name = "sortQuantity") Optional<String> sortQuantity,
+//            @RequestParam(name = "sortTotalMoney") Optional<String> sortTotalMoney
+    ) {
+        Pageable pageable;
+        Sort sort1;
+        switch (sort){
+            case "sortTime":
+                sort1=Sort.by("t");
+                break;
+            case "sortNameCustomer":
+                sort1=Sort.by("");
 
-        Pageable pageable = PageRequest.of(page, limit);
-        if (valueSortNameCustomer){
-            pageable = PageRequest.of(page, limit, Sort.by("name_customer").descending());
-        } else if (valueSortTime){
-            pageable = PageRequest.of(page, limit, Sort.by("time_of_order").ascending());
-        }else if (valueSortNameProduct){
-            Page<IOrderHistoryDtoTotal> saleHistoryList = orderDetailService.getAllSaleHistory(pageable, valueSearchName,1);
-            return new ResponseEntity<>(saleHistoryList, HttpStatus.OK);
-        } else if (valueSortQuantity) {
-            Page<IOrderHistoryDtoTotal> saleHistoryList = orderDetailService.getAllSaleHistory(pageable, valueSearchName,2);
-            return new ResponseEntity<>(saleHistoryList, HttpStatus.OK);
-        } else if (valueSortTotalMoney) {
-            pageable = PageRequest.of(page, limit, Sort.by("total_money").descending());
-        }
+                break;
+            case "sortNameProduct":
+                sort1=Sort.by("");
 
-        Page<IOrderHistoryDtoTotal> saleHistoryList = orderDetailService.getAllSaleHistory(pageable, valueSearchName ,0);
+                break;
+            case "sortQuantity":
+                sort1=Sort.by("");
+
+                break;
+            case "sortTotalMoney":
+                sort1=Sort.by("");
+
+                break;
+            default:
+                sort1=Sort.by("");
+                break;
+        }
+        if (orther.equals("dsc")){
+            sort1=sort1.descending();
+        }else {
+            sort1=sort1.ascending();
+        }
+        pageable=PageRequest.of(page,limit,sort1);
+
+
+
+        Page<IOrderHistoryDtoTotal> saleHistoryList = orderDetailService.getAllSaleHistory(pageable, searchName.get() ,0);
         if (saleHistoryList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
