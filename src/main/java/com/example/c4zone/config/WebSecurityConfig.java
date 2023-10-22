@@ -53,36 +53,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable().cors().and()//
                 .authorizeRequests()//
                 .antMatchers(
-                        "/api/**",
                         "/api/user/create/**",
                         "/api/user/confirm/**",
                         "/api/user/resetOTP/**",
                         "/api/user/login-by-username/**"
-
-
                 ).permitAll()
 
+
                 .antMatchers(
-                        // "/api/user/register/**",
-                        // "/api/user/information/**",
-                        // "/api/user/logout/{userName}/**",
-                        // "/api/user/get-id-app-user/{userName}"
+                         "/api/user/information/**",
+                         "/api/user/logout/{userName}/**",
+                         "/api/user/get-id-app-user/{userName}",
+                         "/api/user/register/**",
+                         "/api/user/confirmRegister/**"
                 ).hasAnyAuthority("ROLE_ADMIN", "ROLE_SALE", "ROLE_BUSINESS", "ROLE_WAREHOUSE")//
 
-                .antMatchers(
-          
-                        "/api/**"
 
+                .antMatchers(
+                        "/api/**"
                 ).hasAnyAuthority("ROLE_ADMIN")//
 
 
                 .antMatchers(
-
-                        // "/api/admin/sales-report/**",
-                        // "/api/admin/scanner-qr",
-                        // "/api/admin/orderHistory/**",
-                        // "/api/admin/order/**",
-                        // "/api/amin/order/cart/**"
 
                 ).hasAnyAuthority("ROLE_SALE")
 
@@ -104,7 +96,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         // "/api/admin/warehouse/**",
                         // "/api/admin/supplier/**"
                         "/api/admin/warehouse/warehouse/**"
+
                 ).hasAnyAuthority("ROLE_WAREHOUSE")
+
 
                 .anyRequest()//
                 .authenticated()
