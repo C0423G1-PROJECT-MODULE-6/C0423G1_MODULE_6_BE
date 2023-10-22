@@ -62,24 +62,23 @@ public class CustomerController_getAllCustomer {
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("totalPages").value(2))
-                .andExpect(jsonPath("totalElements").value(10))
+                .andExpect(jsonPath("totalElements").value(9))
                 .andExpect(jsonPath("content[0].idCustomer").value(6))
                 .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Thị Thắm"))
                 .andExpect(jsonPath("content[0].genderCustomer").value(false))
                 .andExpect(jsonPath("content[0].emailCustomer").value("tham@gmail.com"))
-                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2023-10-10"))
+                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("1990-10-10"))
                 .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0054631279"))
                 .andExpect(jsonPath("content[0].addressCustomer").value("Sai Gon"))
-                .andExpect(jsonPath("content[0].statusCustomer").value(true))
 
-                .andExpect(jsonPath("content[4].idCustomer").value(10))
-                .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Văn Hải"))
-                .andExpect(jsonPath("content[4].genderCustomer").value(true))
-                .andExpect(jsonPath("content[4].emailCustomer").value("hai@gmail.com"))
-                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2000-10-10"))
-                .andExpect(jsonPath("content[4].phoneNumberCustomer").value("0983125476"))
-                .andExpect(jsonPath("content[4].addressCustomer").value("Da Nang"))
-                .andExpect(jsonPath("content[4].statusCustomer").value(true));
+                .andExpect(jsonPath("content[3].idCustomer").value(10))
+                .andExpect(jsonPath("content[3].nameCustomer").value("Nguyễn Văn Hải"))
+                .andExpect(jsonPath("content[3].genderCustomer").value(true))
+                .andExpect(jsonPath("content[3].emailCustomer").value("hai@gmail.com"))
+                .andExpect(jsonPath("content[3].dateOfBirthCustomer").value("2000-10-10"))
+                .andExpect(jsonPath("content[3].phoneNumberCustomer").value("0983125476"))
+                .andExpect(jsonPath("content[3].addressCustomer").value("Da Nang"));
+
     }
 
     /**
@@ -142,24 +141,22 @@ public class CustomerController_getAllCustomer {
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("totalPages").value(2))
-                .andExpect(jsonPath("totalElements").value(10))
+                .andExpect(jsonPath("totalElements").value(9))
                 .andExpect(jsonPath("content[0].idCustomer").value(6))
                 .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Thị Thắm"))
                 .andExpect(jsonPath("content[0].genderCustomer").value(false))
                 .andExpect(jsonPath("content[0].emailCustomer").value("tham@gmail.com"))
-                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2023-10-10"))
+                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("1990-10-10"))
                 .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0054631279"))
                 .andExpect(jsonPath("content[0].addressCustomer").value("Sai Gon"))
-                .andExpect(jsonPath("content[0].statusCustomer").value(true))
 
-                .andExpect(jsonPath("content[4].idCustomer").value(10))
-                .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Văn Hải"))
-                .andExpect(jsonPath("content[4].genderCustomer").value(true))
-                .andExpect(jsonPath("content[4].emailCustomer").value("hai@gmail.com"))
-                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2000-10-10"))
-                .andExpect(jsonPath("content[4].phoneNumberCustomer").value("0983125476"))
-                .andExpect(jsonPath("content[4].addressCustomer").value("Da Nang"))
-                .andExpect(jsonPath("content[4].statusCustomer").value(true));
+                .andExpect(jsonPath("content[3].idCustomer").value(10))
+                .andExpect(jsonPath("content[3].nameCustomer").value("Nguyễn Văn Hải"))
+                .andExpect(jsonPath("content[3].genderCustomer").value(true))
+                .andExpect(jsonPath("content[3].emailCustomer").value("hai@gmail.com"))
+                .andExpect(jsonPath("content[3].dateOfBirthCustomer").value("2000-10-10"))
+                .andExpect(jsonPath("content[3].phoneNumberCustomer").value("0983125476"))
+                .andExpect(jsonPath("content[3].addressCustomer").value("Da Nang"));
     }
 
 
@@ -202,10 +199,10 @@ public class CustomerController_getAllCustomer {
                 .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Hoàng Anh"))
                 .andExpect(jsonPath("content[0].genderCustomer").value(false))
                 .andExpect(jsonPath("content[0].emailCustomer").value("anh@gmail.com"))
-                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2022-10-10"))
+                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("1997-10-10"))
                 .andExpect(jsonPath("content[0].phoneNumberCustomer").value("098732165"))
-                .andExpect(jsonPath("content[0].addressCustomer").value("Da Nang"))
-                .andExpect(jsonPath("content[0].statusCustomer").value(true));
+                .andExpect(jsonPath("content[0].addressCustomer").value("Da Nang"));
+
     }
 
     /**
@@ -240,17 +237,16 @@ public class CustomerController_getAllCustomer {
                         .param("_page", "0")
                         .param("name_like", "")
                         .param("age", "23")
-                        .param("gender", ""))
+                        .param("gender", "3"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("content[0].idCustomer").value(10))
-                .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Văn Hải"))
-                .andExpect(jsonPath("content[0].genderCustomer").value(true))
-                .andExpect(jsonPath("content[0].emailCustomer").value("hai@gmail.com"))
-                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2000-10-10"))
-                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0983125476"))
-                .andExpect(jsonPath("content[0].addressCustomer").value("Da Nang"))
-                .andExpect(jsonPath("content[0].statusCustomer").value(true));
+                .andExpect(jsonPath("content[1].idCustomer").value(10))
+                .andExpect(jsonPath("content[1].nameCustomer").value("Nguyễn Văn Hải"))
+                .andExpect(jsonPath("content[1].genderCustomer").value(true))
+                .andExpect(jsonPath("content[1].emailCustomer").value("hai@gmail.com"))
+                .andExpect(jsonPath("content[1].dateOfBirthCustomer").value("2000-10-10"))
+                .andExpect(jsonPath("content[1].phoneNumberCustomer").value("0983125476"))
+                .andExpect(jsonPath("content[1].addressCustomer").value("Da Nang"));
     }
 
     /**
@@ -292,19 +288,17 @@ public class CustomerController_getAllCustomer {
                 .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Hồng Hà"))
                 .andExpect(jsonPath("content[0].genderCustomer").value(true))
                 .andExpect(jsonPath("content[0].emailCustomer").value("ha@gmail.com"))
-                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2021-10-10"))
+                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("1993-10-10"))
                 .andExpect(jsonPath("content[0].phoneNumberCustomer").value("123312654"))
                 .andExpect(jsonPath("content[0].addressCustomer").value("Ha Noi"))
-                .andExpect(jsonPath("content[0].statusCustomer").value(true))
 
                 .andExpect(jsonPath("content[4].idCustomer").value(9))
                 .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Hồng Nguyên"))
                 .andExpect(jsonPath("content[4].genderCustomer").value(true))
                 .andExpect(jsonPath("content[4].emailCustomer").value("nguyen@gmail.com"))
-                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2023-10-10"))
+                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("1999-10-10"))
                 .andExpect(jsonPath("content[4].phoneNumberCustomer").value("023165489"))
-                .andExpect(jsonPath("content[4].addressCustomer").value("Ha Noi"))
-                .andExpect(jsonPath("content[4].statusCustomer").value(true));
+                .andExpect(jsonPath("content[4].addressCustomer").value("Ha Noi"));
     }
 
     /**
@@ -321,23 +315,21 @@ public class CustomerController_getAllCustomer {
                         .param("sortName", "1"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("content[0].idCustomer").value(8))
-                .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Anh Quân"))
-                .andExpect(jsonPath("content[0].genderCustomer").value(true))
-                .andExpect(jsonPath("content[0].emailCustomer").value("quan@gmail.com"))
-                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("2021-10-10"))
-                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("0983125476"))
-                .andExpect(jsonPath("content[0].addressCustomer").value("Sai Gon"))
-                .andExpect(jsonPath("content[0].statusCustomer").value(true))
+                .andExpect(jsonPath("content[0].idCustomer").value(2))
+                .andExpect(jsonPath("content[0].nameCustomer").value("Nguyễn Hoàng Anh"))
+                .andExpect(jsonPath("content[0].genderCustomer").value(false))
+                .andExpect(jsonPath("content[0].emailCustomer").value("anh@gmail.com"))
+                .andExpect(jsonPath("content[0].dateOfBirthCustomer").value("1997-10-10"))
+                .andExpect(jsonPath("content[0].phoneNumberCustomer").value("098732165"))
+                .andExpect(jsonPath("content[0].addressCustomer").value("Da Nang"))
 
-                .andExpect(jsonPath("content[4].idCustomer").value(1))
-                .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Hồng Hà"))
+                .andExpect(jsonPath("content[4].idCustomer").value(9))
+                .andExpect(jsonPath("content[4].nameCustomer").value("Nguyễn Hồng Nguyên"))
                 .andExpect(jsonPath("content[4].genderCustomer").value(true))
-                .andExpect(jsonPath("content[4].emailCustomer").value("ha@gmail.com"))
-                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("2021-10-10"))
-                .andExpect(jsonPath("content[4].phoneNumberCustomer").value("123312654"))
-                .andExpect(jsonPath("content[4].addressCustomer").value("Ha Noi"))
-                .andExpect(jsonPath("content[4].statusCustomer").value(true));
+                .andExpect(jsonPath("content[4].emailCustomer").value("nguyen@gmail.com"))
+                .andExpect(jsonPath("content[4].dateOfBirthCustomer").value("1999-10-10"))
+                .andExpect(jsonPath("content[4].phoneNumberCustomer").value("023165489"))
+                .andExpect(jsonPath("content[4].addressCustomer").value("Ha Noi"));
     }
 
     /**

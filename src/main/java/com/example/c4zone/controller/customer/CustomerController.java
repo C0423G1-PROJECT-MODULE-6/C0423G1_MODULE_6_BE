@@ -35,7 +35,7 @@ public class CustomerController {
     /**
      * Author: NguyenNH
      * Goal: show list customer
-     * * return HttpStatus
+     *  return HttpStatus
      */
     @GetMapping("/list")
     public ResponseEntity<Page<ICustomerListDto>> getAllCustomer(@RequestParam(name = "_limit") int limit,
@@ -60,20 +60,16 @@ public class CustomerController {
             valueSearchGender = searchGender.get();
         }
 
-        Boolean valueSortName = false;
-        if (sortName.isPresent()){
-            valueSortName = true;
-        }
 
-        Boolean valueSortCount = false;
+        String valueSortCount = "";
         if (sortCount.isPresent()){
-            valueSortCount = true;
+            valueSortCount = sortCount.get();
         }
 
         Pageable pageable = PageRequest.of(page, limit);
-        if (valueSortName){
-            pageable = PageRequest.of(page, limit, Sort.by("nameCustomer").ascending());
-        } else if (valueSortCount){
+        if (valueSortCount.equals("1")){
+            pageable = PageRequest.of(page, limit, Sort.by("totalPurchases").ascending());
+        } else if (valueSortCount.equals("2")){
             pageable = PageRequest.of(page, limit, Sort.by("totalPurchases").descending());
         }
 
