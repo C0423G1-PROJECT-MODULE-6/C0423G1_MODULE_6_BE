@@ -40,6 +40,7 @@ public class SalesReportController {
         List<Product> dataProduct = salesReportService.getDataProduct();
         return ResponseEntity.ok(dataProduct);
     }
+
     @GetMapping("/createproduct")
     public ResponseEntity<List<Product>> getProductQR() throws WriterException, IOException {
         List<Product> dataProduct = salesReportService.getDataProduct();
@@ -81,5 +82,22 @@ public class SalesReportController {
         String resultString = searchTerm.replace("'", "");
         List<SalesReport> dataSearch = salesReportService.getDataSreach(startDate, endDate, resultString);
         return ResponseEntity.ok(dataSearch);
+    }
+
+    @GetMapping("/quantity")
+    public ResponseEntity<Integer> getQuantityToDay() {
+        Integer data = salesReportService.getQuantityToday();
+        return ResponseEntity.ok(data);
+    }
+
+    @GetMapping("/daily")
+    public ResponseEntity<Integer> getDailyToDay() {
+        Integer data = salesReportService.getDailyToday();
+        return ResponseEntity.ok(data);
+    }
+    @GetMapping("/dailymonth")
+    public ResponseEntity<Integer> getDailyMonth() {
+        Integer data = salesReportService.getDailyMonth();
+        return ResponseEntity.ok(data);
     }
 }

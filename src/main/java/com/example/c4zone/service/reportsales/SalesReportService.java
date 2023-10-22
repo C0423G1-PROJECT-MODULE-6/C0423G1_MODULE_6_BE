@@ -45,4 +45,19 @@ public class SalesReportService implements ISalesReportService {
         return salesReportRepository.getByIdProduct(idProduct);
     }
 
+    @Override
+    public Integer getQuantityToday() {
+        return salesReportRepository.getDailyToday();
+    }
+
+    @Override
+    public Integer getDailyToday() {
+        return salesReportRepository.getQuantityToday();
+    }
+
+    @Override
+    public Integer getDailyMonth() {
+        return salesReportRepository.getDailyMonth();
+    }
+
 }
