@@ -27,7 +27,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/admin/sales-report")
+@RequestMapping("/api/admin/sale/sales-report")
 public class SalesReportController {
     @Autowired
     private ISalesReportService salesReportService;
