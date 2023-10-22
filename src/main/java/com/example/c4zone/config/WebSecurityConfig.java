@@ -88,13 +88,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 .antMatchers(
-                        // "/api/admin/product/**",
-                        // "/api/admin/capacity/**",
-                        // "/api/admin/color/**",
-                        // "/api/admin/cpu/**",
-                        // "/api/admin/ram/**",
-                        // "/api/admin/series/**",
-                        // "/api/admin/type/**"
+                        "/api/admin/business/product/**",
+                        "/api/admin/business/capacity/**",
+                        "/api/admin/business/color/**",
+                        "/api/admin/business/cpu/**",
+                        "/api/admin/business/ram/**",
+                        "/api/admin/business/series/**",
+                        "/api/admin/business/type/**",
+                        "/api/admin/business/customer/**"
+
                 ).hasAnyAuthority("ROLE_BUSINESS")
 
 

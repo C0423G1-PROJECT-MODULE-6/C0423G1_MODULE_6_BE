@@ -39,7 +39,7 @@ import java.util.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/admin/product")
+@RequestMapping("/api/admin/business/product")
 public class ProductController {
     @Autowired
     private IProductService productService;
@@ -223,11 +223,11 @@ public class ProductController {
             @RequestParam(value = "sort", required = false, defaultValue = "") String sort,
             @RequestParam(value = "otherSort", required = false, defaultValue = "asc") String otherSort,
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(value = "value", required = false, defaultValue = "") String value) {
+            @RequestParam(value = "value", required = false, defaultValue = "") String value,
+            @RequestParam (value = "size",required = false,defaultValue = "10") Integer size ) {
         Page<IProductDto> productDtoPage;
         Pageable pageable;
         Sort sort1;
-        int size = 5;
         switch (sort) {
             case "name":
                 sort1 = Sort.by("name");
@@ -242,13 +242,13 @@ public class ProductController {
                 sort1 = Sort.by("quantity");
                 break;
             default:
-                sort1 = Sort.unsorted();
+                sort1 = Sort.by("id");
                 break;
         }
-        if (otherSort.equals("dsc")) {
-            sort1 = sort1.descending();
-        } else {
+        if (otherSort.equals("asc")) {
             sort1 = sort1.ascending();
+        } else {
+            sort1 = sort1.descending();
         }
         pageable = PageRequest.of(page, size, sort1);
         switch (choose) {

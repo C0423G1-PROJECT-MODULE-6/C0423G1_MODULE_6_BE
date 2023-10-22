@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/admin/capacity")
+@RequestMapping("api/admin/business/capacity")
 public class CapacityController {
     @Autowired
     private ICapacityService capacityService;
