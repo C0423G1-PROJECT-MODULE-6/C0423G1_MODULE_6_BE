@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/admin/ram")
+@RequestMapping("api/admin/business/ram")
 public class RamController {
     @Autowired
     private IRamService ramService;
