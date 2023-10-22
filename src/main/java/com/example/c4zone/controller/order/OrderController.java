@@ -285,9 +285,9 @@ public class OrderController {
 
 
     }
-    @GetMapping("/payment/showBillNewest")
-    public ResponseEntity<OrderBill> showBillNewest(){
-        OrderBill orderBill = orderDetailService.findBillNewest();
+    @GetMapping("/payment/showBillNewest/{idCustomer}")
+    public ResponseEntity<OrderBill> showBillNewest(@PathVariable Long idCustomer){
+        OrderBill orderBill = orderDetailService.isNotPayOfCustomer(idCustomer);
         return new ResponseEntity<>(orderBill,HttpStatus.OK);
     }
     /**
