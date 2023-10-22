@@ -245,9 +245,9 @@ public class ProductDto implements Validator {
             errors.rejectValue(NAME_PRODUCT_DTO,"","Vui lòng bổ sung tên sản phẩm.");
         } else if (productDto.getNameProduct().trim().equals("")) {
             errors.rejectValue(NAME_PRODUCT_DTO,"","Không để trống tên sản phẩm.");
-        } else if (productDto.getNameProduct().length() < 5) {
+        } else if (productDto.getNameProduct().length() < 3) {
             errors.rejectValue(NAME_PRODUCT_DTO,"","Vui lòng nhập tên hơn 5 ký tự");
-        } else if (productDto.getNameProduct().length() > 70) {
+        } else if (productDto.getNameProduct().length() > 100) {
             errors.rejectValue(NAME_PRODUCT_DTO,"","Tên không quá 70 ký tự.");
         } else if (!productDto.getNameProduct().matches(REGEX_SPECIAL_CHARACTERS)) {
             errors.rejectValue(NAME_PRODUCT_DTO,"","Tên sản phẩm không chứa ký tự đặc biệt.");
@@ -257,9 +257,9 @@ public class ProductDto implements Validator {
             errors.rejectValue(SCREEN_PRODUCT_DTO,"","Vui lòng bổ sung thông tin màn hình sản phẩm.");
         } else if (productDto.getScreenProduct().trim().equals("")) {
             errors.rejectValue(SCREEN_PRODUCT_DTO,"","Không để trống màn hình sản phẩm.");
-        } else if (productDto.getScreenProduct().length() < 5) {
+        } else if (productDto.getScreenProduct().length() < 3) {
             errors.rejectValue(SCREEN_PRODUCT_DTO, "", "Thông tin phải dài hơn 5 ký tự.");
-        } else if (productDto.getScreenProduct().length() > 50) {
+        } else if (productDto.getScreenProduct().length() > 100) {
             errors.rejectValue(SCREEN_PRODUCT_DTO,"","Vui lòng nhập ít hơn 50 ký tự.");
         } else if (!productDto.getScreenProduct().matches(REGEX_SPECIAL_CHARACTERS)){
             errors.rejectValue(SCREEN_PRODUCT_DTO,"","Thông tin không chứa ký tự đặc biệt.");
@@ -269,7 +269,7 @@ public class ProductDto implements Validator {
             errors.rejectValue(CAMERA_PRODUCT_DTO,"","Vui lòng bổ sung thông tin camera sản phẩm.");
         } else if (productDto.getCameraProduct().trim().equals("")) {
             errors.rejectValue(CAMERA_PRODUCT_DTO,"","Không để trống thông tin camera sản phẩm.");
-        } else if (productDto.getCameraProduct().length() < 5) {
+        } else if (productDto.getCameraProduct().length() < 3) {
             errors.rejectValue(CAMERA_PRODUCT_DTO,"","Thông tin camera sản phẩm dài hơn 5 ký tự.");
         } else if (productDto.getCameraProduct().length() > 100) {
             errors.rejectValue(CAMERA_PRODUCT_DTO,"","Vui lòng nhập không quá 100 ký tự.");
@@ -285,7 +285,7 @@ public class ProductDto implements Validator {
             errors.rejectValue(SELFIE_PRODUCT_DTO,"","Vui lòng bổ sung thông tin selfie.");
         } else if (productDto.getSelfieProduct().trim().equals("")) {
             errors.rejectValue(SELFIE_PRODUCT_DTO,"","Không được để trống thông tin Selfie.");
-        } else if (productDto.getSelfieProduct().length() < 5) {
+        } else if (productDto.getSelfieProduct().length() < 3) {
             errors.rejectValue(SELFIE_PRODUCT_DTO,"","Vui lòng nhập hơn 5 ký tự.");
         } else if (productDto.getSelfieProduct().length() > 100){
             errors.rejectValue(SELFIE_PRODUCT_DTO,"","Vui lòng nhập ít hơn 100 ký tự.");
@@ -297,7 +297,7 @@ public class ProductDto implements Validator {
             errors.rejectValue(BATTERY_PRODUCT_DTO,"","Vui lòng bổ sung thông tin pin.");
         } else if (productDto.getBatteryProduct().trim().equals("")) {
             errors.rejectValue(BATTERY_PRODUCT_DTO,"","Không để trống thông tin pin.");
-        } else if (productDto.getBatteryProduct().length() < 5) {
+        } else if (productDto.getBatteryProduct().length() < 3) {
             errors.rejectValue(BATTERY_PRODUCT_DTO,"","Vui lòng nhập hơn 5 ký tự.");
         } else if (productDto.getBatteryProduct().length() > 100) {
             errors.rejectValue(BATTERY_PRODUCT_DTO,"","Vui lòng nhập ít hơn 100 ký tự.");
@@ -309,7 +309,7 @@ public class ProductDto implements Validator {
             errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Vui lòng bổ sung thông tin trọng lượng.");
         } else if (productDto.getWeightProduct().trim().equals("")) {
             errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Không để trống thông tin trọng lượng.");
-        } else if (productDto.getWeightProduct().length() < 5) {
+        } else if (productDto.getWeightProduct().length() < 3) {
             errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Vui lòng nhập hơn 5 ký tự.");
         } else if (productDto.getWeightProduct().length() > 100) {
             errors.rejectValue(WEIGHT_PRODUCT_DTO,"","Vui lòng nhập ít hơn 100 ký tự.");

@@ -133,7 +133,6 @@ public class ProductController {
         Long idProduct = productService.getLastInsertedId();
         imageService.insertImageByProductId(productDto.getImageDtoList(), idProduct);
 
-
         String qrCodeText = product.toString();
         int width = 300;
         int height = 300;
@@ -157,7 +156,6 @@ public class ProductController {
         JSONObject response = new JSONObject();
         response.put("objectId", product.getIdProduct());
         response.put("qrCodeBase64", qrCodeBase64);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         return new ResponseEntity<>(HttpStatus.OK);

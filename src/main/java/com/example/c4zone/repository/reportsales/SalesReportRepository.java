@@ -33,6 +33,27 @@ public interface SalesReportRepository extends JpaRepository<Product, Integer> {
             + "GROUP BY dr.`date`, `name` "
             + "ORDER BY `date`", nativeQuery = true)
     List<SalesReport> getDataSreachNull(String startDate, String endDate);
-    @Query(value = "SELECT * FROM product where id_product = :idProduct",nativeQuery = true)
+
+    @Query(value = "SELECT * FROM product where id_product = :idProduct", nativeQuery = true)
     Product getByIdProduct(Long idProduct);
+
+    @Query(value = "SELECT COALESCE(SUM((od.price_order - p.price_product) * od.quantity_order),0) AS daily_revenue" +
+            " FROM order_detail od" +
+            " INNER JOIN product p ON od.id_product = p.id_product" +
+            " INNER JOIN order_bill ob ON od.id_order = ob.id_order_bill" +
+            " WHERE ob.date_of_order = DATE(NOW())", nativeQuery = true)
+    Integer getQuantityToday();
+
+    @Query(value = "SELECT COALESCE(SUM(od.quantity_order), 0) AS daily_order_count" +
+            " FROM order_detail od" +
+            " INNER JOIN order_bill ob ON od.id_order = ob.id_order_bill" +
+            " WHERE ob.date_of_order = DATE(NOW())", nativeQuery = true)
+    Integer getDailyToday();
+
+    @Query(value = "SELECT COALESCE(SUM((od.price_order - p.price_product) * od.quantity_order), 0) AS monthly_revenue" +
+            " FROM order_detail od" +
+            " INNER JOIN product p ON od.id_product = p.id_product" +
+            " INNER JOIN order_bill ob ON od.id_order = ob.id_order_bill" +
+            " WHERE MONTH(ob.date_of_order) = MONTH(NOW())", nativeQuery = true)
+    Integer getDailyMonth();
 }
