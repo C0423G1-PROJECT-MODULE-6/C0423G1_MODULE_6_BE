@@ -35,11 +35,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier(null);
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("07103665665");
         supplierDto.setEmailSupplier("kienquoc@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -58,11 +58,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("07103665665");
         supplierDto.setEmailSupplier("kienquoc@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -81,11 +81,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("1549#$%");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("07103665665");
         supplierDto.setEmailSupplier("kienquoc@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -104,11 +104,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân Nghĩa");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("07103665665");
         supplierDto.setEmailSupplier("kienquoc@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -127,11 +127,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("a");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("07103665665");
         supplierDto.setEmailSupplier("kienquoc@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -150,11 +150,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công Ty TNHH MTV TMDV Hữu Hải");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier(null);
         supplierDto.setEmailSupplier("kienquoc@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -173,11 +173,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công Ty TNHH MTV TMDV Hữu Hải");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("");
         supplierDto.setEmailSupplier("kienquoc@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -196,11 +196,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công Ty TNHH MTV TMDV Hữu Hải");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("@#%^1524852");
         supplierDto.setEmailSupplier("kienquoc@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -219,11 +219,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công Ty TNHH MTV TMDV Hữu Hải");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("12345678914");
         supplierDto.setEmailSupplier("kienquoc@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -242,11 +242,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công Ty TNHH MTV TMDV Hữu Hải");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("09147852147856");
         supplierDto.setEmailSupplier("kienquoc@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -265,11 +265,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công Ty TNHH MTV TMDV Hữu Hải");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("0941258");
         supplierDto.setEmailSupplier("kienquoc@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -288,11 +288,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công Ty TNHH MTV TMDV Hữu Hải");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("07103665665");
         supplierDto.setEmailSupplier(null);
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -311,11 +311,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công Ty TNHH MTV TMDV Hữu Hải");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("07103665665");
         supplierDto.setEmailSupplier("");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -334,11 +334,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công Ty TNHH MTV TMDV Hữu Hải");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("07103665665");
         supplierDto.setEmailSupplier("tanlonggmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -357,11 +357,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công Ty TNHH MTV TMDV Hữu Hải");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("07103665665");
         supplierDto.setEmailSupplier("tanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -380,11 +380,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công Ty TNHH MTV TMDV Hữu Hải");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("07103665665");
         supplierDto.setEmailSupplier("t@gm.vn");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -403,11 +403,11 @@ public class SupplierController_editSupplier {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setIdSupplier(5L);
         supplierDto.setNameSupplier("Công Ty TNHH MTV TMDV Hữu Hải");
-        supplierDto.setAddressSupplier("Thành phố Cần Thơ");
+        supplierDto.setAddressSupplier("92");
         supplierDto.setPhoneNumberSupplier("07103665665");
         supplierDto.setEmailSupplier("kienquoc@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/api/admin/supplier/edit/5")
+                        MockMvcRequestBuilders.patch("/api/admin/business/supplier/edit/5")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is2xxSuccessful());

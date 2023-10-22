@@ -30,7 +30,7 @@ public class SupplierController_getSupplierById {
     @Test
     public void getSupplierById_idSupplier_1() throws Exception {
         Long id = null;
-        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/api/admin/supplier/{id}");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/api/admin/business/supplier/{id}");
         String url = builder.buildAndExpand(id).toUriString();
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(url)
@@ -47,7 +47,7 @@ public class SupplierController_getSupplierById {
     @Test
     public void getSupplierById_idSupplier_2() throws Exception {
         String id = "";
-        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/api/admin/supplier/{id}");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/api/admin/business/supplier/{id}");
         String url = builder.buildAndExpand(id).toUriString();
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(url)
@@ -64,7 +64,7 @@ public class SupplierController_getSupplierById {
     @Test
     public void getSupplierById_idSupplier_3() throws Exception {
         Long id = 100L;
-        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/api/admin/supplier/{id}");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/api/admin/business/supplier/{id}");
         String url = builder.buildAndExpand(id).toUriString();
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(url)
@@ -81,7 +81,7 @@ public class SupplierController_getSupplierById {
     @Test
     public void getSupplierById_idSupplier_4() throws Exception {
         Long id = 5L;
-        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/api/admin/supplier/{id}");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/api/admin/business/supplier/{id}");
         String url = builder.buildAndExpand(id).toUriString();
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(url)
