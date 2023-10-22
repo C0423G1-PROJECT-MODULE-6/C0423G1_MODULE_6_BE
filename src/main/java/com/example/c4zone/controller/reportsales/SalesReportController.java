@@ -1,5 +1,6 @@
 package com.example.c4zone.controller.reportsales;
 
+import com.example.c4zone.service.home.IHomeService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -7,6 +8,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -28,6 +31,8 @@ import java.util.List;
 public class SalesReportController {
     @Autowired
     private ISalesReportService salesReportService;
+    @Autowired
+    private IHomeService homeService;
 
     @GetMapping("")
     public ResponseEntity<List<SalesReport>> getSalesReport() {
@@ -37,8 +42,9 @@ public class SalesReportController {
 
     @GetMapping("/product")
     public ResponseEntity<List<Product>> getProduct() {
-        List<Product> dataProduct = salesReportService.getDataProduct();
-        return ResponseEntity.ok(dataProduct);
+        List<Product> dataProduct = new ArrayList<>();
+        dataProduct = salesReportService.getDataProduct();
+        return new ResponseEntity<>(dataProduct, HttpStatus.OK);
     }
 
     @GetMapping("/createproduct")
@@ -95,9 +101,16 @@ public class SalesReportController {
         Integer data = salesReportService.getDailyToday();
         return ResponseEntity.ok(data);
     }
+
     @GetMapping("/dailymonth")
-    public ResponseEntity<Integer> getDailyMonth() {
-        Integer data = salesReportService.getDailyMonth();
-        return ResponseEntity.ok(data);
+    public ResponseEntity<Double> getDailyMonth() {
+        Double data = salesReportService.getDailyMonth();
+        double newValue;
+        if (data < 0) {
+            newValue = -data;
+        } else {
+            newValue = data;
+        }
+        return ResponseEntity.ok(newValue);
     }
 }

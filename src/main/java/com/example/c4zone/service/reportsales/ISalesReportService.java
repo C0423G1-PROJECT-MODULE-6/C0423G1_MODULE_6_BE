@@ -18,5 +18,5 @@ public interface ISalesReportService {
 
     Integer getDailyToday();
 
-    Integer getDailyMonth();
+    Double getDailyMonth();
 }
