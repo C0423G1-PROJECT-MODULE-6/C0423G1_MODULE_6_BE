@@ -93,6 +93,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 .antMatchers(
+                        // "/api/admin/warehouse/**",
+                        // "/api/admin/supplier/**"
+                        "/api/admin/warehouse/warehouse/**"
 
                 ).hasAnyAuthority("ROLE_WAREHOUSE")
 
