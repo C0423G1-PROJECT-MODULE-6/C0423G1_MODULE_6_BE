@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(
           
-//                        "/api/**"
+                        "/api/**"
 
                 ).hasAnyAuthority("ROLE_ADMIN")//
 
@@ -95,14 +95,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/admin/business/ram/**",
                         "/api/admin/business/series/**",
                         "/api/admin/business/type/**",
-                        "/api/admin/business/customer/**"
-
+                        "/api/admin/business/customer/**",
+                        "/api/admin/business/supplier/**"
                 ).hasAnyAuthority("ROLE_BUSINESS")
 
 
                 .antMatchers(
                         // "/api/admin/warehouse/**",
                         // "/api/admin/supplier/**"
+                        "/api/admin/warehouse/warehouse/**"
                 ).hasAnyAuthority("ROLE_WAREHOUSE")
 
                 .anyRequest()//

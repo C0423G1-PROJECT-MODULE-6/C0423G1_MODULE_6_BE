@@ -25,7 +25,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/admin/warehouse")
+@RequestMapping("api/admin/warehouse/warehouse")
 public class WareHouseController {
     @Autowired
     private IWareHouseService wareHouseService;

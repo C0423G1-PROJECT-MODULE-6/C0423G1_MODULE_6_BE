@@ -223,11 +223,11 @@ public class ProductController {
             @RequestParam(value = "sort", required = false, defaultValue = "") String sort,
             @RequestParam(value = "otherSort", required = false, defaultValue = "asc") String otherSort,
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(value = "value", required = false, defaultValue = "") String value) {
+            @RequestParam(value = "value", required = false, defaultValue = "") String value,
+            @RequestParam (value = "size",required = false,defaultValue = "10") Integer size ) {
         Page<IProductDto> productDtoPage;
         Pageable pageable;
         Sort sort1;
-        int size = 10;
         switch (sort) {
             case "name":
                 sort1 = Sort.by("name");

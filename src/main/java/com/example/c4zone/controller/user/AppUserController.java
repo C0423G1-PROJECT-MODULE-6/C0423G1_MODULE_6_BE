@@ -141,7 +141,9 @@ public class AppUserController {
 
         AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
 
-        appUserService.generateOneTimePassword(appUser, passwordEncoder);
+        String subject = "Yêu cầu đăng nhập - OTP có hiệu lực trong 5 phút!";
+
+        appUserService.generateOneTimePassword(appUser, passwordEncoder, subject);
 
         return new ResponseEntity<>(appUser, HttpStatus.OK);
     }
@@ -188,7 +190,8 @@ public class AppUserController {
     public ResponseEntity<Object> resetOTP(@RequestBody AppUserDto appUserDto) throws MessagingException, UnsupportedEncodingException {
         AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
         if (appUser != null) {
-            appUserService.generateOneTimePassword(appUser, passwordEncoder);
+            String subject = "Yêu cầu gửi lại OTP - OTP có hiệu lực trong 5 phút!";
+            appUserService.generateOneTimePassword(appUser, passwordEncoder, subject);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -226,7 +229,9 @@ public class AppUserController {
 
         AppUser appUser = appUserService.findByUsername(appUserDto.getUserName()).orElse(null);
 
-        appUserService.generateOneTimePassword(appUser, passwordEncoder);
+        String subject = "Yêu cầu đổi mật khẩu - OTP có hiệu lực trong 5 phút!";
+
+        appUserService.generateOneTimePassword(appUser, passwordEncoder, subject);
 
         return new ResponseEntity<>(appUser, HttpStatus.OK);
     }

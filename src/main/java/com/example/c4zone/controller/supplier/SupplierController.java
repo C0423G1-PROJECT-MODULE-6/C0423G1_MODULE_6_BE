@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/admin/supplier")
+@RequestMapping("/api/admin/business/supplier")
 @CrossOrigin("*")
 public class SupplierController {
     @Autowired

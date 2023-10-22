@@ -22,9 +22,9 @@ public interface IAppUserService extends UserDetailsService {
 
     boolean existsById(Long id);
 
-    void generateOneTimePassword(AppUser appUser, PasswordEncoder passwordEncoder) throws MessagingException, UnsupportedEncodingException;
+    void generateOneTimePassword(AppUser appUser, PasswordEncoder passwordEncoder, String subject) throws MessagingException, UnsupportedEncodingException;
 
-    void sendOTPEmail(AppUser appUser, String OTP) throws MessagingException, UnsupportedEncodingException;
+    void sendOTPEmail(AppUser appUser, String OTP, String subject) throws MessagingException, UnsupportedEncodingException;
 
     Optional<AppUser> findByUsername(String name);
 

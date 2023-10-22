@@ -1,5 +1,6 @@
 package com.example.c4zone.model.product;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.json.JSONObject;
 
@@ -27,8 +28,11 @@ public class Product {
     @Column(columnDefinition = "bigint")
     private Long quantityProduct;
     private Double priceProduct;
+
     @OneToMany(mappedBy = "product")
+    @JsonBackReference
     private List<Image> images;
+
     @ManyToOne
     @JoinColumn(name = "id_capacity", referencedColumnName = "idCapacity")
     private Capacity capacity;

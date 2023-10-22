@@ -32,8 +32,8 @@ public class SupplierDto implements Validator {
             errors.rejectValue("nameSupplier", "", "Tên nhà cung cấp không được null!");
         } else if (supplierDto.getNameSupplier().trim().equals("")) {
             errors.rejectValue("nameSupplier", "", "Không được để trống!");
-        } else if (!supplierDto.getNameSupplier().matches("^[^0-9`~!@#$%^()_\\-=\\[{\\]}\\\\|;:\",><?]+$")) {
-            errors.rejectValue("nameSupplier", "", "Tên chỉ chứa chữ cái và một số ký tự đặc biệt &,.,*,'!,/");
+        } else if (!supplierDto.getNameSupplier().matches("^[^0-9`~!@#$%^()_=\\[{\\]}\\\\|;:\",><?]+$")) {
+            errors.rejectValue("nameSupplier", "", "Tên chỉ chứa chữ cái và một số ký tự đặc biệt &,.,*,'!,/,-");
         } else if (supplierDto.getNameSupplier().length() > 100) {
             errors.rejectValue("nameSupplier", "", "Tên không được quá 100 ký tự!");
         } else if (supplierDto.getNameSupplier().length() < 2) {
