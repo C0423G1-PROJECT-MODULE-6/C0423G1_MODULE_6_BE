@@ -55,5 +55,7 @@ public interface SalesReportRepository extends JpaRepository<Product, Integer> {
             " INNER JOIN product p ON od.id_product = p.id_product" +
             " INNER JOIN order_bill ob ON od.id_order = ob.id_order_bill" +
             " WHERE MONTH(ob.date_of_order) = MONTH(NOW())", nativeQuery = true)
-    Integer getDailyMonth();
+    Double getDailyMonth();
+    @Query(value = "SELECT * FROM product",nativeQuery = true)
+    List<Product> findAllProduct();
 }
