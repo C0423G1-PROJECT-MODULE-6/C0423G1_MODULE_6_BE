@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/admin/type")
+@RequestMapping("api/admin/business/type")
 public class TypeController {
     @Autowired
     private ITypeService typeService;
