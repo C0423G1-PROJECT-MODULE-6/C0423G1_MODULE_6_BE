@@ -2,7 +2,6 @@ package com.example.c4zone.service.cart;
 
 import com.example.c4zone.dto.order.ICartDto;
 import com.example.c4zone.dto.product.IProductCartDto;
-import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.model.order.Cart;
 import com.example.c4zone.model.order.OrderBill;
 import com.example.c4zone.model.product.Product;
@@ -10,9 +9,6 @@ import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.model.wareHouse.WareHouse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
 
 
 import java.util.List;
@@ -36,7 +32,7 @@ public interface ICartService {
      * param Long idUser
      * return List<ICartDto>
      */
-    List<ICartDto> getAllCart(Long idUser);
+    List<ICartDto> getAllCart(Long idCustomer);
 
 
 
@@ -132,4 +128,11 @@ public interface ICartService {
      * @return page had control
      */
     WareHouse findProductById(Long idProduct);
+
+    List<Cart> findCartOfCustomer(Long id);
+
+    void deleteCartByCustomer(Long idCus);
+
+
+    void creatNewCart(Long idCus);
 }

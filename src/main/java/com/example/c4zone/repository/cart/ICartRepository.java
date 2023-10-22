@@ -47,15 +47,15 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
             "as cl on cl.id_color = p.id_color " +
             "join capacity " +
             "as cp on cp.id_capacity = p.id_capacity " +
-            "where c.id_user = :id",nativeQuery = true)
-    List<ICartDto> getAllCart(@Param("id")Long idUser);
+            "where c.id_customer = :id",nativeQuery = true)
+    List<ICartDto> getAllCart(@Param("id")Long idCustomer);
 
     @Modifying
     @Transactional
-    @Query(value = "insert into cart (id_user, id_product, quantity_product_order) " +
-             "values (:userId, :productId, :newQuantity) "  +
+    @Query(value = "insert into cart (id_customer, id_product, quantity_product_order) " +
+             "values (:customerId, :productId, :newQuantity) "  +
              "on duplicate key update quantity_product_order = :newQuantity",nativeQuery = true)
-    void addToCart(@Param("userId") Long userId,
+    void addToCart(@Param("customerId") Long customerId,
                    @Param("productId") Long productId, @Param("newQuantity") Integer newQuantity);
 
     /**
@@ -134,7 +134,7 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      */
     @Modifying
     @Transactional
-    @Query(value = "delete from cart where id_user = :id and id_product = :idProduct",nativeQuery = true)
+    @Query(value = "delete from cart where id_customer = :id and id_product = :idProduct",nativeQuery = true)
     void deleteChosenProduct(@Param("id") Long idUser,@Param("idProduct") Long idProduct);
     /**
      * author :TinDT
@@ -381,4 +381,18 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
     Page<IProductCartDto> getAllByQuantityMin(Pageable pageable, @Param("min") int min);
     @Query(value =" select * from ware_house where product_id = :id_product ",nativeQuery = true)
     WareHouse getProductWareById(@Param("id_product") Long idProduct);
+
+
+    @Query(value = "select * from cart where id_customer = :id",nativeQuery = true)
+    List<Cart> getAllCartOfCustomer(@Param("id") Long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from cart where id_customer = :id",nativeQuery = true)
+    void deleteCartByIdCus(@Param("id") Long idCus);
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO cart (id_customer) VALUES (:id)",nativeQuery = true)
+    void createNewCart(@Param("id") Long idCus);
 }
