@@ -215,6 +215,7 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "    p.quantity_product as quantity_in_stock,\n" +
             "    ca.name AS capacity,\n" +
             "    t.name AS type,\n" +
+            "    p.quantity_product AS quantity,\n" +
             "    quantity_total,\n" +
             "    MIN(i.name) AS image\n" +
             "FROM\n" +
