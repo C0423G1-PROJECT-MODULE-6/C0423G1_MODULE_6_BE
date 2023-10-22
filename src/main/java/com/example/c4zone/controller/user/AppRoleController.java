@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/admin/role")
+@RequestMapping("/admin/admin/appRole")
 public class AppRoleController {
     @Autowired
     private IAppRoleService appRoleService;

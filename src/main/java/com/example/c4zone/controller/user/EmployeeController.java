@@ -30,7 +30,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/admin/employee")
+@RequestMapping("/admin/admin/employee")
 public class EmployeeController {
 
     @Autowired
