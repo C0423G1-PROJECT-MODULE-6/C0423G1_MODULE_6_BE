@@ -19,7 +19,7 @@ import java.util.Objects;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/admin/cart")
+@RequestMapping("/api/admin/sale/cart")
 public class CartController {
     /**
      * method create cart for Sale page
