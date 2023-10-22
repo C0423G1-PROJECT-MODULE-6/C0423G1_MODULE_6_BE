@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/admin/customer")
+@RequestMapping("/api/admin/business/customer")
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
@@ -111,7 +111,7 @@ public class CustomerController {
      * Goal: find customer by id
      * * return HttpStatus
      */
-    @GetMapping("list/{id}")
+    @GetMapping("/list/{id}")
     public ResponseEntity<Customer> findCustomerById(@PathVariable Long id) {
         Customer customer = customerService.findById(id).orElse(null);
         if (customer == null) {
@@ -125,7 +125,7 @@ public class CustomerController {
      * Goal: show list shopping history
      * * return HttpStatus
      */
-    @GetMapping("/history/{id}")
+    @GetMapping("/list/history/{id}")
     public ResponseEntity<Page<IShoppingHistoryDto>> getShoppingHistory(@RequestParam(name = "_limit") int limit,
                                                                         @RequestParam(name = "_page") int page,
                                                                         @RequestParam(name = "name_like") Optional<String> searchName,
