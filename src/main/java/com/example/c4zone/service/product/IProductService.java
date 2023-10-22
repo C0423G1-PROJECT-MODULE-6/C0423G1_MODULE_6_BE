@@ -62,7 +62,7 @@ public interface IProductService {
      * @param id id of product remove
      */
     void removeProduct(Long id);
-    public List<IProductDto> findProductWarehouse(Long id);
+    public IProductDto findProductWarehouse(Long id);
 
 
     Integer getQuantityById(Long idProduct);

@@ -57,22 +57,25 @@ public class WareHouseController {
 
         switch (sort) {
             case "name":
-                pageable = PageRequest.of(page, 5, Sort.by("nameProduct").ascending());
+                pageable = PageRequest.of(page, 10, Sort.by("nameProduct").ascending());
                 break;
             case "price":
-                pageable = PageRequest.of(page, 5, Sort.by("priceProduct").ascending());
+                pageable = PageRequest.of(page, 10, Sort.by("priceProduct").ascending());
                 break;
             case "supplier":
-                pageable = PageRequest.of(page, 5, Sort.by("nameSupplier").ascending());
+                pageable = PageRequest.of(page, 10, Sort.by("nameSupplier").ascending());
                 break;
             case "quantity":
-                pageable = PageRequest.of(page, 5, Sort.by("quantity").ascending());
+                pageable = PageRequest.of(page, 10, Sort.by("quantity").ascending());
                 break;
             case "totalPrice":
-                pageable = PageRequest.of(page, 5, Sort.by("totalPrice").ascending());
+                pageable = PageRequest.of(page, 10, Sort.by("totalPrice").ascending());
+                break;
+            case "inputDate":
+                pageable = PageRequest.of(page, 10, Sort.by("inputDate").descending());
                 break;
             default:
-                pageable = PageRequest.of(page, 5);
+                pageable = PageRequest.of(page, 10);
                 break;
         }
         switch (choose) {
@@ -101,7 +104,7 @@ public class WareHouseController {
      */
     @GetMapping("/product/{id}")
     public ResponseEntity<IProductDto> chooseProduct(@PathVariable Long id) {
-        IProductDto productDto = productService.findProductByIdWarehouse(id);
+        IProductDto productDto = productService.findProductWarehouse(id);
         if (productDto == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

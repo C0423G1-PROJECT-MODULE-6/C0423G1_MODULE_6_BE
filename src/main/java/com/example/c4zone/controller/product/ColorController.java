@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/admin/color")
+@RequestMapping("api/admin/business/color")
 public class ColorController {
     @Autowired
     private IColorService colorService;

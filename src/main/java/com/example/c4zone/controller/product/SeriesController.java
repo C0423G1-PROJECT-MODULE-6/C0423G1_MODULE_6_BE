@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/admin/series")
+@RequestMapping("api/admin/business/series")
 public class SeriesController {
     @Autowired
     private ISeriesService seriesService;

@@ -54,7 +54,7 @@ public class OrderDetailService implements IOrderDetailService{
             return null;
         }
         List<IOrderDetailDto> orderDetails = orderDetailRepository.getAllOrderDetailByOrderBill(orderBill.getIdOrderBill());
-        if (orderDetails.size() == 0){
+        if (orderDetails.isEmpty()){
             return null;
         }
         double total = 0;
@@ -91,7 +91,7 @@ public class OrderDetailService implements IOrderDetailService{
                 Integer quantityOfProductAfterPayment = quantityOfProduct - orderDetail.getQuantityOrder();
                 productRepository.updateQuantityOfProduct(cartDto1.getIdProduct(),quantityOfProductAfterPayment);
             }
-            cartRepository.deleteCart(idUser);
+            cartRepository.deleteCartByIdCus(idCustomerOrder);
         }
     }
     /**

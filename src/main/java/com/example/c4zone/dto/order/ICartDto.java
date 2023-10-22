@@ -7,4 +7,5 @@ public interface ICartDto {
     Double getPriceProduct();
     Integer getQuantityOrder();
     Integer getQuantityProduct();
+
 }
