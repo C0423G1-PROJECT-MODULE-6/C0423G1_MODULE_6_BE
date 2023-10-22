@@ -31,7 +31,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/admin/employee")
+@RequestMapping("/api/admin/admin/employee")
 public class EmployeeController {
 
     @Autowired
@@ -57,7 +57,7 @@ public class EmployeeController {
                                                                 @RequestParam(name = "searchName", defaultValue = "", required = false) String searchName,
                                                                 @RequestParam(name = "searchPhone", defaultValue = "", required = false) String searchPhone) {
 
-        Pageable pageable = PageRequest.of(page, 5, Sort.by("id").descending());
+        Pageable pageable = PageRequest.of(page,10,Sort.by("id").descending());
         Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable, '%' + searchJob + '%', "%" + searchName + "%", "%" + searchPhone + "%");
         if (employeeDtoPage.getTotalElements() == 0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
