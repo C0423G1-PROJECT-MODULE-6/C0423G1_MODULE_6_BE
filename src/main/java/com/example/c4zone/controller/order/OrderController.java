@@ -61,6 +61,9 @@ public class OrderController {
                 if (cartOfCustomer.isEmpty()){
                     orderDetailService.deleteOrderDetailOfBill(orderBillByCustomerNotPay.getIdOrderBill());
                     orderDetailService.deleteOldBillNotPay(orderBillByCustomerNotPay.getCustomer().getIdCustomer());
+                    objectResponseDto.setType("customer");
+                    objectResponseDto.setObjectResponse(customerDtoOrder);
+                    return new ResponseEntity<>(objectResponseDto,HttpStatus.OK);
                 }else {
                     objectResponseDto.setType("orderBill");
                     objectResponseDto.setObjectResponse(orderBillByCustomerNotPay);
