@@ -98,9 +98,6 @@ public class CartService implements ICartService{
      */
     @Override
     public Product getProductById(Long idProduct) {
-        if (cartRepository.getProductById(idProduct)== null){
-            return null;
-        }
         return cartRepository.getProductById(idProduct);
     }
     /**

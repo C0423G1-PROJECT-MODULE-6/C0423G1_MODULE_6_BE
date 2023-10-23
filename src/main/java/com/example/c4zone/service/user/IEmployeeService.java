@@ -48,8 +48,15 @@ public interface IEmployeeService {
      */
     AppUser getEmployeeById(Long id);
 
-
-
+    /**
+     * method :getEmployeeByIdEdit()
+     * created by :CaoNV
+     * date create: 10/09/2023
+     *
+     * @param: id
+     * return: AppUser
+     */
+    IEmployeeDto getEmployeeByIdEdit(Long id);
 
     void editUser(AppUser user);
     /**
@@ -83,5 +90,7 @@ public interface IEmployeeService {
      * update employee
      * @param employee
      */
-    void updateEmployee(AppUser employee,Long id);
+    void updateEmployee(AppUser employee,Long id, Long roleId);
+
+    Boolean existsByUsername(String userName);
 }

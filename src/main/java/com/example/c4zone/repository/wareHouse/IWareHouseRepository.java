@@ -107,6 +107,51 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
             " GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
     Page<IWarehouseProjection> findAllWareHouseByPriceMax(Pageable pageable, @Param("max") Double max);
 
+    @Query(value = " SELECT " +
+            " w.id_warehouse AS idWarehouse , " +
+            " p.name_product AS nameProduct ," +
+            " p.price_product AS priceProduct ," +
+            " s.name_supplier AS nameSupplier ," +
+            " w.input_date AS inputDate ," +
+            " w.quantity AS quantity , " +
+            " (p.price_product * w.quantity) AS totalPrice " +
+            "FROM ware_house w " +
+            "JOIN product p ON w.product_id = p.id_product " +
+            "JOIN supplier s ON w.supplier_id = s.id_supplier " +
+            " WHERE w.quantity between :min and :max " +
+            " GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
+    Page<IWarehouseProjection> findAllWareHouseByQuantity(Pageable pageable, @Param("min") Double min,@Param("max") Double max);
+
+    @Query(value = " SELECT " +
+            " w.id_warehouse AS idWarehouse , " +
+            " p.name_product AS nameProduct ," +
+            " p.price_product AS priceProduct ," +
+            " s.name_supplier AS nameSupplier ," +
+            " w.input_date AS inputDate ," +
+            " w.quantity AS quantity , " +
+            " (p.price_product * w.quantity) AS totalPrice " +
+            "FROM ware_house w " +
+            "JOIN product p ON w.product_id = p.id_product " +
+            "JOIN supplier s ON w.supplier_id = s.id_supplier " +
+            " WHERE w.quantity >= :min " +
+            " GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
+    Page<IWarehouseProjection> findAllWareHouseByQuantityMin(Pageable pageable, @Param("min") Double min);
+
+    @Query(value = " SELECT " +
+            " w.id_warehouse AS idWarehouse , " +
+            " p.name_product AS nameProduct ," +
+            " p.price_product AS priceProduct ," +
+            " s.name_supplier AS nameSupplier ," +
+            " w.input_date AS inputDate ," +
+            " w.quantity AS quantity , " +
+            " (p.price_product * w.quantity) AS totalPrice " +
+            "FROM ware_house w " +
+            "JOIN product p ON w.product_id = p.id_product " +
+            "JOIN supplier s ON w.supplier_id = s.id_supplier " +
+            " WHERE w.quantity <= :max " +
+            " GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
+    Page<IWarehouseProjection> findAllWareHouseByQuantityMax(Pageable pageable, @Param("max") Double max);
+
     /**
      * method findAll by Supplier
      * author PhapTM
@@ -150,4 +195,8 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
     void importProduct(@Param("productId") Long productId,
                        @Param("quantity") int quantity,
                        @Param("supplierId") Long supplierId);
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE product SET quantity_product = quantity_product + :quantity WHERE id_product = :productId", nativeQuery = true)
+    void updateProductQuantity(@Param("productId") Long productId, @Param("quantity") int quantity);
 }

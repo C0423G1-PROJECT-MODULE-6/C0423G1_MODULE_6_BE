@@ -145,7 +145,7 @@ public class ProductController {
                 bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
             }
         }
-        File qrCodeFile = new File("D:\\Sprint_6_Continute\\C0423G1_MODULE_6_FE\\public\\images_qr" + product.getIdProduct() + ".png");
+        File qrCodeFile = new File("/Users/buihuuhai/anh/" + idProduct + ".png");
         ImageIO.write(bufferedImage, "png", qrCodeFile);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

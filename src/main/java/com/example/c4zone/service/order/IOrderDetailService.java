@@ -21,11 +21,11 @@ public interface IOrderDetailService {
 
 
 
-    Page<IOrderHistoryDtoTotal> getAllSaleHistory(Pageable pageable, String valueSearchName, int i);
+    Page<IOrderHistoryDtoTotal> getAllSaleHistory(Pageable pageable, String valueSearchName);
 
     OrderBill isNotPayOfCustomer(Long id);
 
-    void deteleOldBillNotPay(Long id);
+    void deleteOldBillNotPay(Long id);
 
     void updateOrderBill(Double totalMoney, Integer printStatus, Long idCustomerOrder, Long idUser);
 
