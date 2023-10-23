@@ -79,7 +79,7 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      * param Cart cart
      * return Long
      */
-    @Query(value =" select quantity from c4_zone.ware_house  where product_id = :id",nativeQuery = true)
+    @Query(value =" select quantity_product from c4_zone.product  where id_product = :id",nativeQuery = true)
     Long quantityProduct(@Param("id") Long id);
     /**
      * method  create cart for sale pages
@@ -112,7 +112,7 @@ public interface ICartRepository extends JpaRepository<Cart,Long> {
      * return Product
      *
      */
-    @Query(value =" select * from product where id_product = :id_product ",nativeQuery = true)
+    @Query(value =" select * from c4_zone.product where id_product = :id_product ",nativeQuery = true)
     Product getProductById(@Param("id_product") Long idProduct);
     /**
      * method get user  from idUser

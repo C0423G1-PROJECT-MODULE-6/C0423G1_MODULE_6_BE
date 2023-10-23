@@ -12,5 +12,6 @@ public interface IWareHouseService {
 
     Page<IWarehouseProjection> findAllBySupplier(Pageable pageable, String supplier);
     void importProduct(Long productId, int quantity, Long supplierId);
+    void updateProductQuantity(Long productId, int quantity);
 }
 
