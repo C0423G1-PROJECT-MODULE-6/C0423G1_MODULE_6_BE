@@ -9,6 +9,7 @@ public interface IWareHouseService {
     Page<IWarehouseProjection> findAllByName(Pageable pageable, String name);
 
     Page<IWarehouseProjection> findAllByPrice(Pageable pageable, String price);
+    Page<IWarehouseProjection> findAllByQuantity(Pageable pageable, String quantity);
 
     Page<IWarehouseProjection> findAllBySupplier(Pageable pageable, String supplier);
     void importProduct(Long productId, int quantity, Long supplierId);
