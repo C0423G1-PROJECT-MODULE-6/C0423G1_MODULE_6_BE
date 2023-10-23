@@ -91,4 +91,6 @@ public interface IEmployeeService {
      * @param employee
      */
     void updateEmployee(AppUser employee,Long id, Long roleId);
+
+    Boolean existsByUsername(String userName);
 }
