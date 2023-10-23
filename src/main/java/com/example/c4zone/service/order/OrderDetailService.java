@@ -126,7 +126,7 @@ public class OrderDetailService implements IOrderDetailService{
      */
 
     @Override
-    public void deteleOldBillNotPay(Long id) {
+    public void deleteOldBillNotPay(Long id) {
         orderDetailRepository.deleteOldBillNotPay(id);
     }
     /**
