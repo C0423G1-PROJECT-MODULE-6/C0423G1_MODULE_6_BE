@@ -15,7 +15,7 @@ public interface IEmployeeDto {
     String getEmployeeGender();
     String getEmployeeIdCard();
     LocalDate getEmployeeBirthday();
-    LocalDate getEmployeeStartDay();
+    LocalDate getEmployeeStartDate();
     String getEmployeeTypeName();
     Long getRoleId();
 }
