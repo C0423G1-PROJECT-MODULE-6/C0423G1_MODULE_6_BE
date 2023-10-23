@@ -203,5 +203,12 @@ public class EmployeeController {
         return new ResponseEntity<>("Update thành công", HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getEmployeeById(@PathVariable("id") Long id){
+        IEmployeeDto employee = employeeService.getEmployeeByIdEdit(id);
+        return new ResponseEntity<>(employee,HttpStatus.OK);
+
+    }
+
 
 }

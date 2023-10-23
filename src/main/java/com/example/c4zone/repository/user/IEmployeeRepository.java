@@ -58,6 +58,22 @@ public interface IEmployeeRepository extends JpaRepository<AppUser, Long> {
      */
     @Query(nativeQuery = true, value = " select  * from app_user where id= :id")
     AppUser findEmployeeById(@Param("id") Long id);
+    /**
+     * method :findEmployeeById()
+     * created by :PhuocLQ
+     * date create: 10/09/2023
+     *
+     * @param: id
+     * return: user
+     */
+    @Query(nativeQuery = true, value = " select au.id as id, au.user_name as userName,au.password as employeePassword, au.employee_name as employeeName,au.email as email \n " +
+            " ,au.employee_code as employeeCode,au.employee_address as employeeAddress,au.employee_phone as employeePhone, au.employee_gender as employeeGender \n " +
+            " ,au.employee_image as employeeImage,au.employee_id_card as employeeIdCard,au.employee_birthday as employeeBirthDay, \n " +
+            " au.employee_start_date as employeeStartDay,ar.type as employeeTypeName, ar.id as roleId from app_user as au \n " +
+            " join user_role as ur on au.id = app_user_id \n " +
+            " join app_role as ar on app_role_id = ar.id \n " +
+            " where au.id = :id ")
+    IEmployeeDto findEmployeeByIdEdit(@Param("id") Long id);
 
 
     /**
