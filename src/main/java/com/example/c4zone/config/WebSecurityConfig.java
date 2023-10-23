@@ -80,8 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 .antMatchers(
-                        "/api/admin/ware/**",
-                        "/api/admin/business/**"
+                        "/api/admin/ware/**"
                 ).hasAnyAuthority("ROLE_WAREHOUSE", "ROLE_ADMIN")
 
 
