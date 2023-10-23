@@ -142,7 +142,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
      * Author: NguyenNH
      * Goal: show list shopping history
      */
-    @Query(value = "select  ob.date_of_order as dateOfOrder, p.name_product as nameProduct, od.price_order as priceOrder" +
+    @Query(value = "select  ob.date_of_order as dateOfOrder, p.name_product as nameProduct, od.price_order as priceOrder,od.quantity_order as quantityOrder , ob.time_of_order as timeOfOrder " +
             " from customer c " +
             " join order_bill ob on c.id_customer = ob.id_customer " +
             " join order_detail od on ob.id_order_bill = od.id_order " +

@@ -6,4 +6,6 @@ public interface IShoppingHistoryDto {
     String getNameProduct();
 
     Double getPriceOrder();
+    Integer getQuantityOrder();
+    String getTimeOfOrder();
 }
