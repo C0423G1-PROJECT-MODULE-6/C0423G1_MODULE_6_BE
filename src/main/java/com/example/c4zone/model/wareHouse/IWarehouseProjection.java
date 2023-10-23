@@ -8,4 +8,6 @@ public interface IWarehouseProjection {
      Integer getQuantity();
      Double getPriceProduct();
      Double getTotalPrice();
+     String getColor();
+     String getCapacity();
 }
