@@ -9,10 +9,10 @@ public interface IEmployeeDto {
     String getEmployeeName();
     String getEmail();
     String getEmployeeCode();
+    String getEmployeeImage();
     String getEmployeeAddress();
     String getEmployeePhone();
     String getEmployeeGender();
-    String getEmployeeImage();
     String getEmployeeIdCard();
     LocalDate getEmployeeBirthday();
     LocalDate getEmployeeStartDate();

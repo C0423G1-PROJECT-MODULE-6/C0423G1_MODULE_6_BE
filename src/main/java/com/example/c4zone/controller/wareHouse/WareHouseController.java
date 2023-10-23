@@ -75,7 +75,7 @@ public class WareHouseController {
                 pageable = PageRequest.of(page, 10, Sort.by("inputDate").descending());
                 break;
             default:
-                pageable = PageRequest.of(page, 10);
+                pageable = PageRequest.of(page, 10, Sort.by("idWarehouse").descending());
                 break;
         }
         switch (choose) {
@@ -87,6 +87,9 @@ public class WareHouseController {
                 break;
             case "supplier":
                 warehouseProjections = wareHouseService.findAllBySupplier(pageable, value);
+                break;
+            case "quantity":
+                warehouseProjections = wareHouseService.findAllByQuantity(pageable, value);
                 break;
             default:
                 warehouseProjections = wareHouseService.findAllByName(pageable, "");

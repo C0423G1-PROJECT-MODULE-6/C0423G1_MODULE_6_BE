@@ -25,7 +25,7 @@ public interface IOrderDetailService {
 
     OrderBill isNotPayOfCustomer(Long id);
 
-    void deteleOldBillNotPay(Long id);
+    void deleteOldBillNotPay(Long id);
 
     void updateOrderBill(Double totalMoney, Integer printStatus, Long idCustomerOrder, Long idUser);
 
