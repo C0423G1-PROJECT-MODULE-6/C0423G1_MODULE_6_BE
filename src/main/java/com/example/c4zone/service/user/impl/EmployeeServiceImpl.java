@@ -71,6 +71,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
+    public Boolean existsByUsername(String userName) {
+        AppUser appUser =  employeeRepository.findEmployeeByUserName(userName);
+        return appUser != null;
+    }
+
+    @Override
     public void editUser(AppUser user) {
         employeeRepository.save(user);
     }

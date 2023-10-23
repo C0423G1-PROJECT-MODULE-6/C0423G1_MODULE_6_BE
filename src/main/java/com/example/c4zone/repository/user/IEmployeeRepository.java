@@ -138,6 +138,16 @@ public interface IEmployeeRepository extends JpaRepository<AppUser, Long> {
     @Query(value = " INSERT INTO app_user (email,employee_address,employee_birthday,employee_code,employee_gender,employee_id_card,employee_image,employee_name,employee_phone,employee_start_date,flag_deleted,`password`,user_name) " +
             " VALUES ( :#{#employee.email},:#{#employee.employeeAddress},:#{#employee.employeeBirthday},:#{#employee.employeeCode},:#{#employee.employeeGender},:#{#employee.employeeIdCard},:#{#employee.employeeImage},:#{#employee.employeeName}, :#{#employee.employeePhone},:#{#employee.employeeStartDate}, :#{#employee.flagDeleted}, :#{#employee.password}, :#{#employee.userName})", nativeQuery = true)
     void createEmployee(@Param(value = "employee") AppUser employee
-
     );
+    /**
+     * Author: CaoNV
+     * Date: 16/09/2023
+     * Used to check exist userName employee
+     *
+     * @param userName
+     * @return void
+     */
+
+    @Query(value = "select * from app_user where user_name = :name and flag_deleted = 0 ", nativeQuery = true)
+    AppUser findEmployeeByUserName(@Param("name") String userName);
 }

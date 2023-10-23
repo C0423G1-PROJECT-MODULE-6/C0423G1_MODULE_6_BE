@@ -125,6 +125,11 @@ public class EmployeeController {
         if (errorMap.size() > 0) {
             return new ResponseEntity<>(errorMap, HttpStatus.NOT_ACCEPTABLE);
         }
+        Boolean userNameExisted = employeeService.existsByUsername(employeeDto.getUserName());
+        if (Boolean.TRUE.equals(userNameExisted)) {
+            errorMap.put("appUser","Tài khoản này đã tồn tại");
+
+        }
 
         AppUser employee = new AppUser();
         BeanUtils.copyProperties(employeeDto, employee);

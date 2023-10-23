@@ -73,7 +73,7 @@ public class SupplierController {
         if (nameSearch.isEmpty() && addressSearch.isEmpty() && emailSearch.isEmpty()) {
             listSupplier = supplierService.getAllNoCondition(pageable);
         } else {
-            listSupplier = supplierService.getAll(nameSearch, addressSearch, emailSearch, pageable);
+            listSupplier = supplierService.getAll(nameSearch.trim(), addressSearch, emailSearch, pageable);
         }
 
         if (listSupplier == null) {
