@@ -102,12 +102,8 @@ public class OrderDetailService implements IOrderDetailService{
      * return Page<IOrderHistoryDtoTotal>
      */
     @Override
-    public Page<IOrderHistoryDtoTotal> getAllSaleHistory(Pageable pageable, String valueSearchName, int i) {
-        if (i == 1){
-            return orderDetailRepository.getAllHistorySortProduct(pageable , "%" + valueSearchName +"%");
-        }else if (i == 2){
-            return orderDetailRepository.getAllHistorySortQuantity(pageable , "%" + valueSearchName +"%");
-        }
+    public Page<IOrderHistoryDtoTotal> getAllSaleHistory(Pageable pageable, String valueSearchName) {
+
         return orderDetailRepository.getAllHistory(pageable , "%" + valueSearchName +"%");
     }
     /**

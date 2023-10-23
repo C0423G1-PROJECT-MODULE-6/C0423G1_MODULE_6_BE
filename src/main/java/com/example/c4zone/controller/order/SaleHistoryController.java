@@ -31,24 +31,24 @@ public class SaleHistoryController {
             @RequestParam(name = "_limit",required = false,defaultValue = "10") int limit,
             @RequestParam(name = "_page" ,required = false,defaultValue = "0") int page,
             @RequestParam(name = "name_like",required = false,defaultValue = "") String searchName,
-            @RequestParam(name = "sort",required = false,defaultValue = "date_of_order") String sort,
+            @RequestParam(name = "sort",required = false,defaultValue = "timeOfOrder") String sort,
             @RequestParam(name = "other",required = false,defaultValue = "asc") String other
     ) {
         Pageable pageable;
-        Sort sort1 = null;
+        Sort sort1;
         switch (sort){
             case "sortTime":
-                sort1=Sort.by("time_of_order");
+                sort1=Sort.by("timeOfOrder");
                 break;
             case "sortNameCustomer":
-                sort1=Sort.by("name_customer");
+                sort1=Sort.by("nameCustomer");
 
                 break;
             case "sortNameProduct":
-//                sort1=Sort.by("");
+                sort1=Sort.by("timeOfOrder");
                 break;
             case "sortQuantity":
-//                sort1=Sort.by("");
+                sort1=Sort.by("nameCustomer");
 
                 break;
             case "sortTotalMoney":
@@ -65,8 +65,7 @@ public class SaleHistoryController {
         }
         pageable= PageRequest.of(page,limit,sort1);
 
-
-        Page<IOrderHistoryDtoTotal> saleHistoryList = orderDetailService.getAllSaleHistory(pageable, searchName ,0);
+        Page<IOrderHistoryDtoTotal> saleHistoryList = orderDetailService.getAllSaleHistory(pageable, searchName);
         if (saleHistoryList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
