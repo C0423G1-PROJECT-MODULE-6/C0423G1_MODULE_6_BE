@@ -27,7 +27,7 @@ public interface IEmployeeRepository extends JpaRepository<AppUser, Long> {
      *
      * @param: return Page<User>
      */
-    @Query(nativeQuery = true, value = " SELECT app_user.id as id, app_user.employee_Name as employeeName, app_user.employee_Birthday as employeeBirthday, app_user.employee_Address as employeeAddress, app_role.type as employeeTypeName , app_user.employee_Phone as employeePhone FROM app_user  " +
+    @Query(nativeQuery = true, value = " SELECT app_user.id as id, app_user.employee_Name as employeeName, app_user.employee_Image as employeeImage, app_user.employee_Birthday as employeeBirthday, app_user.employee_Address as employeeAddress, app_role.type as employeeTypeName , app_user.employee_Phone as employeePhone FROM app_user  " +
             "             JOIN user_role on app_user.id = user_role.app_user_id  " +
             "             JOIN app_role on user_role.app_role_id = app_role.id  " +
             "             where app_user.flag_deleted = 0 and app_role.type like :searchJob and app_user.employee_name like :searchName and app_user.employee_phone like :searchPhone ")
@@ -58,6 +58,22 @@ public interface IEmployeeRepository extends JpaRepository<AppUser, Long> {
      */
     @Query(nativeQuery = true, value = " select  * from app_user where id= :id")
     AppUser findEmployeeById(@Param("id") Long id);
+    /**
+     * method :findEmployeeById()
+     * created by :PhuocLQ
+     * date create: 10/09/2023
+     *
+     * @param: id
+     * return: user
+     */
+    @Query(nativeQuery = true, value = " select au.id as id, au.user_name as userName,au.password as employeePassword, au.employee_name as employeeName,au.email as email \n " +
+            " ,au.employee_code as employeeCode,au.employee_address as employeeAddress,au.employee_phone as employeePhone, au.employee_gender as employeeGender \n " +
+            " ,au.employee_image as employeeImage,au.employee_id_card as employeeIdCard,au.employee_birthday as employeeBirthDay, \n " +
+            " au.employee_start_date as employeeStartDay,ar.type as employeeTypeName, ar.id as roleId from app_user as au \n " +
+            " join user_role as ur on au.id = app_user_id \n " +
+            " join app_role as ar on app_role_id = ar.id \n " +
+            " where au.id = :id ")
+    IEmployeeDto findEmployeeByIdEdit(@Param("id") Long id);
 
 
     /**

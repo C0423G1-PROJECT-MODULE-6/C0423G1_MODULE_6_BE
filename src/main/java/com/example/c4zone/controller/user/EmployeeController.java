@@ -57,7 +57,7 @@ public class EmployeeController {
                                                                 @RequestParam(name = "searchName", defaultValue = "", required = false) String searchName,
                                                                 @RequestParam(name = "searchPhone", defaultValue = "", required = false) String searchPhone) {
 
-        Pageable pageable = PageRequest.of(page,10,Sort.by("id").descending());
+        Pageable pageable = PageRequest.of(page,5,Sort.by("id").descending());
         Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable, '%' + searchJob + '%', "%" + searchName + "%", "%" + searchPhone + "%");
         if (employeeDtoPage.getTotalElements() == 0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -201,6 +201,13 @@ public class EmployeeController {
 
         employeeService.updateEmployee(employee, id);
         return new ResponseEntity<>("Update thành công", HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getEmployeeById(@PathVariable("id") Long id){
+        IEmployeeDto employee = employeeService.getEmployeeByIdEdit(id);
+        return new ResponseEntity<>(employee,HttpStatus.OK);
+
     }
 
 
