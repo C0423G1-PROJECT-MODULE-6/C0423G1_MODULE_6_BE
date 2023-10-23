@@ -56,9 +56,8 @@ public class EmployeeController {
                                                                 @RequestParam(name = "searchJob", defaultValue = "", required = false) String searchJob,
                                                                 @RequestParam(name = "searchName", defaultValue = "", required = false) String searchName,
                                                                 @RequestParam(name = "searchPhone", defaultValue = "", required = false) String searchPhone) {
-
         Pageable pageable = PageRequest.of(page,5,Sort.by("id").descending());
-        Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable, '%' + searchJob + '%', "%" + searchName + "%", "%" + searchPhone + "%");
+        Page<IEmployeeDto> employeeDtoPage = employeeService.findAllEmployeeBy(pageable, '%' + searchJob + '%', "%" + searchName.trim() + "%", "%" + searchPhone + "%");
         if (employeeDtoPage.getTotalElements() == 0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
