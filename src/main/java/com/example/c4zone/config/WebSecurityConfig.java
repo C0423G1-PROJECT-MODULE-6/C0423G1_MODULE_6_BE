@@ -77,6 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/api/admin/sale/order/**"
 
+
                 ).hasAnyAuthority("ROLE_SALE")
 
 

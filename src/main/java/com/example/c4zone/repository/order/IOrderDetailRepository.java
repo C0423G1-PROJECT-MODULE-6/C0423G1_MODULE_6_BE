@@ -95,8 +95,8 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
                     "LEFT JOIN color C2 ON P.id_color = C2.id_color " +
                     "LEFT JOIN capacity C3 ON P.id_capacity = C3.id_capacity " +
                     "WHERE C.name_customer LIKE :name AND OB.payment_status = 1 " +
-                    "GROUP BY OB.id_order_bill " +
-                    "ORDER BY OB.date_of_order DESC, OB.time_of_order DESC", nativeQuery = true)
+                    "GROUP BY OB.id_order_bill ", nativeQuery = true)
+//                    "ORDER BY OB.date_of_order DESC, OB.time_of_order DESC"
     Page<IOrderHistoryDtoTotal> getAllHistory(Pageable pageable, @Param("name") String s);
 
 
