@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/admin/cpu")
+@RequestMapping("api/admin/business/cpu")
 public class CpuController {
     @Autowired
     private ICpuService cpuService;

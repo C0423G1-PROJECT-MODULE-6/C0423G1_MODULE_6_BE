@@ -24,7 +24,7 @@ public interface SalesReportRepository extends JpaRepository<Product, Integer> {
             + "SELECT "
             + "dr.`date` AS `date`, "
             + "'Tất Cả' AS `name`, "
-            + "COALESCE(SUM((od.price_order - p.price_product) * od.quantity_order), 0) AS `daily`, "
+            + "COALESCE(SUM(((od.price_order - p.price_product) * od.quantity_order)*1.1), 0) AS `daily`, "
             + "COALESCE(SUM(od.quantity_order), 0) AS `quantity` "
             + "FROM DateRange dr "
             + "LEFT JOIN order_bill ob ON dr.`date` = ob.date_of_order "
@@ -37,7 +37,7 @@ public interface SalesReportRepository extends JpaRepository<Product, Integer> {
     @Query(value = "SELECT * FROM product where id_product = :idProduct", nativeQuery = true)
     Product getByIdProduct(Long idProduct);
 
-    @Query(value = "SELECT COALESCE(SUM((od.price_order - p.price_product) * od.quantity_order),0) AS daily_revenue" +
+    @Query(value = "SELECT COALESCE(SUM(((od.price_order - p.price_product) * od.quantity_order)*1.1),0) AS daily_revenue" +
             " FROM order_detail od" +
             " INNER JOIN product p ON od.id_product = p.id_product" +
             " INNER JOIN order_bill ob ON od.id_order = ob.id_order_bill" +
@@ -50,10 +50,13 @@ public interface SalesReportRepository extends JpaRepository<Product, Integer> {
             " WHERE ob.date_of_order = DATE(NOW())", nativeQuery = true)
     Integer getDailyToday();
 
-    @Query(value = "SELECT COALESCE(SUM((od.price_order - p.price_product) * od.quantity_order), 0) AS monthly_revenue" +
+    @Query(value = "SELECT COALESCE(SUM(((od.price_order - p.price_product) * od.quantity_order)*1.1), 0) AS monthly_revenue" +
             " FROM order_detail od" +
             " INNER JOIN product p ON od.id_product = p.id_product" +
             " INNER JOIN order_bill ob ON od.id_order = ob.id_order_bill" +
             " WHERE MONTH(ob.date_of_order) = MONTH(NOW())", nativeQuery = true)
-    Integer getDailyMonth();
+    Double getDailyMonth();
+
+    @Query(value = "SELECT * FROM product", nativeQuery = true)
+    List<Product> findAllProduct();
 }
