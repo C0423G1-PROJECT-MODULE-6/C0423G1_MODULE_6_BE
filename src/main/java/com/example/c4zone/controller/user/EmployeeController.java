@@ -199,7 +199,8 @@ public class EmployeeController {
         employee.setEmployeeBirthday(date);
 
 
-        employeeService.updateEmployee(employee, id);
+        employeeService.updateEmployee(employee, id,employeeDto.getRoleId());
+
         return new ResponseEntity<>("Update thành công", HttpStatus.OK);
     }
 
