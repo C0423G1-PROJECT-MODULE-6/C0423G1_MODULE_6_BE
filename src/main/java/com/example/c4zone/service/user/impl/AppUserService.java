@@ -142,7 +142,7 @@ public class AppUserService implements IAppUserService {
      * return void
      */
     @Override
-    public void generateOneTimePassword(AppUser appUser, PasswordEncoder passwordEncoder) throws MessagingException, UnsupportedEncodingException {
+    public void generateOneTimePassword(AppUser appUser, PasswordEncoder passwordEncoder, String subject) throws MessagingException, UnsupportedEncodingException {
         String OTP = RandomString.make(8);
         String encodedOTP = passwordEncoder.encode(OTP);
 
@@ -151,7 +151,7 @@ public class AppUserService implements IAppUserService {
 
         appUserRepository.updateOtp(appUser);
 
-        sendOTPEmail(appUser, OTP);
+        sendOTPEmail(appUser, OTP, subject);
     }
 
     /**
@@ -162,14 +162,14 @@ public class AppUserService implements IAppUserService {
      * return void
      */
     @Override
-    public void sendOTPEmail(AppUser appUser, String OTP) throws MessagingException, UnsupportedEncodingException {
+    public void sendOTPEmail(AppUser appUser, String OTP, String subject) throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
         helper.setFrom("c4zone@gmail.com", "C4Zone");
         helper.setTo(appUser.getEmail());
 
-        String subject = "Here's your One Time Password (OTP) - Expire in 5 minutes!";
+//        String subject = "Xác thực mật khẩu (OTP) - Expire in 5 minutes!";
 
         String content = EmailTemplate.getTemplateEmail(appUser.getUserName(), OTP);
 

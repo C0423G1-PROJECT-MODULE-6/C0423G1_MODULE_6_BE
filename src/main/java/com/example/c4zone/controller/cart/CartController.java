@@ -19,7 +19,7 @@ import java.util.Objects;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/admin/cart")
+@RequestMapping("/api/admin/sale/cart")
 public class CartController {
     /**
      * method create cart for Sale page
@@ -40,9 +40,9 @@ public class CartController {
                                         @RequestParam (defaultValue = "0",name = "quantity") Long quantity) {
         Customer user = customerService.findCustomerById(idCustomer);
 //        WareHouse product = cartService.findProductById(idProduct);
-        if (user == null){
-            return new ResponseEntity<>("Không tìm thấy idUser", HttpStatus.NOT_ACCEPTABLE);
-        }
+//        if (user == null){
+//            return new ResponseEntity<>("Không tìm thấy idUser", HttpStatus.NOT_ACCEPTABLE);
+//        }
         if (idProduct == 0 || idProduct < 1) {
             return new ResponseEntity<>("Không tìm thấy idProduct", HttpStatus.NOT_ACCEPTABLE);
         }

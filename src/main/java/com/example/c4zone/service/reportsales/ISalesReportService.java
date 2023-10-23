@@ -13,4 +13,10 @@ public interface ISalesReportService {
     List<SalesReport> getDataSreach(String startDate, String endDate, String searchTerm);
 
     Product getById(Long idProduct);
+
+    Integer getQuantityToday();
+
+    Integer getDailyToday();
+
+    Double getDailyMonth();
 }

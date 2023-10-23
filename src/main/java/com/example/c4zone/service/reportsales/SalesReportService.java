@@ -23,12 +23,12 @@ public class SalesReportService implements ISalesReportService {
 
     @Override
     public List<Product> getDataProduct() {
-        return salesReportRepository.findAll();
+        return salesReportRepository.findAllProduct();
     }
 
     @Override
     public List<SalesReport> getDataSreach(String startDate, String endDate, String searchTerm) {
-        List<Product> products = getDataProduct();
+        List<Product> products = salesReportRepository.findAllProduct();
         for (int i = 0; i < products.size(); i++) {
             if (searchTerm.equals(products.get(i).getNameProduct())) {
                 return salesReportRepository.getDataSreach(startDate, endDate, products.get(i).getIdProduct());
@@ -43,6 +43,21 @@ public class SalesReportService implements ISalesReportService {
     @Override
     public Product getById(Long idProduct) {
         return salesReportRepository.getByIdProduct(idProduct);
+    }
+
+    @Override
+    public Integer getQuantityToday() {
+        return salesReportRepository.getDailyToday();
+    }
+
+    @Override
+    public Integer getDailyToday() {
+        return salesReportRepository.getQuantityToday();
+    }
+
+    @Override
+    public Double getDailyMonth() {
+        return salesReportRepository.getDailyMonth();
     }
 
 }

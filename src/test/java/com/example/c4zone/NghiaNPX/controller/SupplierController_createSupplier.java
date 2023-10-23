@@ -34,11 +34,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_nameSupplier_13() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier(null);
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("0987412589");
         supplierDto.setEmailSupplier("tanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -56,11 +56,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_nameSupplier_14() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("0987412589");
         supplierDto.setEmailSupplier("tanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -78,11 +78,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_nameSupplier_15() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công ty TNHH Tân T%&^N");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("0987412589");
         supplierDto.setEmailSupplier("tanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -100,11 +100,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_nameSupplier_16() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân NghĩaCông ty TNHH Nguyễn Phan Xuân Nghĩa");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("0987412589");
         supplierDto.setEmailSupplier("tanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -122,11 +122,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_nameSupplier_17() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("a");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("0987412589");
         supplierDto.setEmailSupplier("tanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -144,11 +144,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_phoneNumberSupplier_13() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công Ty TNHH Tân Long");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier(null);
         supplierDto.setEmailSupplier("tanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -166,11 +166,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_phoneNumberSupplier_14() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công Ty TNHH Tân Long");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("");
         supplierDto.setEmailSupplier("tanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -188,11 +188,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_phoneNumberSupplier_1_15() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công Ty TNHH Tân Long");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("@#%^1524852");
         supplierDto.setEmailSupplier("tanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -210,11 +210,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_phoneNumberSupplier_2_15() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công Ty TNHH Tân Long");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("12345678914");
         supplierDto.setEmailSupplier("tanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -232,11 +232,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_phoneNumberSupplier_16() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công Ty TNHH Tân Long");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("09147852147856");
         supplierDto.setEmailSupplier("tanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -254,11 +254,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_phoneNumberSupplier_17() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công Ty TNHH Tân Long");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("0941258");
         supplierDto.setEmailSupplier("tanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -276,11 +276,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_emailSupplier_13() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công Ty TNHH Tân Long");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("0987412589");
         supplierDto.setEmailSupplier(null);
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -298,11 +298,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_emailSupplier_14() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công Ty TNHH Tân Long");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("0987412589");
         supplierDto.setEmailSupplier("");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -320,11 +320,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_emailSupplier_15() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công Ty TNHH Tân Long");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("0987412589");
         supplierDto.setEmailSupplier("tanlonggmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -342,11 +342,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_emailSupplier_16() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công Ty TNHH Tân Long");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("0987412589");
         supplierDto.setEmailSupplier("tanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlongtanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -364,11 +364,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_emailSupplier_17() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công Ty TNHH Tân Long");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("0987412589");
         supplierDto.setEmailSupplier("t@gm.vn");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is4xxClientError());
@@ -386,11 +386,11 @@ public class SupplierController_createSupplier {
     public void createSupplier_successfully_18() throws Exception {
         SupplierDto supplierDto = new SupplierDto();
         supplierDto.setNameSupplier("Công Ty TNHH Tân Long");
-        supplierDto.setAddressSupplier("Thành phố Đà Nẵng");
+        supplierDto.setAddressSupplier("48");
         supplierDto.setPhoneNumberSupplier("0987412589");
         supplierDto.setEmailSupplier("tanlong@gmail.com");
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/admin/supplier/create")
+                        MockMvcRequestBuilders.post("/api/admin/business/supplier/create")
                                 .content(this.objectMapper.writeValueAsString(supplierDto))
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print()).andExpect(status().is2xxSuccessful());

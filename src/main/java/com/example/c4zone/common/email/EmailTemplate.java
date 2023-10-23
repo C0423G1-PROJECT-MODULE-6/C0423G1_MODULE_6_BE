@@ -466,7 +466,7 @@ public class EmailTemplate {
                 "\n" +
                 "                                                                <p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#fbfafa;font-size:14px\">\n" +
                 "                                                                    Vì mục đích bảo mật, bạn được yêu cầu phải sử dụng\n" +
-                "                                                                    mật khẩu OTP:<br><br>it <b>" + OTP + "</b><br><br>Ghi chú: OTP sẽ chỉ có\n" +
+                "                                                                    mật khẩu OTP:<br><br><b>" + OTP + "</b><br><br>Ghi chú: OTP sẽ chỉ có\n" +
                 "                                                                    hiệu lực trong 5 phút.</p>\n" +
                 "                                                                <p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#fbfafa;font-size:14px\">\n" +
                 "                                                                    <br></p>\n" +
