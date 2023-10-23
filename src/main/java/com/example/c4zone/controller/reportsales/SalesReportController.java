@@ -27,7 +27,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/admin/sale/sales-report")
+@RequestMapping("/api/admin/business/sales-report")
 public class SalesReportController {
     @Autowired
     private ISalesReportService salesReportService;
@@ -63,7 +63,7 @@ public class SalesReportController {
                     bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
                 }
             }
-            File qrCodeFile = new File("C:\\CODEGYM\\C0423G1\\case_6\\ảnh" + dataProduct.get(i).getIdProduct() + ".png");
+            File qrCodeFile = new File("/Users/buihuuhai/anh/" + dataProduct.get(i).getIdProduct() + ".png");
             ImageIO.write(bufferedImage, "png", qrCodeFile);
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
