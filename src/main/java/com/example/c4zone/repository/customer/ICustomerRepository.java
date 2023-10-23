@@ -104,7 +104,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
      */
     @Query(value = "select c.id_customer as idCustomer, c.name_customer as nameCustomer, c.gender_customer as genderCustomer, c.email_customer as emailCustomer, c.birth_date_customer as dateOfBirthCustomer, c.phone_number_customer as phoneNumberCustomer, c.address_customer as addressCustomer\n" +
             "   from customer c \n" +
-            "             where c.phone_number_customer =  :phone_number_customer\n" +
+            "             where c.phone_number_customer like  :phone_number_customer\n" +
             "             and TIMESTAMPDIFF(YEAR, c.birth_date_customer, CURDATE()) >= 0 \n" +
             "             and c.status_customer = true", nativeQuery = true)
     Page<ICustomerListDto> findAllCustomerByPhone(Pageable pageable, @Param("phone_number_customer") String valueSearchName);
