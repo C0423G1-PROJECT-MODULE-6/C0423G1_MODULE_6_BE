@@ -20,9 +20,9 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
      * goal: get all data of list supplier for condition search
      */
     @Query(value = "SELECT * FROM  Supplier s WHERE s.name_supplier LIKE concat('%',:nameSearch,'%') " +
-            "AND s.address_supplier LIKE concat('%',:addressSearch,'%') " +
-            "AND s.email_supplier LIKE concat('%',:emailSearch,'%') " +
-            "AND  s.status_supplier = 1", nativeQuery = true)
+            " AND s.email_supplier LIKE concat('%',:emailSearch,'%') " +
+            "AND  s.status_supplier = 1 " +
+            " AND( IF(:addressSearch != '', s.address_supplier = :addressSearch, s.address_supplier LIKE '%%') ) ", nativeQuery = true)
     Page<Supplier> getAllSupplier(@Param("nameSearch") String name, @Param("addressSearch") String addressSearch
             , @Param("emailSearch") String emailSearch, Pageable pageable);
 
