@@ -79,7 +79,20 @@ public class OrderController {
                 return new ResponseEntity<>(objectResponseDto,HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>("Không tìm thấy id",HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Không tìm thấy ID",HttpStatus.NOT_FOUND);
+    }
+    @GetMapping("/customerScan/{idCustomerScan}")
+    public ResponseEntity<Object> findCustomerScan(@PathVariable Long idCustomerScan){
+        if (idCustomerScan != null){
+            ICustomerDtoOrder customer = customerService.findCustomerByIdOrder(idCustomerScan);
+            List<ICartDto> cartDtos = cartService.getAllCart(idCustomerScan);
+            ObjectResponseScanDto objectResponseScanDto = new ObjectResponseScanDto();
+            objectResponseScanDto.setCartDto(cartDtos);
+            objectResponseScanDto.setCustomer(customer);
+            return new ResponseEntity<>(objectResponseScanDto,HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("Không tìm thấy ID",HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
