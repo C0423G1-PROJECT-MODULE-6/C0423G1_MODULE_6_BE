@@ -19,19 +19,23 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
      * return: List warehouse
      * author: PhapTM
      */
-    @Query(value = " SELECT " +
-            " w.id_warehouse AS idWarehouse , " +
-            " p.name_product AS nameProduct ," +
-            " p.price_product AS priceProduct ," +
-            " s.name_supplier AS nameSupplier ," +
-            " w.input_date AS inputDate ," +
-            " w.quantity AS quantity , " +
-            " (p.price_product * w.quantity) AS totalPrice " +
+    @Query(value = "SELECT " +
+            "w.id_warehouse AS idWarehouse, " +
+            "p.name_product AS nameProduct, " +
+            "p.price_product AS priceProduct, " +
+            "s.name_supplier AS nameSupplier, " +
+            "w.input_date AS inputDate, " +
+            "w.quantity AS quantity, " +
+            "co.name AS color, " +
+            "ca.name AS capacity, " +
+            "(p.price_product * w.quantity) AS totalPrice " +
             "FROM ware_house w " +
             "JOIN product p ON w.product_id = p.id_product " +
             "JOIN supplier s ON w.supplier_id = s.id_supplier " +
-            " WHERE p.name_product like :name " +
-            " GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
+            "JOIN color co ON p.id_color = co.id_color " +
+            "JOIN capacity ca ON p.id_capacity = ca.id_capacity " +
+            "WHERE p.name_product LIKE :name " +
+            "GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
     Page<IWarehouseProjection> findAllWareHouseByName(Pageable pageable, @Param("name") String name);
 
     /**
@@ -50,11 +54,15 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
             " p.price_product AS priceProduct ," +
             " s.name_supplier AS nameSupplier ," +
             " w.input_date AS inputDate ," +
-            " w.quantity AS quantity , " +
+            " w.quantity AS quantity ," +
+            " co.name AS color, " +
+            " ca.name AS capacity, " +
             " (p.price_product * w.quantity) AS totalPrice " +
             "FROM ware_house w " +
             "JOIN product p ON w.product_id = p.id_product " +
             "JOIN supplier s ON w.supplier_id = s.id_supplier " +
+            "JOIN color co ON p.id_color = co.id_color " +
+            "JOIN capacity ca ON p.id_capacity = ca.id_capacity " +
             " WHERE p.price_product between :min and :max " +
             " GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
     Page<IWarehouseProjection> findAllWareHouseByPrice(Pageable pageable, @Param("min") Double min,@Param("max") Double max);
@@ -74,11 +82,15 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
             " p.price_product AS priceProduct ," +
             " s.name_supplier AS nameSupplier ," +
             " w.input_date AS inputDate ," +
-            " w.quantity AS quantity , " +
+            " w.quantity AS quantity ," +
+            " co.name AS color, " +
+            " ca.name AS capacity, " +
             " (p.price_product * w.quantity) AS totalPrice " +
             "FROM ware_house w " +
             "JOIN product p ON w.product_id = p.id_product " +
             "JOIN supplier s ON w.supplier_id = s.id_supplier " +
+            "JOIN color co ON p.id_color = co.id_color " +
+            "JOIN capacity ca ON p.id_capacity = ca.id_capacity " +
             " WHERE p.price_product >= :min " +
             " GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
     Page<IWarehouseProjection> findAllWareHouseByPriceMin(Pageable pageable, @Param("min") Double min);
@@ -98,11 +110,15 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
             " p.price_product AS priceProduct ," +
             " s.name_supplier AS nameSupplier ," +
             " w.input_date AS inputDate ," +
-            " w.quantity AS quantity , " +
+            " w.quantity AS quantity ," +
+            " co.name AS color, " +
+            " ca.name AS capacity, " +
             " (p.price_product * w.quantity) AS totalPrice " +
             "FROM ware_house w " +
             "JOIN product p ON w.product_id = p.id_product " +
             "JOIN supplier s ON w.supplier_id = s.id_supplier " +
+            "JOIN color co ON p.id_color = co.id_color " +
+            "JOIN capacity ca ON p.id_capacity = ca.id_capacity " +
             " WHERE p.price_product <= :max " +
             " GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
     Page<IWarehouseProjection> findAllWareHouseByPriceMax(Pageable pageable, @Param("max") Double max);
@@ -113,11 +129,15 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
             " p.price_product AS priceProduct ," +
             " s.name_supplier AS nameSupplier ," +
             " w.input_date AS inputDate ," +
-            " w.quantity AS quantity , " +
+            " w.quantity AS quantity ," +
+            " co.name AS color, " +
+            " ca.name AS capacity, " +
             " (p.price_product * w.quantity) AS totalPrice " +
             "FROM ware_house w " +
             "JOIN product p ON w.product_id = p.id_product " +
             "JOIN supplier s ON w.supplier_id = s.id_supplier " +
+            "JOIN color co ON p.id_color = co.id_color " +
+            "JOIN capacity ca ON p.id_capacity = ca.id_capacity " +
             " WHERE w.quantity between :min and :max " +
             " GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
     Page<IWarehouseProjection> findAllWareHouseByQuantity(Pageable pageable, @Param("min") Double min,@Param("max") Double max);
@@ -128,11 +148,15 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
             " p.price_product AS priceProduct ," +
             " s.name_supplier AS nameSupplier ," +
             " w.input_date AS inputDate ," +
-            " w.quantity AS quantity , " +
+            " w.quantity AS quantity ," +
+            "co.name AS color, " +
+            " ca.name AS capacity, " +
             " (p.price_product * w.quantity) AS totalPrice " +
             "FROM ware_house w " +
             "JOIN product p ON w.product_id = p.id_product " +
             "JOIN supplier s ON w.supplier_id = s.id_supplier " +
+            "JOIN color co ON p.id_color = co.id_color " +
+            "JOIN capacity ca ON p.id_capacity = ca.id_capacity " +
             " WHERE w.quantity >= :min " +
             " GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
     Page<IWarehouseProjection> findAllWareHouseByQuantityMin(Pageable pageable, @Param("min") Double min);
@@ -143,11 +167,15 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
             " p.price_product AS priceProduct ," +
             " s.name_supplier AS nameSupplier ," +
             " w.input_date AS inputDate ," +
-            " w.quantity AS quantity , " +
+            " w.quantity AS quantity ," +
+            "co.name AS color, " +
+            " ca.name AS capacity, " +
             " (p.price_product * w.quantity) AS totalPrice " +
             "FROM ware_house w " +
             "JOIN product p ON w.product_id = p.id_product " +
             "JOIN supplier s ON w.supplier_id = s.id_supplier " +
+            "JOIN color co ON p.id_color = co.id_color " +
+            "JOIN capacity ca ON p.id_capacity = ca.id_capacity " +
             " WHERE w.quantity <= :max " +
             " GROUP BY w.id_warehouse, w.input_date ", nativeQuery = true)
     Page<IWarehouseProjection> findAllWareHouseByQuantityMax(Pageable pageable, @Param("max") Double max);
@@ -168,11 +196,15 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
             " p.price_product AS priceProduct ," +
             " s.name_supplier AS nameSupplier ," +
             " w.input_date AS inputDate ," +
-            " w.quantity AS quantity , " +
+            " w.quantity AS quantity ," +
+            " co.name AS color, " +
+            " ca.name AS capacity, " +
             " (p.price_product * w.quantity) AS totalPrice " +
             "FROM ware_house w " +
             "JOIN product p ON w.product_id = p.id_product " +
             "JOIN supplier s ON w.supplier_id = s.id_supplier " +
+            "JOIN color co ON p.id_color = co.id_color " +
+            "JOIN capacity ca ON p.id_capacity = ca.id_capacity " +
             " WHERE s.name_supplier like:name " +
             " GROUP BY w.id_warehouse, w.input_date " +
             " ORDER BY  w.input_date ", nativeQuery = true)
