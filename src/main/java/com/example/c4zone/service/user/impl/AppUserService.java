@@ -142,7 +142,7 @@ public class AppUserService implements IAppUserService {
      * return void
      */
     @Override
-    public void generateOneTimePassword(AppUser appUser, PasswordEncoder passwordEncoder, String subject) throws MessagingException, UnsupportedEncodingException {
+    public void generateOneTimePassword(AppUser appUser, PasswordEncoder passwordEncoder, String subject, String title) throws MessagingException, UnsupportedEncodingException {
         String OTP = RandomString.make(8);
         String encodedOTP = passwordEncoder.encode(OTP);
 
@@ -151,7 +151,7 @@ public class AppUserService implements IAppUserService {
 
         appUserRepository.updateOtp(appUser);
 
-        sendOTPEmail(appUser, OTP, subject);
+        sendOTPEmail(appUser, OTP, subject, title);
     }
 
     /**
@@ -162,16 +162,24 @@ public class AppUserService implements IAppUserService {
      * return void
      */
     @Override
-    public void sendOTPEmail(AppUser appUser, String OTP, String subject) throws MessagingException, UnsupportedEncodingException {
+    public void sendOTPEmail(AppUser appUser, String OTP, String subject, String title) throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom("c4zone@gmail.com", "C4Zone");
+        helper.setFrom("c4zone@gmail.com", "C4Zone - " + title);
         helper.setTo(appUser.getEmail());
 
 //        String subject = "Xác thực mật khẩu (OTP) - Expire in 5 minutes!";
-
-        String content = EmailTemplate.getTemplateEmail(appUser.getUserName(), OTP);
+        String content = "";
+        if (appUser.getEmployeeName() == null) {
+            content = EmailTemplate.getTemplateEmail(appUser.getUserName(), OTP);
+        } else {
+            if (appUser.getEmployeeName().trim().equals("")) {
+                content = EmailTemplate.getTemplateEmail(appUser.getUserName(), OTP);
+            } else {
+                content = EmailTemplate.getTemplateEmail(appUser.getEmployeeName(), OTP);
+            }
+        }
 
         helper.setSubject(subject);
 
