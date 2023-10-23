@@ -21,7 +21,7 @@ public interface IOrderDetailService {
 
 
 
-    Page<IOrderHistoryDtoTotal> getAllSaleHistory(Pageable pageable, String valueSearchName, int i);
+    Page<IOrderHistoryDtoTotal> getAllSaleHistory(Pageable pageable, String valueSearchName);
 
     OrderBill isNotPayOfCustomer(Long id);
 
