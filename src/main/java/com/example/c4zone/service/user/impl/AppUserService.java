@@ -171,10 +171,14 @@ public class AppUserService implements IAppUserService {
 
 //        String subject = "Xác thực mật khẩu (OTP) - Expire in 5 minutes!";
         String content = "";
-        if (appUser.getEmployeeName().trim().equals("")) {
+        if (appUser.getEmployeeName() == null) {
             content = EmailTemplate.getTemplateEmail(appUser.getUserName(), OTP);
         } else {
-            content = EmailTemplate.getTemplateEmail(appUser.getEmployeeName(), OTP);
+            if (appUser.getEmployeeName().trim().equals("")) {
+                content = EmailTemplate.getTemplateEmail(appUser.getUserName(), OTP);
+            } else {
+                content = EmailTemplate.getTemplateEmail(appUser.getEmployeeName(), OTP);
+            }
         }
 
         helper.setSubject(subject);
