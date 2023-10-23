@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admin/business/order/saleHistory")
@@ -32,36 +31,38 @@ public class SaleHistoryController {
             @RequestParam(name = "_page" ,required = false,defaultValue = "0") int page,
             @RequestParam(name = "name_like",required = false,defaultValue = "") String searchName,
             @RequestParam(name = "sort",required = false,defaultValue = "timeOfOrder") String sort,
-            @RequestParam(name = "other",required = false,defaultValue = "asc") String other
+            @RequestParam(name = "other",required = false,defaultValue = "dsc") String other
     ) {
         Pageable pageable;
         Sort sort1;
         switch (sort){
             case "sortTime":
-                sort1=Sort.by("timeOfOrder");
+                if (other.equals("dsc")){
+                    sort1=Sort.by("dateOfOrder").descending().and(Sort.by("timeOfOrder")).descending();
+                }else {
+                    sort1=Sort.by("dateOfOrder").ascending().and(Sort.by("timeOfOrder")).ascending();
+                }
                 break;
             case "sortNameCustomer":
                 sort1=Sort.by("nameCustomer");
-
                 break;
             case "sortNameProduct":
                 sort1=Sort.by("timeOfOrder");
                 break;
             case "sortQuantity":
-                sort1=Sort.by("nameCustomer");
-
+                sort1=Sort.by("totalQuantity");
                 break;
             case "sortTotalMoney":
-                sort1=Sort.by("total_money");
+                sort1=Sort.by("totalMoney");
                 break;
             default:
-                sort1=Sort.by("id_order_bill");
+                sort1=Sort.by("dateOfOrder").descending().and(Sort.by("timeOfOrder")).descending();
                 break;
         }
-        if (other.equals("dsc")){
-            sort1=sort1.descending();
-        }else {
+        if (other.equals("asc")){
             sort1=sort1.ascending();
+        }else {
+            sort1=sort1.descending();
         }
         pageable= PageRequest.of(page,limit,sort1);
 

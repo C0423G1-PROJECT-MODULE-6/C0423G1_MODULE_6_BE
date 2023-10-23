@@ -49,6 +49,20 @@ public class WareHouseService implements IWareHouseService {
         }
     }
 
+    @Override
+    public Page<IWarehouseProjection> findAllByQuantity(Pageable pageable, String quantity) {
+        switch (quantity) {
+            case "smaller 50":
+                return wareHouseRepository.findAllWareHouseByQuantityMax(pageable, 50.0);
+            case "50 to 200":
+                return wareHouseRepository.findAllWareHouseByQuantity(pageable, 50.0, 200.0);
+            case "better 200":
+                return wareHouseRepository.findAllWareHouseByQuantityMin(pageable, 200.0);
+            default:
+                return wareHouseRepository.findAllWareHouseByName(pageable, "%%");
+        }
+    }
+
     /**
      * method findAll by supplier
      * author PhapTM

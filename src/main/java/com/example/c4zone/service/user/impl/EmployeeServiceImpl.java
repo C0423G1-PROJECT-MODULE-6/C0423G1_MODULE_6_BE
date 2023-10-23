@@ -66,8 +66,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public void updateEmployee(AppUser employee, Long id) {
-        employeeRepository.updateEmployee(employee, id);
+    public void updateEmployee(AppUser employee, Long id, Long roleId) {
+        employeeRepository.updateEmployee(employee, id, roleId);
     }
 
     @Override

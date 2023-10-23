@@ -53,8 +53,8 @@ public class CartController {
         }
         Long checkQuantityProduct = cartService.getQuantityProduct(idProduct);
         Long checkQuantityCart = cartService.getQuantityProductOrder(idProduct, idCustomer);
-        if (checkQuantityProduct == 0) {
-            return new ResponseEntity<>("Chọn không thành công sản phẩm "+product.getNameProduct() +" đã hết hàng", HttpStatus.NO_CONTENT);
+        if (checkQuantityProduct < 1) {
+            return new ResponseEntity<>("Chọn không thành công sản phẩm "+product.getNameProduct() +" đã hết hàng", HttpStatus.CREATED);
         }
         if (checkQuantityCart != null) {
             if ((checkQuantityCart + quantity) > checkQuantityProduct) {

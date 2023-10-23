@@ -59,7 +59,7 @@ public class OrderDetailService implements IOrderDetailService{
         }
         double total = 0;
         for (IOrderDetailDto orderDetail: orderDetails) {
-            total += orderDetail.getPriceProduct() * orderDetail.getQuantityOrder()
+            total += orderDetail.getPriceProduct() * 1.2 * orderDetail.getQuantityOrder()
                     + orderDetail.getPriceProduct() * 0.1;
         }
         return total;
@@ -126,7 +126,7 @@ public class OrderDetailService implements IOrderDetailService{
      */
 
     @Override
-    public void deteleOldBillNotPay(Long id) {
+    public void deleteOldBillNotPay(Long id) {
         orderDetailRepository.deleteOldBillNotPay(id);
     }
     /**
