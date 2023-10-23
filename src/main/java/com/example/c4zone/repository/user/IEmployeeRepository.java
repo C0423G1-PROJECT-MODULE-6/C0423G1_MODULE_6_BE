@@ -15,7 +15,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Repository
 public interface IEmployeeRepository extends JpaRepository<AppUser, Long> {
@@ -59,8 +58,8 @@ public interface IEmployeeRepository extends JpaRepository<AppUser, Long> {
     @Query(nativeQuery = true, value = " select  * from app_user where id= :id")
     AppUser findEmployeeById(@Param("id") Long id);
     /**
-     * method :findEmployeeById()
-     * created by :PhuocLQ
+     * method :findEmployeeByIdEdit()
+     * created by :CaoNV
      * date create: 10/09/2023
      *
      * @param: id
@@ -69,7 +68,7 @@ public interface IEmployeeRepository extends JpaRepository<AppUser, Long> {
     @Query(nativeQuery = true, value = " select au.id as id, au.user_name as userName,au.password as employeePassword, au.employee_name as employeeName,au.email as email \n " +
             " ,au.employee_code as employeeCode,au.employee_address as employeeAddress,au.employee_phone as employeePhone, au.employee_gender as employeeGender \n " +
             " ,au.employee_image as employeeImage,au.employee_id_card as employeeIdCard,au.employee_birthday as employeeBirthDay, \n " +
-            " au.employee_start_date as employeeStartDay,ar.type as employeeTypeName, ar.id as roleId from app_user as au \n " +
+            " au.employee_start_date as employeeStartDate,ar.type as employeeTypeName, ar.id as roleId from app_user as au \n " +
             " join user_role as ur on au.id = app_user_id \n " +
             " join app_role as ar on app_role_id = ar.id \n " +
             " where au.id = :id ")
@@ -107,23 +106,25 @@ public interface IEmployeeRepository extends JpaRepository<AppUser, Long> {
      */
     @Modifying
     @Transactional
-    @Query(value = "UPDATE `c4_zone`.`app_user` \n" +
-            "SET \n" +
-            "    `email` = :#{#employee.email},\n" +
-            "    `employee_address` = :#{#employee.employeeAddress},\n" +
-            "    `employee_birthday` = :#{#employee.employeeBirthday},\n" +
-            "    `employee_code` = :#{#employee.employeeCode},\n" +
-            "    `employee_gender` = :#{#employee.employeeGender},\n" +
-            "    `employee_id_card` = :#{#employee.employeeIdCard},\n" +
-            "    `employee_image` = :#{#employee.employeeImage} ,\n" +
-            "    `employee_name` = :#{#employee.employeeName},\n" +
-            "    `employee_phone` = :#{#employee.employeePhone},\n" +
-            "    `employee_start_date` = :#{#employee.employeeStartDate},\n" +
-            "    `user_name` = :#{#employee.userName}\n" +
-            " WHERE " +
-            "    `app_user`.`id` = :id AND flag_deleted = FALSE", nativeQuery = true)
+    @Query(value =
+            "UPDATE app_user as au\n" +
+            "inner join user_role as ur on au.id = ur.app_user_id\n" +
+            "SET  au.user_name =:#{#employee.userName} ,\n" +
+            "au.employee_name = :#{#employee.employeeName},\n" +
+            "au.email = :#{#employee.email},\n" +
+            "au.employee_code = :#{#employee.employeeCode},\n" +
+            "au.employee_address =:#{#employee.employeeAddress},\n" +
+            "au.employee_phone =:#{#employee.employeePhone},\n" +
+            "au.employee_gender = :#{#employee.employeeGender},\n" +
+            "au.employee_image = :#{#employee.employeeImage},\n" +
+            "au.employee_id_card = :#{#employee.employeeIdCard}, \n" +
+            "au.employee_birthday = :#{#employee.employeeBirthday},\n" +
+            "au.employee_start_date = :#{#employee.employeeStartDate},\n" +
+            "ur.app_role_id = :roleId \n" +
+            "WHERE au.id = :id AND flag_deleted = FALSE ", nativeQuery = true)
     void updateEmployee(@Param(value = "employee") AppUser employee,
-                        @Param(value = "id") Long id
+                        @Param(value = "id") Long id ,
+                        @Param(value = "roleId") Long roleId
     );
     /**
      * Author: CaoNV
