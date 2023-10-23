@@ -22,7 +22,8 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
     @Query(value = "SELECT * FROM  Supplier s WHERE s.name_supplier LIKE concat('%',:nameSearch,'%') " +
             " AND s.email_supplier LIKE concat('%',:emailSearch,'%') " +
             "AND  s.status_supplier = 1 " +
-            " AND( IF(:addressSearch != '', s.address_supplier = :addressSearch, s.address_supplier LIKE '%%') ) ", nativeQuery = true)
+            " AND( IF(:addressSearch != '', s.address_supplier = :addressSearch, s.address_supplier LIKE '%%') ) " +
+            "ORDER BY s.id_supplier DESC ", nativeQuery = true)
     Page<Supplier> getAllSupplier(@Param("nameSearch") String name, @Param("addressSearch") String addressSearch
             , @Param("emailSearch") String emailSearch, Pageable pageable);
 
@@ -41,7 +42,8 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
      * date: 12/10/2023
      * goal: get all data of list supplier
      */
-    @Query(value = "select * from Supplier s where s.status_supplier = 1",nativeQuery = true)
+    @Query(value = "select * from Supplier s where s.status_supplier = 1 " +
+            "ORDER BY s.id_supplier DESC",nativeQuery = true)
     Page<Supplier> getAllSupplierNoCondition(Pageable pageable);
 
     /**
