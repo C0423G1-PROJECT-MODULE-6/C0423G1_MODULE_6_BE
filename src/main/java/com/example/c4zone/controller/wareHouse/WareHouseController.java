@@ -151,6 +151,7 @@ public class WareHouseController {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
         wareHouseService.importProduct(warehouseDto.getProductId(), warehouseDto.getQuantity(), warehouseDto.getSupplierId());
+        wareHouseService.updateProductQuantity(warehouseDto.getProductId(), warehouseDto.getQuantity());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

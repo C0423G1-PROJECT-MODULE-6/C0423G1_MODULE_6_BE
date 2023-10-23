@@ -77,4 +77,9 @@ public class WareHouseService implements IWareHouseService {
         wareHouseRepository.importProduct(productId, quantity, supplierId);
     }
 
+    @Override
+    public void updateProductQuantity(Long productId, int quantity) {
+        wareHouseRepository.updateProductQuantity(productId, quantity);
+    }
+
 }

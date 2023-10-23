@@ -150,4 +150,8 @@ public interface IWareHouseRepository extends JpaRepository<WareHouse, Long> {
     void importProduct(@Param("productId") Long productId,
                        @Param("quantity") int quantity,
                        @Param("supplierId") Long supplierId);
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE product SET quantity_product = quantity_product + :quantity WHERE id_product = :productId", nativeQuery = true)
+    void updateProductQuantity(@Param("productId") Long productId, @Param("quantity") int quantity);
 }
