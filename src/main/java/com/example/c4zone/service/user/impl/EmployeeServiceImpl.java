@@ -43,20 +43,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     public String getNextCode() {
-
-        String code = employeeRepository.getLastCodeEmployee();
-        if (code == null) {
-            return "NV001";
-        }
-        int currentNumber = Integer.parseInt(code.substring(2));
-        currentNumber++;
-        return "NV" + String.format("%03d", currentNumber);
-
+        long code = employeeRepository.getLastIdEmployee() +1L;
+        return "NV" + code ;
     }
 
     @Override
     public Long getNextId() {
-
         return employeeRepository.getLastIdEmployee()   ;
     }
 

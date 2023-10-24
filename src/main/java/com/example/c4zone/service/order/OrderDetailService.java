@@ -84,7 +84,7 @@ public class OrderDetailService implements IOrderDetailService{
                 Product product = productRepository.findProductByIdProduct(cartDto1.getIdProduct());
                 orderDetail.setQuantityOrder(cartDto1.getQuantityOrder());
                 orderDetail.setProduct(product);
-                orderDetail.setPriceOrder(product.getPriceProduct() * 1.2);
+                orderDetail.setPriceOrder(product.getPriceProduct()* 1.2);
                 orderDetail.setOrderBill(orderBillByCusAndUser);
                 orderDetailRepository.createOrderDetail(orderDetail);
 
