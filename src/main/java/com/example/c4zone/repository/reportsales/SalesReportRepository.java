@@ -1,5 +1,6 @@
 package com.example.c4zone.repository.reportsales;
 
+import com.example.c4zone.dto.reportsales.TypeReport;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.dto.reportsales.SalesReport;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -59,4 +60,7 @@ public interface SalesReportRepository extends JpaRepository<Product, Integer> {
 
     @Query(value = "SELECT * FROM product", nativeQuery = true)
     List<Product> findAllProduct();
+
+    @Query(value = "SELECT t.id_type AS typeid,t.name AS typename,COALESCE(SUM(((od.price_order - p.price_product) * od.quantity_order) * 1.1), 0) AS revenue FROM order_bill ob JOIN order_detail od ON ob.id_order_bill = od.id_order JOIN product p ON od.id_product = p.id_product JOIN type t ON p.id_type = t.id_type WHERE MONTH(ob.date_of_order) = MONTH(CURRENT_DATE)GROUP BY t.id_type, t.name;\n",nativeQuery = true)
+    List<TypeReport> getTypeReport();
 }
