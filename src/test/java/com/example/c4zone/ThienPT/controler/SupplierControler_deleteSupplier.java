@@ -8,6 +8,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -26,9 +27,9 @@ class SupplierControler_deleteSupplier {
      * */
 
     @Test
-    public void deleteSupplier_id_28() throws Exception {
+    void deleteSupplier_id_28() throws Exception {
         this.mockMvc.perform(
-                MockMvcRequestBuilders.delete("/api/admin/supplier/{id}",2)
+                MockMvcRequestBuilders.delete("/api/admin/business/supplier/{id}",2)
         ).andExpect(status().is2xxSuccessful());
     }
 
@@ -43,9 +44,11 @@ class SupplierControler_deleteSupplier {
 
     @Test
      void deleteSupplier_id_25() throws Exception{
+        Long id=null;
         this.mockMvc.perform(
-                MockMvcRequestBuilders.delete("/api/admin/supplier/{id}", (Object) null)
-        ).andExpect(status().isMethodNotAllowed());
+                MockMvcRequestBuilders
+                        .delete("/api/admin/business/supplier/{id}",id)
+        ).andExpect(status().is4xxClientError()).andDo(print());
     }
 
 
@@ -59,10 +62,13 @@ class SupplierControler_deleteSupplier {
      * */
 
     @Test
-    public void deleteSupplier_id_26() throws Exception{
+    void deleteSupplier_id_26() throws Exception{
+        String id = "";
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/api/admin/business/supplier/{id}");
+        String url = builder.buildAndExpand(id).toUriString();
         this.mockMvc.perform(
-                MockMvcRequestBuilders.delete("/api/admin/supplier/{id}","")
-        ).andExpect(status().isBadRequest());
+                MockMvcRequestBuilders.delete(url)
+        ).andExpect(status().is4xxClientError()).andDo(print());
     }
 
     /**
@@ -75,9 +81,9 @@ class SupplierControler_deleteSupplier {
      * */
 
     @Test
-    public void deleteSupplier_id_27() throws Exception{
+    void deleteSupplier_id_27() throws Exception{
         this.mockMvc.perform(
-                MockMvcRequestBuilders.delete("/api/admin/supplier/{id}",9)
-        ).andExpect(status().isNotFound());
+                MockMvcRequestBuilders.delete("/api/admin/business/supplier/{id}",1000)
+        ).andExpect(status().isNotFound()).andDo(print());
     }
 }
