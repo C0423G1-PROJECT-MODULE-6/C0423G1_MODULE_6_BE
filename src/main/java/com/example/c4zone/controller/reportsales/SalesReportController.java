@@ -1,5 +1,6 @@
 package com.example.c4zone.controller.reportsales;
 
+import com.example.c4zone.dto.reportsales.TypeReport;
 import com.example.c4zone.service.home.IHomeService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -112,5 +113,11 @@ public class SalesReportController {
             newValue = data;
         }
         return ResponseEntity.ok(newValue);
+    }
+
+    @GetMapping("/typereport")
+    public ResponseEntity<List<TypeReport>> getTypeReport() {
+        List<TypeReport> data = salesReportService.getTypeReport();
+        return ResponseEntity.ok(data);
     }
 }

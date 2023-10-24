@@ -1,5 +1,6 @@
 package com.example.c4zone.service.reportsales;
 
+import com.example.c4zone.dto.reportsales.TypeReport;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.dto.reportsales.SalesReport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,11 @@ public class SalesReportService implements ISalesReportService {
     @Override
     public Double getDailyMonth() {
         return salesReportRepository.getDailyMonth();
+    }
+
+    @Override
+    public List<TypeReport> getTypeReport() {
+        return salesReportRepository.getTypeReport();
     }
 
 }

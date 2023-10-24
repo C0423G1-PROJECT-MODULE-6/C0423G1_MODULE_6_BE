@@ -1,5 +1,6 @@
 package com.example.c4zone.service.reportsales;
 
+import com.example.c4zone.dto.reportsales.TypeReport;
 import com.example.c4zone.model.product.Product;
 import com.example.c4zone.dto.reportsales.SalesReport;
 
@@ -19,4 +20,6 @@ public interface ISalesReportService {
     Integer getDailyToday();
 
     Double getDailyMonth();
+
+    List<TypeReport> getTypeReport();
 }
