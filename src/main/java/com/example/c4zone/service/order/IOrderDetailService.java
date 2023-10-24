@@ -1,8 +1,10 @@
 package com.example.c4zone.service.order;
 
 import com.example.c4zone.dto.order.ICartDto;
+import com.example.c4zone.dto.order.IOrderDetailPdfDto;
 import com.example.c4zone.dto.order.IOrderHistoryDtoTotal;
 import com.example.c4zone.model.order.OrderBill;
+import com.example.c4zone.model.order.OrderDetail;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -34,4 +36,8 @@ public interface IOrderDetailService {
     void deleteOrderDetailOfBill(Long idOrderBill);
 
     OrderBill findBillNewest();
+
+    List<OrderDetail> getAllOrderDetail(Long idOrderBill);
+
+    List<IOrderDetailPdfDto> getAllOrderDetailByOrder(Long idOrderBill);
 }
