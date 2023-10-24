@@ -38,12 +38,12 @@ public class WareHouseService implements IWareHouseService {
     @Override
     public Page<IWarehouseProjection> findAllByPrice(Pageable pageable, String price) {
         switch (price) {
-            case "smaller 5m":
-                return wareHouseRepository.findAllWareHouseByPriceMax(pageable, 5000000.0);
-            case "5m to 10m":
-                return wareHouseRepository.findAllWareHouseByPrice(pageable, 5000000.0, 10000000.0);
-            case "better 10m":
-                return wareHouseRepository.findAllWareHouseByPriceMin(pageable, 10000000.0);
+            case "smaller 10m":
+                return wareHouseRepository.findAllWareHouseByPriceMax(pageable, 10000000.0);
+            case "10m to 20m":
+                return wareHouseRepository.findAllWareHouseByPrice(pageable, 10000000.0, 20000000.0);
+            case "better 20m":
+                return wareHouseRepository.findAllWareHouseByPriceMin(pageable, 20000000.0);
             default:
                 return wareHouseRepository.findAllWareHouseByName(pageable, "%%");
         }
