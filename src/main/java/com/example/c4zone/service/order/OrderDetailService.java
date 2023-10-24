@@ -3,6 +3,7 @@ package com.example.c4zone.service.order;
 import com.example.c4zone.dto.order.ICartDto;
 import com.example.c4zone.dto.order.IOrderDetailDto;
 
+import com.example.c4zone.dto.order.IOrderDetailPdfDto;
 import com.example.c4zone.dto.order.IOrderHistoryDtoTotal;
 import com.example.c4zone.model.order.OrderBill;
 import com.example.c4zone.model.order.OrderDetail;
@@ -59,7 +60,7 @@ public class OrderDetailService implements IOrderDetailService{
         }
         double total = 0;
         for (IOrderDetailDto orderDetail: orderDetails) {
-            total += orderDetail.getPriceProduct() * 1.2 * orderDetail.getQuantityOrder()
+            total += orderDetail.getPriceProduct() * orderDetail.getQuantityOrder()
                     + orderDetail.getPriceProduct() * 0.1;
         }
         return total;
@@ -83,7 +84,7 @@ public class OrderDetailService implements IOrderDetailService{
                 Product product = productRepository.findProductByIdProduct(cartDto1.getIdProduct());
                 orderDetail.setQuantityOrder(cartDto1.getQuantityOrder());
                 orderDetail.setProduct(product);
-                orderDetail.setPriceOrder(product.getPriceProduct());
+                orderDetail.setPriceOrder(product.getPriceProduct()* 1.2);
                 orderDetail.setOrderBill(orderBillByCusAndUser);
                 orderDetailRepository.createOrderDetail(orderDetail);
 
@@ -167,6 +168,16 @@ public class OrderDetailService implements IOrderDetailService{
     @Override
     public OrderBill findBillNewest(){
        return orderDetailRepository.findOrderBillWithNewest();
+    }
+
+    @Override
+    public List<OrderDetail> getAllOrderDetail(Long idOrderBill) {
+        return orderDetailRepository.getAllOrderDetail(idOrderBill);
+    }
+
+    @Override
+    public List<IOrderDetailPdfDto> getAllOrderDetailByOrder(Long idOrderBill) {
+        return orderDetailRepository.getAllOrderDetailByOrder(idOrderBill);
     }
 }
 

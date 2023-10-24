@@ -242,7 +242,7 @@ public class ProductController {
                 sort1 = Sort.by("quantity");
                 break;
             default:
-                sort1 = Sort.by("id");
+                sort1 = Sort.by("id").descending();
                 break;
         }
         if (otherSort.equals("asc")) {

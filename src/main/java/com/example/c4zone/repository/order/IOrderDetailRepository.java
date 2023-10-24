@@ -2,6 +2,7 @@ package com.example.c4zone.repository.order;
 
 
 import com.example.c4zone.dto.order.IOrderDetailDto;
+import com.example.c4zone.dto.order.IOrderDetailPdfDto;
 import com.example.c4zone.dto.order.IOrderHistoryDtoTotal;
 
 import com.example.c4zone.model.order.OrderBill;
@@ -87,6 +88,7 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
                     "    OB.time_of_order as timeOfOrder, " +
                     "    C.name_customer as nameCustomer, " +
                     "    GROUP_CONCAT(CONCAT(P.name_product, ' (', C2.name, ' - ', C3.name, ') x', OD.quantity_order) SEPARATOR ', \\n') as infoBuy, " +
+                    "    SUM(OD.quantity_order) as totalQuantity, " +
                     "    OB.total_money as totalMoney " +
                     "FROM order_bill OB " +
                     "LEFT JOIN order_detail OD ON OB.id_order_bill = OD.id_order " +
@@ -182,7 +184,7 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
      * param total money, payment method, id customer, id user
      * return status 2xx
      */
-
+    @Transactional
     @Modifying
     @Query(value = "update order_bill set total_money = :total,payment_method = :method where id_order_bill = :id",nativeQuery = true)
     void updateOrderBill(@Param("id") Long idOrderBill,@Param("total") Double totalMoney,@Param("method") Integer paymentMethod);
@@ -221,8 +223,14 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
     void deleteOrderDetailOfBill(@Param("id") Long idOrderBill);
 
     @Query(value = "select * from order_detail where id_order = :id",nativeQuery = true)
-    List<OrderDetail> getAllOrderDetail(@Param("id") Long idOrderBill);
+    List<OrderDetail> getAllOrderDetail(@Param("id") Long id);
     @Modifying
     @Query(value = "update order_bill set total_money = :total,print_status = :print,payment_status = 1 where id_order_bill = :id",nativeQuery = true)
     void updateOrderBill(@Param("total") Double totalMoney,@Param("print") int printStatus,@Param("id") Long idOrderBill);
+    @Query(value = "select p.name_product as nameProduct, od.price_order as priceOrder, od.quantity_order as quantityOrder " +
+            "from order_detail as od " +
+            "join product as p " +
+            "on p.id_product = od.id_product " +
+            "where id_order = :idOrderBill", nativeQuery = true)
+    List<IOrderDetailPdfDto> getAllOrderDetailByOrder(@Param("idOrderBill") Long idOrderBill);
 }
