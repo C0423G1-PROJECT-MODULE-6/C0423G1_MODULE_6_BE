@@ -76,4 +76,46 @@ public class CustomerController_findCustomerById {
                 .andExpect(jsonPath("addressCustomer").value("Da Nang"))
                 .andExpect(jsonPath("statusCustomer").value(true));
     }
+
+    /**
+     * Function Check case Id  is a negative number
+     * Author: NguyenNH
+     * date: 13/10/2023
+     * @throw Exception
+     */
+    @Test
+    public void findCustomerById_id_5() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/admin/business/customer/list/{id}", -33))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    /**
+     * Function Check case Id  is too large value
+     * Author: NguyenNH
+     * date: 13/10/2023
+     * @throw Exception
+     */
+    @Test
+    public void findCustomerById_id_6() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/admin/business/customer/list/{id}", 999999999))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    /**
+     * Function Check case Id  is not an integer
+     * Author: NguyenNH
+     * date: 13/10/2023
+     * @throw Exception
+     */
+    @Test
+    public void findCustomerById_id_7() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/admin/business/customer/list/{id}", 2.5))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
 }

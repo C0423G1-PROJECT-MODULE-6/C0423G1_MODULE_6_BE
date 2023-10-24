@@ -1,9 +1,5 @@
 package com.example.c4zone.controller;
-<<<<<<< HEAD
 
-//import jdk.internal.org.jline.utils.Status;
-=======
->>>>>>> 29ed533de2eb97cbe5ac3898b91d183d28ccba3e
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

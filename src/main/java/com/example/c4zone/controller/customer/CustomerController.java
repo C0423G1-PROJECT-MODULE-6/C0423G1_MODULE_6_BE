@@ -33,9 +33,10 @@ public class CustomerController {
 
 
     /**
+     * Function Get All Customer
      * Author: NguyenNH
-     * Goal: show list customer
-     *  return HttpStatus
+     * date: 12/10/2023
+     * return HttpStatus
      */
     @GetMapping("/list")
     public ResponseEntity<Page<ICustomerListDto>> getAllCustomer(@RequestParam(name = "_limit") int limit,
@@ -107,9 +108,10 @@ public class CustomerController {
     }
 
     /**
+     * Function find customer by id
      * Author: NguyenNH
-     * Goal: find customer by id
-     * * return HttpStatus
+     * date: 12/10/2023
+     * return HttpStatus
      */
     @GetMapping("/list/{id}")
     public ResponseEntity<Customer> findCustomerById(@PathVariable Long id) {
@@ -121,9 +123,10 @@ public class CustomerController {
     }
 
     /**
+     * Function Get shopping history of customer
      * Author: NguyenNH
-     * Goal: show list shopping history
-     * * return HttpStatus
+     * date: 12/10/2023
+     * return HttpStatus
      */
     @GetMapping("/list/history/{id}")
     public ResponseEntity<Page<IShoppingHistoryDto>> getShoppingHistory(@RequestParam(name = "_limit") int limit,
