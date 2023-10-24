@@ -1,10 +1,13 @@
 package com.example.c4zone.controller.order;
 
+import com.example.c4zone.dto.customer.ICustomerListDto;
 import com.example.c4zone.dto.order.*;
+import com.example.c4zone.dto.product.IProductDto;
 import com.example.c4zone.model.customer.Customer;
 import com.example.c4zone.model.order.Cart;
 import com.example.c4zone.model.order.OrderBill;
 
+import com.example.c4zone.model.order.OrderDetail;
 import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.service.cart.ICartService;
 import com.example.c4zone.service.customer.ICustomerService;
@@ -16,6 +19,10 @@ import com.example.c4zone.service.user.IAppUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +32,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -313,6 +321,17 @@ public class OrderController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("Không tìm thấy ID",HttpStatus.NOT_FOUND);
+    }
+    @GetMapping("/printPDF")
+    public ResponseEntity<Object> getOrderBillNewestPDF(){
+        OrderBill orderBill = orderDetailService.findBillNewest();
+        Customer customer = orderBill.getCustomer();
+        List<IOrderDetailPdfDto> orderDetailList = orderDetailService.getAllOrderDetailByOrder(orderBill.getIdOrderBill());
+        ObjectResponsePrintPDF objectResponsePrintPDF = new ObjectResponsePrintPDF();
+        objectResponsePrintPDF.setOrderBill(orderBill);
+        objectResponsePrintPDF.setOrderDetails(orderDetailList);
+        objectResponsePrintPDF.setCustomer(customer);
+        return new ResponseEntity<>(objectResponsePrintPDF,HttpStatus.OK);
     }
 }
 

@@ -3,6 +3,7 @@ package com.example.c4zone.service.order;
 import com.example.c4zone.dto.order.ICartDto;
 import com.example.c4zone.dto.order.IOrderDetailDto;
 
+import com.example.c4zone.dto.order.IOrderDetailPdfDto;
 import com.example.c4zone.dto.order.IOrderHistoryDtoTotal;
 import com.example.c4zone.model.order.OrderBill;
 import com.example.c4zone.model.order.OrderDetail;
@@ -167,6 +168,16 @@ public class OrderDetailService implements IOrderDetailService{
     @Override
     public OrderBill findBillNewest(){
        return orderDetailRepository.findOrderBillWithNewest();
+    }
+
+    @Override
+    public List<OrderDetail> getAllOrderDetail(Long idOrderBill) {
+        return orderDetailRepository.getAllOrderDetail(idOrderBill);
+    }
+
+    @Override
+    public List<IOrderDetailPdfDto> getAllOrderDetailByOrder(Long idOrderBill) {
+        return orderDetailRepository.getAllOrderDetailByOrder(idOrderBill);
     }
 }
 
