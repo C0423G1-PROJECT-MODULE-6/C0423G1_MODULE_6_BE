@@ -1,6 +1,7 @@
 package com.example.c4zone.model.order;
 
 import com.example.c4zone.model.product.Product;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
