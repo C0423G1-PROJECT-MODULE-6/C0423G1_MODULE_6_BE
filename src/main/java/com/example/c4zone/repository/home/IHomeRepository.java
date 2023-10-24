@@ -240,6 +240,7 @@ public interface IHomeRepository extends JpaRepository<Product, Long> {
             "    GROUP BY o.id_product\n" +
             "    ORDER BY SUM(o.quantity_order) DESC\n" +
             "    LIMIT 10) AS subquery ON p.id_product = subquery.id_product\n" +
+            "    WHERE p.status_business = 1\n"+
             "GROUP BY p.id_product;", nativeQuery = true)
     List<IProductDto> getBestsellers();
 
