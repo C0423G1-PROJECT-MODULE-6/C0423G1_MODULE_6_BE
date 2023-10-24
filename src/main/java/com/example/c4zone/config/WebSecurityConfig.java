@@ -54,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()//
                 .antMatchers(
                         "/api/user/create/**",
+                        "/api/admin/home/**",
                         "/api/user/confirm/**",
                         "/api/user/resetOTP/**",
                         "/api/user/login-by-username/**"
