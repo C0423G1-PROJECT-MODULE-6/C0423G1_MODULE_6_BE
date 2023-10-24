@@ -46,9 +46,6 @@ public class SaleHistoryController {
             case "sortNameCustomer":
                 sort1=Sort.by("nameCustomer");
                 break;
-            case "sortNameProduct":
-                sort1=Sort.by("timeOfOrder");
-                break;
             case "sortQuantity":
                 sort1=Sort.by("totalQuantity");
                 break;

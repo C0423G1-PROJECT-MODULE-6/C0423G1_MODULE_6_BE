@@ -60,7 +60,7 @@ public class OrderDetailService implements IOrderDetailService{
         }
         double total = 0;
         for (IOrderDetailDto orderDetail: orderDetails) {
-            total += orderDetail.getPriceProduct() * 1.2 * orderDetail.getQuantityOrder()
+            total += orderDetail.getPriceProduct() * orderDetail.getQuantityOrder()
                     + orderDetail.getPriceProduct() * 0.1;
         }
         return total;
