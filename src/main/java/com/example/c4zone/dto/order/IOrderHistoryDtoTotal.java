@@ -7,6 +7,7 @@ public interface IOrderHistoryDtoTotal {
     String getDateOfOrder();
     String getTimeOfOrder();
     String getNameCustomer();
+    Integer getTotalQuantity();
     Double getTotalMoney();
     String getInfoBuy();
 }

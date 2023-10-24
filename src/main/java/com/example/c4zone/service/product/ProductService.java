@@ -120,12 +120,12 @@ public class ProductService implements IProductService{
     @Override
     public Page<IProductDto> getAllByPrice(Pageable pageable, String price) {
         switch (price) {
-            case "smaller 7m":
-                return productRepository.getAllByPriceMax(pageable, 7000000.0);
-            case "7m to 12m":
-                return productRepository.getAllByPrice(pageable, 7000000.0, 12000000.0);
-            case "better 12m":
-                return productRepository.getAllByPriceMin(pageable, 12000000.0);
+            case "smaller 10m":
+                return productRepository.getAllByPriceMax(pageable, 10000000.0);
+            case "10m to 20m":
+                return productRepository.getAllByPrice(pageable, 10000000.0, 20000000.0);
+            case "better 20m":
+                return productRepository.getAllByPriceMin(pageable, 20000000.0);
             default:
                 return productRepository.getAllByName(pageable, "%%");
         }
@@ -155,10 +155,10 @@ public class ProductService implements IProductService{
         switch (value) {
             case "smaller 50":
                 return productRepository.getAllByQuantityMax(pageable, 50);
-            case "50 to 250":
-                return productRepository.getAllByQuantity(pageable, 50, 250);
-            case "better 250":
-                return productRepository.getAllByQuantityMin(pageable, 250);
+            case "50 to 200":
+                return productRepository.getAllByQuantity(pageable, 50, 200);
+            case "better 200":
+                return productRepository.getAllByQuantityMin(pageable, 200);
             default:
                 return productRepository.getAllByName(pageable, "%%");
         }

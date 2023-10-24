@@ -88,6 +88,7 @@ public interface IOrderDetailRepository extends JpaRepository<OrderBill,Long> {
                     "    OB.time_of_order as timeOfOrder, " +
                     "    C.name_customer as nameCustomer, " +
                     "    GROUP_CONCAT(CONCAT(P.name_product, ' (', C2.name, ' - ', C3.name, ') x', OD.quantity_order) SEPARATOR ', \\n') as infoBuy, " +
+                    "    SUM(OD.quantity_order) as totalQuantity, " +
                     "    OB.total_money as totalMoney " +
                     "FROM order_bill OB " +
                     "LEFT JOIN order_detail OD ON OB.id_order_bill = OD.id_order " +
