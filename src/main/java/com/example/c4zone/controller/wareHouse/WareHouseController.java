@@ -258,7 +258,7 @@ public class WareHouseController {
                 sort1 = Sort.by("quantity");
                 break;
             default:
-                sort1 = Sort.by("id");
+                sort1 = Sort.by("quantity");
                 break;
         }
         if (otherSort.equals("asc")) {
