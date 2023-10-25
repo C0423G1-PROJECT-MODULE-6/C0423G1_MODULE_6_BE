@@ -130,19 +130,7 @@ public class OrderDetailService implements IOrderDetailService{
     public void deleteOldBillNotPay(Long id) {
         orderDetailRepository.deleteOldBillNotPay(id);
     }
-    /**
-     * method update totalmoney ,payment method
-     * Create ThoiND
-     * Date 15-10-2023
-     * param total money, payment method, id customer, id user
-     * return status 2xx
-     */
-    @Override
-    public void updateOrderBill(Double totalMoney, Integer printStatus,
-                                Long idCustomerOrder, Long idUser) {
-        OrderBill orderBill = orderDetailRepository.getOrderBillWithCusAndUser(idCustomerOrder,idUser);
-        orderDetailRepository.updateOrderBill(orderBill.getIdOrderBill(),totalMoney, printStatus);
-    }
+
     /**
      * method update print status at final step
      * Create ThoiND
@@ -170,10 +158,6 @@ public class OrderDetailService implements IOrderDetailService{
        return orderDetailRepository.findOrderBillWithNewest();
     }
 
-    @Override
-    public List<OrderDetail> getAllOrderDetail(Long idOrderBill) {
-        return orderDetailRepository.getAllOrderDetail(idOrderBill);
-    }
 
     @Override
     public List<IOrderDetailPdfDto> getAllOrderDetailByOrder(Long idOrderBill) {

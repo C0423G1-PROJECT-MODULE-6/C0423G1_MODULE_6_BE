@@ -1,13 +1,12 @@
 package com.example.c4zone.controller.order;
 
-import com.example.c4zone.dto.customer.ICustomerListDto;
+
 import com.example.c4zone.dto.order.*;
-import com.example.c4zone.dto.product.IProductDto;
+
 import com.example.c4zone.model.customer.Customer;
 import com.example.c4zone.model.order.Cart;
 import com.example.c4zone.model.order.OrderBill;
 
-import com.example.c4zone.model.order.OrderDetail;
 import com.example.c4zone.model.user.AppUser;
 import com.example.c4zone.service.cart.ICartService;
 import com.example.c4zone.service.customer.ICustomerService;
@@ -19,10 +18,7 @@ import com.example.c4zone.service.user.IAppUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +28,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 
@@ -89,6 +84,13 @@ public class OrderController {
         }
         return new ResponseEntity<>("Không tìm thấy ID",HttpStatus.NOT_FOUND);
     }
+    /**
+     * method findByCustomer by scan
+     * Create ThoiND
+     * Date 12-10-2023
+     * param Long id
+     * return Customer status 2xx
+     */
     @GetMapping("/customerScan/{idCustomerScan}")
     public ResponseEntity<Object> findCustomerScan(@PathVariable Long idCustomerScan){
         if (idCustomerScan != null){
@@ -104,15 +106,15 @@ public class OrderController {
     }
 
     /**
-     * method get bill by customer (other screen modal to choose old bill or create new)
+     * method get cart by customer (other screen modal to choose old cart or create new)
      * after Check Customer's bill has not pay yet
      * Create ThoiND
      * Date 14-10-2023
-     * param Long idUser,Long idProduct
+     * param idCustomer,_choose
      * return status 2xx
      */
     @GetMapping("/customer/getCartByChoose/{idCus}")
-    public ResponseEntity<Object> getOrderNotPayByChoose(
+    public ResponseEntity<Object> getCartNotPayByChoose(
             @RequestParam(name = "_choose") Integer choose,
             @PathVariable Long idCus){
         if (idCus != null) {
@@ -131,6 +133,15 @@ public class OrderController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    /**
+     * method get order by customer (other screen modal to choose old bill or create new)
+     * after Check Customer's bill has not pay yet
+     * Create ThoiND
+     * Date 14-10-2023
+     * param idCustomer,id User,_choose
+     * return status 2xx
+     */
+
     @GetMapping("/customer/getOrderNotPay/{idCus}/{idUser}")
     public ResponseEntity<Object> getOrderNotPayByChoose(
             @RequestParam(name = "_choose") Integer choose,
@@ -230,7 +241,6 @@ public class OrderController {
      * param Long idUser,Long idProduct
      * return status 2xx
      */
-//    @PostMapping("/cart/deleteChosenProduct/{idUser},{idProduct}")
     @PostMapping("/cart/deleteChosenProduct/{idProduct}/{idCustomer}")
     public ResponseEntity<Object> deleteChosenProduct(@PathVariable Long idCustomer,@PathVariable Long idProduct){
         if (idCustomer == null){
@@ -284,6 +294,12 @@ public class OrderController {
         }
         return new ResponseEntity<>("Không tìm thấy ID",HttpStatus.NOT_FOUND);
     }
+    /**
+     * method show bill newest for customer
+     * Create ThoiND
+     * Date 15-10-2023
+     * return status 2xx and order bill
+     */
     @GetMapping("/payment/showBillNewest/{idCustomer}")
     public ResponseEntity<Object> showBillNewest(@PathVariable Long idCustomer){
         if (idCustomer != null){
@@ -322,11 +338,26 @@ public class OrderController {
         }
         return new ResponseEntity<>("Không tìm thấy ID",HttpStatus.NOT_FOUND);
     }
+    /**
+     * method get order to print contact
+     * Create ThoiND
+     * Date 24-10-2023
+     * return status 200 and object response
+     */
     @GetMapping("/printPDF")
     public ResponseEntity<Object> getOrderBillNewestPDF(){
         OrderBill orderBill = orderDetailService.findBillNewest();
+        if (orderBill == null){
+            return new ResponseEntity<>("Không tìm thấy bill",HttpStatus.NOT_FOUND);
+        }
         Customer customer = orderBill.getCustomer();
+        if (customer == null){
+            return new ResponseEntity<>("Không tìm thấy khách hàng",HttpStatus.NOT_FOUND);
+        }
         List<IOrderDetailPdfDto> orderDetailList = orderDetailService.getAllOrderDetailByOrder(orderBill.getIdOrderBill());
+        if (orderDetailList.isEmpty()){
+            return new ResponseEntity<>("Không tìm thấy danh sách đơn hàng chi tiết",HttpStatus.NOT_FOUND);
+        }
         ObjectResponsePrintPDF objectResponsePrintPDF = new ObjectResponsePrintPDF();
         objectResponsePrintPDF.setOrderBill(orderBill);
         objectResponsePrintPDF.setOrderDetails(orderDetailList);
