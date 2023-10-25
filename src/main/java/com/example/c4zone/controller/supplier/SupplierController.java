@@ -101,7 +101,7 @@ public class SupplierController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá trị của id không thể mang giá trị rỗng");
         }
         if (id == null) {
-            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body("Giá trị của id không thể là null");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá trị của id không thể là null");
         }
         if (supplierService.findByIdSupplier(id) == null) {
             return ResponseEntity.notFound().build();
